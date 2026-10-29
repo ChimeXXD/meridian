@@ -1,0 +1,59 @@
+{
+  "show": {
+    "id": 44778,
+    "url": "https://www.tvmaze.com/shows/44778/house-of-the-dragon",
+    "name": "House of the Dragon",
+    "type": "Scripted",
+    "language": "English",
+    "genres": [
+      "Drama",
+      "Action",
+      "Fantasy"
+    ],
+    "status": "Running",
+    "runtime": null,
+    "averageRuntime": 66,
+    "premiered": "2022-08-21",
+    "ended": null,
+    "schedule": {
+      "time": "21:00",
+      "days": [
+        "Sunday"
+      ]
+    },
+    "network": {
+      "id": 8,
+      "name": "HBO",
+      "country": {
+        "name": "United States",
+        "code": "US",
+        "timezone": "America/New_York"
+      },
+      "officialSite": "https://www.hbo.com/"
+    },
+    "webChannel": null,
+    "externals": {
+      "tvrage": null,
+      "thetvdb": 371572,
+      "imdb": "tt11198330"
+    }
+  },
+  "episode": {
+    "id": 3605061,
+    "url": "https://www.tvmaze.com/episodes/3605061/house-of-the-dragon-3x01-salt-and-sea-fire-and-blood",
+    "name": "Salt and Sea, Fire and Blood",
+    "season": 3,
+    "number": 1,
+    "type": "regular",
+    "airdate": "2026-06-21",
+    "airtime": "21:00",
+    "airstamp": "2026-06-22T01:00:00+00:00",
+    "runtime": 73
+  },
+  "expected": {
+    "instant": "2026-06-22T01:00:00Z",
+    "confidence": "exact",
+    "source": "https://nc.inverse.com/entertainment/house-of-the-dragon-season-3-release-date-start-time-trailer-plot",
+    "note": "HBO: broadcast 21:00 ET"
+  }
+}

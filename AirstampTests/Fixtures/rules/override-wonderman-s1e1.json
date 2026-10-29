@@ -1,0 +1,52 @@
+{
+  "show": {
+    "id": 62569,
+    "url": "https://www.tvmaze.com/shows/62569/wonder-man",
+    "name": "Wonder Man",
+    "type": "Scripted",
+    "language": "English",
+    "genres": [
+      "Action",
+      "Science-Fiction"
+    ],
+    "status": "Ended",
+    "runtime": null,
+    "averageRuntime": 33,
+    "premiered": "2026-01-27",
+    "ended": "2026-01-27",
+    "schedule": {
+      "time": "",
+      "days": []
+    },
+    "network": null,
+    "webChannel": {
+      "id": 287,
+      "name": "Disney+",
+      "country": null,
+      "officialSite": "https://www.disneyplus.com/"
+    },
+    "externals": {
+      "tvrage": null,
+      "thetvdb": 428629,
+      "imdb": "tt21066182"
+    }
+  },
+  "episode": {
+    "id": 3394714,
+    "url": "https://www.tvmaze.com/episodes/3394714/wonder-man-1x01-matinee",
+    "name": "Matinee",
+    "season": 1,
+    "number": 1,
+    "type": "regular",
+    "airdate": "2026-01-27",
+    "airtime": "",
+    "airstamp": "2026-01-27T12:00:00+00:00",
+    "runtime": 35
+  },
+  "expected": {
+    "instant": "2026-01-28T02:00:00Z",
+    "confidence": "estimated",
+    "source": "https://www.dexerto.com/tv-movies/wonder-man-release-date-time-3310024/",
+    "note": "Disney+ Marvel: 18:00 PT (show override)"
+  }
+}

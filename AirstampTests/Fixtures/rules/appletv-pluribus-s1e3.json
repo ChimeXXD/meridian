@@ -1,0 +1,55 @@
+{
+  "show": {
+    "id": 86175,
+    "url": "https://www.tvmaze.com/shows/86175/pluribus",
+    "name": "Pluribus",
+    "type": "Scripted",
+    "language": "English",
+    "genres": [
+      "Drama",
+      "Science-Fiction",
+      "Thriller"
+    ],
+    "status": "Running",
+    "runtime": null,
+    "averageRuntime": 49,
+    "premiered": "2025-11-07",
+    "ended": null,
+    "schedule": {
+      "time": "",
+      "days": [
+        "Friday"
+      ]
+    },
+    "network": null,
+    "webChannel": {
+      "id": 310,
+      "name": "Apple TV",
+      "country": null,
+      "officialSite": "https://tv.apple.com/"
+    },
+    "externals": {
+      "tvrage": null,
+      "thetvdb": 436457,
+      "imdb": "tt22202452"
+    }
+  },
+  "episode": {
+    "id": 3314580,
+    "url": "https://www.tvmaze.com/episodes/3314580/pluribus-1x03-grenade",
+    "name": "Grenade",
+    "season": 1,
+    "number": 3,
+    "type": "regular",
+    "airdate": "2025-11-14",
+    "airtime": "",
+    "airstamp": "2025-11-14T12:00:00+00:00",
+    "runtime": 43
+  },
+  "expected": {
+    "instant": "2025-11-14T02:00:00Z",
+    "confidence": "estimated",
+    "source": "https://www.thewrap.com/?p=7880659",
+    "note": "Apple TV: 21:00 ET the day before the listed date"
+  }
+}

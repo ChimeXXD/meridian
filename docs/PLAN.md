@@ -93,12 +93,12 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
 **Goal:** the part that must be right, written tests first. It needs no UI.
 
 ### Claude CLI does
-- [ ] Models in `Shared/Models`: `Drop`, `DropSnapshot`, `Confidence`, `ReleaseSource`, `ProviderLabel`.
-- [ ] Record fixtures in `AirstampTests/Fixtures/`: 2 real episodes per platform rule, the override examples (Stranger Things 5 at 17:00 PT, the early Fallout S2 premiere), and placeholders at 12:00Z and 16:00Z.
-- [ ] `rules/platform-rules.json` v1, bundled with the app (SPEC §3.2).
-- [ ] `PlatformRules` and `TimeResolver`, plus the test matrix: each rule × 6 zones × US summer and winter, the US, EU and Sydney clock-change dates, placeholders never `exact`, overrides beating rules, and anime unaffected by US clock changes.
-- [ ] `TVmazeClient` actor: backoff that honours `Retry-After`, and a 6-hour cache.
-- [ ] Commit after each green step.
+- [x] Models in `Shared/Models`: `Drop`, `DropSnapshot`, `Confidence`, `ReleaseSource`, `ProviderLabel`.
+- [x] Record fixtures in `AirstampTests/Fixtures/`: 2 real episodes per platform rule, the override examples (Stranger Things 5 at 17:00 PT, the early Fallout S2 premiere), and placeholders at 12:00Z and 16:00Z.
+- [x] `rules/platform-rules.json` v1, bundled with the app (SPEC §3.2).
+- [x] `PlatformRules` and `TimeResolver`, plus the test matrix: each rule × 6 zones × US summer and winter, the US, EU and Sydney clock-change dates, placeholders never `exact`, overrides beating rules, and anime unaffected by US clock changes.
+- [x] `TVmazeClient` actor: backoff that honours `Retry-After`, and a 6-hour cache.
+- [x] Commit after each green step.
 
 **Prompt**
 > Day 1 from docs/PLAN.md, tests first. Record the fixtures, write rules/platform-rules.json, then implement the models, PlatformRules, TimeResolver and TVmazeClient per SPEC §3. Show me the test matrix output.
@@ -221,7 +221,7 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
   - AniList's answer recorded (O-5)
   - LICENSE and credits present
   - personal device IDs removed
-- [ ] Switch on the remote rules fetch and the GitHub-issue reporting now that the repo will be public (D-34), and widen CI to every push and PR (D-35).
+- [ ] Switch on the remote rules fetch and the GitHub-issue reporting now that the repo will be public (D-34), and widen CI to every push and PR (D-35). Before switching on, persist `RulesStore`'s last good copy and next-attempt time to Caches, so cold launches and offline launches keep the newest valid rules (Day 1 review item 6).
 - [ ] Tag `v0.1.0`. **Make the repo public:** `gh repo edit --visibility public --accept-visibility-change-consequences`. Add topics and a description.
 
 ### Chime does

@@ -1,0 +1,55 @@
+{
+  "show": {
+    "id": 43031,
+    "url": "https://www.tvmaze.com/shows/43031/reacher",
+    "name": "Reacher",
+    "type": "Scripted",
+    "language": "English",
+    "genres": [
+      "Drama",
+      "Action",
+      "Thriller"
+    ],
+    "status": "Running",
+    "runtime": null,
+    "averageRuntime": 48,
+    "premiered": "2022-02-04",
+    "ended": null,
+    "schedule": {
+      "time": "",
+      "days": [
+        "Wednesday"
+      ]
+    },
+    "network": null,
+    "webChannel": {
+      "id": 3,
+      "name": "Prime Video",
+      "country": null,
+      "officialSite": "https://www.primevideo.com"
+    },
+    "externals": {
+      "tvrage": null,
+      "thetvdb": 366924,
+      "imdb": "tt9288030"
+    }
+  },
+  "episode": {
+    "id": 3658412,
+    "url": "https://www.tvmaze.com/episodes/3658412/reacher-4x04-karambits-and-pieces",
+    "name": "Karambits and Pieces",
+    "season": 4,
+    "number": 4,
+    "type": "regular",
+    "airdate": "2026-08-19",
+    "airtime": "",
+    "airstamp": "2026-08-19T12:00:00+00:00",
+    "runtime": 44
+  },
+  "expected": {
+    "instant": "2026-08-19T07:00:00Z",
+    "confidence": "estimated",
+    "source": "https://techradar.com/streaming/amazon-prime-video/reacher-season-4-episode-4-release-date-time",
+    "note": "Prime Video: 00:00 PT"
+  }
+}

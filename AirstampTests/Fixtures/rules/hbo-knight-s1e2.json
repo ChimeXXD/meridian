@@ -1,0 +1,59 @@
+{
+  "show": {
+    "id": 53063,
+    "url": "https://www.tvmaze.com/shows/53063/a-knight-of-the-seven-kingdoms",
+    "name": "A Knight of the Seven Kingdoms",
+    "type": "Scripted",
+    "language": "English",
+    "genres": [
+      "Drama",
+      "Action",
+      "Fantasy"
+    ],
+    "status": "Running",
+    "runtime": null,
+    "averageRuntime": 37,
+    "premiered": "2026-01-18",
+    "ended": null,
+    "schedule": {
+      "time": "22:00",
+      "days": [
+        "Sunday"
+      ]
+    },
+    "network": {
+      "id": 8,
+      "name": "HBO",
+      "country": {
+        "name": "United States",
+        "code": "US",
+        "timezone": "America/New_York"
+      },
+      "officialSite": "https://www.hbo.com/"
+    },
+    "webChannel": null,
+    "externals": {
+      "tvrage": null,
+      "thetvdb": 433631,
+      "imdb": "tt27497448"
+    }
+  },
+  "episode": {
+    "id": 3391838,
+    "url": "https://www.tvmaze.com/episodes/3391838/a-knight-of-the-seven-kingdoms-1x02-hard-salt-beef",
+    "name": "Hard Salt Beef",
+    "season": 1,
+    "number": 2,
+    "type": "regular",
+    "airdate": "2026-01-25",
+    "airtime": "22:02",
+    "airstamp": "2026-01-26T03:02:00+00:00",
+    "runtime": 36
+  },
+  "expected": {
+    "instant": "2026-01-26T03:00:00Z",
+    "confidence": "exact",
+    "source": "https://www.tomsguide.com/entertainment/hbo-max/a-knight-of-the-seven-kingdoms-episode-2-release-date-and-time-heres-when-its-streaming-on-hbo-max",
+    "note": "HBO: broadcast 22:00 ET"
+  }
+}

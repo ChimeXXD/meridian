@@ -1,0 +1,61 @@
+{
+  "id": 38052,
+  "url": "https://www.tvmaze.com/shows/38052/silo",
+  "name": "Silo",
+  "type": "Scripted",
+  "language": "English",
+  "genres": [
+    "Drama",
+    "Science-Fiction",
+    "Mystery"
+  ],
+  "status": "Running",
+  "runtime": null,
+  "averageRuntime": 51,
+  "premiered": "2023-05-05",
+  "ended": null,
+  "schedule": {
+    "time": "",
+    "days": [
+      "Thursday"
+    ]
+  },
+  "network": null,
+  "webChannel": {
+    "id": 310,
+    "name": "Apple TV",
+    "country": null,
+    "officialSite": "https://tv.apple.com/"
+  },
+  "externals": {
+    "tvrage": null,
+    "thetvdb": 403245,
+    "imdb": "tt14688458"
+  },
+  "_embedded": {
+    "nextepisode": {
+      "id": 3726616,
+      "url": "https://www.tvmaze.com/episodes/3726616/silo-4x01-tba",
+      "name": "TBA",
+      "season": 4,
+      "number": 1,
+      "type": "regular",
+      "airdate": "2027-07-09",
+      "airtime": "",
+      "airstamp": "2027-07-09T12:00:00+00:00",
+      "runtime": null
+    },
+    "previousepisode": {
+      "id": 3599628,
+      "url": "https://www.tvmaze.com/episodes/3599628/silo-3x10-troy",
+      "name": "Troy",
+      "season": 3,
+      "number": 10,
+      "type": "regular",
+      "airdate": "2026-09-04",
+      "airtime": "",
+      "airstamp": "2026-09-04T12:00:00+00:00",
+      "runtime": 60
+    }
+  }
+}

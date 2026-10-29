@@ -1,0 +1,53 @@
+{
+  "show": {
+    "id": 53777,
+    "url": "https://www.tvmaze.com/shows/53777/landman",
+    "name": "Landman",
+    "type": "Scripted",
+    "language": "English",
+    "genres": [
+      "Drama"
+    ],
+    "status": "Running",
+    "runtime": null,
+    "averageRuntime": 56,
+    "premiered": "2024-11-17",
+    "ended": null,
+    "schedule": {
+      "time": "",
+      "days": [
+        "Sunday"
+      ]
+    },
+    "network": null,
+    "webChannel": {
+      "id": 107,
+      "name": "Paramount+",
+      "country": null,
+      "officialSite": "https://www.paramountplus.com/"
+    },
+    "externals": {
+      "tvrage": null,
+      "thetvdb": 397424,
+      "imdb": "tt14186672"
+    }
+  },
+  "episode": {
+    "id": 3441667,
+    "url": "https://www.tvmaze.com/episodes/3441667/landman-2x02-sins-of-the-father",
+    "name": "Sins of the Father",
+    "season": 2,
+    "number": 2,
+    "type": "regular",
+    "airdate": "2025-11-23",
+    "airtime": "",
+    "airstamp": "2025-11-23T12:00:00+00:00",
+    "runtime": 56
+  },
+  "expected": {
+    "instant": "2025-11-23T08:00:00Z",
+    "confidence": "estimated",
+    "source": "https://newsweek.com/entertainment/tv/landman-season-2-episode-2-release-date-how-to-watch-11064092",
+    "note": "Paramount+: 03:00 ET"
+  }
+}

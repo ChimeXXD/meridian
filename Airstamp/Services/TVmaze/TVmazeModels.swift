@@ -1,0 +1,73 @@
+import Foundation
+
+// TVmaze API response shapes (https://www.tvmaze.com/api). Only the fields Airstamp uses.
+
+struct TVmazeCountry: Codable, Hashable, Sendable {
+    let name: String?
+    let code: String?
+    let timezone: String?
+}
+
+struct TVmazeChannel: Codable, Hashable, Sendable {
+    let id: Int
+    let name: String
+    let country: TVmazeCountry?
+}
+
+struct TVmazeEpisode: Codable, Hashable, Sendable {
+    let id: Int
+    let name: String?
+    let season: Int?
+    let number: Int?
+    let type: String?
+    let airdate: String?
+    let airtime: String?
+    let airstamp: String?
+    let runtime: Int?
+}
+
+struct TVmazeShow: Codable, Hashable, Sendable {
+    struct Embedded: Codable, Hashable, Sendable {
+        let nextepisode: TVmazeEpisode?
+        let previousepisode: TVmazeEpisode?
+    }
+
+    let id: Int
+    let name: String
+    let type: String?
+    let language: String?
+    let status: String?
+    let premiered: String?
+    let network: TVmazeChannel?
+    let webChannel: TVmazeChannel?
+    let embedded: Embedded?
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, type, language, status, premiered, network, webChannel
+        case embedded = "_embedded"
+    }
+}
+
+struct TVmazeSearchResult: Codable, Hashable, Sendable {
+    let score: Double
+    let show: TVmazeShow
+}
+
+extension TVmazeEpisode {
+    /// The catalog-neutral listing `TimeResolver` works on.
+    func listing(show: TVmazeShow) -> EpisodeListing {
+        EpisodeListing(
+            episodeID: "tvmaze:\(id)",
+            showID: "tvmaze:\(show.id)",
+            airdate: airdate.flatMap { $0.isEmpty ? nil : $0 },
+            airtime: airtime ?? "",
+            airstamp: airstamp.flatMap(Self.parseAirstamp),
+            channelNames: [show.webChannel?.name, show.network?.name].compactMap { $0 },
+            broadcastNetwork: show.network?.name ?? show.webChannel?.name)
+    }
+
+    /// TVmaze airstamps carry an offset, e.g. "2025-11-14T12:00:00+00:00".
+    static func parseAirstamp(_ text: String) -> Date? {
+        try? Date(text, strategy: .iso8601)
+    }
+}

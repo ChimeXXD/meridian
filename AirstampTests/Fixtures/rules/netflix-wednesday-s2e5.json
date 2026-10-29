@@ -1,0 +1,53 @@
+{
+  "show": {
+    "id": 53647,
+    "url": "https://www.tvmaze.com/shows/53647/wednesday",
+    "name": "Wednesday",
+    "type": "Scripted",
+    "language": "English",
+    "genres": [
+      "Comedy",
+      "Mystery",
+      "Supernatural"
+    ],
+    "status": "Running",
+    "runtime": null,
+    "averageRuntime": 54,
+    "premiered": "2022-11-23",
+    "ended": null,
+    "schedule": {
+      "time": "",
+      "days": []
+    },
+    "network": null,
+    "webChannel": {
+      "id": 1,
+      "name": "Netflix",
+      "country": null,
+      "officialSite": "https://www.netflix.com/"
+    },
+    "externals": {
+      "tvrage": null,
+      "thetvdb": 397060,
+      "imdb": "tt13443470"
+    }
+  },
+  "episode": {
+    "id": 3214593,
+    "url": "https://www.tvmaze.com/episodes/3214593/wednesday-2x05-chapter-v-hyde-and-woe-seek",
+    "name": "Chapter V: Hyde and Woe Seek",
+    "season": 2,
+    "number": 5,
+    "type": "regular",
+    "airdate": "2025-09-03",
+    "airtime": "",
+    "airstamp": "2025-09-03T12:00:00+00:00",
+    "runtime": 51
+  },
+  "expected": {
+    "instant": "2025-09-03T07:00:00Z",
+    "confidence": "estimated",
+    "source": "https://www.soapcentral.com/shows/when-will-wednesday-season-2-part-2-dropped-netflix-release-timings-different-regions-explored",
+    "note": "Netflix: Part 2, 00:00 PT"
+  }
+}

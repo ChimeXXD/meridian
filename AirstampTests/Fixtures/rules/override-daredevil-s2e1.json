@@ -1,0 +1,55 @@
+{
+  "show": {
+    "id": 63234,
+    "url": "https://www.tvmaze.com/shows/63234/daredevil-born-again",
+    "name": "Daredevil: Born Again",
+    "type": "Scripted",
+    "language": "English",
+    "genres": [
+      "Drama",
+      "Action",
+      "Science-Fiction"
+    ],
+    "status": "Running",
+    "runtime": null,
+    "averageRuntime": 48,
+    "premiered": "2025-03-04",
+    "ended": null,
+    "schedule": {
+      "time": "",
+      "days": [
+        "Tuesday"
+      ]
+    },
+    "network": null,
+    "webChannel": {
+      "id": 287,
+      "name": "Disney+",
+      "country": null,
+      "officialSite": "https://www.disneyplus.com/"
+    },
+    "externals": {
+      "tvrage": null,
+      "thetvdb": 422712,
+      "imdb": "tt18923754"
+    }
+  },
+  "episode": {
+    "id": 3449248,
+    "url": "https://www.tvmaze.com/episodes/3449248/daredevil-born-again-2x01-the-northern-star",
+    "name": "The Northern Star",
+    "season": 2,
+    "number": 1,
+    "type": "regular",
+    "airdate": "2026-03-24",
+    "airtime": "",
+    "airstamp": "2026-03-24T12:00:00+00:00",
+    "runtime": 51
+  },
+  "expected": {
+    "instant": "2026-03-25T01:00:00Z",
+    "confidence": "estimated",
+    "source": "https://www.thewrap.com/creative-content/tv-shows/daredevil-born-again-season-2-episodes-release-schedule/",
+    "note": "Disney+ Marvel: 18:00 PT (show override)"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "show": {
+    "id": 49041,
+    "url": "https://www.tvmaze.com/shows/49041/fallout",
+    "name": "Fallout",
+    "type": "Scripted",
+    "language": "English",
+    "genres": [
+      "Drama",
+      "Action",
+      "Science-Fiction"
+    ],
+    "status": "Running",
+    "runtime": null,
+    "averageRuntime": 57,
+    "premiered": "2024-04-10",
+    "ended": null,
+    "schedule": {
+      "time": "",
+      "days": [
+        "Wednesday"
+      ]
+    },
+    "network": null,
+    "webChannel": {
+      "id": 3,
+      "name": "Prime Video",
+      "country": null,
+      "officialSite": "https://www.primevideo.com"
+    },
+    "externals": {
+      "tvrage": null,
+      "thetvdb": 416744,
+      "imdb": "tt12637874"
+    }
+  },
+  "episode": {
+    "id": 3335205,
+    "url": "https://www.tvmaze.com/episodes/3335205/fallout-2x01-the-innovator",
+    "name": "The Innovator",
+    "season": 2,
+    "number": 1,
+    "type": "regular",
+    "airdate": "2025-12-16",
+    "airtime": "",
+    "airstamp": "2025-12-16T12:00:00+00:00",
+    "runtime": 62
+  },
+  "expected": {
+    "instant": "2025-12-17T02:00:00Z",
+    "confidence": "exact",
+    "source": "https://bloody-disgusting.com/tv/3921877/fallout-season-2-delivers-holiday-surprise-with-early-release-date/",
+    "note": "Prime moved the premiere to 16 Dec 2025 18:00 PT (episode override)"
+  }
+}

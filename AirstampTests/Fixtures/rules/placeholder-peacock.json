@@ -1,0 +1,63 @@
+{
+  "show": {
+    "id": 812,
+    "url": "https://www.tvmaze.com/shows/812/days-of-our-lives",
+    "name": "Days of Our Lives",
+    "type": "Scripted",
+    "language": "English",
+    "genres": [
+      "Drama",
+      "Family",
+      "Romance"
+    ],
+    "status": "Running",
+    "runtime": null,
+    "averageRuntime": 51,
+    "premiered": "1965-11-08",
+    "ended": null,
+    "schedule": {
+      "time": "",
+      "days": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+      ]
+    },
+    "network": null,
+    "webChannel": {
+      "id": 347,
+      "name": "Peacock",
+      "country": {
+        "name": "United States",
+        "code": "US",
+        "timezone": "America/New_York"
+      },
+      "officialSite": "https://www.peacocktv.com/"
+    },
+    "externals": {
+      "tvrage": 3256,
+      "thetvdb": 70366,
+      "imdb": "tt0058796"
+    }
+  },
+  "episode": {
+    "id": 3777392,
+    "url": "https://www.tvmaze.com/episodes/3777392/days-of-our-lives-2026-10-28-ep-15497",
+    "name": "Ep. #15497",
+    "season": 2026,
+    "number": 215,
+    "type": "regular",
+    "airdate": "2026-10-28",
+    "airtime": "",
+    "airstamp": "2026-10-28T16:00:00+00:00",
+    "runtime": 41
+  },
+  "expected": {
+    "instant": null,
+    "confidence": "dateOnly",
+    "source": "https://api.tvmaze.com/schedule/web?date=2026-10-28",
+    "note": "Peacock placeholder airstamp with empty airtime; no rule, so date only"
+  }
+}

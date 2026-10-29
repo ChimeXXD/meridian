@@ -85,7 +85,7 @@ Prefer the MobileBuildMCP tools (formerly XcodeBuildMCP: `build_run_sim`, `test_
 
 - Work day by day from `docs/PLAN.md`. Pass a day's gate before starting the next.
 - Write tests first for anything in `Shared/Time/`. Fixtures are recorded JSON in `AirstampTests/Fixtures/`.
-- Commit after each green step with a conventional message (`feat:`, `fix:`, `test:`, `chore:`, `docs:`). Push at the end of each day.
+- Commit after each green step with a conventional message (`feat:`, `fix:`, `test:`, `chore:`, `docs:`). **Push to GitHub after every commit** (`ChimeXXD/next-episode`, private until Day 7). Chime wants every change on GitHub.
 - After UI work, build, take a simulator screenshot, and run the screen's fidelity check before calling the step done.
 - Update the checkbox in `docs/PLAN.md` and the matching item in `docs/features.json` (with evidence) when a task is complete. Log each session in `PROGRESS.md`.
 - Keep files under about 300 lines. Use one type per file in `Shared/`.

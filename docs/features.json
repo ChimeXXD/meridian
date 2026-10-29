@@ -63,8 +63,8 @@
         "Codable round trip for every case"
       ],
       "verify": "ModelCodingTests",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "30 Oct: xcodebuild test on iPhone 18 Pro (iOS 27.0), 41 tests in 9 suites pass; ModelCodingTests (6 ReleaseSource cases, Confidence, Catalog, Drop with airdate, DropSnapshot)"
     },
     {
       "id": "D1-2",
@@ -75,8 +75,8 @@
         "every SPEC 3.3 row has 2 fixtures"
       ],
       "verify": "FixtureCoverageTests fails if any rule row has fewer than 2 fixtures",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "30 Oct: xcodebuild test on iPhone 18 Pro (iOS 27.0), 41 tests in 9 suites pass; 17 recorded fixtures (scripts/record-fixtures.py); FixtureResolutionTests.everyRuleHasTwoFixtures checks every SPEC §3.3 row has 2+"
     },
     {
       "id": "D1-3",
@@ -89,8 +89,8 @@
         "flag off makes no network call"
       ],
       "verify": "RulesSchemaTests; RulesStoreTests",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "30 Oct: xcodebuild test on iPhone 18 Pro (iOS 27.0), 41 tests in 9 suites pass; RulesStoreTests: bundled file validates, remote off makes 0 calls, valid remote used once a day, bad JSON / bad schema / offline / HTTP 500 fall back, retry within the hour"
     },
     {
       "id": "D1-4",
@@ -102,8 +102,8 @@
         "US, EU and Sydney changeover dates"
       ],
       "verify": "PlatformRulesTests",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "30 Oct: xcodebuild test on iPhone 18 Pro (iOS 27.0), 41 tests in 9 suites pass; PlatformRulesTests: 48 matrix cases + 21 changeover cases (US, EU, Sydney, Paramount+), expected times recomputed independently with Python zoneinfo by the verifier"
     },
     {
       "id": "D1-5",
@@ -116,8 +116,8 @@
         "anime unaffected by US DST"
       ],
       "verify": "TimeResolverTests",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "30 Oct: xcodebuild test on iPhone 18 Pro (iOS 27.0), 41 tests in 9 suites pass; TimeResolverTests (placeholders 12/16/17Z never exact, precedence incl. fallback, anime UTC fixed across 1 Nov) + FixtureResolutionTests (17 real episodes within 5 min of confirmed times); Apple TV mutation made 12 cases fail"
     },
     {
       "id": "D1-6",
@@ -129,8 +129,8 @@
         "dateOnly same day in Lagos, New York, Auckland"
       ],
       "verify": "FormattingTests; DateOnlyTests; grep finds no TimeZone( outside Shared/Time and Settings",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "30 Oct: xcodebuild test on iPhone 18 Pro (iOS 27.0), 41 tests in 9 suites pass; FormattingTests (6 zones, dateOnly same day in Lagos/New York/Auckland/Pago Pago); grep finds no TimeZone(identifier outside Shared/Time"
     },
     {
       "id": "D1-7",
@@ -142,8 +142,8 @@
         "429 backs off"
       ],
       "verify": "TVmazeClientTests with a stub URLProtocol",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "30 Oct: xcodebuild test on iPhone 18 Pro (iOS 27.0), 41 tests in 9 suites pass; TVmazeClientTests (10): real search/show/episodes fixtures, Retry-After, exponential backoff, give-up, long Retry-After cap, no retry on 404, 6-hour disk cache; uses an injected transport instead of a URLProtocol stub"
     },
     {
       "id": "D2-1",

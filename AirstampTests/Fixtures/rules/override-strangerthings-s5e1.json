@@ -1,0 +1,55 @@
+{
+  "show": {
+    "id": 2993,
+    "url": "https://www.tvmaze.com/shows/2993/stranger-things",
+    "name": "Stranger Things",
+    "type": "Scripted",
+    "language": "English",
+    "genres": [
+      "Drama",
+      "Horror",
+      "Science-Fiction"
+    ],
+    "status": "Ended",
+    "runtime": null,
+    "averageRuntime": 65,
+    "premiered": "2016-07-15",
+    "ended": "2025-12-31",
+    "schedule": {
+      "time": "",
+      "days": [
+        "Wednesday"
+      ]
+    },
+    "network": null,
+    "webChannel": {
+      "id": 1,
+      "name": "Netflix",
+      "country": null,
+      "officialSite": "https://www.netflix.com/"
+    },
+    "externals": {
+      "tvrage": 48493,
+      "thetvdb": 305288,
+      "imdb": "tt4574334"
+    }
+  },
+  "episode": {
+    "id": 2427134,
+    "url": "https://www.tvmaze.com/episodes/2427134/stranger-things-5x01-chapter-one-the-crawl",
+    "name": "Chapter One: The Crawl",
+    "season": 5,
+    "number": 1,
+    "type": "regular",
+    "airdate": "2025-11-26",
+    "airtime": "",
+    "airstamp": "2025-11-26T12:00:00+00:00",
+    "runtime": 71
+  },
+  "expected": {
+    "instant": "2025-11-27T01:00:00Z",
+    "confidence": "exact",
+    "source": "https://www.nbcnewyork.com/entertainment/entertainment-news/what-time-stranger-things-season-5-netflix/6423120/",
+    "note": "Netflix event drop: 17:00 PT on 26 Nov 2025 (episode override)"
+  }
+}

@@ -200,7 +200,7 @@ An override is keyed by `episode` (one drop) or by `show` with `zone`, `time` an
 | Netflix | 00:00 America/Los_Angeles on airdate; event drops via overrides (17:00 PT) | 08:00 / 09:00 |
 | Prime Video / Amazon | 00:00 America/Los_Angeles on airdate; early premieres via overrides | 08:00 / 09:00 |
 | Apple TV | 21:00 America/New_York on airdate − 1 day | 02:00 / 03:00 on airdate |
-| Disney+ | 00:00 America/Los_Angeles; Marvel live action via overrides at 18:00 PT | 08:00 / 09:00 |
+| Disney+ | No default rule → `dateOnly` (D-36); Marvel live action via show overrides at 18:00 PT | Date only; Marvel 02:00 / 03:00 next day |
 | Paramount+ | 03:00 America/New_York on airdate | 08:00 / 09:00 |
 | HBO / HBO Max | Has an airtime (21:00 or 22:00 ET), so step 2 applies | 02:00–04:00 next day |
 | Peacock, Hulu, anything else | `dateOnly` | — |

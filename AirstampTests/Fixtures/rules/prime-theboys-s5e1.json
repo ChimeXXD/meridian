@@ -1,0 +1,55 @@
+{
+  "show": {
+    "id": 15299,
+    "url": "https://www.tvmaze.com/shows/15299/the-boys",
+    "name": "The Boys",
+    "type": "Scripted",
+    "language": "English",
+    "genres": [
+      "Action",
+      "Fantasy",
+      "Adult"
+    ],
+    "status": "Ended",
+    "runtime": null,
+    "averageRuntime": 63,
+    "premiered": "2019-07-26",
+    "ended": "2026-05-20",
+    "schedule": {
+      "time": "",
+      "days": [
+        "Wednesday"
+      ]
+    },
+    "network": null,
+    "webChannel": {
+      "id": 3,
+      "name": "Prime Video",
+      "country": null,
+      "officialSite": "https://www.primevideo.com"
+    },
+    "externals": {
+      "tvrage": null,
+      "thetvdb": 355567,
+      "imdb": "tt1190634"
+    }
+  },
+  "episode": {
+    "id": 3067170,
+    "url": "https://www.tvmaze.com/episodes/3067170/the-boys-5x01-fifteen-inches-of-sheer-dynamite",
+    "name": "Fifteen Inches of Sheer Dynamite",
+    "season": 5,
+    "number": 1,
+    "type": "regular",
+    "airdate": "2026-04-08",
+    "airtime": "",
+    "airstamp": "2026-04-08T12:00:00+00:00",
+    "runtime": 63
+  },
+  "expected": {
+    "instant": "2026-04-08T07:00:00Z",
+    "confidence": "estimated",
+    "source": "https://www.tomsguide.com/entertainment/prime-video/what-is-the-release-date-for-the-boys-season-5-episodes-1-and-2-on-prime-video",
+    "note": "Prime Video: 00:00 PT"
+  }
+}

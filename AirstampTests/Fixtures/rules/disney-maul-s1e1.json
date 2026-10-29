@@ -1,0 +1,53 @@
+{
+  "show": {
+    "id": 84190,
+    "url": "https://www.tvmaze.com/shows/84190/star-wars-maul-shadow-lord",
+    "name": "Star Wars: Maul - Shadow Lord",
+    "type": "Animation",
+    "language": "English",
+    "genres": [
+      "Science-Fiction"
+    ],
+    "status": "Running",
+    "runtime": null,
+    "averageRuntime": 24,
+    "premiered": "2026-04-06",
+    "ended": null,
+    "schedule": {
+      "time": "",
+      "days": [
+        "Monday"
+      ]
+    },
+    "network": null,
+    "webChannel": {
+      "id": 287,
+      "name": "Disney+",
+      "country": null,
+      "officialSite": "https://www.disneyplus.com/"
+    },
+    "externals": {
+      "tvrage": null,
+      "thetvdb": 462715,
+      "imdb": "tt36594331"
+    }
+  },
+  "episode": {
+    "id": 3531279,
+    "url": "https://www.tvmaze.com/episodes/3531279/star-wars-maul-shadow-lord-1x01-chapter-1-the-dark-revenge",
+    "name": "Chapter 1: The Dark Revenge",
+    "season": 1,
+    "number": 1,
+    "type": "regular",
+    "airdate": "2026-04-06",
+    "airtime": "",
+    "airstamp": "2026-04-06T12:00:00+00:00",
+    "runtime": 29
+  },
+  "expected": {
+    "instant": null,
+    "confidence": "dateOnly",
+    "source": "https://www.tomsguide.com/entertainment/disney-plus/star-wars-maul-shadow-lord-episode-release-schedule-heres-when-new-episodes-stream-on-disney",
+    "note": "Disney+ has no default rule (D-36: Disney+ has no single rule); real time was 00:00 PT"
+  }
+}

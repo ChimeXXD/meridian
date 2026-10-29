@@ -1,0 +1,53 @@
+{
+  "show": {
+    "id": 53777,
+    "url": "https://www.tvmaze.com/shows/53777/landman",
+    "name": "Landman",
+    "type": "Scripted",
+    "language": "English",
+    "genres": [
+      "Drama"
+    ],
+    "status": "Running",
+    "runtime": null,
+    "averageRuntime": 56,
+    "premiered": "2024-11-17",
+    "ended": null,
+    "schedule": {
+      "time": "",
+      "days": [
+        "Sunday"
+      ]
+    },
+    "network": null,
+    "webChannel": {
+      "id": 107,
+      "name": "Paramount+",
+      "country": null,
+      "officialSite": "https://www.paramountplus.com/"
+    },
+    "externals": {
+      "tvrage": null,
+      "thetvdb": 397424,
+      "imdb": "tt14186672"
+    }
+  },
+  "episode": {
+    "id": 3329988,
+    "url": "https://www.tvmaze.com/episodes/3329988/landman-2x01-death-and-a-sunset",
+    "name": "Death and a Sunset",
+    "season": 2,
+    "number": 1,
+    "type": "regular",
+    "airdate": "2025-11-16",
+    "airtime": "",
+    "airstamp": "2025-11-16T12:00:00+00:00",
+    "runtime": 50
+  },
+  "expected": {
+    "instant": "2025-11-16T08:00:00Z",
+    "confidence": "estimated",
+    "source": "https://bravo-www.soapcentral.com/shows/what-time-will-landman-season-2-premiere-paramount-release-streaming-details-explored",
+    "note": "Paramount+: 03:00 ET"
+  }
+}

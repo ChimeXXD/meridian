@@ -28,6 +28,8 @@ targets:
       - path: Airstamp
         excludes: ["Info.plist", "Airstamp.entitlements"]
       - Shared
+      - path: rules/platform-rules.json
+        buildPhase: resources
     info:
       path: Airstamp/Info.plist
       properties:
@@ -81,7 +83,11 @@ targets:
     type: bundle.unit-test
     platform: iOS
     sources:
-      - AirstampTests
+      - path: AirstampTests
+        excludes: ["Fixtures/**"]
+      - path: AirstampTests/Fixtures
+        type: folder
+        buildPhase: resources
     dependencies:
       - target: Airstamp
     settings:

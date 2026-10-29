@@ -1,0 +1,403 @@
+[
+  {
+    "score": 0.8977784,
+    "show": {
+      "id": 38052,
+      "url": "https://www.tvmaze.com/shows/38052/silo",
+      "name": "Silo",
+      "type": "Scripted",
+      "language": "English",
+      "genres": [
+        "Drama",
+        "Science-Fiction",
+        "Mystery"
+      ],
+      "status": "Running",
+      "runtime": null,
+      "averageRuntime": 51,
+      "premiered": "2023-05-05",
+      "ended": null,
+      "schedule": {
+        "time": "",
+        "days": [
+          "Thursday"
+        ]
+      },
+      "network": null,
+      "webChannel": {
+        "id": 310,
+        "name": "Apple TV",
+        "country": null,
+        "officialSite": "https://tv.apple.com/"
+      },
+      "externals": {
+        "tvrage": null,
+        "thetvdb": 403245,
+        "imdb": "tt14688458"
+      }
+    }
+  },
+  {
+    "score": 0.78577054,
+    "show": {
+      "id": 81119,
+      "url": "https://www.tvmaze.com/shows/81119/silo",
+      "name": "Silo",
+      "type": "Scripted",
+      "language": "English",
+      "genres": [],
+      "status": "Ended",
+      "runtime": null,
+      "averageRuntime": 30,
+      "premiered": "2017-09-15",
+      "ended": "2017-10-06",
+      "schedule": {
+        "time": "",
+        "days": []
+      },
+      "network": null,
+      "webChannel": {
+        "id": 400,
+        "name": "meWATCH",
+        "country": {
+          "name": "Singapore",
+          "code": "SG",
+          "timezone": "Asia/Singapore"
+        },
+        "officialSite": null
+      },
+      "externals": {
+        "tvrage": null,
+        "thetvdb": 256215,
+        "imdb": "tt6462804"
+      }
+    }
+  },
+  {
+    "score": 0.39140248,
+    "show": {
+      "id": 40281,
+      "url": "https://www.tvmaze.com/shows/40281/solo",
+      "name": "Solo",
+      "type": "Scripted",
+      "language": "Italian",
+      "genres": [
+        "Drama",
+        "Crime"
+      ],
+      "status": "To Be Determined",
+      "runtime": null,
+      "averageRuntime": 99,
+      "premiered": "2016-11-09",
+      "ended": null,
+      "schedule": {
+        "time": "",
+        "days": [
+          "Friday"
+        ]
+      },
+      "network": null,
+      "webChannel": {
+        "id": 3,
+        "name": "Prime Video",
+        "country": null,
+        "officialSite": "https://www.primevideo.com"
+      },
+      "externals": {
+        "tvrage": null,
+        "thetvdb": 319715,
+        "imdb": "tt6785194"
+      }
+    }
+  },
+  {
+    "score": 0.39102292,
+    "show": {
+      "id": 3933,
+      "url": "https://www.tvmaze.com/shows/3933/silk",
+      "name": "Silk",
+      "type": "Scripted",
+      "language": "English",
+      "genres": [
+        "Drama",
+        "Crime",
+        "Legal"
+      ],
+      "status": "Ended",
+      "runtime": 60,
+      "averageRuntime": 60,
+      "premiered": "2011-02-22",
+      "ended": "2014-03-31",
+      "schedule": {
+        "time": "21:00",
+        "days": [
+          "Monday"
+        ]
+      },
+      "network": {
+        "id": 12,
+        "name": "BBC One",
+        "country": {
+          "name": "United Kingdom",
+          "code": "GB",
+          "timezone": "Europe/London"
+        },
+        "officialSite": "https://www.bbc.co.uk/bbcone"
+      },
+      "webChannel": null,
+      "externals": {
+        "tvrage": 27552,
+        "thetvdb": 188011,
+        "imdb": "tt1717455"
+      }
+    }
+  },
+  {
+    "score": 0.38247272,
+    "show": {
+      "id": 61285,
+      "url": "https://www.tvmaze.com/shows/61285/milo",
+      "name": "Milo",
+      "type": "Animation",
+      "language": "English",
+      "genres": [
+        "Children"
+      ],
+      "status": "To Be Determined",
+      "runtime": 15,
+      "averageRuntime": 15,
+      "premiered": "2021-05-10",
+      "ended": null,
+      "schedule": {
+        "time": "07:55",
+        "days": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ]
+      },
+      "network": {
+        "id": 135,
+        "name": "5",
+        "country": {
+          "name": "United Kingdom",
+          "code": "GB",
+          "timezone": "Europe/London"
+        },
+        "officialSite": "https://www.channel5.com/"
+      },
+      "webChannel": null,
+      "externals": {
+        "tvrage": null,
+        "thetvdb": 404714,
+        "imdb": "tt15655602"
+      }
+    }
+  },
+  {
+    "score": 0.3450481,
+    "show": {
+      "id": 18951,
+      "url": "https://www.tvmaze.com/shows/18951/sila",
+      "name": "Sıla",
+      "type": "Scripted",
+      "language": "Turkish",
+      "genres": [
+        "Drama",
+        "Family",
+        "Romance"
+      ],
+      "status": "Ended",
+      "runtime": 82,
+      "averageRuntime": 82,
+      "premiered": "2006-09-15",
+      "ended": "2009-10-20",
+      "schedule": {
+        "time": "",
+        "days": [
+          "Saturday"
+        ]
+      },
+      "network": {
+        "id": 504,
+        "name": "ATV",
+        "country": {
+          "name": "Turkey",
+          "code": "TR",
+          "timezone": "Europe/Istanbul"
+        },
+        "officialSite": null
+      },
+      "webChannel": null,
+      "externals": {
+        "tvrage": null,
+        "thetvdb": 271628,
+        "imdb": "tt0875103"
+      }
+    }
+  },
+  {
+    "score": 0.34112746,
+    "show": {
+      "id": 8747,
+      "url": "https://www.tvmaze.com/shows/8747/solo",
+      "name": "Solo",
+      "type": "Scripted",
+      "language": "English",
+      "genres": [
+        "Comedy"
+      ],
+      "status": "Ended",
+      "runtime": 30,
+      "averageRuntime": 30,
+      "premiered": "1981-01-11",
+      "ended": "1982-10-17",
+      "schedule": {
+        "time": "",
+        "days": [
+          "Sunday"
+        ]
+      },
+      "network": {
+        "id": 12,
+        "name": "BBC One",
+        "country": {
+          "name": "United Kingdom",
+          "code": "GB",
+          "timezone": "Europe/London"
+        },
+        "officialSite": "https://www.bbc.co.uk/bbcone"
+      },
+      "webChannel": null,
+      "externals": {
+        "tvrage": null,
+        "thetvdb": 78363,
+        "imdb": "tt0081934"
+      }
+    }
+  },
+  {
+    "score": 0.34004527,
+    "show": {
+      "id": 64632,
+      "url": "https://www.tvmaze.com/shows/64632/solo-leveling",
+      "name": "Solo Leveling",
+      "type": "Animation",
+      "language": "Japanese",
+      "genres": [
+        "Action",
+        "Anime",
+        "Fantasy"
+      ],
+      "status": "To Be Determined",
+      "runtime": 30,
+      "averageRuntime": 30,
+      "premiered": "2024-01-06",
+      "ended": null,
+      "schedule": {
+        "time": "00:00",
+        "days": [
+          "Saturday"
+        ]
+      },
+      "network": {
+        "id": 132,
+        "name": "Tokyo MX",
+        "country": {
+          "name": "Japan",
+          "code": "JP",
+          "timezone": "Asia/Tokyo"
+        },
+        "officialSite": null
+      },
+      "webChannel": null,
+      "externals": {
+        "tvrage": null,
+        "thetvdb": 389597,
+        "imdb": "tt21209876"
+      }
+    }
+  },
+  {
+    "score": 0.33759812,
+    "show": {
+      "id": 1893,
+      "url": "https://www.tvmaze.com/shows/1893/silk-stalkings",
+      "name": "Silk Stalkings",
+      "type": "Scripted",
+      "language": "English",
+      "genres": [
+        "Drama",
+        "Action",
+        "Crime"
+      ],
+      "status": "Ended",
+      "runtime": 60,
+      "averageRuntime": 60,
+      "premiered": "1991-11-07",
+      "ended": "1999-04-18",
+      "schedule": {
+        "time": "",
+        "days": [
+          "Sunday"
+        ]
+      },
+      "network": {
+        "id": 30,
+        "name": "USA Network",
+        "country": {
+          "name": "United States",
+          "code": "US",
+          "timezone": "America/New_York"
+        },
+        "officialSite": "https://www.usanetwork.com"
+      },
+      "webChannel": null,
+      "externals": {
+        "tvrage": 5200,
+        "thetvdb": 75607,
+        "imdb": "tt0101198"
+      }
+    }
+  },
+  {
+    "score": 0.33472908,
+    "show": {
+      "id": 89476,
+      "url": "https://www.tvmaze.com/shows/89476/solo-leveling",
+      "name": "Solo Leveling",
+      "type": "Scripted",
+      "language": "Korean",
+      "genres": [
+        "Drama",
+        "Action",
+        "Fantasy"
+      ],
+      "status": "In Development",
+      "runtime": null,
+      "averageRuntime": null,
+      "premiered": null,
+      "ended": null,
+      "schedule": {
+        "time": "",
+        "days": [
+          "Thursday"
+        ]
+      },
+      "network": null,
+      "webChannel": {
+        "id": 1,
+        "name": "Netflix",
+        "country": null,
+        "officialSite": "https://www.netflix.com/"
+      },
+      "externals": {
+        "tvrage": null,
+        "thetvdb": 465668,
+        "imdb": "tt35506453"
+      }
+    }
+  }
+]

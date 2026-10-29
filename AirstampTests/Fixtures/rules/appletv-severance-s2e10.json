@@ -1,0 +1,55 @@
+{
+  "show": {
+    "id": 44933,
+    "url": "https://www.tvmaze.com/shows/44933/severance",
+    "name": "Severance",
+    "type": "Scripted",
+    "language": "English",
+    "genres": [
+      "Drama",
+      "Science-Fiction",
+      "Mystery"
+    ],
+    "status": "Running",
+    "runtime": null,
+    "averageRuntime": 49,
+    "premiered": "2022-02-18",
+    "ended": null,
+    "schedule": {
+      "time": "",
+      "days": [
+        "Friday"
+      ]
+    },
+    "network": null,
+    "webChannel": {
+      "id": 310,
+      "name": "Apple TV",
+      "country": null,
+      "officialSite": "https://tv.apple.com/"
+    },
+    "externals": {
+      "tvrage": null,
+      "thetvdb": 371980,
+      "imdb": "tt11280740"
+    }
+  },
+  "episode": {
+    "id": 2939710,
+    "url": "https://www.tvmaze.com/episodes/2939710/severance-2x10-cold-harbor",
+    "name": "Cold Harbor",
+    "season": 2,
+    "number": 10,
+    "type": "regular",
+    "airdate": "2025-03-21",
+    "airtime": "",
+    "airstamp": "2025-03-21T12:00:00+00:00",
+    "runtime": 75
+  },
+  "expected": {
+    "instant": "2025-03-21T01:00:00Z",
+    "confidence": "estimated",
+    "source": "https://www.techradar.com/streaming/apple-tv-plus/what-time-is-severance-season-2-episode-10-going-to-be-released-on-apple-tv",
+    "note": "Apple TV: Thu 20 Mar 2025 21:00 EDT"
+  }
+}
