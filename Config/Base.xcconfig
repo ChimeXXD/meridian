@@ -1,0 +1,10 @@
+// Shared build settings for every target.
+// To build on your own device, copy Signing.local.xcconfig.example to
+// Signing.local.xcconfig (git-ignored) and set your team and bundle prefix there.
+
+DISPLAY_NAME = Airstamp
+BUNDLE_PREFIX = dev.chime
+APP_GROUP_ID = group.$(BUNDLE_PREFIX).airstamp
+DEVELOPMENT_TEAM =
+
+#include? "Signing.local.xcconfig"

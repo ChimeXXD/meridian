@@ -1,0 +1,636 @@
+{
+  "features": [
+    {
+      "id": "P0-1",
+      "phase": 0,
+      "title": "Repo scaffold: git, .gitignore, LICENSE, PRD moved to docs/PRD.md",
+      "criteria": [
+        "git log shows the first commit",
+        "docs/PRD.md exists and the root PRD is gone"
+      ],
+      "verify": "git log --oneline | head -1; test -f docs/PRD.md",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P0-2",
+      "phase": 0,
+      "title": "project.yml with app, widget extension and test targets, App Group, privacy manifest",
+      "criteria": [
+        "xcodegen generate succeeds",
+        "both targets carry the App Group entitlement",
+        "PrivacyInfo.xcprivacy declares CA92.1 and 1C8F.1"
+      ],
+      "verify": "xcodegen generate && xcodebuild -scheme Airstamp -destination 'platform=iOS Simulator,name=iPhone 17 Pro' build; plutil -lint Airstamp/PrivacyInfo.xcprivacy",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P0-3",
+      "phase": 0,
+      "title": "Placeholder app screen and systemSmall widget render in the simulator",
+      "criteria": [
+        "app launches",
+        "widget appears in the gallery and renders"
+      ],
+      "verify": "simulator screenshot of the app and the widget saved to a scratch dir",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P0-4",
+      "phase": 0,
+      "title": "Completion gate config (.claude/proof.json) with build and test checks",
+      "criteria": [
+        "the gate runs build and test"
+      ],
+      "verify": "node <proof>/scripts/gate.mjs --run exits 0",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P0-5",
+      "phase": 0,
+      "title": "reference collection 'Airstamp references' exists",
+      "criteria": [
+        "collection created"
+      ],
+      "verify": "references list_collections shows the collection",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P1-1",
+      "phase": 1,
+      "title": "Record rule fixtures: 2 real episodes per platform rule plus override examples",
+      "criteria": [
+        "AirstampTests/Fixtures has 2 files per rule row in SPEC 3.3",
+        "Stranger Things 5 and Fallout S2 override fixtures exist"
+      ],
+      "verify": "script lists fixtures per rule and fails if any row has fewer than 2",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P1-2",
+      "phase": 1,
+      "title": "Measure TVmaze anime coverage for 15 currently airing AniList titles",
+      "criteria": [
+        "table of 15 titles with found / next episode / airtime present",
+        "hit rate recorded in RESEARCH.md"
+      ],
+      "verify": "the coverage script's output is pasted into RESEARCH.md with the date",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P1-3",
+      "phase": 1,
+      "title": "rules/platform-rules.json v1 matching SPEC 3.2 schema",
+      "criteria": [
+        "each platform has 2 sources",
+        "zones are IANA IDs"
+      ],
+      "verify": "RulesSchemaTests validates the bundled file",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P1-4",
+      "phase": 1,
+      "title": "AniList answer recorded or TVmaze fallback chosen",
+      "criteria": [
+        "O-5 closed in DECISIONS.md"
+      ],
+      "verify": "DECISIONS.md O-5 checked with the reply date or the coverage-based decision",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P1-5",
+      "phase": 1,
+      "title": "5 viewer interviews (2+ in Nigeria, 1 anime-first)",
+      "criteria": [
+        "5 write-ups of 5 bullets each"
+      ],
+      "verify": "docs/research/interviews.md has 5 entries",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P1-6",
+      "phase": 1,
+      "title": "Competitor accuracy teardown: Up Next, Rexy, Sofa on the same 3 shows",
+      "criteria": [
+        "shown time vs real time per app"
+      ],
+      "verify": "docs/research/teardown.md table with screenshots referenced",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P1-7",
+      "phase": 1,
+      "title": "Positioning line and App Store subtitle approved",
+      "criteria": [
+        "subtitle 30 characters or fewer"
+      ],
+      "verify": "approved line recorded in DECISIONS.md; character count checked by script",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P1-8",
+      "phase": 1,
+      "title": "Clock-change capture: Lagos either side of 1 Nov and one London time this week",
+      "criteria": [
+        "real times recorded with source"
+      ],
+      "verify": "rows added to docs/research/accuracy-audit.md marked 'phase 1'",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P2-1",
+      "phase": 2,
+      "title": "design reference board: 3-5 saved references per surface with the pattern taken",
+      "criteria": [
+        "every surface in PLAN Phase 2a has entries in docs/design/REFERENCES.md",
+        "the reference collection holds the same screens"
+      ],
+      "verify": "REFERENCES.md has a row for each surface in the Phase 2a table; manual check of the collection",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P2-2",
+      "phase": 2,
+      "title": "Tokens.swift and core components with previews (SourceChip, CountdownText, DropRow, ProviderLabelView, SectionHeader)",
+      "criteria": [
+        "light, dark and tinted colours",
+        "tabular numerals",
+        "every component has a #Preview"
+      ],
+      "verify": "the build passes; preview PNGs for each component in docs/design/studies/components/",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P2-3",
+      "phase": 2,
+      "title": "Numeral studies as SwiftUI previews: 3 options, Chime picks one",
+      "criteria": [
+        "5 widget families plus the Lock Screen Live Activity, in 4 rendering modes per option"
+      ],
+      "verify": "PNGs in docs/design/studies/; Chime's pick recorded in DECISIONS.md",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P2-4",
+      "phase": 2,
+      "title": "UI brief for every screen and surface (docs/design/UI-BRIEF.md)",
+      "criteria": [
+        "each section has the job, design references, elements with test IDs, copy from SPEC, and every state"
+      ],
+      "verify": "a script checks that every screen in SPEC §1 and every widget family has a brief section with those 5 parts",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P2-6",
+      "phase": 2,
+      "title": "Fidelity inventories generated from the UI brief",
+      "criteria": [
+        "one fidelity/inventory/<screen>.json per screen in the brief"
+      ],
+      "verify": "ls fidelity/inventory matches the brief's sections; verify-screen.sh runs",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P3-1",
+      "phase": 3,
+      "title": "Shared models: Drop, DropSnapshot, Confidence, ReleaseSource, ProviderLabel",
+      "criteria": [
+        "Codable round trip for every case"
+      ],
+      "verify": "ModelCodingTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P3-2",
+      "phase": 3,
+      "title": "TVmazeClient actor with backoff, Retry-After and 6-hour cache",
+      "criteria": [
+        "parses search, show+embed and episodes fixtures",
+        "a 429 triggers backoff"
+      ],
+      "verify": "TVmazeClientTests with a stub URLProtocol",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P3-3",
+      "phase": 3,
+      "title": "AniListClient behind a CatalogSource protocol, 30 requests a minute, isAdult filter",
+      "criteria": [
+        "parses airing fixtures",
+        "adult results dropped",
+        "rate limiter holds 30/min"
+      ],
+      "verify": "AniListClientTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P3-4",
+      "phase": 3,
+      "title": "RulesStore: bundled rules, daily fetch, schema validation, fallback",
+      "criteria": [
+        "valid fetch used",
+        "invalid JSON and 500 fall back to the bundled copy"
+      ],
+      "verify": "RulesStoreTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P3-5",
+      "phase": 3,
+      "title": "PlatformRules zone x DST matrix",
+      "criteria": [
+        "each rule x 6 zones x 2 seasons",
+        "changeover weeks 8 Mar 2026, 1 Nov 2026 and 14 Mar 2027"
+      ],
+      "verify": "PlatformRulesTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P3-6",
+      "phase": 3,
+      "title": "TimeResolver: overrides, AniList, broadcast, rule, dateOnly; placeholder never exact",
+      "criteria": [
+        "placeholder at 12:00Z, 16:00Z and 17:00Z never exact",
+        "episode override beats show override beats rule",
+        "anime UTC instant unaffected by US DST"
+      ],
+      "verify": "TimeResolverTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P3-7",
+      "phase": 3,
+      "title": "Formatting: UTC instants rendered only in views; dateOnly rendered from airdate",
+      "criteria": [
+        "same instant correct in 6 zones",
+        "dateOnly same calendar day in Lagos, New York and Auckland"
+      ],
+      "verify": "FormattingTests and DateOnlyTests; grep finds no TimeZone( outside Shared/Time and Settings",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P3-8",
+      "phase": 3,
+      "title": "ProviderLabel with country and no-official-stream flag; viewer country from zone with Settings override",
+      "criteria": [
+        "HBO · US",
+        "Africa/Lagos maps to NG",
+        "override wins"
+      ],
+      "verify": "ProviderLabelTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P4-1",
+      "phase": 4,
+      "title": "FollowedShow SwiftData model and follow/unfollow",
+      "criteria": [
+        "follow persists across launch",
+        "unfollow removes cached drops"
+      ],
+      "verify": "FollowStoreTests with an in-memory ModelContainer",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P4-2",
+      "phase": 4,
+      "title": "Search screen with TV/Anime segments and disambiguation",
+      "criteria": [
+        "no auto-pick",
+        "year, network and status shown"
+      ],
+      "verify": "SearchViewModelTests with the Euphoria fixture; fidelity/verify-screen.sh prints ALL PASS; Chime approves the screenshots, which become fidelity/refs baselines",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P4-3",
+      "phase": 4,
+      "title": "Upcoming screen: sections, countdown, source chip, provider label, empty states",
+      "criteria": [
+        "sections Out now, Next 24 hours, This week, Later, Date only, Nothing scheduled with the boundaries in SPEC",
+        "both empty-state copies, with no refresh-interval promise"
+      ],
+      "verify": "UpcomingViewModelTests; fidelity/verify-screen.sh prints ALL PASS; Chime approves the screenshots, which become fidelity/refs baselines",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P4-4",
+      "phase": 4,
+      "title": "Show detail: next drop, last 3 episodes, Live Activity toggle, anime offset, report link, unfollow",
+      "criteria": [
+        "offset changes the resolved time and its confidence"
+      ],
+      "verify": "ShowDetailViewModelTests; fidelity/verify-screen.sh prints ALL PASS; Chime approves the screenshots, which become fidelity/refs baselines",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P4-5",
+      "phase": 4,
+      "title": "Onboarding (3 cards) and Settings (zone override, lead time, Live Activity state)",
+      "criteria": [
+        "onboarding shows the current zone and ends with the widget prompt",
+        "the zone override changes every displayed time, including widgets"
+      ],
+      "verify": "SettingsTests; fidelity/verify-screen.sh prints ALL PASS; Chime approves the screenshots, which become fidelity/refs baselines; OnboardingUITests with the simulator zone set to Africa/Lagos",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P4-6",
+      "phase": 4,
+      "title": "5-second glance test on the simulator build",
+      "criteria": [
+        "at least 4 of 5 participants answer when and where correctly"
+      ],
+      "verify": "docs/research/glance-test.md with 5 rows of answers",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P5-1",
+      "phase": 5,
+      "title": "SnapshotStore writes App Group JSON and reloads timelines",
+      "criteria": [
+        "round trip",
+        "written after follow, unfollow and refresh"
+      ],
+      "verify": "SnapshotStoreTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P5-2",
+      "phase": 5,
+      "title": "Timeline provider: 5-minute spacing, Out now entry, .after(nextDrop)",
+      "criteria": [
+        "entries at drop and drop + 1h",
+        "never closer than 5 minutes"
+      ],
+      "verify": "TimelineProviderTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P5-3",
+      "phase": 5,
+      "title": "Lock Screen widgets: inline, circular, rectangular",
+      "criteria": [
+        "countsDown timer only",
+        "tinted and Always-On variants"
+      ],
+      "verify": "grep finds no .timer style; preview captures in fidelity/shots pass verify-screen.sh; Chime approves; approved captures become fidelity/refs baselines",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P5-4",
+      "phase": 5,
+      "title": "Home Screen widgets: systemSmall and systemMedium",
+      "criteria": [
+        "light, dark, accented and Always-On"
+      ],
+      "verify": "preview captures in fidelity/shots pass verify-screen.sh; Chime approves; approved captures become fidelity/refs baselines",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P5-5",
+      "phase": 5,
+      "title": "DropActivityAttributes and Live Activity views (compact, minimal, expanded, Lock Screen)",
+      "criteria": [
+        "payload under 2 KB",
+        "attributes carry dropIDs",
+        "minimal fits 28 pt when limited in width",
+        "Lock Screen view 160 pt or less",
+        "shows Out now when context.isStale"
+      ],
+      "verify": "ActivityPayloadTests; LiveActivityLayoutTests (ImageRenderer height check); previews pass verify-screen.sh",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P5-6",
+      "phase": 5,
+      "title": "ActivityScheduler: start:, AlertConfiguration, max 3 pending, merge same night, catch errors",
+      "criteria": [
+        "4th request skipped",
+        "same-night drops merged by dropIDs",
+        "staleDate set to the drop",
+        "expired activities ended on active",
+        "rescheduled when a drop moves",
+        "denied authorisation handled"
+      ],
+      "verify": "ActivitySchedulerTests (incl. endsExpired, reschedulesOnDelay) with a fake requester; on-device fake drop shows Out now with the phone locked",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P5-7",
+      "phase": 5,
+      "title": "Debug menu: fake drops, fake activity, dump snapshot, simulate delay, reload rules",
+      "criteria": [
+        "Debug builds only"
+      ],
+      "verify": "Release build compiles without the Debug menu (#if DEBUG); manual run of each action in the simulator",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P5-8",
+      "phase": 5,
+      "title": "VoiceOver labels on every widget and activity view",
+      "criteria": [
+        "full-phrase labels"
+      ],
+      "verify": "AccessibilityLabelTests; manual VoiceOver pass on device",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P6-1",
+      "phase": 6,
+      "title": "RefreshService: on active plus BGAppRefreshTask, delay detection, reschedule",
+      "criteria": [
+        "later time sets previousDate and Delayed"
+      ],
+      "verify": "RefreshServiceTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P6-3",
+      "phase": 6,
+      "title": "Report a wrong time: prefilled GitHub issue with email fallback",
+      "criteria": [
+        "URL carries show, episode, time, source and zone"
+      ],
+      "verify": "ReportURLBuilderTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P6-4",
+      "phase": 6,
+      "title": "Offline state, Credits screen, PRIVACY.md",
+      "criteria": [
+        "last-updated label offline",
+        "TVmaze and AniList credited with links"
+      ],
+      "verify": "CreditsUITests; manual flight-mode steps from SPEC",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P6-5",
+      "phase": 6,
+      "title": "Accessibility pass: AX5, Reduce Motion, no colour-only cues",
+      "criteria": [
+        "no clipped countdowns at AX5"
+      ],
+      "verify": "AX5 screenshots of the main screens pass verify-screen.sh; AX5LayoutTests finds no truncated countdown",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P6-6",
+      "phase": 6,
+      "title": "GitHub Actions: build and test on each push",
+      "criteria": [
+        "workflow green on main"
+      ],
+      "verify": "gh run list --limit 1 shows success",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P6-7",
+      "phase": 6,
+      "title": "Polish list from Chime's walkthrough closed",
+      "criteria": [
+        "every item fixed or moved to the backlog with a reason"
+      ],
+      "verify": "docs/research/polish.md has every item ticked or deferred",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P6-8",
+      "phase": 6,
+      "title": "TestFlight build uploaded and passed Beta App Review",
+      "criteria": [
+        "build approved for external testing"
+      ],
+      "verify": "App Store Connect TestFlight shows 'Ready to Test' for external groups",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P7-1",
+      "phase": 7,
+      "title": "External TestFlight testers onboarded (10-20, 5+ in Nigeria)",
+      "criteria": [
+        "testers invited and installed"
+      ],
+      "verify": "App Store Connect TestFlight page; tester count recorded in PLAN.md",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P7-2",
+      "phase": 7,
+      "title": "100-drop accuracy audit",
+      "criteria": [
+        "99 or more correct"
+      ],
+      "verify": "docs/research/accuracy-audit.md with 100 rows",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P7-3",
+      "phase": 7,
+      "title": "Glance test repeated on the TestFlight build",
+      "criteria": [
+        "at least 4 of 5 answer when and where correctly"
+      ],
+      "verify": "docs/research/glance-test.md has a Phase 7 section with 5 rows",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P8-1",
+      "phase": 8,
+      "title": "App Store submission: listing, privacy label, age rating, screenshots",
+      "criteria": [
+        "Data Not Collected",
+        "approved"
+      ],
+      "verify": "App Store Connect status Ready for Distribution",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P8-2",
+      "phase": 8,
+      "title": "README, case study, 30-second video, v1.0.0 tag",
+      "criteria": [
+        "README has the pitch, Mermaid diagram, rules table and credits"
+      ],
+      "verify": "git tag --list v1.0.0; README sections present",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P8-3",
+      "phase": 8,
+      "title": "Launch posts published",
+      "criteria": [
+        "r/iOSapps, r/anime, TV Time switcher threads, Nigerian tech X"
+      ],
+      "verify": "docs/research/launch.md lists each post URL",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "P9-1",
+      "phase": 9,
+      "title": "DST regression audit for the March 2027 changes (US 14 Mar, EU 28 Mar)",
+      "criteria": [
+        "20 drops audited, all correct"
+      ],
+      "verify": "docs/research/accuracy-audit.md has a March 2027 section with 20 rows",
+      "passes": false,
+      "evidence": ""
+    }
+  ]
+}

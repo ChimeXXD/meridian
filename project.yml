@@ -1,0 +1,99 @@
+# XcodeGen spec. Edit this file, then run `xcodegen generate`. Never hand-edit the .xcodeproj.
+# Signing and IDs live in Config/Base.xcconfig, overridden by the git-ignored Config/Signing.local.xcconfig.
+name: Airstamp
+
+options:
+  deploymentTarget:
+    iOS: "26.0"
+  createIntermediateGroups: true
+
+configFiles:
+  Debug: Config/Base.xcconfig
+  Release: Config/Base.xcconfig
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    IPHONEOS_DEPLOYMENT_TARGET: "26.0"
+    TARGETED_DEVICE_FAMILY: "1"
+    CODE_SIGN_STYLE: Automatic
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+
+targets:
+  Airstamp:
+    type: application
+    platform: iOS
+    sources:
+      - path: Airstamp
+        excludes: ["Info.plist", "Airstamp.entitlements"]
+      - Shared
+    info:
+      path: Airstamp/Info.plist
+      properties:
+        CFBundleDisplayName: $(DISPLAY_NAME)
+        CFBundleShortVersionString: "0.1.0"
+        CFBundleVersion: "1"
+        UILaunchScreen: {}
+        NSSupportsLiveActivities: true
+        AirstampAppGroup: $(APP_GROUP_ID)
+    entitlements:
+      path: Airstamp/Airstamp.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - $(APP_GROUP_ID)
+    settings:
+      base:
+        PRODUCT_NAME: Airstamp
+        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_PREFIX).airstamp
+    dependencies:
+      - target: AirstampWidgets
+        embed: true
+
+  AirstampWidgets:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: AirstampWidgets
+        excludes: ["Info.plist", "AirstampWidgets.entitlements"]
+      - Shared
+    info:
+      path: AirstampWidgets/Info.plist
+      properties:
+        CFBundleDisplayName: $(DISPLAY_NAME)
+        CFBundleShortVersionString: "0.1.0"
+        CFBundleVersion: "1"
+        AirstampAppGroup: $(APP_GROUP_ID)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    entitlements:
+      path: AirstampWidgets/AirstampWidgets.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - $(APP_GROUP_ID)
+    settings:
+      base:
+        PRODUCT_NAME: AirstampWidgets
+        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_PREFIX).airstamp.widgets
+        SKIP_INSTALL: YES
+
+  AirstampTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - AirstampTests
+    dependencies:
+      - target: Airstamp
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_PREFIX).airstamp.tests
+
+schemes:
+  Airstamp:
+    build:
+      targets:
+        Airstamp: all
+    test:
+      targets:
+        - AirstampTests

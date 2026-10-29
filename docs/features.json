@@ -1,0 +1,618 @@
+{
+  "features": [
+    {
+      "id": "D0-1",
+      "day": 0,
+      "priority": "must",
+      "title": "Repo scaffold: git, .gitignore, MIT LICENSE, PRD moved to docs/PRD.md",
+      "criteria": [
+        "first commit exists",
+        "docs/PRD.md exists"
+      ],
+      "verify": "git log --oneline | head -1; test -f docs/PRD.md",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D0-2",
+      "day": 0,
+      "priority": "must",
+      "title": "project.yml: app, widget extension, tests, App Group, privacy manifest",
+      "criteria": [
+        "xcodegen generate succeeds",
+        "App Group on both targets",
+        "PrivacyInfo.xcprivacy declares CA92.1 and 1C8F.1"
+      ],
+      "verify": "xcodegen generate && xcodebuild -scheme Airstamp -destination 'platform=iOS Simulator,name=iPhone 17 Pro' build; plutil -lint Airstamp/PrivacyInfo.xcprivacy",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D0-3",
+      "day": 0,
+      "priority": "must",
+      "title": "Placeholder app and systemSmall widget run on Chime's iPhone with free signing",
+      "criteria": [
+        "app launches on device",
+        "widget reads a value the app wrote to the App Group"
+      ],
+      "verify": "simulator screenshot, plus an on-device photo or screen recording showing the widget displaying the App Group value",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D0-4",
+      "day": 0,
+      "priority": "must",
+      "title": "Private GitHub repo pushed, proof gate configured, reference collection created",
+      "criteria": [
+        "repo is PRIVATE",
+        "gate runs build and test",
+        "collection exists"
+      ],
+      "verify": "gh repo view --json visibility returns PRIVATE; node <proof>/scripts/gate.mjs --run exits 0; references list_collections shows 'Airstamp references'",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D1-1",
+      "day": 1,
+      "priority": "must",
+      "title": "Shared models: Drop (with airdate), DropSnapshot, Confidence, ReleaseSource, ProviderLabel",
+      "criteria": [
+        "Codable round trip for every case"
+      ],
+      "verify": "ModelCodingTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D1-2",
+      "day": 1,
+      "priority": "must",
+      "title": "Fixtures: 2 per platform rule, overrides, placeholders at 12:00Z and 16:00Z",
+      "criteria": [
+        "every SPEC 3.3 row has 2 fixtures"
+      ],
+      "verify": "FixtureCoverageTests fails if any rule row has fewer than 2 fixtures",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D1-3",
+      "day": 1,
+      "priority": "must",
+      "title": "Bundled rules/platform-rules.json v1 and RulesStore (remote fetch behind a flag, off while private)",
+      "criteria": [
+        "schema valid",
+        "2 sources per platform",
+        "flag off makes no network call"
+      ],
+      "verify": "RulesSchemaTests; RulesStoreTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D1-4",
+      "day": 1,
+      "priority": "must",
+      "title": "PlatformRules zone x DST matrix",
+      "criteria": [
+        "each rule x 6 zones x 2 seasons",
+        "US, EU and Sydney changeover dates"
+      ],
+      "verify": "PlatformRulesTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D1-5",
+      "day": 1,
+      "priority": "must",
+      "title": "TimeResolver: overrides, AniList, broadcast, rule, dateOnly",
+      "criteria": [
+        "placeholders never exact",
+        "episode override beats show override beats rule",
+        "anime unaffected by US DST"
+      ],
+      "verify": "TimeResolverTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D1-6",
+      "day": 1,
+      "priority": "must",
+      "title": "Formatting: UTC instants rendered only in views; dateOnly rendered from airdate",
+      "criteria": [
+        "correct in 6 zones",
+        "dateOnly same day in Lagos, New York, Auckland"
+      ],
+      "verify": "FormattingTests; DateOnlyTests; grep finds no TimeZone( outside Shared/Time and Settings",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D1-7",
+      "day": 1,
+      "priority": "must",
+      "title": "TVmazeClient actor with backoff, Retry-After and 6-hour cache",
+      "criteria": [
+        "parses search, show+embed, episodes",
+        "429 backs off"
+      ],
+      "verify": "TVmazeClientTests with a stub URLProtocol",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D2-1",
+      "day": 2,
+      "priority": "must",
+      "title": "reference sweep: 3-5 references per surface with the pattern taken",
+      "criteria": [
+        "every surface in the Day 2 table covered"
+      ],
+      "verify": "REFERENCES.md has a section per surface; references get_collection_contents lists the saved screens",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D2-2",
+      "day": 2,
+      "priority": "must",
+      "title": "UI brief for every screen and surface",
+      "criteria": [
+        "job, references, elements with test IDs, copy from SPEC, states"
+      ],
+      "verify": "scripts/check-brief.sh checks each SPEC 1 screen and widget family has all 5 parts",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D2-3",
+      "day": 2,
+      "priority": "must",
+      "title": "Tokens.swift and components with previews",
+      "criteria": [
+        "light, dark, tinted",
+        "tabular numerals",
+        "each component has a #Preview"
+      ],
+      "verify": "build passes; preview PNGs in docs/design/studies/components/",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D2-4",
+      "day": 2,
+      "priority": "must",
+      "title": "3 numeral studies; Chime picks one",
+      "criteria": [
+        "5 widget families + Lock Screen Live Activity, 4 rendering modes"
+      ],
+      "verify": "PNGs in docs/design/studies/; pick recorded in DECISIONS.md",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D2-5",
+      "day": 2,
+      "priority": "must",
+      "title": "AniListClient behind CatalogSource, 30/min, isAdult filtered",
+      "criteria": [
+        "parses airing fixtures",
+        "adult results dropped"
+      ],
+      "verify": "AniListClientTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D2-6",
+      "day": 2,
+      "priority": "must",
+      "title": "ProviderLabel with country; viewer country from time zone, Settings override",
+      "criteria": [
+        "HBO · US",
+        "Africa/Lagos maps to NG"
+      ],
+      "verify": "ProviderLabelTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D2-7",
+      "day": 2,
+      "priority": "must",
+      "title": "FollowedShow and Search with TV/Anime tabs and disambiguation",
+      "criteria": [
+        "no auto-pick",
+        "year, network, status shown",
+        "follow persists"
+      ],
+      "verify": "SearchViewModelTests with the Euphoria fixture; FollowStoreTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D3-1",
+      "day": 3,
+      "priority": "must",
+      "title": "Fidelity inventories from the UI brief and verify-screen.sh",
+      "criteria": [
+        "one inventory per screen"
+      ],
+      "verify": "ls fidelity/inventory matches the brief; verify-screen.sh runs",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D3-2",
+      "day": 3,
+      "priority": "must",
+      "title": "Upcoming: sections, countdown, source chip, provider label, empty states",
+      "criteria": [
+        "sections and boundaries per SPEC",
+        "no refresh-interval promise"
+      ],
+      "verify": "UpcomingViewModelTests; verify-screen.sh upcoming ALL PASS; Chime approves; baseline in fidelity/refs",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D3-3",
+      "day": 3,
+      "priority": "must",
+      "title": "Show detail: next drop, Live Activity toggle, anime offset, unfollow",
+      "criteria": [
+        "offset changes the time and the chip to Adjusted"
+      ],
+      "verify": "ShowDetailViewModelTests; verify-screen.sh ALL PASS; Chime approves",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D3-4",
+      "day": 3,
+      "priority": "must",
+      "title": "Welcome screen, Settings (lead time) and Credits",
+      "criteria": [
+        "welcome shows the detected zone and the widget prompt",
+        "Credits links TVmaze and AniList"
+      ],
+      "verify": "OnboardingUITests (zone Africa/Lagos); CreditsUITests; verify-screen.sh ALL PASS",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D3-5",
+      "day": 3,
+      "priority": "should",
+      "title": "Settings time-zone override reaches app, widgets and Live Activity",
+      "criteria": [
+        "override stored in the App Group suite"
+      ],
+      "verify": "SnapshotStoreTests; WidgetFormattingTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D3-6",
+      "day": 3,
+      "priority": "must",
+      "title": "Glance test with 5 people on the Upcoming screenshot",
+      "criteria": [
+        "at least 4 of 5 correct"
+      ],
+      "verify": "docs/research/glance-test.md has 5 rows",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D3-7",
+      "day": 3,
+      "priority": "must",
+      "title": "Clock-change capture: real times on either side of 1 Nov",
+      "criteria": [
+        "at least 6 drops logged with sources"
+      ],
+      "verify": "rows in docs/research/accuracy-audit.md marked 'day 3'",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D4-1",
+      "day": 4,
+      "priority": "must",
+      "title": "SnapshotStore writes App Group JSON and reloads timelines",
+      "criteria": [
+        "round trip",
+        "written after follow, unfollow, refresh"
+      ],
+      "verify": "SnapshotStoreTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D4-2",
+      "day": 4,
+      "priority": "must",
+      "title": "Timeline provider: 5-minute spacing, Out now entry, .after(nextDrop)",
+      "criteria": [
+        "entries at drop and drop + 1h",
+        "never closer than 5 minutes"
+      ],
+      "verify": "TimelineProviderTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D4-3",
+      "day": 4,
+      "priority": "must",
+      "title": "Lock Screen widgets: inline, circular, rectangular",
+      "criteria": [
+        "countsDown timer only",
+        "tinted and Always-On"
+      ],
+      "verify": "grep finds no .timer style; previews pass verify-screen.sh; Chime approves",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D4-4",
+      "day": 4,
+      "priority": "must",
+      "title": "Home Screen widgets: systemSmall and systemMedium",
+      "criteria": [
+        "light, dark, accented, Always-On"
+      ],
+      "verify": "previews pass verify-screen.sh; Chime approves",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D4-5",
+      "day": 4,
+      "priority": "must",
+      "title": "VoiceOver labels built from ProviderLabel on every widget",
+      "criteria": [
+        "full phrases, no 'on HBO' where it isn't available"
+      ],
+      "verify": "AccessibilityLabelTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D5-1",
+      "day": 5,
+      "priority": "must",
+      "title": "DropActivityAttributes and Live Activity views",
+      "criteria": [
+        "dropIDs carried",
+        "payload under 2 KB",
+        "minimal fits 28 pt",
+        "Lock Screen view 160 pt or less",
+        "Out now when stale"
+      ],
+      "verify": "ActivityPayloadTests; LiveActivityLayoutTests (ImageRenderer)",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D5-2",
+      "day": 5,
+      "priority": "must",
+      "title": "ActivityScheduler: start:, AlertConfiguration, staleDate, max 3 pending, merge, errors, end expired",
+      "criteria": [
+        "4th request skipped",
+        "same-night merged",
+        "denied handled"
+      ],
+      "verify": "ActivitySchedulerTests with a fake requester",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D5-3",
+      "day": 5,
+      "priority": "must",
+      "title": "Debug menu: fake drops, fake activity, dump snapshot, simulate delay",
+      "criteria": [
+        "Debug builds only"
+      ],
+      "verify": "a Release build compiles without it (#if DEBUG); manual run of each action",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D5-4",
+      "day": 5,
+      "priority": "must",
+      "title": "On-device fake drop recorded",
+      "criteria": [
+        "activity starts at lead time with an alert",
+        "Out now at the drop with the phone locked"
+      ],
+      "verify": "Chime's screen recording saved for the video",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D5-5",
+      "day": 5,
+      "priority": "should",
+      "title": "Watch and Mac support via supplementalActivityFamilies",
+      "criteria": [
+        "small family renders"
+      ],
+      "verify": "preview of activityFamily .small",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D6-1",
+      "day": 6,
+      "priority": "must",
+      "title": "Refresh when the app opens, with delay detection and rescheduling",
+      "criteria": [
+        "later time sets previousDate and Delayed",
+        "activity rescheduled"
+      ],
+      "verify": "RefreshServiceTests; ActivitySchedulerTests.reschedulesOnDelay",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D6-2",
+      "day": 6,
+      "priority": "must",
+      "title": "Offline label and PRIVACY.md",
+      "criteria": [
+        "'Updated <time>' shown offline"
+      ],
+      "verify": "manual flight-mode steps in SPEC; PRIVACY.md linked from Credits",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D6-3",
+      "day": 6,
+      "priority": "should",
+      "title": "Report a wrong time: email while private, GitHub issue once public",
+      "criteria": [
+        "fields present in both modes"
+      ],
+      "verify": "ReportURLBuilderTests",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D6-4",
+      "day": 6,
+      "priority": "must",
+      "title": "GitHub Actions: build and test on main pushes and by hand while private; every push and PR once public",
+      "criteria": [
+        "green on main",
+        "no PR or branch triggers while private"
+      ],
+      "verify": "gh run list --branch main --limit 1 shows success; the workflow file's 'on:' block lists only push to main and workflow_dispatch until Day 7",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D6-5",
+      "day": 6,
+      "priority": "must",
+      "title": "Accuracy audit: 20 drops from the week",
+      "criteria": [
+        "20 of 20 correct per the SPEC definition"
+      ],
+      "verify": "docs/research/accuracy-audit.md with 20 rows",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D6-6",
+      "day": 6,
+      "priority": "must",
+      "title": "Private beta: fresh free-signed install on Chime's iPhone (plus any friend's iPhone by cable)",
+      "criteria": [
+        "installed on Day 6 so the 7-day signing covers the rest of the week"
+      ],
+      "verify": "photo or screen recording of the app on Chime's iPhone dated Day 6",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D6-7",
+      "day": 6,
+      "priority": "must",
+      "title": "Polish list closed",
+      "criteria": [
+        "each item fixed or deferred with a reason"
+      ],
+      "verify": "docs/research/polish.md fully ticked",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D6-8",
+      "day": 6,
+      "priority": "should",
+      "title": "Dynamic Type AX5 pass",
+      "criteria": [
+        "no truncated countdowns"
+      ],
+      "verify": "AX5LayoutTests; AX5 screenshots pass verify-screen.sh",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D7-1",
+      "day": 7,
+      "priority": "must",
+      "title": "README for a 60-second reader",
+      "criteria": [
+        "video/GIF, problem, Mermaid diagram, rules table, CI badge, how to run, credits"
+      ],
+      "verify": "scripts/check-readme.sh",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D7-2",
+      "day": 7,
+      "priority": "must",
+      "title": "Case study for the portfolio site",
+      "criteria": [
+        "problem, research, design with references refs, engineering, audit result, next steps"
+      ],
+      "verify": "docs/CASE-STUDY.md has each section",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D7-3",
+      "day": 7,
+      "priority": "must",
+      "title": "Open-source checklist and remote features switched on",
+      "criteria": [
+        "no secrets",
+        "fixtures licence noted",
+        "AniList answer recorded",
+        "remote rules and GitHub reporting on",
+        "CI widened to every push and PR"
+      ],
+      "verify": "checklist in PLAN Day 7 ticked; secret grep finds nothing",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D7-4",
+      "day": 7,
+      "priority": "must",
+      "title": "Tag v0.1.0 and make the repo public",
+      "criteria": [
+        "visibility PUBLIC",
+        "topics and description set"
+      ],
+      "verify": "git tag --list v0.1.0; gh repo view --json visibility,description,repositoryTopics",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D7-5",
+      "day": 7,
+      "priority": "must",
+      "title": "30-second video and portfolio page live",
+      "criteria": [
+        "video shows Lock Screen, Live Activity, Dynamic Island, Out now"
+      ],
+      "verify": "the portfolio page URL is recorded in README",
+      "passes": false,
+      "evidence": ""
+    }
+  ]
+}

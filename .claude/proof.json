@@ -1,0 +1,23 @@
+{
+  "checks": [
+    {
+      "name": "build",
+      "run": "xcodegen generate --quiet && xcodebuild -scheme Airstamp -destination 'platform=iOS Simulator,name=iPhone 18 Pro,OS=27.0' -quiet build",
+      "when": ["project.yml", "Config/", "Airstamp/", "AirstampWidgets/", "Shared/"],
+      "timeout": 900
+    },
+    {
+      "name": "test",
+      "run": "xcodegen generate --quiet && xcodebuild -scheme Airstamp -destination 'platform=iOS Simulator,name=iPhone 18 Pro,OS=27.0' -quiet test",
+      "when": ["project.yml", "Config/", "Airstamp/", "AirstampWidgets/", "Shared/", "AirstampTests/"],
+      "timeout": 1200
+    },
+    {
+      "name": "spec",
+      "run": "node \"$CLAUDE_PLUGIN_ROOT/skills/discover/scripts/check-spec.mjs\" docs/SPEC.md docs/features.json",
+      "when": ["docs/SPEC.md", "docs/features.json"]
+    }
+  ],
+  "concurrency": 1,
+  "maxRounds": 5
+}
