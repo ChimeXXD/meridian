@@ -78,8 +78,8 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
 - [x] `project.yml`: the `Airstamp`, `AirstampWidgets` and `AirstampTests` targets, the `Shared/` sources, the App Group, `NSSupportsLiveActivities`, and `PrivacyInfo.xcprivacy` (`CA92.1`, `1C8F.1`).
 - [ ] A placeholder app screen and `systemSmall` widget. Build and take a simulator screenshot, then **install on Chime's iPhone** with free signing and confirm that the widget can read a value the app wrote to the App Group. That proves the free route works before we build on it.
 - [x] `.claude/proof.json` with the build and test checks.
-- [ ] Create the **private** repo and push: `gh repo create next-episode --private --source=. --remote=origin --push`.
-- [ ] Create the reference collection `Airstamp references`.
+- [x] Create the **private** repo and push: `gh repo create next-episode --private --source=. --remote=origin --push`.
+- [x] Create the reference collection `Airstamp references`.
 
 **Prompt**
 > Day 0 from docs/PLAN.md. Bundle prefix `<dev.chime>`, App Group `<group.dev.chime.airstamp>`, Personal Team ID `<XXXX>`. Set up git, project.yml, the privacy manifest and placeholder screens. Build, take a screenshot, install on my iPhone with free signing and prove the App Group works, commit, then create the private GitHub repo and push.
