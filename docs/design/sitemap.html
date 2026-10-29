@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Airstamp sitemap</title>
+<style>
+  :root { --bg: #f6f5f2; --surface: #fff; --ink: #17161a; --ink-2: #57545e; --line: #e2dfd8; --accent: #1f5eff; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #0f0f12; --surface: #18181d; --ink: #f2f1f4; --ink-2: #b5b2bd; --line: #2c2c34; --accent: #8aa8ff; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { font: 700 36px/1.1 -apple-system, "SF Pro Rounded", Inter, sans-serif; letter-spacing: -0.02em; margin: 0 0 12px; }
+  h2 { font-size: 24px; margin: 48px 0 12px; padding-top: 16px; border-top: 1px solid var(--line); }
+  h3 { font-size: 18px; margin: 28px 0 8px; }
+  p, li { color: var(--ink-2); max-width: 820px; }
+  strong { color: var(--ink); }
+  code { font: 13px ui-monospace, Menlo, monospace; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 1px 5px; }
+  .diagram { margin: 16px 0 24px; padding: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow-x: auto; }
+  .diagram pre { margin: 0; text-align: center; }
+  .table { overflow-x: auto; margin: 12px 0 20px; }
+  table { border-collapse: collapse; width: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; font-size: 14px; }
+  th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-2); }
+  td { color: var(--ink-2); }
+  @media (max-width: 640px) { main { padding: 24px 16px 64px; } }
+</style>
+</head>
+<body>
+<main>
+<h1>Airstamp sitemap</h1>
+<p>How the product fits together: the screens inside the app, the surfaces outside it (widgets, Live Activity, alerts), and how you move between them. Built from <code>docs/SPEC.md</code> on 30 Oct 2026. The reference board (<code>docs/design/reference-board/</code>) uses the same section names.</p>
+<p>Airstamp is small on purpose: <strong>four screens, three sheets, and four surfaces outside the app.</strong> Most of the time people use it without opening it, from the Lock Screen.</p>
+<h2>The map</h2>
+<h3>Inside the app</h3>
+<figure class="diagram"><pre class="mermaid">flowchart TD
+    WELCOME[&quot;Welcome&lt;br/&gt;&lt;i&gt;first run only&lt;/i&gt;&quot;]
+    WELCOME -- &quot;Not now&quot; --&gt; UP
+    WELCOME -- &quot;Find a show&quot; --&gt; SEARCH
+
+    subgraph tabs[&quot;Tab bar&quot;]
+        direction LR
+        UP[&quot;Upcoming&lt;br/&gt;&lt;b&gt;home&lt;/b&gt;&quot;]
+        SEARCH[&quot;Search&quot;]
+        SET[&quot;Settings&quot;]
+    end
+
+    UP -- &quot;tap a show&quot; --&gt; DETAIL[&quot;Show detail&quot;]
+    SEARCH -- &quot;tap a result&quot; --&gt; DETAIL
+    SEARCH -- &quot;Follow&quot; --&gt; UP
+
+    DETAIL -- &quot;tap a source chip&quot; --&gt; ABOUT[&quot;About this time&lt;br/&gt;&lt;i&gt;sheet&lt;/i&gt;&quot;]
+    UP -- &quot;tap a source chip&quot; --&gt; ABOUT
+    DETAIL -- &quot;Report a wrong time&quot; --&gt; REPORT[&quot;Report a wrong time&lt;br/&gt;&lt;i&gt;sheet&lt;/i&gt;&quot;]
+
+    SET --&gt; TZ[&quot;Time zone&quot;]
+    SET --&gt; LEAD[&quot;Live Activity&lt;br/&gt;lead time&quot;]
+    SET --&gt; CREDITS[&quot;Credits &amp;&lt;br/&gt;licences&quot;]
+    SET --&gt; PRIVACY[&quot;Privacy&quot;]
+    SET -.-&gt; DEBUG[&quot;Debug menu&lt;br/&gt;&lt;i&gt;Debug builds only&lt;/i&gt;&quot;]</pre></figure>
+<h3>Outside the app</h3>
+<p>Most glances happen here, on the Lock Screen, without opening the app.</p>
+<figure class="diagram"><pre class="mermaid">flowchart LR
+    LSW[&quot;Lock Screen widgets&lt;br/&gt;&lt;i&gt;inline · circular · rectangular&lt;/i&gt;&quot;] -- &quot;tap&quot; --&gt; DETAIL
+    HSW[&quot;Home Screen widgets&lt;br/&gt;&lt;i&gt;small · medium&lt;/i&gt;&quot;] -- &quot;tap&quot; --&gt; DETAIL
+    DETAIL[&quot;Show detail&lt;br/&gt;&lt;i&gt;in the app&lt;/i&gt;&quot;] -. &quot;Live Activity on&quot; .-&gt; ALERT
+    ALERT[&quot;Release-night alert&lt;br/&gt;&lt;i&gt;Silo starts in 2 hours · 02:00&lt;/i&gt;&quot;] --&gt; LA
+    LA[&quot;Live Activity&lt;br/&gt;&lt;i&gt;Lock Screen banner · Dynamic Island&lt;/i&gt;&quot;] -- &quot;tap&quot; --&gt; DETAIL</pre></figure>
+<p>Solid lines are taps. The dotted line is a setting: switching on the Live Activity in Show detail schedules one for release night, which starts with an alert at the lead time.</p>
+<h2>Navigation (proposed: needs Chime&#x27;s OK, O-11)</h2>
+<p>SPEC lists the screens but not how you move between them. The proposal:</p>
+<ul><li><strong>A tab bar with three tabs: Upcoming, Settings, and Search.</strong> iOS 26 gives Search its own tab, set apart on the trailing side, so that&#x27;s where it goes, not as a button.</li><li><strong>Upcoming is the home screen</strong> and opens first after the welcome screen.</li><li><strong>Show detail is pushed</strong> from Upcoming, Search, a widget or the Live Activity, with a back button.</li><li><strong>Sheets</strong> (About this time, Report a wrong time) slide up over the screen you&#x27;re on.</li></ul>
+<p>The alternative is a single Upcoming screen with Search and Settings as toolbar buttons. It&#x27;s simpler, but it hides Search, which is the first thing a new user needs.</p>
+<h2>Screens inside the app</h2>
+<div class="table"><table><thead><tr><th>Screen</th><th>What it&#x27;s for</th><th>What&#x27;s on it</th><th>How you get there</th></tr></thead><tbody><tr><td><strong>Welcome</strong></td><td>Explain the app once, then get the first show followed</td><td>&quot;Times shown for Lagos, UTC+1&quot;, Find a show, a Lock Screen widget preview with steps, Not now</td><td>First launch only</td></tr><tr><td><strong>Upcoming</strong> (home)</td><td>Answer &quot;how long, when, where&quot; for everything you follow</td><td>&quot;Times in your zone&quot; line and an &quot;Updated …&quot; stamp; a &quot;Next up&quot; hero; sections below</td><td>Opens on launch; Upcoming tab</td></tr><tr><td><strong>Search</strong></td><td>Find and follow a show</td><td>TV / Anime switch, search field, results with <strong>Year · Network · Status</strong>, a (+) Follow button</td><td>Search tab; Welcome → Find a show</td></tr><tr><td><strong>Show detail</strong></td><td>Everything about one show</td><td>The next-episode block (relative day, big local time, countdown, source chip, where to watch); your time vs broadcast time; the last 3 episodes; the Live Activity toggle; the anime time offset; Report a wrong time; Unfollow</td><td>Tap a show anywhere: Upcoming, Search, a widget, the Live Activity</td></tr><tr><td><strong>Settings</strong></td><td>Preferences and information</td><td>Time zone (automatic or a chosen city), Live Activity lead time (30 min to 6 h), Live Activities permission state, Credits, Privacy, Debug</td><td>Settings tab</td></tr><tr><td>Settings › <strong>Time zone</strong></td><td>Override the device&#x27;s zone</td><td>Automatic switch, city search with offsets and current local time, Lagos pinned</td><td>Settings</td></tr><tr><td>Settings › <strong>Live Activity lead time</strong></td><td>When the release-night activity starts</td><td>30 min, 1 h, 2 h (default), 3 h, 4 h, 6 h, each with the actual local start time</td><td>Settings</td></tr><tr><td>Settings › <strong>Credits &amp; licences</strong></td><td>Data credits and licences</td><td>TVmaze (CC BY-SA 4.0, with link), AniList, MIT licence, &quot;No data collected&quot;</td><td>Settings</td></tr><tr><td>Settings › <strong>Privacy</strong></td><td>What the app does and doesn&#x27;t send</td><td>The <code>PRIVACY.md</code> text</td><td>Settings</td></tr><tr><td>Settings › <strong>Debug</strong></td><td>Test without waiting for real releases</td><td>Fake drop in 2 / 10 / 60 min, fake Live Activity in 3 min, Dump snapshot, Simulate delay +1 h, Reload rules</td><td>Debug builds only</td></tr></tbody></table></div>
+<h3>Sheets</h3>
+<div class="table"><table><thead><tr><th>Sheet</th><th>Opens from</th><th>What&#x27;s on it</th></tr></thead><tbody><tr><td><strong>About this time</strong></td><td>Any source chip</td><td>Where this time came from (Broadcast, Netflix rule, JP broadcast, Confirmed, Adjusted, Date only), what it means, and the original broadcast time</td></tr><tr><td><strong>Report a wrong time</strong></td><td>Show detail</td><td>Wrong time / wrong date / wrong platform, an optional note, and what will be sent. Email while the repo is private; a GitHub issue once it&#x27;s public (D-34)</td></tr><tr><td><strong>Unfollow confirmation</strong></td><td>Show detail</td><td>&quot;Stop following Silo?&quot;, the only destructive action</td></tr></tbody></table></div>
+<h2>Inside Upcoming</h2>
+<p>Upcoming is one scrolling list. Empty sections are hidden.</p>
+<figure class="diagram"><pre class="mermaid">flowchart TD
+    TOP[&quot;Times in Lagos (WAT, UTC+1) · Updated 3 h ago&quot;] --&gt; HERO
+    HERO[&quot;Next up: the single nearest drop, large&quot;] --&gt; OUT
+    OUT[&quot;Out now&lt;br/&gt;&lt;i&gt;released in the last hour&lt;/i&gt;&quot;] --&gt; NEXT
+    NEXT[&quot;Next 24 hours&quot;] --&gt; WEEK
+    WEEK[&quot;This week&quot;] --&gt; LATER
+    LATER[&quot;Later&lt;br/&gt;&lt;i&gt;days-only countdown, no ticking timer&lt;/i&gt;&quot;] --&gt; DATE
+    DATE[&quot;Date only&lt;br/&gt;&lt;i&gt;time not announced&lt;/i&gt;&quot;] --&gt; NONE
+    NONE[&quot;Nothing scheduled&lt;br/&gt;&lt;i&gt;e.g. Silo returns 9 Jul 2027&lt;/i&gt;&quot;]</pre></figure>
+<div class="table"><table><thead><tr><th>State</th><th>What Upcoming shows</th></tr></thead><tbody><tr><td>No shows followed</td><td>&quot;Follow a show to see its countdown here&quot;, with Find a show</td></tr><tr><td>Shows followed, nothing scheduled</td><td>&quot;Nothing scheduled for your shows yet. Airstamp checks again each time you open it.&quot;</td></tr><tr><td>Offline</td><td>The last known times plus &quot;Offline · Updated 3 h ago&quot;</td></tr><tr><td>A time moved later</td><td>The row shows &quot;Delayed&quot;, with the old time struck through</td></tr><tr><td>No official stream in your country</td><td>The row shows &quot;No official stream in your country&quot; in place of the provider</td></tr></tbody></table></div>
+<h2>Outside the app</h2>
+<div class="table"><table><thead><tr><th>Surface</th><th>Sizes</th><th>What it shows</th><th>Tap goes to</th></tr></thead><tbody><tr><td><strong>Lock Screen widgets</strong></td><td>Inline: &quot;Silo · 2d 4h&quot; · Circular: &quot;2d&quot; with a 7-day ring · Rectangular: name, countdown, &quot;Wed 02:00 · Apple TV&quot;</td><td>The next drop</td><td>Show detail</td></tr><tr><td><strong>Home Screen widgets</strong></td><td>Small: one huge countdown, the name small, the source chip · Medium: the next 3 drops as rows</td><td>The next drop(s)</td><td>Show detail (small) or that row&#x27;s show (medium)</td></tr><tr><td><strong>Release-night alert</strong></td><td>System alert when the Live Activity starts</td><td>&quot;Silo starts in 2 hours · 02:00 · Apple TV&quot;</td><td>The Live Activity</td></tr><tr><td><strong>Live Activity</strong></td><td>Lock Screen banner; Dynamic Island compact, minimal and expanded</td><td>Countdown to the drop, then &quot;Out now&quot; for an hour</td><td>Show detail</td></tr></tbody></table></div>
+<p>The widgets and Live Activity read a JSON snapshot that the app writes (D-05), so they keep counting with the app closed.</p>
+<h2>Key journeys</h2>
+<ol><li><strong>First run:</strong> Welcome → Find a show → Search → Follow → Upcoming, with a prompt to add a Lock Screen widget.</li><li><strong>The everyday glance:</strong> Lock Screen widget &quot;Silo · 2d 4h&quot; → tap if needed → Show detail.</li><li><strong>Release night:</strong> Live Activity switched on in Show detail → at the lead time, alert plus Live Activity → the Dynamic Island counts down → &quot;Out now&quot; → it ends an hour later.</li><li><strong>&quot;Can I trust this time?&quot;:</strong> tap the source chip → About this time → if it&#x27;s wrong → Report a wrong time.</li><li><strong>Travelling or using a VPN:</strong> Settings → Time zone → choose a city → every time, widget and Live Activity updates.</li></ol>
+<h2>Behind the screens</h2>
+<figure class="diagram"><pre class="mermaid">flowchart LR
+    TVMAZE[&quot;TVmaze&lt;br/&gt;&lt;i&gt;TV schedules&lt;/i&gt;&quot;] --&gt; RESOLVER
+    ANILIST[&quot;AniList&lt;br/&gt;&lt;i&gt;anime schedules&lt;/i&gt;&quot;] --&gt; RESOLVER
+    RULES[&quot;Rules file&lt;br/&gt;&lt;i&gt;platform rules + overrides&lt;/i&gt;&quot;] --&gt; RESOLVER
+    RESOLVER[&quot;TimeResolver&lt;br/&gt;&lt;i&gt;real time + source + confidence&lt;/i&gt;&quot;] --&gt; STORE[&quot;Followed shows&lt;br/&gt;&lt;i&gt;SwiftData, in the app&lt;/i&gt;&quot;]
+    STORE --&gt; SCREENS[&quot;App screens&quot;]
+    STORE --&gt; SNAPSHOT[&quot;Snapshot JSON&lt;br/&gt;&lt;i&gt;App Group&lt;/i&gt;&quot;]
+    SNAPSHOT --&gt; WIDGETS[&quot;Widgets&quot;]
+    SNAPSHOT --&gt; ACTIVITY[&quot;Live Activity&quot;]</pre></figure>
+<p>No account and no server. The only network calls go to TVmaze and AniList, plus the rules file once the repo is public.</p>
+</main>
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
+  const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+  mermaid.initialize({ startOnLoad: true, theme: dark ? "dark" : "neutral", flowchart: { htmlLabels: true, curve: "basis", useMaxWidth: true },
+    themeVariables: { fontFamily: "-apple-system, BlinkMacSystemFont, Inter, sans-serif", fontSize: "15px" } });
+</script>
+</body>
+</html>
