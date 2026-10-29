@@ -2,6 +2,23 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Day 2 (started): design reference board
+
+**Changed**
+- `docs/design/reference-board/index.html`: a local picker with 154 iOS references from references in 4 groups (Home & schedules 39, Widgets & Live Activities 39, Time & honesty 37, Search, detail & settings 39). Each one has Claude's reason and tags, Use this / Not for us, 9 reason chips, a note field, filters, search, zoom, and Export → `picks.json`. Picks persist in localStorage.
+- `scripts/build-reference-board.py` + `scripts/reference-board-template.html`: merge agent results, drop duplicates (5), download screenshots, build the page.
+- Screenshots live in `docs/design/reference-board/images/` (git-ignored, 24 MB: other apps' copyrighted UI, CLAUDE.md rule 9). Run the build script to fetch them again.
+
+**Checked (Playwright, Chromium headless)**
+- 154 cards, 0 broken images, 0 console errors.
+- Reason chips auto-mark "Use this"; decision, reasons and note survive a reload.
+- Filters (decision, group, search) work; Export gives valid JSON with reason counts; zoom opens.
+- No horizontal scroll at 390 px; the toolbar stops being sticky on phones.
+
+**Gaps references couldn't fill:** real Lock Screen accessory widgets (only Udemy and Cal AI), StandBy, a Live Activity on/off toggle, a streaming "not available in your region" screen other than HBO Max.
+
+**Next:** Chime picks → save the liked screens to the reference collection → UI brief.
+
 ## Day 1: Time engine (Thu 29 – Fri 30 Oct 2026)
 
 **Changed**

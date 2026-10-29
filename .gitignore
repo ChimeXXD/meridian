@@ -20,3 +20,6 @@ AirstampWidgets/AirstampWidgets.entitlements
 
 # proof plugin local state
 .claude/proof-cache/
+
+# reference screenshots: other apps' copyrighted UI, kept local only (CLAUDE.md rule 9)
+docs/design/reference-board/images/
