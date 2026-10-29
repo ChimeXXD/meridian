@@ -118,7 +118,7 @@ This version is a **portfolio project**: it's built in one week, ends at a priva
 
 | Screen | Purpose | Key content |
 | --- | --- | --- |
-| Onboarding (3 cards) | Explain, then follow the first shows | Shows your time zone ("Times shown for Lagos, UTC+1"), a button to follow shows, a prompt to add a widget |
+| Welcome (one screen) | Explain, then follow the first show | Shows your time zone ("Times shown for Lagos, UTC+1"), a button to follow shows, a prompt to add a widget |
 | Search | Find TV (TVmaze) and anime (AniList or TVmaze, D-19) | Segmented TV / Anime; each result shows year, network and status; never auto-pick the first result (searching "Euphoria" also returns an Israeli show) |
 | Upcoming (home) | Every followed show sorted by time to drop | Big countdown, show name, `S1E4`, local day and time, source chip, provider label (D-20); sections: Out now · Next 24 hours · This week · Later · Date only · Nothing scheduled |
 | Show detail | One show | Next drop, the last 3 aired episodes, a Live Activity toggle, an anime offset field, "Report a wrong time", unfollow |
