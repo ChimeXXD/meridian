@@ -19,6 +19,12 @@ struct ShowArtwork: Hashable, Sendable {
         (self.background, self.poster, self.posterThumbnail) = (background, poster, posterThumbnail)
     }
 
+    /// AniList's banner as the background and its cover as the poster (D-37).
+    init(media: AniListMedia) {
+        self.init(background: media.bannerImage, poster: media.coverImage?.extraLarge ?? media.coverImage?.large,
+                  posterThumbnail: media.coverImage?.large)
+    }
+
     init(images: [TVmazeImage]) {
         let backgrounds = images.filter { $0.type == "background" }
             .compactMap { image in image.resolutions["original"].map { (main: image.main, resolution: $0) } }

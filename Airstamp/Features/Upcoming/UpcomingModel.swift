@@ -10,14 +10,16 @@ final class UpcomingModel {
     private(set) var artwork: [String: ShowArtwork] = [:]
 
     private let client: TVmazeClient
+    private let anilist: AniListClient
     private let loader: UpcomingLoader
     /// Bumped by each refresh, so a slower, older refresh (a launch and a foreground at once, or a follow change
     /// mid-load) can't overwrite a newer result.
     private var generation = 0
 
-    init(client: TVmazeClient, rules: RulesFile, viewerCountry: String?) {
+    init(client: TVmazeClient, anilist: AniListClient, rules: RulesFile, viewerCountry: String?) {
         self.client = client
-        loader = UpcomingLoader(client: client, rules: rules, viewerCountry: viewerCountry)
+        self.anilist = anilist
+        loader = UpcomingLoader(client: client, anilist: anilist, rules: rules, viewerCountry: viewerCountry)
     }
 
     func refresh(_ shows: [FollowedShow], now: Date = .now) async {
@@ -32,8 +34,13 @@ final class UpcomingModel {
         let missing = Set((result?.drops ?? []).map(\.showID)).filter { artwork[$0] == nil }
         await withTaskGroup(of: (String, ShowArtwork?).self) { group in
             for id in missing {
-                guard let showID = Int(id) else { continue }
-                group.addTask { [client] in (id, try? ShowArtwork(images: await client.images(showID: showID))) }
+                let key = Drop.key(showID: id)
+                group.addTask { [client, anilist] in
+                    switch key.catalog {
+                    case .tvmaze: (id, try? ShowArtwork(images: await client.images(showID: key.id)))
+                    case .anilist: (id, try? await anilist.media(id: key.id).map(ShowArtwork.init(media:)))
+                    }
+                }
             }
             for await (id, art) in group {
                 if let art { artwork[id] = art }
@@ -43,7 +50,8 @@ final class UpcomingModel {
 
     /// The last three aired episodes, newest first, for Show detail.
     func pastEpisodes(showID: String, now: Date = .now) async -> [PastEpisode] {
-        guard let id = Int(showID), let episodes = try? await client.episodes(showID: id) else { return [] }
+        // AniList has no episode list in this query; anime detail shows the next episode only.
+        guard Drop.key(showID: showID).catalog == .tvmaze, let id = Int(showID), let episodes = try? await client.episodes(showID: id) else { return [] }
         let today = DropFormatter(timeZone: .gmt).localDay(now)
         // Numbered episodes only, before taking three, so specials don't use up the slots.
         let aired = episodes.compactMap { episode -> PastEpisode? in

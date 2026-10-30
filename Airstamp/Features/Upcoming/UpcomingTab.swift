@@ -42,7 +42,7 @@ struct ShowDetailScreen: View {
         self.drop = drop
         self.model = model
         self.artwork = artwork
-        let key = FollowedShow.key(catalog: .tvmaze, id: Int(drop.showID) ?? 0)
+        let key = FollowedShow.key(catalog: drop.showKey.catalog, id: drop.showKey.id)
         _shows = Query(filter: #Predicate<FollowedShow> { $0.key == key })
     }
 
@@ -61,6 +61,6 @@ struct ShowDetailScreen: View {
     }
 
     private func unfollow() {
-        try? FollowStore(context: context).unfollow(catalog: .tvmaze, id: Int(drop.showID) ?? 0)
+        try? FollowStore(context: context).unfollow(catalog: drop.showKey.catalog, id: drop.showKey.id)
     }
 }

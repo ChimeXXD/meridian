@@ -23,6 +23,13 @@ struct Drop: Codable, Hashable, Identifiable, Sendable {
     /// Only a broadcast time has one.
     var broadcastZone: String? = nil
 
+    /// The catalog and its ID for this drop's show: TVmaze shows use their plain ID, AniList ones "anilist:<id>".
+    var showKey: (catalog: Catalog, id: Int) { Self.key(showID: showID) }
+
+    static func key(showID: String) -> (catalog: Catalog, id: Int) {
+        showID.hasPrefix("anilist:") ? (.anilist, Int(showID.dropFirst("anilist:".count)) ?? 0) : (.tvmaze, Int(showID) ?? 0)
+    }
+
     /// "S2E5", or "E5" when there's no season; nil without an episode number.
     var episodeLabel: String? {
         guard let number else { return nil }

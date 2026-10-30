@@ -25,6 +25,17 @@ struct SearchResult: Hashable, Identifiable, Sendable {
             .compactMap(\.self).joined(separator: " · ")
     }
 
+    /// An anime from AniList, worded like a TV result: "2023 · Crunchyroll · Finished".
+    init(media: AniListMedia) {
+        id = media.id
+        catalog = .anilist
+        title = media.displayTitle
+        poster = media.coverImage?.large
+        year = media.startDate?.year
+        network = media.streamingSite
+        meta = [year.map(String.init), network, media.statusText].compactMap(\.self).joined(separator: " · ")
+    }
+
     var followShow: FollowStore.Show {
         FollowStore.Show(catalog: catalog, id: id, name: title, year: year, network: network)
     }

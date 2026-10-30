@@ -7,6 +7,7 @@ struct RootView: View {
     enum AppTab: Hashable { case upcoming, search, settings }
 
     let client: TVmazeClient
+    let anilist: AniListClient
     let model: UpcomingModel
 
     @Environment(\.modelContext) private var context
@@ -18,7 +19,7 @@ struct RootView: View {
         content
             #if DEBUG
             // On the root, not the tab bar, so `-follow` also works on a fresh install that opens on Welcome.
-            .task { await DebugLaunch.apply(context: context, client: client, tab: $tab) }
+            .task { await DebugLaunch.apply(context: context, client: client, anilist: anilist, tab: $tab) }
             #endif
     }
 
@@ -33,7 +34,7 @@ struct RootView: View {
                 // Search sits in the middle (Chime). A `.search` role tab always floats on the trailing edge on iOS 26,
                 // so this is a plain tab.
                 Tab("Search", systemImage: "magnifyingglass", value: .search) {
-                    SearchView(client: client)
+                    SearchView(client: client, anilist: anilist)
                 }
                 Tab("Settings", systemImage: "gearshape", value: .settings) {
                     SettingsView()

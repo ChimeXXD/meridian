@@ -2,6 +2,23 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Anime from AniList (Sat 31 Oct 2026)
+
+**Changed**
+- `AniListClient` (GraphQL): search, one show's next episode, and anime airing in Japan this week. Adult titles always filtered, requests spaced 2 s apart (30 a minute), responses cached like TVmaze's (rule 8). `AniListModels`.
+- Search has a TV | Anime switch. Anime opens on "Airing in Japan this week" (poster grid) and searches AniList; results read "2023 · Crunchyroll · Finished".
+- Followed anime load through `UpcomingLoader` as "Airs in Japan …" drops (`resolveAniList`), with their streaming site as the provider and AniList's banner and cover as art. Drops key AniList shows as `anilist:<id>` (`Drop.showKey`).
+- Debug launch options `-kind anime` and `-followAnime <ids>`.
+
+**Red → green**
+- Red: `AniListClientTests` (`cannot find type 'AniListClient'`) with fixtures recorded from AniList on 30 Oct (`anilist/search-frieren`, `anilist/airing-2026-10-30`). Green: 113 tests in 28 suites.
+
+**Checked**
+- On Chime's iPhone: the anime grid (Black Clover S2, Detective Conan, Dragon Ball Super…) and a Frieren search.
+
+**Not verified**
+- A followed anime's Upcoming row and detail on the phone. Anime detail has no episode list (AniList query doesn't fetch one).
+
 ## Search with posters (Fri 30 Oct 2026)
 
 **Changed**

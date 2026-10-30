@@ -35,13 +35,15 @@ struct UpcomingLoader: Sendable {
     }
 
     let client: TVmazeClient
+    /// Anime come from AniList (D-19); nil leaves followed anime out.
+    var anilist: AniListClient? = nil
     let rules: RulesFile
     /// ISO country code, for "No official stream in your country" (CLAUDE.md rule 11).
     let viewerCountry: String?
 
     func load(_ requests: [Request], now: Date) async -> Result {
         let outcomes = await withTaskGroup(of: (Int, Outcome).self) { group in
-            for (index, request) in requests.enumerated() where request.catalog == .tvmaze {
+            for (index, request) in requests.enumerated() {
                 group.addTask { (index, await load(request, now: now)) }
             }
             var collected: [(Int, Outcome)] = []
@@ -61,6 +63,7 @@ struct UpcomingLoader: Sendable {
     }
 
     private func load(_ request: Request, now: Date) async -> Outcome {
+        if request.catalog == .anilist { return await loadAnime(request, now: now) }
         guard let show = try? await client.show(id: request.id) else { return .failed(request.name) }
         guard let next = show.embedded?.nextepisode else { return .nothing(show.name) }
         let resolution = TimeResolver.resolve(next.listing(show: show), rules: rules, offsetMinutes: request.offsetMinutes,
@@ -73,5 +76,20 @@ struct UpcomingLoader: Sendable {
                           season: next.season, number: next.number, episodeTitle: next.name, date: resolution.date,
                           airdate: resolution.airdate, confidence: resolution.confidence, source: resolution.source,
                           provider: provider, previousDate: nil, broadcastZone: show.network?.country?.timezone))
+    }
+
+    /// An anime's next episode is its Japanese broadcast (AniList `airingAt`), shifted by the show's offset.
+    private func loadAnime(_ request: Request, now: Date) async -> Outcome {
+        guard let anilist, let media = try? await anilist.media(id: request.id) else { return .failed(request.name) }
+        guard let next = media.nextAiringEpisode else { return .nothing(media.displayTitle) }
+        let resolution = TimeResolver.resolveAniList(airingAt: Date(timeIntervalSince1970: TimeInterval(next.airingAt)),
+                                                     offsetMinutes: request.offsetMinutes)
+        let provider = media.streamingSite.map {
+            ProviderLabel(name: $0, countryCode: nil, viewerCountry: viewerCountry, rules: rules)
+        }
+        return .drop(Drop(id: "anilist:\(media.id):\(next.episode)", showID: "anilist:\(media.id)",
+                          showName: media.displayTitle, season: nil, number: next.episode, episodeTitle: nil,
+                          date: resolution.date, airdate: resolution.airdate, confidence: resolution.confidence,
+                          source: resolution.source, provider: provider, previousDate: nil))
     }
 }
