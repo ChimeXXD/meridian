@@ -128,7 +128,7 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
 - [x] **`docs/design/UI-BRIEF.md`:** one section per screen and surface: its job, the design references it borrows from, its elements with test IDs, its copy taken from SPEC, and every state.
 - [x] **Style in code:** `Shared/Design/Tokens.swift` (colours for light, dark and tinted; a type scale with tabular numerals), plus `SourceChip`, `CountdownText`, `DropRow`, `ProviderLabelView` and `SectionHeader`, each with a `#Preview`.
 - [x] **3 numeral studies** (`docs/design/studies/index.html`) rendered from previews across the widget families and the Lock Screen Live Activity, then shown side by side.
-- [ ] `AniListClient` behind a `CatalogSource` protocol (30 requests a minute, `isAdult` filtered out). SwiftData `FollowedShow`. The Search screen with TV and Anime tabs and disambiguation.
+- [x] `AniListClient` behind a `CatalogSource` protocol (30 requests a minute, `isAdult` filtered out). SwiftData `FollowedShow`. The Search screen with TV and Anime tabs and disambiguation. (Done 31 Oct: `AniListClient` and `TVmazeClient` side by side rather than behind one protocol; Search has a TV | Anime switch.)
 
 ### Chime does
 - [ ] React to the reference board, and **pick a numeral style**.

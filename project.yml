@@ -30,6 +30,8 @@ targets:
       - Shared
       - path: rules/platform-rules.json
         buildPhase: resources
+      - path: rules/zone-countries.json
+        buildPhase: resources
     info:
       path: Airstamp/Info.plist
       properties:

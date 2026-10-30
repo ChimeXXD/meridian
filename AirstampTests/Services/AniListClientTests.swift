@@ -46,6 +46,17 @@ struct AniListClientTests {
         #expect(await network.sleeps == [.seconds(2)])
     }
 
+    @Test("concurrent requests each take their own slot instead of firing together")
+    func rateLimitConcurrent() async throws {
+        let network = TVmazeClientTests.FakeNetwork([try Self.ok("search-frieren")])
+        let client = Self.client(network)
+        async let a = client.search("A")
+        async let b = client.search("B")
+        async let c = client.search("C")
+        _ = try await (a, b, c)
+        #expect(await network.sleeps.sorted() == [.seconds(2), .seconds(4)])
+    }
+
     @Test("a repeated search is served from the cache, without a request")
     func cached() async throws {
         let network = TVmazeClientTests.FakeNetwork([try Self.ok("search-frieren")])
@@ -55,12 +66,13 @@ struct AniListClientTests {
         #expect(await network.requests.count == 1)
     }
 
-    @Test("airing this week: one entry per show, Japanese anime only, most popular first")
+    @Test("airing this week: the most popular airing anime with an episode in the next 7 days, across the whole week")
     func airing() async throws {
-        let network = TVmazeClientTests.FakeNetwork([try Self.ok("airing-2026-10-30")])
-        let media = try await Self.client(network).airingSoon(from: Date(iso: "2026-10-30T22:00:00Z"), days: 3)
-        #expect(media.first?.id == 195604)
-        #expect(Set(media.map(\.id)).count == media.count)
+        let network = TVmazeClientTests.FakeNetwork([try Self.ok("releasing-2026-10-31")])
+        let media = try await Self.client(network).airingSoon(from: Date(iso: "2026-10-31T00:00:00Z"), days: 7)
+        let ids = media.map(\.id)
+        #expect(ids.prefix(3) == [195516, 195604, 235])  // Apothecary Diaries (in 6 days), Black Clover, Detective Conan
+        #expect(!ids.contains(21))  // One Piece's next episode is months away
         #expect(media.allSatisfy { $0.countryOfOrigin == "JP" && !$0.isAdult })
         #expect(media.map { $0.popularity ?? 0 } == media.map { $0.popularity ?? 0 }.sorted(by: >))
     }

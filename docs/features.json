@@ -206,8 +206,8 @@
         "adult results dropped"
       ],
       "verify": "AniListClientTests",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "AniListClientTests (search, adult filter, 2 s spacing incl. concurrent, cache, airing this week) and UpcomingLoaderAnimeTests: xcodebuild test, 117 tests in 29 suites, 31 Oct 2026"
     },
     {
       "id": "D2-6",
@@ -219,8 +219,8 @@
         "Africa/Lagos maps to NG"
       ],
       "verify": "ProviderLabelTests",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "ProviderLabelTests (HBO · US, no-stream only where the rules say) and ViewerCountryTests (Africa/Lagos → NG from the bundled zone.tab): xcodebuild test, 117 tests, 31 Oct 2026. The Settings override is D3-5 (Should)."
     },
     {
       "id": "D2-7",
@@ -233,8 +233,8 @@
         "follow persists"
       ],
       "verify": "SearchViewModelTests with the Euphoria fixture; FollowStoreTests",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "FollowStoreTests and SearchResultTests (Euphoria: US and Israeli shows read differently; follow payload): xcodebuild test, 117 tests, 31 Oct 2026; on Chime's iPhone: search 'Silo' and the poster grid"
     },
     {
       "id": "D3-1",

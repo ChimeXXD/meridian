@@ -16,6 +16,10 @@ Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 **Checked**
 - On Chime's iPhone: the anime grid (Black Clover S2, Detective Conan, Dragon Ball Super…) and a Frieren search.
 
+**Review and follow-ups (31 Oct)**
+- `/code-review --fix`: 7 findings, 6 fixed (concurrent AniList requests broke the 2 s spacing, now reserved per slot with `rateLimitConcurrent`; airing cache key per hour; stale TV results after switching to Anime; a loader without AniList reporting anime as failed). The 7th, "this week" covering only about a day, is fixed: `airingSoon` now asks for popular airing Japanese anime and keeps those with an episode in the next 7 days (red: `ids.prefix(3) → []`, then green with `anilist/releasing-2026-10-31`).
+- D2-6: the viewer's country comes from the time zone via the tz database's zone.tab, bundled as `rules/zone-countries.json` (`scripts/make-zone-countries.py`); the device region is the fallback. `ViewerCountryTests` (written with the code). D2-5, D2-6, D2-7 marked passing.
+
 **Not verified**
 - A followed anime's Upcoming row and detail on the phone. Anime detail has no episode list (AniList query doesn't fetch one).
 

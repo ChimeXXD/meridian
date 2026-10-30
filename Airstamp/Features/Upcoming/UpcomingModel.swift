@@ -50,8 +50,8 @@ final class UpcomingModel {
 
     /// The last three aired episodes, newest first, for Show detail.
     func pastEpisodes(showID: String, now: Date = .now) async -> [PastEpisode] {
-        // AniList has no episode list in this query; anime detail shows the next episode only.
-        guard Drop.key(showID: showID).catalog == .tvmaze, let id = Int(showID), let episodes = try? await client.episodes(showID: id) else { return [] }
+        // TVmaze shows only: AniList has no episode list in this query ("anilist:<id>" isn't an Int).
+        guard let id = Int(showID), let episodes = try? await client.episodes(showID: id) else { return [] }
         let today = DropFormatter(timeZone: .gmt).localDay(now)
         // Numbered episodes only, before taking three, so specials don't use up the slots.
         let aired = episodes.compactMap { episode -> PastEpisode? in

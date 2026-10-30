@@ -2,7 +2,7 @@ import Foundation
 
 /// Turns followed shows into drops: TVmaze's next episode for each, resolved by `TimeResolver` against the rules
 /// file, with a provider label for the viewer's country. A show TVmaze can't serve is reported, never dropped
-/// silently. AniList shows are added with the AniList client.
+/// silently. Followed anime come from AniList's next airing episode.
 struct UpcomingLoader: Sendable {
     struct Request: Hashable, Sendable {
         var catalog: Catalog
@@ -43,7 +43,7 @@ struct UpcomingLoader: Sendable {
 
     func load(_ requests: [Request], now: Date) async -> Result {
         let outcomes = await withTaskGroup(of: (Int, Outcome).self) { group in
-            for (index, request) in requests.enumerated() {
+            for (index, request) in requests.enumerated() where request.catalog == .tvmaze || anilist != nil {
                 group.addTask { (index, await load(request, now: now)) }
             }
             var collected: [(Int, Outcome)] = []

@@ -56,6 +56,11 @@ struct SearchView: View {
                     airing[.anime] = Array(media.prefix(AiringSoon.limit)).map(SearchResult.init(media:))
                 }
             }
+            .onChange(of: kind) {
+                // The other catalog's results must not show (or be followed) while the new search waits.
+                results = []
+                state = .idle
+            }
             .task(id: "\(kind.rawValue)|\(query)") {
                 // Debounced: search after a short pause in typing, not on every key.
                 guard query.count >= 2 else { results = []; state = .idle; return }

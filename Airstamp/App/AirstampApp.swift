@@ -11,8 +11,11 @@ struct AirstampApp: App {
         // The bundled rules only while the repo is private (D-34); the remote fetch switches on at Day 7.
         let rules = (try? RulesStore.loadBundled())
             ?? RulesFile(schemaVersion: 1, updated: "", platforms: [], overrides: [], providers: [])
+        // The country from the time zone (D2-6), so Lagos means Nigeria whatever the region setting says.
+        let country = (try? ViewerCountry.loadBundled())?.code(zone: TimeZone.current.identifier,
+                                                               region: Locale.current.region?.identifier)
         _model = State(initialValue: UpcomingModel(client: client, anilist: anilist, rules: rules,
-                                                   viewerCountry: Locale.current.region?.identifier))
+                                                   viewerCountry: country))
     }
 
     var body: some Scene {

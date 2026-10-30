@@ -45,16 +45,18 @@ actor AniListClient {
         return single.data.Media.flatMap { $0.isAdult ? nil : $0 }
     }
 
-    /// Anime airing in Japan from `from` for `days` days: one entry per show, most popular first.
+    /// The most popular anime airing in Japan with an episode in the next `days` days, most popular first. Asks for
+    /// popular airing shows and keeps those whose next episode falls in the window, so the list covers the whole
+    /// week (a time-sorted schedule page only reaches about a day).
     func airingSoon(from: Date, days: Int) async throws -> [AniListMedia] {
-        let query = "query ($from: Int, $to: Int) { Page(perPage: 50) { airingSchedules(airingAt_greater: $from, " +
-            "airingAt_lesser: $to, sort: TIME) { airingAt episode media { \(Self.fields) } } } }"
-        let start = Int(from.timeIntervalSince1970)
-        let page: AniListPage = try await post(query, ["from": .int(start), "to": .int(start + days * 86_400)])
-        var seen = Set<Int>()
-        return (page.data.Page.airingSchedules ?? []).map(\.media)
-            .filter { !$0.isAdult && $0.countryOfOrigin == "JP" && seen.insert($0.id).inserted }
-            .sorted { ($0.popularity ?? 0) > ($1.popularity ?? 0) }
+        let query = "query { Page(perPage: 50) { media(type: ANIME, status: RELEASING, countryOfOrigin: \"JP\", " +
+            "isAdult: false, sort: POPULARITY_DESC) { \(Self.fields) } } }"
+        let page: AniListPage = try await post(query, [:])
+        let start = from.timeIntervalSince1970, end = start + Double(days) * 86_400
+        return (page.data.Page.media ?? []).filter { media in
+            guard !media.isAdult, media.countryOfOrigin == "JP", let next = media.nextAiringEpisode else { return false }
+            return Double(next.airingAt) >= start && Double(next.airingAt) <= end
+        }
     }
 
     // MARK: Transport
@@ -92,11 +94,13 @@ actor AniListClient {
     }
 
     private func send(_ body: Data) async throws -> Data {
-        if let lastRequest {
-            let wait = Self.spacing - now().timeIntervalSince(lastRequest)
-            if wait > 0 { try await sleep(.milliseconds(Int(wait * 1_000))) }
-        }
-        lastRequest = now()
+        // Reserve this request's slot before sleeping: the actor is reentrant, so concurrent callers (Upcoming loads
+        // every followed anime at once) would otherwise all read the same `lastRequest` and fire together.
+        let current = now()
+        let slot = lastRequest.map { max(current, $0.addingTimeInterval(Self.spacing)) } ?? current
+        lastRequest = slot
+        let wait = slot.timeIntervalSince(current)
+        if wait > 0 { try await sleep(.milliseconds(Int(wait * 1_000))) }
         var request = URLRequest(url: Self.endpoint)
         request.httpMethod = "POST"
         request.httpBody = body
