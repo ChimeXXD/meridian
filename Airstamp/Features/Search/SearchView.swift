@@ -11,6 +11,8 @@ struct SearchView: View {
     @State private var query = ""
     @State private var results: [SearchResult] = []
     @State private var state = Phase.idle
+    /// Shows with episodes in the next few days, shown before you type (`AiringSoon`).
+    @State private var airingSoon: [SearchResult] = []
 
     private enum Phase: Equatable { case idle, searching, done, failed }
 
@@ -18,10 +20,22 @@ struct SearchView: View {
         NavigationStack {
             List {
                 switch state {
-                case .idle:
+                case .idle where airingSoon.isEmpty:
                     Text("Search TVmaze for a show to follow")
                         .foregroundStyle(NightInk.muted)
                         .accessibilityIdentifier("search-empty")
+                case .idle:
+                    Section {
+                        ForEach(Array(airingSoon.enumerated()), id: \.element.id) { index, result in
+                            row(result, index: index + 1, prefix: "airing")
+                        }
+                    } header: {
+                        Text("Airing in the next few days")
+                            .font(.subheadline.weight(.medium))
+                            .foregroundStyle(NightInk.muted)
+                            .textCase(nil)
+                            .accessibilityIdentifier("search-airing-header")
+                    }
                 case .searching:
                     ProgressView()
                 case .failed:
@@ -44,6 +58,10 @@ struct SearchView: View {
             .navigationTitle("Search")
             .searchable(text: $query, prompt: "Search")
             .onSubmit(of: .search) { Task { await search() } }
+            .task {
+                guard airingSoon.isEmpty, let shows = await AiringSoon.load(client: client) else { return }
+                airingSoon = shows.map(SearchResult.init(show:))
+            }
             .task(id: query) {
                 // Debounced: search after a short pause in typing, not on every key.
                 guard query.count >= 2 else { results = []; state = .idle; return }
@@ -58,17 +76,17 @@ struct SearchView: View {
         #endif
     }
 
-    private func row(_ result: SearchResult, index: Int) -> some View {
+    private func row(_ result: SearchResult, index: Int, prefix: String = "search-result") -> some View {
         let following = followed.contains { $0.key == FollowedShow.key(catalog: result.catalog, id: result.id) }
         return HStack(spacing: Tokens.Space.m) {
             VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
                 Text(result.title)
                     .font(.system(size: 20, design: .serif))
-                    .accessibilityIdentifier("search-result-\(index)-title")
+                    .accessibilityIdentifier("\(prefix)-\(index)-title")
                 Text(result.meta)
                     .font(.footnote)
                     .foregroundStyle(NightInk.muted)
-                    .accessibilityIdentifier("search-result-\(index)-meta")
+                    .accessibilityIdentifier("\(prefix)-\(index)-meta")
             }
             Spacer()
             Button {
@@ -81,11 +99,11 @@ struct SearchView: View {
             }
             .buttonStyle(.plain)
             .accessibilityLabel(following ? "Following \(result.title)" : "Follow \(result.title)")
-            .accessibilityIdentifier("search-result-\(index)-follow")
+            .accessibilityIdentifier("\(prefix)-\(index)-follow")
         }
         .listRowBackground(Color.clear)
         .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("search-result-\(index)")
+        .accessibilityIdentifier("\(prefix)-\(index)")
     }
 
     private func search() async {

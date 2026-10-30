@@ -34,14 +34,23 @@ struct StatusBarScrim: View {
     }
 }
 
-/// Artwork filling its frame, cropped, with the palette colour behind it while it loads.
+/// Artwork filling its frame, cropped, with a base colour behind it while it loads.
 struct ArtworkFill: View {
     let image: UIImage?
-    let palette: ArtworkPalette
+    let base: Color
+
+    init(image: UIImage?, base: Color) {
+        self.image = image
+        self.base = base
+    }
+
+    init(image: UIImage?, palette: ArtworkPalette) {
+        self.init(image: image, base: palette.base.color)
+    }
 
     var body: some View {
         Rectangle()
-            .fill(palette.base.color)
+            .fill(base)
             .overlay {
                 if let image {
                     Image(uiImage: image).resizable().scaledToFill()

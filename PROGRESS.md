@@ -2,6 +2,26 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Day 0 device check, and the app on Chime's iPhone (Fri 30 Oct 2026)
+
+**Changed**
+- Chime's iPhone 14 Pro (iOS 27.0.1) paired with the Mac (`devicectl manage pair`), Developer Mode on, Apple ID in Xcode. Team ID only in the git-ignored `Config/Signing.local.xcconfig`.
+- Chime found the app "basically empty": nothing was followed, Search was blank until you typed, and most known shows are between seasons. Search now opens on **"Airing in the next few days"** (`AiringSoon`): TVmaze's streaming and US schedules for today and the next two days, English drama and animation plus anime, no news or talk shows, most popular first (TVmaze weight), each with a follow button. `TVmazeClient.webSchedule(date:)` and `schedule(country:date:)`; `TVmazeScheduleItem` reads both schedule shapes.
+- App icon: a light New York serif "A" on Night Sky charcoal (`scripts/make-app-icon.swift`, `Airstamp/Resources/Assets.xcassets`).
+- The art header shows the night base while art downloads, not a grey block (seen on the phone).
+
+**Red → green**
+- Red: `AiringSoonTests` (`cannot find type 'TVmazeScheduleItem'`), with fixtures recorded from TVmaze on 30 Oct (`schedule-web-2026-10-30`, `schedule-us-2026-10-30`). Green: 104 tests in 25 suites.
+
+**Checked**
+- Day 0 gate: free signing works for the app **and** the widget extension, both with the App Group `group.dev.chime.airstamp` in their signed entitlements (`codesign -d --entitlements`). Profile expires Fri 6 Nov 2026 21:27 UTC.
+- On the phone (screenshots via `devicectl device capture screenshot`): Upcoming with a live countdown for Outlander: Blood of My Blood (S2E7, STARZ · US, out tomorrow 01:00 Lagos time), and Silo's Show detail with its art.
+
+**Not verified**
+- The widget reading App Group data on the phone (no real widget until Day 4). The airing-soon list on the phone (needs Chime to open Search).
+
+**Next:** Chime's notes on the phone build; then Day 3's remaining items (AniList, fidelity inventories) and Day 4 widgets.
+
 ## Day 3: the real app on Night Sky (Fri 30 Oct 2026)
 
 **Changed**

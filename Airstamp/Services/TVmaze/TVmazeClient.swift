@@ -40,6 +40,16 @@ actor TVmazeClient {
         try await get("/shows/\(showID)/images", [])
     }
 
+    /// Every streaming episode released on `date` ("yyyy-MM-dd"), worldwide.
+    func webSchedule(date: String) async throws -> [TVmazeScheduleItem] {
+        try await get("/schedule/web", [URLQueryItem(name: "date", value: date)])
+    }
+
+    /// Every broadcast episode airing on `date` in one country.
+    func schedule(country: String, date: String) async throws -> [TVmazeScheduleItem] {
+        try await get("/schedule", [URLQueryItem(name: "country", value: country), URLQueryItem(name: "date", value: date)])
+    }
+
     func episodes(showID: Int) async throws -> [TVmazeEpisode] {
         try await get("/shows/\(showID)/episodes", [])
     }

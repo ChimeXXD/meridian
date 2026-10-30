@@ -40,11 +40,34 @@ struct TVmazeShow: Codable, Hashable, Sendable {
     let premiered: String?
     let network: TVmazeChannel?
     let webChannel: TVmazeChannel?
+    /// TVmaze's popularity score, 0–100.
+    let weight: Int?
     let embedded: Embedded?
 
     enum CodingKeys: String, CodingKey {
-        case id, name, type, language, status, premiered, network, webChannel
+        case id, name, type, language, status, premiered, network, webChannel, weight
         case embedded = "_embedded"
+    }
+}
+
+/// One episode on a TVmaze schedule. The broadcast schedule puts the show inline; the streaming schedule embeds it.
+struct TVmazeScheduleItem: Decodable, Sendable {
+    let id: Int
+    let airstamp: String?
+    let show: TVmazeShow?
+
+    private struct Embedded: Decodable { let show: TVmazeShow? }
+    private enum CodingKeys: String, CodingKey {
+        case id, airstamp, show
+        case embedded = "_embedded"
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(Int.self, forKey: .id)
+        airstamp = try container.decodeIfPresent(String.self, forKey: .airstamp)
+        show = try container.decodeIfPresent(TVmazeShow.self, forKey: .show)
+            ?? container.decodeIfPresent(Embedded.self, forKey: .embedded)?.show
     }
 }
 

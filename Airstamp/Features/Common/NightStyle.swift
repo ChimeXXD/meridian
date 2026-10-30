@@ -54,7 +54,8 @@ struct NightArtHeader: View {
 
     var body: some View {
         ZStack {
-            ArtworkFill(image: image, palette: .neutral).frame(height: height)
+            // While the art downloads the header is the night base itself, never a grey block (Chime saw one).
+            ArtworkFill(image: image, base: base).frame(height: height)
             LinearGradient(stops: [.init(color: base.opacity(0), location: 0.4), .init(color: base, location: 1)],
                            startPoint: .top, endPoint: .bottom)
             LinearGradient(colors: [.black.opacity(0.4), .clear], startPoint: .top, endPoint: .init(x: 0.5, y: 0.25))
