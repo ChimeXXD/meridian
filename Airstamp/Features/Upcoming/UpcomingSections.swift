@@ -52,8 +52,8 @@ struct UpcomingSections: Equatable {
 
     /// What the top of Upcoming says when no show has a time yet. Names the next real date when there is one;
     /// never promises a refresh interval (D-27).
-    func emptyHeadline(formatter: DropFormatter) -> String {
-        if let next = nextDateOnly, let day = next.airdate.flatMap(formatter.airdate) {
+    func emptyHeadline(formatter: DropFormatter, now: Date) -> String {
+        if let next = nextDateOnly, let day = next.airdate.flatMap({ formatter.airdate($0, now: now) }) {
             return "\(next.showName) returns \(day)"
         }
         return "Nothing scheduled for your shows yet. Airstamp checks again each time you open it."

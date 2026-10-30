@@ -30,7 +30,8 @@ struct DropFormatter: Sendable {
 
     /// A listed airdate as "Wed 29 Apr". It's a calendar date, not an instant,
     /// so it reads the same in every zone (D-28). Nil if the date can't be read.
-    func airdate(_ airdate: String) -> String? {
+    /// With `now`, a date in another year adds it ("Fri 9 Jul 2027"), as `relativeDay` does.
+    func airdate(_ airdate: String, now: Date? = nil) -> String? {
         guard let parts = WallClock.parseDate(airdate) else { return nil }
         var utc = Calendar(identifier: .gregorian)
         utc.timeZone = .gmt
@@ -41,7 +42,9 @@ struct DropFormatter: Sendable {
         formatter.locale = locale
         formatter.timeZone = .gmt
         formatter.dateFormat = "EEE d MMM"
-        return formatter.string(from: date)
+        let text = formatter.string(from: date)
+        guard let now, parts.year != calendar.component(.year, from: now) else { return text }
+        return "\(text) \(parts.year)"
     }
 
     /// "Today", "Tomorrow", "Yesterday", a weekday within the week ("Wed"), then "Wed 18 Nov",

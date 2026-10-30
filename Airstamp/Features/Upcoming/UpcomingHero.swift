@@ -1,68 +1,73 @@
 import SwiftUI
 
-/// The nearest drop as a full-bleed artwork hero (Chime's picks: Insight Timer, Apple TV, HBO Max): the key art
-/// fades into a deep tone of its own colour, with a very large thin serif countdown over the fade.
+/// The next drop at the top of Upcoming: its art fading into night, then the title, a giant light serif countdown,
+/// when it's out (worded by certainty, D-40), and the episode and provider on one quiet line.
 struct UpcomingHero: View {
     let drop: Drop
     let image: UIImage?
-    let palette: ArtworkPalette
+    let base: Color
     let now: Date
     var formatter = DropFormatter()
 
-    static let height: CGFloat = 600
-
     var body: some View {
-        ZStack(alignment: .bottomLeading) {
-            ArtworkFill(image: image, palette: palette)
-                .frame(height: Self.height)
-            fade
-            VStack(alignment: .leading, spacing: Tokens.Space.xs) {
-                Text("NEXT UP · \(day.uppercased())")
-                    .font(.caption.weight(.semibold)).tracking(1.6)
-                    .foregroundStyle(.white.opacity(0.75))
-                Text(drop.showName)
-                    .font(.system(size: 34, weight: .bold))
-                    .lineLimit(2)
-                    .accessibilityIdentifier("upcoming-hero-title")
-                CountdownText(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate, now: now,
-                              size: 88, tint: .white, formatter: formatter)
-                    .environment(\.numeralStudy, .night)
-                    .padding(.vertical, -Tokens.Space.xs)
-                Text(meta)
-                    .font(.subheadline.weight(.medium))
-                    .foregroundStyle(.white.opacity(0.8))
-                SourceChip(source: drop.source, confidence: drop.confidence)
-                    .padding(.top, Tokens.Space.xxs)
+        VStack(alignment: .leading, spacing: 0) {
+            NightArtHeader(image: image, base: base)
+            VStack(alignment: .leading, spacing: Tokens.Space.s) {
+                ReleaseHeadline(drop: drop, now: now, formatter: formatter, testID: "upcoming-hero")
+                ReleaseMeta(drop: drop)
             }
             .padding(.horizontal, Tokens.Space.l)
-            .padding(.bottom, Tokens.Space.l)
+            .padding(.top, -64)
         }
-        .frame(height: Self.height)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("upcoming-hero")
     }
+}
 
-    private var day: String { formatter.relativeDay(drop.date, now: now) }
+/// Title, countdown, and when it's out: the three lines that answer the question.
+struct ReleaseHeadline: View {
+    let drop: Drop
+    let now: Date
+    var formatter = DropFormatter()
+    var titleSize: CGFloat = 32
+    var countdownSize: CGFloat = 88
+    /// Prefix for the test IDs: `upcoming-hero` or `detail` (UI-BRIEF).
+    var testID = "headline"
 
-    /// "S4E1 · Today 03:25 · Apple TV"
-    private var meta: String {
-        let when = drop.confidence == .dateOnly ? "time not announced" : "\(day) \(formatter.localTime(drop.date))"
-        return [drop.episodeLabel, when, drop.provider?.display].compactMap(\.self).joined(separator: " · ")
-    }
-
-    /// A scrim at the top for the status bar, and the long fade into the palette at the bottom.
-    private var fade: some View {
-        let base = palette.base.color
-        return ZStack {
-            LinearGradient(stops: [
-                .init(color: base.opacity(0), location: 0.22),
-                .init(color: base.opacity(0.35), location: 0.42),
-                .init(color: base.opacity(0.75), location: 0.6),
-                .init(color: base.opacity(0.95), location: 0.76),
-                .init(color: base, location: 0.88),
-            ], startPoint: .top, endPoint: .bottom)
-            LinearGradient(colors: [.black.opacity(0.45), .clear], startPoint: .top, endPoint: .init(x: 0.5, y: 0.22))
+    var body: some View {
+        VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
+            Text(drop.showName)
+                .font(.system(size: titleSize, design: .serif))
+                .lineLimit(2).minimumScaleFactor(0.7)
+                .accessibilityIdentifier("\(testID)-title")
+            CountdownText(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate, now: now,
+                          size: countdownSize, tint: .white, formatter: formatter)
+                .environment(\.numeralStudy, .night)
+            Text(ReleaseWording.outLine(drop, now: now, formatter: formatter, naming: true))
+                .font(.body.weight(.medium))
+                .foregroundStyle(NightInk.primary)
+                .padding(.top, Tokens.Space.xxs)
+                .accessibilityIdentifier("\(testID)-out")
         }
-        .allowsHitTesting(false)
+    }
+}
+
+/// "S4E1 · Apple TV" in muted text, and "No official stream in your country" when the rules file says so.
+struct ReleaseMeta: View {
+    let drop: Drop
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(drop.episodeAndProvider)
+                .font(.footnote)
+                .foregroundStyle(NightInk.muted)
+                .lineLimit(1)
+            if drop.provider?.noOfficialStream == true {
+                Text("No official stream in your country")
+                    .font(.footnote)
+                    .foregroundStyle(NightInk.muted)
+                    .accessibilityIdentifier("provider-no-stream")
+            }
+        }
     }
 }

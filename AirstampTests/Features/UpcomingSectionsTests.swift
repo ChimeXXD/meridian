@@ -49,13 +49,13 @@ struct UpcomingSectionsTests {
         let silo = Self.drop("Silo", in: 250 * Self.day, dateOnly: true, airdate: "2027-07-09")
         let sections = UpcomingSections.make(drops: [silo], nothingScheduled: [], now: Self.now)
         #expect(sections.hero == nil)
-        #expect(sections.emptyHeadline(formatter: Self.lagos) == "Silo returns Fri 9 Jul")
+        #expect(sections.emptyHeadline(formatter: Self.lagos, now: Self.now) == "Silo returns Fri 9 Jul 2027")
     }
 
     @Test("with nothing at all, it says so and promises no refresh interval (D-27)")
     func emptyNothing() {
         let sections = UpcomingSections.make(drops: [], nothingScheduled: ["Quiet"], now: Self.now)
-        #expect(sections.emptyHeadline(formatter: Self.lagos)
+        #expect(sections.emptyHeadline(formatter: Self.lagos, now: Self.now)
                 == "Nothing scheduled for your shows yet. Airstamp checks again each time you open it.")
     }
 }

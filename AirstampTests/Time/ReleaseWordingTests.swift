@@ -37,6 +37,12 @@ struct ReleaseWordingTests {
         #expect(ReleaseWording.outLine(drop, now: Self.now, formatter: Self.lagos) == "Out Thu 19 Nov, time not announced")
     }
 
+    @Test("a date in another year says the year, so 2027 isn't read as this summer")
+    func dateOnlyNextYear() {
+        let drop = Self.drop(.dateOnly, .dateOnly, airdate: "2027-07-09")
+        #expect(ReleaseWording.outLine(drop, now: Self.now, formatter: Self.lagos) == "Out Fri 9 Jul 2027, time not announced")
+    }
+
     @Test("after the time, only a sure time says it was released", arguments: [
         (ReleaseSource.broadcast(network: "HBO"), Confidence.exact, "Released today at 16:00"),
         (.platformRule("Netflix rule"), .estimated, "Expected today at 16:00"),
@@ -59,6 +65,14 @@ struct ReleaseWordingTests {
     ])
     func place(zone: String, expected: String) {
         #expect(ReleaseWording.place(DropFormatter(zoneIdentifier: zone)) == expected)
+    }
+
+    @Test("Welcome names the zone and its UTC offset", arguments: [
+        ("Africa/Lagos", "Lagos, UTC+1"), ("Europe/London", "London, UTC+0"), ("Asia/Kolkata", "Kolkata, UTC+5:30"),
+        ("America/New_York", "New York, UTC-4"),
+    ])
+    func zoneSummary(zone: String, expected: String) {
+        #expect(ReleaseWording.zoneSummary(DropFormatter(zoneIdentifier: zone), at: Self.now) == expected)
     }
 
     @Test("Show detail explains where the time came from in one sentence", arguments: [

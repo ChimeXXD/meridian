@@ -10,7 +10,8 @@ enum ReleaseWording {
     /// ("… Lagos time"), once per screen.
     static func outLine(_ drop: Drop, now: Date, formatter: DropFormatter, naming: Bool = false) -> String {
         if drop.confidence == .dateOnly {
-            return "Out \(drop.airdate.flatMap(formatter.airdate) ?? "date to be confirmed"), time not announced"
+            let day = drop.airdate.flatMap { formatter.airdate($0, now: now) } ?? "date to be confirmed"
+            return "Out \(day), time not announced"
         }
         let day = formatter.relativeDay(drop.date, now: now)
         let spoken = ["Today": "today", "Tomorrow": "tomorrow", "Yesterday": "yesterday"][day] ?? day
@@ -42,6 +43,14 @@ enum ReleaseWording {
         case .dateOnly:
             return "Only the date is announced. The countdown starts once there's a time."
         }
+    }
+
+    /// "Lagos, UTC+1" for Welcome's "Times shown for …" (SPEC §1): the place and its offset at `date`.
+    static func zoneSummary(_ formatter: DropFormatter, at date: Date) -> String {
+        let seconds = formatter.timeZone.secondsFromGMT(for: date)
+        let hours = abs(seconds) / 3_600, minutes = abs(seconds) % 3_600 / 60
+        let offset = "UTC\(seconds < 0 ? "-" : "+")\(hours)\(minutes == 0 ? "" : String(format: ":%02d", minutes))"
+        return "\(place(formatter)), \(offset)"
     }
 
     /// The city in a zone's IANA name: "Africa/Lagos" → "Lagos", "America/New_York" → "New York". A zone with no city

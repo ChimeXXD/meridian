@@ -30,7 +30,7 @@ struct CountdownText: View {
     @ViewBuilder private var content: some View {
         switch CountdownFormatter.state(drop: drop, confidence: confidence, now: now) {
         case .dateOnly:
-            Text(airdate.flatMap(formatter.airdate) ?? "Date not set")
+            Text(airdate.flatMap { formatter.airdate($0, now: now) } ?? "Date not set")
                 .font(study.font(size: size * 0.6 * scale))
         case .outNow:
             Text("Out now").font(study.font(size: size * 0.7 * scale))

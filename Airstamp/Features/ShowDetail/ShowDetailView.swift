@@ -1,0 +1,138 @@
+import SwiftUI
+
+/// Show detail (SPEC §1, UI-BRIEF §5.4) in Night Sky: the show's art fades into night, then the same three lines as
+/// Upcoming, one sentence on where the time came from (D-40), the Live Activity switch, recent episodes, "Report a
+/// wrong time" and unfollow. One back button; nothing else sits on the art.
+struct ShowDetailView: View {
+    let drop: Drop
+    let artwork: ShowArtwork?
+    var episodes: [PastEpisode] = []
+    @Binding var liveActivity: Bool
+    var formatter = DropFormatter()
+    var scrollAnchor: UnitPoint? = nil
+    /// Nil hides "Report a wrong time" until the email route exists (Day 6, D-34).
+    var onReport: (() -> Void)? = nil
+    var onUnfollow: () -> Void = {}
+
+    @Environment(\.dismiss) private var dismiss
+    @State private var confirmingUnfollow = false
+    @AppStorage(LeadTime.storageKey) private var leadMinutes = LeadTime.defaultMinutes
+
+    var body: some View {
+        TimelineView(.everyMinute) { context in
+            ArtworkLoaderView(url: artwork?.hero, maxPixel: ShowArtwork.idealBackgroundWidth) { hero in
+                let base = (hero?.palette ?? .neutral).night.color
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 0) {
+                        NightArtHeader(image: hero?.image, base: base, height: 500)
+                            .overlay(alignment: .topLeading) {
+                                GlassCircleButton(systemImage: "chevron.left", label: "Back") { dismiss() }
+                                    .padding(.leading, Tokens.Space.m)
+                                    .padding(.top, 58)
+                            }
+                        VStack(alignment: .leading, spacing: Tokens.Space.xl) {
+                            next(now: context.date)
+                            liveActivityRow
+                            if !episodes.isEmpty {
+                                VStack(alignment: .leading, spacing: Tokens.Space.xs) {
+                                    Text("Episodes")
+                                        .font(.subheadline.weight(.medium))
+                                        .foregroundStyle(NightInk.muted)
+                                        .accessibilityAddTraits(.isHeader)
+                                    EpisodeRows(episodes: episodes, ink: .white, formatter: formatter)
+                                }
+                            }
+                            VStack(alignment: .leading, spacing: Tokens.Space.m) {
+                                if let onReport {
+                                    Button("Report a wrong time", action: onReport)
+                                        .accessibilityIdentifier("detail-report")
+                                }
+                                Button("Unfollow", role: .destructive) { confirmingUnfollow = true }
+                                    .accessibilityIdentifier("detail-unfollow")
+                            }
+                            .font(.subheadline)
+                            .foregroundStyle(NightInk.muted)
+                        }
+                        .padding(.horizontal, Tokens.Space.l)
+                        .padding(.top, -64)
+                    }
+                    .padding(.bottom, Tokens.Space.xl)
+                }
+                .scrollIndicators(.hidden)
+                .defaultScrollAnchor(scrollAnchor)
+                .background(base)
+                .ignoresSafeArea(edges: .top)
+            }
+        }
+        .toolbarVisibility(.hidden, for: .navigationBar)
+        .environment(\.colorScheme, .dark)
+        .confirmationDialog("Stop following \(drop.showName)?", isPresented: $confirmingUnfollow, titleVisibility: .visible) {
+            Button("Unfollow", role: .destructive) { onUnfollow(); dismiss() }
+        }
+    }
+
+    private func next(now: Date) -> some View {
+        VStack(alignment: .leading, spacing: Tokens.Space.s) {
+            ReleaseHeadline(drop: drop, now: now, formatter: formatter, testID: "detail")
+            ReleaseMeta(drop: drop)
+            // Where the time came from, as one plain sentence instead of a code to learn (D-40).
+            Text(ReleaseWording.explanation(drop, broadcastZone: drop.broadcastZone, formatter: formatter))
+                .font(.subheadline)
+                .foregroundStyle(NightInk.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, Tokens.Space.xs)
+                .accessibilityIdentifier("detail-why")
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("detail-next")
+    }
+
+    private var liveActivityRow: some View {
+        Toggle(isOn: $liveActivity) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Release-night Live Activity").font(.body)
+                Text("Starts \(LeadTime.phrase(minutes: leadMinutes)) before, on your Lock Screen")
+                    .font(.footnote).foregroundStyle(NightInk.muted)
+            }
+        }
+        .tint(.white.opacity(0.6))
+        .accessibilityIdentifier("detail-live-activity")
+    }
+}
+
+/// One aired episode for Show detail's list.
+struct PastEpisode: Hashable, Identifiable, Sendable {
+    var id: String { label }
+    let label: String
+    let title: String
+    let airdate: String
+}
+
+/// Past episodes, newest first.
+struct EpisodeRows: View {
+    let episodes: [PastEpisode]
+    let ink: Color
+    var formatter = DropFormatter()
+
+    var body: some View {
+        VStack(spacing: 0) {
+            ForEach(Array(episodes.enumerated()), id: \.element) { index, episode in
+                HStack(alignment: .firstTextBaseline, spacing: Tokens.Space.s) {
+                    Text(episode.label)
+                        .font(.footnote.monospacedDigit().weight(.semibold))
+                        .foregroundStyle(ink.opacity(0.6))
+                        .frame(width: 52, alignment: .leading)
+                    Text(episode.title).font(.body.weight(.medium))
+                    Spacer()
+                    Text(formatter.airdate(episode.airdate, now: .now) ?? "").font(.footnote).foregroundStyle(ink.opacity(0.6))
+                }
+                .padding(.vertical, Tokens.Space.s)
+                .overlay(alignment: .bottom) {
+                    if index < episodes.count - 1 { Rectangle().fill(ink.opacity(0.12)).frame(height: 1) }
+                }
+                .accessibilityIdentifier("detail-episode-\(index + 1)")
+            }
+        }
+        .foregroundStyle(ink)
+    }
+}

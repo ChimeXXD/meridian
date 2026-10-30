@@ -19,6 +19,9 @@ struct Drop: Codable, Hashable, Identifiable, Sendable {
     var provider: ProviderLabel?
     /// Set when a refresh moved the time later.
     var previousDate: Date?
+    /// The network's own IANA zone, for "That's when HBO airs it in its home zone: Fri 17:00 New York time".
+    /// Only a broadcast time has one.
+    var broadcastZone: String? = nil
 
     /// "S2E5", or "E5" when there's no season; nil without an episode number.
     var episodeLabel: String? {

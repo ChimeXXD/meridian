@@ -54,3 +54,29 @@ struct UpcomingLoaderTests {
         #expect(result.failed == ["Silo"])
     }
 }
+
+/// Offline or a TVmaze hiccup keeps the last known times (UI-BRIEF §5.2, offline state) instead of emptying Upcoming.
+@Suite("Upcoming last known times")
+struct UpcomingLastKnownTests {
+    static func drop(_ name: String) -> Drop {
+        Drop(id: "tvmaze:\(name)", showID: name, showName: name, season: 1, number: 1, episodeTitle: nil,
+             date: Date(iso: "2026-11-01T20:00:00Z"), airdate: nil, confidence: .exact, source: .broadcast(network: "HBO"),
+             provider: nil, previousDate: nil)
+    }
+
+    @Test("a show that failed this time keeps its last known drop and is still named as failed")
+    func keepsLastKnown() {
+        let previous = UpcomingLoader.Result(drops: [Self.drop("Silo"), Self.drop("Severance")])
+        let loaded = UpcomingLoader.Result(drops: [Self.drop("Severance")], failed: ["Silo"])
+        let merged = loaded.keepingLastKnown(from: previous)
+        #expect(Set(merged.drops.map(\.showName)) == ["Silo", "Severance"])
+        #expect(merged.failed == ["Silo"])
+    }
+
+    @Test("a show that loaded fine replaces its old drop, and an unfollowed show doesn't come back")
+    func replacesAndForgets() {
+        let previous = UpcomingLoader.Result(drops: [Self.drop("Silo"), Self.drop("Old")])
+        let loaded = UpcomingLoader.Result(drops: [Self.drop("Silo")])
+        #expect(loaded.keepingLastKnown(from: previous).drops.map(\.showName) == ["Silo"])
+    }
+}

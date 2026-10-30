@@ -2,6 +2,32 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Day 3: the real app on Night Sky (Fri 30 Oct 2026)
+
+**Changed**
+- Removed the rejected numeral studies and the old artwork-led views; Night Sky is now the app, not a debug study: `UpcomingView`, `UpcomingHero` (`ReleaseHeadline`, `ReleaseMeta`), `ShowDetailView`, `NightStyle`.
+- `FollowStore` + `FollowedShow` (SwiftData): follow, unfollow, one entry per show per catalog.
+- `UpcomingSections`: SPEC's sections at every boundary, the hero, and the empty headline ("Silo returns Fri 9 Jul 2027", or "Nothing scheduled … checks again each time you open it").
+- `UpcomingLoader`: followed shows → TVmaze next episode → `TimeResolver` → drops with provider labels; failures reported, not hidden. `UpcomingModel` adds artwork and the last three aired episodes.
+- `ProviderLabel(name:countryCode:viewerCountry:rules:)`: "No official stream in your country" only where the rules file says so. Viewer country is the device region for now (D2-6's time-zone mapping and Settings override are still open).
+- D-42 (closes O-10): no airtime and more than 180 days away → date only. D-41 (closes O-11): tab bar.
+- App shell: Welcome (zone line, Find a show, Not now), tab bar (Upcoming, Settings, Search with the search role), Search (TVmaze, year · network · country · status, follow toggle), Settings (zone, lead time 30 min–6 h, credits), Credits. Show detail stores the Live Activity switch per show and can unfollow; "Report a wrong time" stays hidden until the email route (Day 6).
+- Dates in another year say the year ("Fri 9 Jul 2027").
+- Debug launch options for screenshots of the real app: `-follow <ids>`, `-tab search|settings`, `-query <text>`.
+
+**Red → green**
+- Red, each before its code: `FollowStoreTests` (`cannot find 'FollowStore'`), `FarPlaceholderTests` and `ProviderLabelTests` (`extra arguments`), `UpcomingSectionsTests` and `UpcomingLoaderTests` (`cannot find 'UpcomingLoader'`), `SearchResultTests` (`cannot find type 'SearchResult'`), `zoneSummary` (`no member 'zoneSummary'`), the year tests (`extra argument 'now'`). `LeadTimeTests` was written with its code, not before.
+- Green: `xcodebuild … test`, 100 tests in 24 suites.
+- `/code-review --fix` (medium): 10 findings, 8 fixed: a slower refresh overwriting a newer one, a cancelled search showing an error, past episodes trusting a placeholder airstamp (rule 2), specials using up episode slots, the debug launch not running on Welcome, serial artwork loads, episode dates without the year, and Upcoming emptying when TVmaze fails (now keeps the last known times; `UpcomingLastKnownTests`). Left: row thumbnails use the background art (deliberate), and `explanation` still takes the zone separately.
+
+**Checked**
+- The real app on the simulator with live TVmaze data: Welcome, Search for "Euphoria" (the US and Israeli shows read differently), Upcoming with six followed shows, Settings. TVmaze currently lists no next episode for five of them and only Silo's 2027 placeholder, so Upcoming shows the empty headline, Date only and Nothing scheduled. The filled hero is shown with sample times in `-designPreview`.
+
+**Not verified**
+- Show detail with live data (the simulator can't tap; the same view renders in `-designPreview detail`). Anime search (AniList, D2-5) isn't built. Fidelity inventories (D3-1) aren't set up yet.
+
+**Next:** AniList client and the Anime tab (D2-5), viewer country from the time zone (D2-6), fidelity inventories (D3-1), then Chime's approval of each screen.
+
 ## Day 2: saying how sure a time is, without dots (Fri 30 Oct 2026)
 
 **Changed**

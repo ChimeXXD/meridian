@@ -17,6 +17,17 @@ struct UpcomingLoader: Sendable {
         var nothingScheduled: [String] = []
         /// Followed shows that couldn't be loaded this time.
         var failed: [String] = []
+
+        /// Keeps the last known drop for each show that failed this time (offline, a TVmaze hiccup), so Upcoming
+        /// doesn't go empty; the show stays in `failed` so the screen can say so. Shows no longer followed don't
+        /// come back, because only failed names are carried over.
+        func keepingLastKnown(from previous: Result?) -> Result {
+            guard let previous, !failed.isEmpty else { return self }
+            var merged = self
+            merged.drops += previous.drops.filter { failed.contains($0.showName) }
+            merged.drops.sort { $0.date < $1.date }
+            return merged
+        }
     }
 
     private enum Outcome: Sendable {
@@ -61,6 +72,6 @@ struct UpcomingLoader: Sendable {
         return .drop(Drop(id: "tvmaze:\(show.id):\(next.id)", showID: String(show.id), showName: show.name,
                           season: next.season, number: next.number, episodeTitle: next.name, date: resolution.date,
                           airdate: resolution.airdate, confidence: resolution.confidence, source: resolution.source,
-                          provider: provider, previousDate: nil))
+                          provider: provider, previousDate: nil, broadcastZone: show.network?.country?.timezone))
     }
 }
