@@ -193,7 +193,8 @@
       ],
       "verify": "PNGs in docs/design/studies/; pick recorded in DECISIONS.md",
       "passes": false,
-      "evidence": ""
+      "evidence": "",
+      "superseded_by": "D-37, D-38: the numeral studies were rejected; Night Sky's light serif countdown (NumeralStudy.night) is the style"
     },
     {
       "id": "D2-5",
