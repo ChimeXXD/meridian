@@ -191,17 +191,13 @@ struct PosterImage: View {
 
     var body: some View {
         ArtworkLoaderView(url: url, maxPixel: 420) { loaded in
-            Rectangle()
-                .fill(.white.opacity(0.08))
+            ArtworkFill(image: loaded?.image, base: .white.opacity(0.08))
                 .overlay {
-                    if let image = loaded?.image {
-                        Image(uiImage: image).resizable().scaledToFill()
-                    } else if url == nil {
-                        Image(systemName: "tv").font(.title3).foregroundStyle(NightInk.muted)
+                    if url == nil {
+                        Image(systemName: "tv").font(.title3).foregroundStyle(NightInk.muted).accessibilityHidden(true)
                     }
                 }
                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
-                .accessibilityHidden(true)
         }
     }
 }
