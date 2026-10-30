@@ -10,6 +10,12 @@ struct DropFormatter: Sendable {
         self.locale = locale
     }
 
+    /// A formatter for a named IANA zone, falling back to the device zone if the name is unknown.
+    /// Keeps `TimeZone(` lookups inside `Shared/Time` (SPEC formatting criterion).
+    init(zoneIdentifier: String, locale: Locale = .current) {
+        self.init(timeZone: TimeZone(identifier: zoneIdentifier) ?? .current, locale: locale)
+    }
+
     /// "yyyy-MM-dd" in this zone.
     func localDay(_ date: Date) -> String {
         let parts = calendar.dateComponents([.year, .month, .day], from: date)
@@ -36,6 +42,37 @@ struct DropFormatter: Sendable {
         formatter.timeZone = .gmt
         formatter.dateFormat = "EEE d MMM"
         return formatter.string(from: date)
+    }
+
+    /// "Today", "Tomorrow", "Yesterday", a weekday within the week ("Wed"), then "Wed 18 Nov",
+    /// with the year when it isn't this year ("Fri 9 Jul 2027").
+    /// Days are counted in this formatter's zone, so 00:30 Saturday in Lagos is "Tomorrow" on a Friday evening.
+    func relativeDay(_ date: Date, now: Date) -> String {
+        let calendar = calendar
+        let days = calendar.dateComponents([.day], from: calendar.startOfDay(for: now), to: calendar.startOfDay(for: date)).day ?? 0
+        switch days {
+        case 0: return "Today"
+        case 1: return "Tomorrow"
+        case -1: return "Yesterday"
+        case 2...6: return weekday(date)
+        default:
+            let dayMonth = date.formatted(verbatim("\(weekday: .abbreviated) \(day: .defaultDigits) \(month: .abbreviated)"))
+            let sameYear = calendar.component(.year, from: date) == calendar.component(.year, from: now)
+            return sameYear ? dayMonth : "\(dayMonth) \(calendar.component(.year, from: date))"
+        }
+    }
+
+    /// "Wed 02:00", for the rectangular widget and rows.
+    func weekdayTime(_ date: Date) -> String {
+        "\(weekday(date)) \(localTime(date))"
+    }
+
+    private func weekday(_ date: Date) -> String {
+        date.formatted(verbatim("\(weekday: .abbreviated)"))
+    }
+
+    private func verbatim(_ format: Date.FormatString) -> Date.VerbatimFormatStyle {
+        Date.VerbatimFormatStyle(format: format, locale: locale, timeZone: timeZone, calendar: calendar)
     }
 
     private var calendar: Calendar {

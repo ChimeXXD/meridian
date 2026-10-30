@@ -13,25 +13,27 @@ What the 47 picks have in common, and the rules that follow from it.
 3. **Bright number, dim unit.** In "2d 4h" the digits are full-strength and the units are smaller and dimmer (#117 one year, #135 Waymo, #33 Any Distance). Digits are always tabular, so a ticking timer never jitters.
 4. **Status lives in small chips: a glyph plus a word** (#31 WHOOP, #33 Any Distance, #43 Qantas). Colour is a second signal, never the only one (SPEC accessibility criterion).
 5. **Headers carry the date so rows stay short.** Section headers have a small count (#1 Brink), and day headers combine date, relative word and weekday (#6 Todoist, #14 MLS).
-6. **Quiet honesty.** Freshness is a muted footer line ("Updated 3 h ago", #43 Qantas). A moved time keeps the old one struck through (#43). "No official stream in your country" replaces the provider line without hiding the show (#53 Grab).
+6. **Quiet honesty.** Freshness is a muted footer line ("Updated 3 h ago", #43 Qantas). A moved time keeps the old one struck through (#43). "No official stream in your country" is added under the provider ("HBO · US" stays) without hiding the show (#53 Grab).
 7. **Surfaces outside the app are dark and spare** (#126 Once, #139 Lumy, #140 Moonlitt). The app follows the system light or dark setting.
 
 Taken as counterexamples, not patterns: #24 Paramount+ (US-only times) and #64 Posh (times in the source zone). They go in the case study as the problem Airstamp solves.
 
 ## 2. Tokens (`Shared/Design/Tokens.swift`)
 
+- **Light-mode inks are darkened** until they pass WCAG AA as text on the background, the card and their own chip fill (`TokenContrastTests`).
 - **Neutrals are system colours** (`label`, `secondaryLabel`, `tertiaryLabel`, grouped backgrounds), so light, dark and Increase Contrast work without custom values.
 - **Status tints have fixed meanings** and always sit next to a word:
 
   | Meaning | Tint | Used by |
   | --- | --- | --- |
-  | Exact time | green | `Broadcast`, `Confirmed` chips |
-  | Estimated by a rule | blue | `<Platform> rule`, `JP broadcast` chips |
+  | Exact time | green | `Broadcast`, `Confirmed`, `JP broadcast` chips |
+  | Estimated by a rule | blue | `<Platform> rule` chip |
   | Adjusted | purple | `Adjusted` chip (unconfirmed override or anime offset) |
   | No time yet | grey | `Date only` chip |
   | Delayed | orange | "Delayed" pill, struck-through old time |
   | Not in your country | red | "No official stream in your country" |
 
+- **Tinted and accented widgets:** status inks fall back to primary, and the countdown is the one `widgetAccentable` element. Glyphs and words keep the meaning.
 - **One accent**, set by the chosen numeral study (§3). It is used for the countdown tint in the Dynamic Island and for controls, never for status.
 - **Spacing:** 4 · 8 · 12 · 16 · 24 · 32 pt. **Radius:** chip = capsule, row card 14 pt, sheet 20 pt.
 - **Type:** text styles so Dynamic Type works (SPEC AX5 criterion). The numeral face comes from the chosen study. Everything else is SF Pro.
@@ -39,7 +41,7 @@ Taken as counterexamples, not patterns: #24 Paramount+ (US-only times) and #64 P
 
 ## 3. Numeral studies (Chime picks one)
 
-Rendered by `NumeralStudyRenderTests` into `docs/design/numeral-studies/` for every widget family, the Lock Screen Live Activity and the Upcoming hero.
+Rendered by `NumeralStudyRenderTests` into `docs/design/studies/` (compare them in `index.html`) for every widget family, the Lock Screen Live Activity and the Upcoming hero.
 
 | Study | Numerals | Accent | From the picks |
 | --- | --- | --- | --- |
@@ -47,7 +49,7 @@ Rendered by `NumeralStudyRenderTests` into `docs/design/numeral-studies/` for ev
 | **B · Mono** | SF Mono Medium | Lime | #33 Any Distance, #117 one year |
 | **C · Serif** | New York Semibold, tabular | Warm yellow | #126 Once, #149 Tiimo, #75 Fable |
 
-Once Chime picks one, `Tokens.numeral` is fixed to it and the other two are deleted.
+Once Chime picks one, `EnvironmentValues.numeralStudy` defaults to it and the other two are deleted, with the study board.
 
 ## 4. Shared components (`Shared/Design/`)
 
@@ -55,9 +57,9 @@ Once Chime picks one, `Tokens.numeral` is fixed to it and the other two are dele
 | --- | --- | --- |
 | `SourceChip` | Glyph + word for a `ReleaseSource` and `Confidence`: `Broadcast`, `Netflix rule`, `Confirmed`, `Adjusted`, `JP broadcast`, `Date only` (**SPEC**). Override shows `Confirmed` when exact, otherwise `Adjusted`. | `source-chip` |
 | `CountdownText` | Over 24 h: static "2d 4h". Within 24 h: a ticking `Text(timerInterval:pauseTime:countsDown:)` (CLAUDE.md rule 4). After the drop: "Out now". `dateOnly`: no timer. Units dim (§1.3). | `countdown` |
-| `ProviderLabelView` | "HBO · US" (D-20), or "No official stream in your country" (**SPEC**) in red with a glyph | `provider-label` |
+| `ProviderLabelView` | "HBO · US" (D-20); when the rules file says so, "No official stream in your country" (**SPEC**) under it in the no-stream ink with a glyph | `provider-label` |
 | `SectionHeader` | Title plus a small count, e.g. "Next 24 hours" over "2 shows" (#1 Brink) | `section-header-<id>` |
-| `DropRow` | One drop: show name, `S2E5`, local day and time, countdown, source chip, provider label; "Delayed" pill with the old time struck through (#43) | `drop-row-<n>` with children `drop-row-<n>-title`, `-episode`, `-time` |
+| `DropRow` | One drop: show name, `S2E5`, local day and time, countdown, source chip, provider label; "Delayed" pill with the old time struck through (#43) | `drop-row-<n>` with children `drop-row-<n>-title` and `drop-row-<n>-time` ("S2E5 · Tomorrow 02:00") |
 
 ## 5. Screens
 
@@ -89,7 +91,7 @@ Navigation is still O-11 (`SITEMAP.md`). This brief assumes the proposed tab bar
 
 - **Job:** find and follow the right show; never auto-select (SPEC).
 - **Borrows:** #80 Hypelist (media switch above the field); #83 Apple TV (dense rows, dot-separated metadata); #84 Shelf (trailing (+) to follow); #87 PlayStation (the typed query in bold inside titles).
-- **Elements:** `search-kind` TV / Anime; `search-field`; `search-result-<n>` with `-title` and `-meta` "2019 · HBO · Running" (year, network, status, **SPEC**); `search-result-<n>-follow`.
+- **Elements:** `search-kind` TV / Anime; `search-field`; `search-result-<n>` with `-title` and `-meta` showing year, network and status (**SPEC**), e.g. "2019 · HBO · Running"; `search-result-<n>-follow`.
 - **States:** empty field; typing; results; no results; network error; already followed (the (+) becomes a check).
 
 ### 5.4 Show detail
@@ -107,32 +109,46 @@ Navigation is still O-11 (`SITEMAP.md`). This brief assumes the proposed tab bar
 
 ### 5.6 Settings
 
-- **Borrows:** #96 Life Reset ("System: …" / "Airstamp will use: …" summary for the zone override); #103 Lumy (radio list for lead time); #111 Pillow (credits grouped under the licence name); #56 Ultrahuman (status and last-sync pairs).
-- **Elements:** `settings-zone` with summary; `settings-lead` 30 min, 1 h, 2 h (default), 3 h, 4 h, 6 h (**SPEC** range), each with the local start time; `settings-la-permission`; `settings-credits`; `settings-privacy`; `settings-debug` (Debug builds only).
-- **Credits:** TVmaze (CC BY-SA 4.0, with a link) and AniList, and that no data is collected (**SPEC**).
+- **Job:** preferences and information: the zone override, the Live Activity lead time and permission, credits, privacy.
+- **Borrows:** #96 Life Reset ("System: …" / "Airstamp will use: …" summary for the zone override); #103 Lumy (radio list for lead time); #56 Ultrahuman (status and last-sync pairs).
+- **Elements:** `settings-zone` with summary; `settings-lead` 30 min, 1 h, 2 h (default), 3 h, 4 h, 6 h, each with the local start time; `settings-la-permission`; `settings-credits`; `settings-privacy`; `settings-debug` (Debug builds only).
+- **Copy:** *new*: "Time zone", "Automatic", "System: Lagos (WAT)" / "Airstamp will use: London (GMT)", "Live Activity lead time", "Starts at 00:00 for a 02:00 drop", "Live Activities: Allowed" / "Off in iOS Settings", "Credits & licences", "Privacy". The lead-time range, 30 min to 6 h, is from SPEC.
+- **States:** automatic zone; overridden zone (the summary names both); Live Activities allowed; denied (with a link to iOS Settings); Debug build (Debug row shown); release build (hidden).
+
+### 5.7 Credits
+
+- **Job:** credit the data sources and licences, and say that no data is collected (SPEC).
+- **Borrows:** #111 Pillow (credits grouped under the licence name, then the works).
+- **Elements:** `credits-tvmaze` with `credits-tvmaze-link`; `credits-anilist`; `credits-licence` (MIT); `credits-no-data`; `credits-privacy` linking `PRIVACY.md`.
+- **Copy:** *new*, written to SPEC's content list (TVmaze CC BY-SA with a link, AniList, no data collected): "Show and episode data from TVmaze, licensed under CC BY-SA 4.0", "Anime schedules from AniList", "Airstamp is open source under the MIT licence", "Airstamp collects no data. Nothing leaves your phone except requests to TVmaze and AniList."
+- **States:** default; long licence text at AX5 (scrolls, nothing clipped); link tapped (opens Safari).
 
 ## 6. Surfaces outside the app
 
 ### 6.1 Widgets
 
-All copy is from SPEC §5. Every view has the full-phrase `accessibilityLabel` (CLAUDE.md).
+- **Job:** answer "how long, and where is it on" from the Lock Screen and Home Screen without opening the app (SPEC Goal).
+- **Borrows:** #135 Waymo, #128 Apple Sports, #117 one year, #119 Speak, and #114 Cal AI for the in-context preview on Welcome.
 
-| Family | Content | Borrows |
-| --- | --- | --- |
-| `accessoryInline` | `Silo · 2d 4h` | — |
-| `accessoryCircular` | Big "2d" / "4h" / "38m" with a 7-day ring | #135 Waymo (big number, small unit) |
-| `accessoryRectangular` | Show name, countdown, `Wed 02:00 · Apple TV` | #128 Apple Sports (dot-separated line) |
-| `systemSmall` | Huge countdown, the show name small, the source chip | #117 one year (bright number, dim unit) |
-| `systemMedium` | The next 3 drops as rows; the first row has an "UP NEXT" label | #119 Speak ("UP NEXT") |
+| Family | Content | Test IDs | Borrows | States |
+| --- | --- | --- | --- | --- |
+| `accessoryInline` | `Silo · 2d 4h` (**SPEC**). The system draws it in its own font. | `widget-inline` | — | counting down; Out now ("Silo · Out now", *new*); `dateOnly` ("Silo · Wed 29 Apr"); nothing followed ("Follow a show", *new*) |
+| `accessoryCircular` | Big "2d" / "4h" / "38m" with a ring over the last 7 days | `widget-circular-value`, `widget-circular-ring` | #135 Waymo (big number, small unit) | counting down; Out now (full ring, "Out", *new*); `dateOnly` (calendar glyph and day number, no ring); nothing followed (empty ring) |
+| `accessoryRectangular` | Show name, countdown, `Wed 02:00 · Apple TV` (**SPEC**) | `widget-rect-title`, `widget-rect-countdown`, `widget-rect-meta` | #128 Apple Sports (dot-separated line) | counting down; Out now; `dateOnly` ("Wed 29 Apr · time not announced"); no official stream (the meta line keeps "HBO · US") |
+| `systemSmall` | Huge countdown, the show name small, the source chip | `widget-small-countdown`, `widget-small-title`, `source-chip` | #117 one year (bright number, dim unit) | counting down; Out now; `dateOnly`; nothing followed |
+| `systemMedium` | The next 3 drops as rows under an "UP NEXT" label (*new*) | `widget-medium-row-1`…`-3` | #119 Speak ("UP NEXT") | 1, 2 or 3 drops; nothing followed |
 
-- **States:** counting down; Out now (1 hour); `dateOnly` ("Wed 29 Apr", no timer); nothing followed; light, dark, tinted/accented and Always-On (SPEC).
+- **States:** in every family, counting down; Out now for 1 hour; a `dateOnly` drop shows "Wed 29 Apr" with no timer (**SPEC**); nothing followed.
+- **Rendering modes in every family:** light, dark, tinted/accented and Always-On (SPEC §5). In tinted or accented mode the status inks fall back to primary and secondary, the countdown is the accentable element, and the chip keeps its glyph and word, so no meaning is lost (`SourceChip`, `ProviderLabelView`). Always-On dims everything and keeps the countdown.
+- **Accessibility:** every view has the full-phrase `accessibilityLabel` (CLAUDE.md), e.g. "House of the Dragon, in 3 hours, HBO US, no official stream in your country" (SPEC).
 
 ### 6.2 Live Activity
 
-All copy is from SPEC §6.
-
-- **Lock Screen** (at most 160 pt): a breadcrumb `Silo · S2 E5 · Apple TV` (#128 Apple Sports), then the relative countdown big and the absolute time below, "in 2 h 10 min" then "Fri 02:00" (#130 Transit). A header band flips to "Out now" without moving the numbers (#146 Strava).
-- **Compact:** leading monogram, trailing tinted timer (#132 Flighty). **Minimal:** the timer, fitting 28 pt (SPEC). Coarse values use big number, small unit (#135 Waymo).
-- **Expanded:** title top-left, accent "in 2:57:30" top-right (#140 Moonlitt), caption "Out in" over the value (#141 Tide Guide), "Apple TV · 02:00" (**SPEC**).
-- **Before the window opens:** the date and time centred, not a timer (#145 NFL).
-- **Alert:** "Silo starts in 2 hours · 02:00 · Apple TV" (**SPEC**).
+- **Job:** count down on release night on the Lock Screen and in the Dynamic Island, then show "Out now" without the app running (SPEC core flow 4).
+- **Borrows:** #128 Apple Sports (breadcrumb), #130 Transit (relative first, absolute second), #146 Strava (header band for the state change), #132 Flighty (compact), #135 Waymo (big number, small unit), #140 Moonlitt and #141 Tide Guide (expanded), #145 NFL (before the countdown).
+- **Elements:**
+  - Lock Screen (at most 160 pt): `la-breadcrumb` `Silo · S2E5 · Apple TV · US` (*new*, built from `episodeLabel` and the provider label); `la-countdown`, the big relative countdown under an "Out in" caption (*new*); `la-time`, the absolute local time ("Fri 02:00", *new*); `la-band`, the header band that flips to "Out now".
+  - Compact: `la-compact-monogram` leading, `la-compact-timer` trailing and tinted. Minimal: `la-minimal`, the timer, fitting 28 pt (SPEC).
+  - Expanded: `la-expanded-title` (show name and `S2E5`, SPEC §6), `la-expanded-countdown` top-right, `la-expanded-meta` "Apple TV · 02:00" (**SPEC**).
+  - Alert: "Silo starts in 2 hours · 02:00 · Apple TV" (**SPEC**).
+- **States:** before the window opens (the date and time centred, no timer, #145 NFL); counting down; "Out now" (**SPEC**) once the content is stale at the drop, with the numbers staying put; merged same-night drops ("Silo + 1 more", *new*); delayed (old time struck through); ended an hour after the drop.

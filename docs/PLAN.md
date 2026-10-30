@@ -112,7 +112,7 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
 **Goal:** know what each screen looks like before building it. There is no Figma (D-31). design references go into a written brief, and the brief goes straight into SwiftUI.
 
 ### Claude CLI does
-- [ ] **reference sweep:** one iOS search per surface, following the `references:search` skill rules. Save the best 3–5 per surface to `Airstamp references`, and note the pattern taken from each in `docs/design/REFERENCES.md`. The seed pass is already there.
+- [x] **reference sweep:** (Done 30 Oct as the reference board: 154 references, Chime liked 47, all saved to the collection.) One iOS search per surface, following the `references:search` skill rules. Save the best 3–5 per surface to `Airstamp references`, and note the pattern taken from each in `docs/design/REFERENCES.md`. The seed pass is already there.
 
   | Surface | Query |
   | --- | --- |
@@ -125,9 +125,9 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
   | Live Activity | "lock screen live activity with countdown timer" (seeds: Apple Fitness, Once, Duolingo) |
   | Widgets | "lock screen widgets countdown", "home screen widget countdown large numeral" |
 
-- [ ] **`docs/design/UI-BRIEF.md`:** one section per screen and surface: its job, the design references it borrows from, its elements with test IDs, its copy taken from SPEC, and every state.
-- [ ] **Style in code:** `Shared/Design/Tokens.swift` (colours for light, dark and tinted; a type scale with tabular numerals), plus `SourceChip`, `CountdownText`, `DropRow`, `ProviderLabelView` and `SectionHeader`, each with a `#Preview`.
-- [ ] **3 numeral studies** rendered from previews across the widget families and the Lock Screen Live Activity, then shown side by side.
+- [x] **`docs/design/UI-BRIEF.md`:** one section per screen and surface: its job, the design references it borrows from, its elements with test IDs, its copy taken from SPEC, and every state.
+- [x] **Style in code:** `Shared/Design/Tokens.swift` (colours for light, dark and tinted; a type scale with tabular numerals), plus `SourceChip`, `CountdownText`, `DropRow`, `ProviderLabelView` and `SectionHeader`, each with a `#Preview`.
+- [x] **3 numeral studies** (`docs/design/studies/index.html`) rendered from previews across the widget families and the Lock Screen Live Activity, then shown side by side.
 - [ ] `AniListClient` behind a `CatalogSource` protocol (30 requests a minute, `isAdult` filtered out). SwiftData `FollowedShow`. The Search screen with TV and Anime tabs and disambiguation.
 
 ### Chime does

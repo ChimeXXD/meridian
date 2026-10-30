@@ -107,7 +107,7 @@ flowchart TD
 | Shows followed, nothing scheduled | "Nothing scheduled for your shows yet. Airstamp checks again each time you open it." |
 | Offline | The last known times plus "Offline · Updated 3 h ago" |
 | A time moved later | The row shows "Delayed", with the old time struck through |
-| No official stream in your country | The row shows "No official stream in your country" in place of the provider |
+| No official stream in your country | The row keeps the provider ("HBO · US") and adds "No official stream in your country" under it |
 
 ## Outside the app
 

@@ -154,8 +154,8 @@
         "every surface in the Day 2 table covered"
       ],
       "verify": "REFERENCES.md has a section per surface; references get_collection_contents lists the saved screens",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "30 Oct 2026: reference board (154 refs) → Chime liked 47 (docs/design/reference-board/picks.json); scripts/picks-to-references.py writes them into REFERENCES.md grouped by surface with the pattern taken (verifier regenerated it byte-identical); references get_collection_contents on 'Airstamp references' reports 47 iOS screens."
     },
     {
       "id": "D2-2",
@@ -166,8 +166,8 @@
         "job, references, elements with test IDs, copy from SPEC, states"
       ],
       "verify": "scripts/check-brief.sh checks each SPEC 1 screen and widget family has all 5 parts",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "scripts/check-brief.sh → 'PASS brief: 6 SPEC screens with all 5 parts, 5 widget families, the Live Activity, 11 SPEC strings found word for word'. The check reads the screens from SPEC §1 and the families from SPEC §5, and fails on a misquoted SPEC string or a missing part (both tried)."
     },
     {
       "id": "D2-3",
@@ -180,8 +180,8 @@
         "each component has a #Preview"
       ],
       "verify": "build passes; preview PNGs in docs/design/studies/components/",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "xcodebuild test on iPhone 18 Pro (iOS 27.0): 56 tests in 14 suites pass, incl. TokenContrastTests (WCAG AA for every ink on background, card and chip fill, light and dark), SourceChipContentTests, CountdownFormatterTests, RelativeDayTests. Every component has a #Preview and appears in the renders in docs/design/studies/ (one board per study, not a components/ subfolder). Tinted/accented: inks fall back to primary, countdown is widgetAccentable (in code; rendered on Day 4 with the real widgets)."
     },
     {
       "id": "D2-4",

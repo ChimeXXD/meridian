@@ -19,4 +19,10 @@ struct Drop: Codable, Hashable, Identifiable, Sendable {
     var provider: ProviderLabel?
     /// Set when a refresh moved the time later.
     var previousDate: Date?
+
+    /// "S2E5", or "E5" when there's no season; nil without an episode number.
+    var episodeLabel: String? {
+        guard let number else { return nil }
+        return season.map { "S\($0)E\(number)" } ?? "E\(number)"
+    }
 }
