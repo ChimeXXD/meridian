@@ -1,11 +1,11 @@
 #if DEBUG
 import SwiftUI
 
-/// The three directions on `docs/design/direction-board`, built as real screens for Chime to choose from.
-/// Launch with `-designPreview A` (or `B`, `C`), adding `detail` for Show detail and `bottom` to open scrolled.
-/// Debug only: the two directions that lose are deleted.
+/// Night Sky, the direction Chime picked from `docs/design/direction-board` (Glass and Poster Colour were dropped).
+/// Launch with `-designPreview A`, adding `detail` for Show detail, `bottom` to open scrolled, and a TVmaze ID
+/// (`44778`) to make that show the hero.
 enum Direction: String, CaseIterable {
-    case nightSky = "A", glass = "B", posterColour = "C"
+    case nightSky = "A"
 
     static var launched: Direction? {
         ProcessInfo.processInfo.arguments.lazy.compactMap(Direction.init(rawValue:)).first
@@ -13,24 +13,17 @@ enum Direction: String, CaseIterable {
 }
 
 extension ArtworkPalette {
-    /// Night Sky: Insight Timer's quiet base, a dark, low-saturation tone of the art's hue (olive, slate, plum).
-    var muted: RGBColor { RGBColor(hue: base.hue, saturation: min(base.saturation, 0.28), brightness: 0.19) }
-
-    /// Poster Colour: a bold tone of the art's hue for whole cards and pages (Paramount+, Fixtured). Greys stay grey.
-    var vivid: RGBColor {
-        guard base.saturation > 0.08 else { return RGBColor(hue: 0, saturation: 0, brightness: 0.3) }
-        // Bright enough that warm posters read as orange or mustard rather than brown; `ink` picks the text colour.
-        return RGBColor(hue: base.hue, saturation: max(base.saturation, 0.68), brightness: 0.76)
+    /// Night Sky's base: near-black with only a hint of the art's hue, so the art fades into night rather than
+    /// into a coloured page. Reds, oranges and yellows turn brown when darkened (Chime: "I don't like the brownish
+    /// background"), so warm art gets a neutral charcoal; cool art keeps a faint navy, slate or forest tint.
+    var night: RGBColor {
+        let warm = base.hue < 75 || base.hue > 320
+        return RGBColor(hue: base.hue, saturation: warm ? min(base.saturation, 0.08) : min(base.saturation, 0.32),
+                        brightness: warm ? 0.11 : 0.14)
     }
 }
 
-extension RGBColor {
-    /// White text when it reaches 4.5:1 on this colour, otherwise near-black.
-    var prefersWhiteText: Bool { RGBColor(r: 1, g: 1, b: 1).contrast(with: self) >= 4.5 }
-    var ink: Color { prefersWhiteText ? .white : Color(white: 0.08) }
-}
-
-/// Copy the three directions share, so they differ only in look.
+/// Copy shared by the Night Sky screens.
 enum DirectionCopy {
     /// "Today 21:00", or "Time not announced" for a date-only drop (D-28).
     static func yourTime(_ drop: Drop, now: Date, formatter: DropFormatter) -> String {

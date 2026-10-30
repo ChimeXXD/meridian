@@ -2,7 +2,7 @@
 import SwiftUI
 
 /// Direction A, Show detail: Insight Timer's player screen nearly as it is. The art fills the top with a round glass
-/// button on it (here the Live Activity bell), the countdown and bar sit on the muted base, then the facts and
+/// button on it (here the Live Activity bell), the countdown and bar sit on the night base, then the facts and
 /// episodes continue in the same quiet serif style.
 struct NightSkyDetail: View {
     let drop: Drop
@@ -18,7 +18,7 @@ struct NightSkyDetail: View {
     var body: some View {
         TimelineView(.everyMinute) { context in
             ArtworkLoaderView(url: artwork?.hero, maxPixel: ShowArtwork.idealBackgroundWidth) { hero in
-                let base = (hero?.palette ?? .neutral).muted.color
+                let base = (hero?.palette ?? .neutral).night.color
                 ScrollView {
                     VStack(alignment: .leading, spacing: Tokens.Space.xl) {
                         header(image: hero?.image, base: base)
@@ -31,9 +31,11 @@ struct NightSkyDetail: View {
                                            showControls: false)
                             FactRows(rows: DirectionCopy.facts(drop, now: context.date, zone: broadcastZone, formatter: formatter), ink: .white, serif: true)
                             liveActivityRow
-                            VStack(alignment: .leading, spacing: Tokens.Space.xs) {
-                                Text("Episodes").font(.system(size: 26, design: .serif)).accessibilityAddTraits(.isHeader)
-                                EpisodeRows(episodes: episodes, ink: .white, serif: true, formatter: formatter)
+                            if !episodes.isEmpty {
+                                VStack(alignment: .leading, spacing: Tokens.Space.xs) {
+                                    Text("Episodes").font(.system(size: 26, design: .serif)).accessibilityAddTraits(.isHeader)
+                                    EpisodeRows(episodes: episodes, ink: .white, serif: true, formatter: formatter)
+                                }
                             }
                             Button("Report a wrong time") {}
                                 .font(.subheadline.weight(.semibold))

@@ -15,7 +15,7 @@ struct NightSkyUpcoming: View {
         TimelineView(.everyMinute) { context in
             ArtworkLoaderView(url: drops.first.flatMap { artwork[$0.showID]?.hero },
                               maxPixel: ShowArtwork.idealBackgroundWidth) { hero in
-                let base = (hero?.palette ?? .neutral).muted.color
+                let base = (hero?.palette ?? .neutral).night.color
                 ScrollView {
                     VStack(alignment: .leading, spacing: 36) {
                         if let next = drops.first {
@@ -132,7 +132,7 @@ struct NightSkyUpcoming: View {
     }
 }
 
-/// The next drop as Insight Timer's player: art on top, the muted base below, a giant light serif countdown with
+/// The next drop as Insight Timer's player: art on top, the night base below, a giant light serif countdown with
 /// quiet controls beside it, a thin bar for the last week before the drop, then the serif title.
 struct NightSkyHero: View {
     let drop: Drop

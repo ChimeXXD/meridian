@@ -7,8 +7,6 @@ enum NumeralStudy: String, CaseIterable, Sendable {
     case system, mono, serif
     /// Thin serif over artwork, from Chime's Insight Timer pick (D-37).
     case night
-    /// Large thin sans over Liquid Glass, for direction B (Apple Weather's temperatures).
-    case glass
 
     var title: String {
         switch self {
@@ -16,7 +14,6 @@ enum NumeralStudy: String, CaseIterable, Sendable {
         case .mono: "B · Mono"
         case .serif: "C · Serif"
         case .night: "Night"
-        case .glass: "Glass"
         }
     }
 
@@ -26,13 +23,12 @@ enum NumeralStudy: String, CaseIterable, Sendable {
         case .mono: "SF Mono Medium, lime accent"
         case .serif: "New York Semibold, tabular digits, warm yellow accent"
         case .night: "New York Light over artwork, white"
-        case .glass: "SF Pro Thin over glass, white"
         }
     }
 
     var design: Font.Design {
         switch self {
-        case .system, .glass: .default
+        case .system: .default
         case .mono: .monospaced
         case .serif, .night: .serif
         }
@@ -44,14 +40,13 @@ enum NumeralStudy: String, CaseIterable, Sendable {
         case .mono: .medium
         case .serif: .semibold
         case .night: .light
-        case .glass: .thin
         }
     }
 
     /// Countdown tint and controls. Never used for status.
     var accentInk: UIColor {
         switch self {
-        case .system, .night, .glass: .label
+        case .system, .night: .label
         case .mono: Tokens.dynamic(light: 0x3F6B0A, dark: 0xC6F432)
         case .serif: Tokens.dynamic(light: 0x8A6100, dark: 0xFFC940)
         }
