@@ -12,19 +12,52 @@ struct DesignPreview: View {
     private let formatter = DropFormatter(zoneIdentifier: "Africa/Lagos")
     private let anchor: UnitPoint? = ProcessInfo.processInfo.arguments.contains("bottom") ? .bottom : nil
 
+    private let direction = Direction.launched
+
     var body: some View {
         NavigationStack(path: $path) {
-            UpcomingArtView(drops: drops, artwork: artwork, formatter: formatter, scrollAnchor: anchor) { path.append($0) }
+            upcoming
                 .toolbarVisibility(.hidden, for: .navigationBar)
-                .navigationDestination(for: Drop.self) { drop in
-                    ShowDetailArtView(drop: drop, artwork: artwork[drop.showID],
-                                      episodes: drop.showID == "38052" ? Self.siloEpisodes : [],
-                                      broadcastZone: "America/New_York", formatter: formatter, scrollAnchor: anchor)
-                }
+                .navigationDestination(for: Drop.self) { detail(for: $0) }
         }
         .task { await loadArtwork() }
         .onAppear {
             if ProcessInfo.processInfo.arguments.contains("detail") { path = [drops[0]] }
+        }
+    }
+
+    /// `-designPreview A|B|C` opens that direction (DirectionKit); no letter opens the current artwork-led screens.
+    @ViewBuilder private var upcoming: some View {
+        let open: (Drop) -> Void = { path.append($0) }
+        switch direction {
+        case .nightSky:
+            NightSkyUpcoming(drops: drops, artwork: artwork, formatter: formatter, scrollAnchor: anchor, onSelect: open)
+        case .glass:
+            GlassUpcoming(drops: drops, artwork: artwork, formatter: formatter, scrollAnchor: anchor, onSelect: open)
+        case .posterColour:
+            PosterColourUpcoming(drops: drops, artwork: artwork, formatter: formatter, scrollAnchor: anchor, onSelect: open)
+        case nil:
+            UpcomingArtView(drops: drops, artwork: artwork, formatter: formatter, scrollAnchor: anchor, onSelect: open)
+        }
+    }
+
+    @ViewBuilder private func detail(for drop: Drop) -> some View {
+        let art = artwork[drop.showID]
+        let episodes = drop.showID == "38052" ? Self.siloEpisodes : []
+        let zone = "America/New_York"
+        switch direction {
+        case .nightSky:
+            NightSkyDetail(drop: drop, artwork: art, episodes: episodes, broadcastZone: zone, formatter: formatter,
+                           scrollAnchor: anchor)
+        case .glass:
+            GlassDetail(drop: drop, artwork: art, episodes: episodes, broadcastZone: zone, formatter: formatter,
+                        scrollAnchor: anchor)
+        case .posterColour:
+            PosterColourDetail(drop: drop, artwork: art, episodes: episodes, broadcastZone: zone, formatter: formatter,
+                               scrollAnchor: anchor)
+        case nil:
+            ShowDetailArtView(drop: drop, artwork: art, episodes: episodes, broadcastZone: zone, formatter: formatter,
+                              scrollAnchor: anchor)
         }
     }
 

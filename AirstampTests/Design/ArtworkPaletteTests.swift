@@ -40,6 +40,31 @@ struct ArtworkPaletteTests {
         #expect(base.saturation > 0.2)
     }
 
+    @Test("teal and orange art gives teal or orange, not the olive between them (Silo's poster)")
+    func complementaryHuesDontMix() {
+        let art = Self.image { context in
+            context.setFillColor(red: 0.10, green: 0.50, blue: 0.55, alpha: 1)
+            context.fill(CGRect(x: 0, y: 0, width: 64, height: 40))
+            context.setFillColor(red: 0.90, green: 0.50, blue: 0.10, alpha: 1)
+            context.fill(CGRect(x: 0, y: 40, width: 64, height: 24))
+        }
+        let hue = ArtworkPalette(image: art).base.hue
+        let distance = { (target: Double) in abs(((hue - target + 540).truncatingRemainder(dividingBy: 360)) - 180) }
+        #expect(distance(185) < 15 || distance(30) < 15, "hue \(hue) is neither teal nor orange")
+    }
+
+    @Test("a small muted blue subject on grey gives blue, not the red hue greys report")
+    func greysDontVoteForRed() {
+        let art = Self.image { context in
+            context.setFillColor(red: 0.45, green: 0.45, blue: 0.45, alpha: 1)
+            context.fill(CGRect(x: 0, y: 0, width: 64, height: 64))
+            context.setFillColor(red: 0.35, green: 0.40, blue: 0.50, alpha: 1)
+            context.fill(CGRect(x: 0, y: 0, width: 64, height: 4))
+        }
+        let hue = ArtworkPalette(image: art).base.hue
+        #expect(abs(((hue - 220 + 540).truncatingRemainder(dividingBy: 360)) - 180) < 20, "hue \(hue)")
+    }
+
     @Test("grey artwork gives a neutral base, not an invented colour")
     func greyStaysNeutral() {
         #expect(ArtworkPalette(image: Self.solid(0.5, 0.5, 0.5)).base.saturation < 0.05)
