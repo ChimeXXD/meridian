@@ -39,11 +39,29 @@ enum DirectionCopy {
         return "\(local.weekdayTime(drop.date)) \(local.zoneAbbreviation(drop.date))"
     }
 
-    /// Show detail's fact rows: your time, the broadcast time when there is one, and where to watch.
-    static func facts(_ drop: Drop, now: Date, zone: String?, formatter: DropFormatter) -> [(label: String, value: String)] {
-        var rows = [("Your time", yourTime(drop, now: now, formatter: formatter))]
+    /// When the episode is out, in words: "Out today at 19:21", "Out Sun at 20:31", "Released today at 19:21",
+    /// or "Out Thu 19 Nov" for a date-only drop, whose "Date only" chip says the time isn't announced (D-28).
+    /// `naming` adds the place whose clock the time is on ("Out today at 19:21 Lagos time"), so the screen says
+    /// once which zone its times are in.
+    static func outLine(_ drop: Drop, now: Date, formatter: DropFormatter, naming: Bool = false) -> String {
+        if drop.confidence == .dateOnly {
+            return "Out \(drop.airdate.flatMap(formatter.airdate) ?? "date to be confirmed")"
+        }
+        let day = formatter.relativeDay(drop.date, now: now)
+        let spoken = ["Today": "today", "Tomorrow": "tomorrow", "Yesterday": "yesterday"][day] ?? day
+        let line = "\(drop.date <= now ? "Released" : "Out") \(spoken) at \(formatter.localTime(drop.date))"
+        guard naming, let place = formatter.timeZone.identifier.split(separator: "/").last else { return line }
+        return "\(line) \(place.replacingOccurrences(of: "_", with: " ")) time"
+    }
+
+    /// Show detail's time facts: your time with its zone, against the broadcast time when there is one. The
+    /// episode, provider and source are already on the line under the countdown.
+    static func timeFacts(_ drop: Drop, now: Date, zone: String?, formatter: DropFormatter) -> [(label: String, value: String)] {
+        let yours = drop.confidence == .dateOnly
+            ? yourTime(drop, now: now, formatter: formatter)
+            : "\(yourTime(drop, now: now, formatter: formatter)) \(formatter.zoneAbbreviation(drop.date))"
+        var rows = [("Your time", yours)]
         if let broadcast = broadcast(drop, zone: zone, formatter: formatter) { rows.append(("Broadcast", broadcast)) }
-        rows.append(("Where to watch", drop.provider?.display ?? "Not listed"))
         return rows
     }
 

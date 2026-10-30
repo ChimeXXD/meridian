@@ -2,6 +2,23 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Day 2: Night Sky cleaned up (Fri 30 Oct 2026)
+
+**Changed**
+- Chime called the Night Sky screens cluttered ("unslop this", the progress bar made no sense for a release countdown). Removed the progress bar, the bell and "…" icons, the zone pill, the big bell on the art and the share button.
+- Every screen now leads with the same three lines (`NightSkyHeadline`): title, giant serif countdown, "Out today at 19:21" (`DirectionCopy.outLine`), then one dim line with episode, provider and source (`NightSkyMeta`).
+- Upcoming after the hero is one row pattern in SPEC's sections (Next 24 hours, This week, Later, Date only) under small caps headers, replacing the shelf plus list. The row's countdown sits beside the title so the meta line gets the full width.
+- Show detail keeps only your time (with its zone) against the broadcast time, the Live Activity switch, episodes and the report link.
+- `SourceChip(plain:)`: glyph and word without the capsule, for quiet lines; the filled chip stays the default.
+
+**Checked**
+- Simulator screenshots of Silo, House of the Dragon and Frieren (Upcoming and Show detail) and both screens scrolled; in `docs/design/direction-board/variants.html`. Fixed after looking: meta lines cut off in rows, a wrapping date-only line.
+
+**Not verified**
+- Times are samples. "Your time" shows "GMT+1" for Lagos (the zone's short name from the system), not "WAT".
+
+**Next:** Chime's verdict. Then delete the old artwork-led views, rewrite UI-BRIEF §1–3 for Night Sky, and build the real Upcoming on it (Day 3).
+
 ## Day 2: Night Sky chosen, no brown (Fri 30 Oct 2026)
 
 **Changed**

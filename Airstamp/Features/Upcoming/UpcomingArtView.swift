@@ -42,7 +42,7 @@ struct UpcomingArtView: View {
 
     private func rows(now: Date) -> some View {
         VStack(alignment: .leading, spacing: Tokens.Space.s) {
-            ForEach(Array(groups(now: now).enumerated()), id: \.offset) { _, group in
+            ForEach(Array(Self.sections(after: drops, now: now).enumerated()), id: \.offset) { _, group in
                 Text(group.title)
                     .font(.title3.weight(.bold))
                     .padding(.top, Tokens.Space.m)
@@ -62,7 +62,7 @@ struct UpcomingArtView: View {
 
     /// SPEC's sections for everything after the hero. A first cut for the design pass; `UpcomingViewModel` owns
     /// the tested boundaries on Day 3.
-    private func groups(now: Date) -> [(title: String, drops: [Drop])] {
+    static func sections(after drops: [Drop], now: Date) -> [(title: String, drops: [Drop])] {
         let later = drops.dropFirst()
         let buckets: [(String, (Drop) -> Bool)] = [
             ("Next 24 hours", { $0.confidence != .dateOnly && $0.date.timeIntervalSince(now) <= 86_400 }),

@@ -5,26 +5,36 @@ import WidgetKit
 /// In tinted or accented widgets the ink becomes primary; the glyph and word still say which source it is.
 struct SourceChip: View {
     let content: SourceChipContent
+    /// Glyph and word only, without the capsule, for quiet lines over dark art (Night Sky, D-38).
+    var plain = false
 
     @Environment(\.widgetRenderingMode) private var renderingMode
 
-    init(source: ReleaseSource, confidence: Confidence) {
+    init(source: ReleaseSource, confidence: Confidence, plain: Bool = false) {
         content = SourceChipContent(source: source, confidence: confidence)
+        self.plain = plain
     }
 
     var body: some View {
         let ink = renderingMode == .fullColor ? Color(uiColor: content.kind.ink) : .primary
-        Label(content.label, systemImage: content.kind.glyph)
+        let label = Label(content.label, systemImage: content.kind.glyph)
             .labelStyle(.titleAndIcon)
             .font(.caption.weight(.semibold))
             .foregroundStyle(ink)
             .lineLimit(1)
-            .padding(.horizontal, Tokens.Space.xs)
-            .padding(.vertical, Tokens.Space.xxs)
-            .background(ink.opacity(Tokens.chipFillOpacity), in: Capsule())
-            .accessibilityElement(children: .ignore)
-            .accessibilityLabel("Source: \(content.label)")
-            .accessibilityIdentifier("source-chip")
+        Group {
+            if plain {
+                label
+            } else {
+                label
+                    .padding(.horizontal, Tokens.Space.xs)
+                    .padding(.vertical, Tokens.Space.xxs)
+                    .background(ink.opacity(Tokens.chipFillOpacity), in: Capsule())
+            }
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Source: \(content.label)")
+        .accessibilityIdentifier("source-chip")
     }
 }
 
