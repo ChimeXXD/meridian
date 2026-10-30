@@ -1,6 +1,6 @@
 # CLAUDE.md — Next Episode (app name: Airstamp)
 
-You are building this project. Read this file first, then `docs/PLAN.md` for the current day and `PROGRESS.md` for where the last session stopped.
+You are building this project. Read this file first, then `docs/HANDOFF.md` (the latest session summary), `docs/PLAN.md` for the current day and `PROGRESS.md` for where the last session stopped.
 Every product and architecture decision is already made in `docs/DECISIONS.md`. Don't reopen one unless it blocks you. If it does, write the problem in `docs/DECISIONS.md` under "Open" and ask Chime.
 
 ## What we are building
