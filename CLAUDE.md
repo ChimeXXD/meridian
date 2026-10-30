@@ -7,7 +7,7 @@ Every product and architecture decision is already made in `docs/DECISIONS.md`. 
 
 An iPhone app that answers one question at a glance: **"How long until my next episode, in my time zone, and where is it on?"**
 It shows a live countdown on the Lock Screen and Home Screen widgets, and a scheduled release-night Live Activity in the Dynamic Island.
-The app is local-first: no account, no server, no analytics. Its edge is **release times you can trust, wherever you are**: every time shows where it came from (D-17).
+The app is local-first: no account, no server, no analytics. Its edge is **release times you can trust, wherever you are**: every time says how sure it is in plain words, and Show detail says where it came from (D-17, D-40).
 
 - Codename / repo: `next-episode`. Display name: **Airstamp** (see D-01).
 - Primary user: Chime in Lagos (UTC+1, no DST). Design for viewers outside the US first.
@@ -71,7 +71,7 @@ Prefer the MobileBuildMCP tools (formerly XcodeBuildMCP: `build_run_sim`, `test_
 
 1. **Store every time as a UTC `Date`.** Format only at the view layer, with `TimeZone.current`, unless the user overrides it in Settings. The one exception: a `dateOnly` drop keeps its listed `airdate` (`yyyy-MM-dd`) and is formatted from that, so it never shifts to the wrong day (D-28).
 2. **Never trust a TVmaze `airstamp` when `airtime == ""`.** It is a fake noon placeholder in the channel's country zone (12:00Z for Netflix, 16:00Z or 17:00Z for Peacock and Hulu). Detect it **only** by the empty airtime, never by the hour (D-25). Resolve the time with an override or `PlatformRules` and mark it `.estimated`. If nothing matches, mark it `.dateOnly` and show no timer.
-3. Every displayed time carries a `ReleaseSource`, shown as the source chip: `broadcast` ("Broadcast"), `platformRule(name)` ("Netflix rule"), `override` ("Confirmed" if confirmed, otherwise "Adjusted"), `adjusted` for an anime offset ("Adjusted"), `anilist` ("JP broadcast"), and `dateOnly` ("Date only").
+3. Every displayed time says how sure it is **in words**, through `ReleaseWording` (D-40), never with a colour code or dot: "Out"/"Released" for an exact time (`broadcast`, a confirmed `override`), "Expected" for an estimate (`platformRule`, an unconfirmed `override`, `adjusted`), "Airs in Japan"/"Aired in Japan" for `anilist`, and "Out Thu 19 Nov, time not announced" for `dateOnly`. Show detail explains the source in one sentence (`ReleaseWording.explanation`). The coloured `SourceChip` survives only in the pre-Night-Sky views and the widget mock-ups; it goes as each one is rebuilt on `ReleaseWording`, so never add it to new UI.
 4. Use `Text(timerInterval: now...drop, pauseTime: drop, countsDown: true)` or add a timeline entry at `drop`. A plain `.timer` counts *up* after zero, which is a bug here.
 5. Widget timeline entries are at least 5 minutes apart. Reload policy is `.after(nextDrop)`.
 6. Use `Activity.request(... start:)`, not `startDate:`, which exists only on iOS 26.0. It requires an `AlertConfiguration` and must be called while the app is in the foreground. Set `staleDate` to the drop so the view shows "Out now" without the app. Always catch `ActivityAuthorizationError`. Scheduled activities count toward an unpublished limit, so keep **at most 3 pending** (D-24).

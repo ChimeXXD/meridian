@@ -14,7 +14,9 @@ Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 **Not verified**
 - If Chime picks one, CLAUDE.md rule 3, SPEC's source-chip criterion and D-39 change with it; that needs Chime's OK.
 
-**Next:** Chime picks A, B or C.
+**Decided:** Chime picked A (D-40, supersedes D-39). `Shared/Time/ReleaseWording` (test-first: red `cannot find 'ReleaseWording' in scope`, then green) words every time ("Out", "Expected", "Airs in Japan", "time not announced"; only an exact time says "Released") and explains its source on Show detail. B, C, `TrustStyle` and the dot style of `SourceChip` are deleted; CLAUDE.md rule 3, SPEC, PLAN and features.json now describe the wording. `guide.html` is redrawn for it. 74 tests pass; `check-spec` passes.
+
+**Next:** Delete the old artwork-led views, rewrite UI-BRIEF §1–3 for Night Sky, and build the real Upcoming on it (Day 3).
 
 ## Day 2: unslop pass on Night Sky (Fri 30 Oct 2026)
 

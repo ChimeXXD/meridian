@@ -28,7 +28,7 @@ struct NightSkyDetail: View {
                                                  titleSize: 32, countdownSize: 88, testID: "detail")
                                 NightSkyMeta(drop: drop)
                                 // Where the time came from, as one plain sentence instead of a code to learn.
-                                Text(DirectionCopy.why(drop, zone: broadcastZone, formatter: formatter))
+                                Text(ReleaseWording.explanation(drop, broadcastZone: broadcastZone, formatter: formatter))
                                     .font(.subheadline)
                                     .foregroundStyle(NightInk.secondary)
                                     .fixedSize(horizontal: false, vertical: true)

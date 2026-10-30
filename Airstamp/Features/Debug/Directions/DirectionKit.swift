@@ -24,61 +24,15 @@ extension ArtworkPalette {
 }
 
 /// Night Sky's three text roles on the dark base (unslop: primary, secondary, muted), named so the two greys are
-/// never confused: secondary is a row's "Out …" line, muted is meta, labels and the source word.
+/// never confused: secondary is a row's "Out …" line, muted is meta and labels.
 enum NightInk {
     static let primary = Color.white
     static let secondary = Color.white.opacity(0.75)
     static let muted = Color.secondary
 }
 
-/// Copy shared by the Night Sky screens.
+/// Copy shared by the Night Sky screens. How sure a time is lives in `ReleaseWording` (Shared/Time, tested).
 enum DirectionCopy {
-    /// "Fri 14:38 New York" in the network's zone; only a broadcast time has one. Zones are named by place
-    /// everywhere ("Lagos", "New York"), never "GMT+1" on one line and "EDT" on the next.
-    static func broadcast(_ drop: Drop, zone: String?, formatter: DropFormatter) -> String? {
-        guard drop.confidence != .dateOnly, case .broadcast = drop.source, let zone else { return nil }
-        let local = DropFormatter(zoneIdentifier: zone, locale: formatter.locale)
-        return "\(local.weekdayTime(drop.date)) \(place(local))"
-    }
-
-    /// The city in a zone's IANA name: "Africa/Lagos" → "Lagos", "America/New_York" → "New York".
-    /// A zone with no city ("UTC", "Etc/GMT+1", a fixed offset) falls back to its GMT name, because "Etc/GMT+1" is
-    /// really UTC-1 and its last component would read the wrong way round.
-    static func place(_ formatter: DropFormatter) -> String {
-        let zone = formatter.timeZone
-        guard zone.identifier.contains("/"), !zone.identifier.hasPrefix("Etc/") else {
-            return zone.localizedName(for: .shortStandard, locale: Locale(identifier: "en_US")) ?? zone.identifier
-        }
-        return String(zone.identifier.split(separator: "/").last ?? "").replacingOccurrences(of: "_", with: " ")
-    }
-
-    /// When the episode is out, in words: "Out today at 19:21", "Out Sun at 20:31", "Released today at 19:21",
-    /// or "Out Thu 19 Nov" for a date-only drop (D-28). In style A the verb carries the certainty ("Expected …",
-    /// "Airs in Japan …") and a date-only line says the time isn't announced.
-    /// `naming` adds the place whose clock the time is on ("Out today at 19:21 Lagos time"), so the screen says
-    /// once which zone its times are in.
-    static func outLine(_ drop: Drop, now: Date, formatter: DropFormatter, naming: Bool = false,
-                        style: TrustStyle = .launched) -> String {
-        if drop.confidence == .dateOnly {
-            let day = drop.airdate.flatMap(formatter.airdate) ?? "date to be confirmed"
-            return style == .inWords ? "Out \(day), time not announced" : "Out \(day)"
-        }
-        let day = formatter.relativeDay(drop.date, now: now)
-        let spoken = ["Today": "today", "Tomorrow": "tomorrow", "Yesterday": "yesterday"][day] ?? day
-        let verb = drop.date <= now ? "Released" : style == .inWords ? verb(drop) : "Out"
-        let line = "\(verb) \(spoken) at \(formatter.localTime(drop.date))"
-        return naming ? "\(line) \(place(formatter)) time" : line
-    }
-
-    /// The broadcast time in the network's own city, when there is one and it differs from your clock: the headline
-    /// already says your time ("Out today at 21:00 Lagos time"). Feeds Show detail's `why` sentence.
-    static func timeFacts(_ drop: Drop, zone: String?, formatter: DropFormatter) -> [(label: String, value: String)] {
-        // When the network's clock matches yours, the headline already says it.
-        if let zone, TimeZone(identifier: zone)?.secondsFromGMT(for: drop.date)
-            == formatter.timeZone.secondsFromGMT(for: drop.date) { return [] }
-        return broadcast(drop, zone: zone, formatter: formatter).map { [("Broadcast", $0)] } ?? []
-    }
-
     /// "S4E1 · Apple TV"
     static func episodeAndProvider(_ drop: Drop) -> String {
         [drop.episodeLabel, drop.provider?.display].compactMap(\.self).joined(separator: " · ")

@@ -11,7 +11,7 @@ The finished project is:
 2. A public repo that reads like senior work: a README with a demo video, an architecture diagram, the time-rules story, tests, a CI badge, and a clean commit history.
 3. A case study and a 30-second video for the portfolio site.
 
-The selling point stays: **release times you can trust, wherever you are** (D-17). Every competitor has a countdown. None shows where its time came from.
+The selling point stays: **release times you can trust, wherever you are** (D-17). Every competitor has a countdown. None shows where its time came from or how sure it is.
 
 ## The week at a glance
 
@@ -34,7 +34,7 @@ The selling point stays: **release times you can trust, wherever you are** (D-17
 | --- | --- | --- |
 | TimeResolver, PlatformRules, bundled rules file with overrides, and tests | Fetching rules updates from GitHub, switched on once the repo is public (D-34) | App Store listing, privacy label, age rating, name/trademark check |
 | TVmaze and AniList clients, Search, follow | Settings time-zone override (great for the demo: "now show it in Tokyo") | `BGAppRefreshTask` (refresh happens when the app opens) |
-| Upcoming with source chips, provider label, empty state | Delay badge (shown through Debug → "Simulate delay") | Multi-card onboarding (one welcome screen instead) |
+| Upcoming with release wording (D-40), provider label, empty state | Delay badge (shown through Debug → "Simulate delay") | Multi-card onboarding (one welcome screen instead) |
 | Show detail: next drop, Live Activity toggle, anime offset, unfollow | "Report a wrong time" (email while private, GitHub issue once public) | Interviews, competitor teardown, 14-day beta, 100-drop audit |
 | 5 widget families with countdowns that never count up | Dynamic Type AX5 pass | Drop Day, importers, calendar, Watch, region data, pricing |
 | Scheduled Live Activity and Debug fake drop | `.supplementalActivityFamilies` for the Watch and Mac | |
@@ -144,7 +144,7 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
 
 ### Claude CLI does
 - [ ] Set up the `proof:build` fidelity check: `fidelity/inventory/<screen>.json` built from the UI brief, plus `fidelity/verify-screen.sh`.
-- [ ] Upcoming (sections, countdown, source chip, provider label, empty state), Show detail, a one-screen welcome showing "Times shown for Lagos, UTC+1" with a widget prompt, Settings (lead time, plus the time-zone override as a Should), and Credits.
+- [ ] Upcoming (sections, countdown, release wording, provider label, empty state), Show detail, a one-screen welcome showing "Times shown for Lagos, UTC+1" with a widget prompt, Settings (lead time, plus the time-zone override as a Should), and Credits.
 - [ ] For each screen: run `verify-screen.sh` until it prints ALL PASS, then show the screenshots next to their design references. Approved screenshots go to `fidelity/refs/` as baselines.
 
 ### Chime does

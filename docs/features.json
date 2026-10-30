@@ -251,7 +251,7 @@
       "id": "D3-2",
       "day": 3,
       "priority": "must",
-      "title": "Upcoming: sections, countdown, source chip, provider label, empty states",
+      "title": "Upcoming: sections, countdown, release wording (D-40), provider label, empty states",
       "criteria": [
         "sections and boundaries per SPEC",
         "no refresh-interval promise"
@@ -266,7 +266,7 @@
       "priority": "must",
       "title": "Show detail: next drop, Live Activity toggle, anime offset, unfollow",
       "criteria": [
-        "offset changes the time and the chip to Adjusted"
+        "offset changes the time and its wording to Expected"
       ],
       "verify": "ShowDetailViewModelTests; verify-screen.sh ALL PASS; Chime approves",
       "passes": false,

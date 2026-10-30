@@ -31,7 +31,7 @@ This version is a **portfolio project**: it's built in one week, ends at a priva
 
 1. **First run:** open the app → one welcome screen shows "Times shown for Lagos (UTC+1)" → follow the first show → prompt to add a Lock Screen widget → Upcoming.
 2. **Follow a show:** Search → choose TV or Anime → type a title → results show year, network and status → tap the right result → Follow → Upcoming updates and the snapshot is rewritten.
-3. **Glance:** look at the Lock Screen widget → "Silo · 2d 4h" → the long-press or the app shows the day, time, source chip and provider label.
+3. **Glance:** look at the Lock Screen widget → "Silo · 2d 4h" → the long-press or the app shows the day and time, how sure it is ("Out", "Expected") and the provider label.
 4. **Release night:** a show is opted in → when the app is foregrounded, Airstamp schedules the activity → it starts 2 h before (lead time) with an alert → the Dynamic Island counts down → at the drop it shows "Out now" → it ends at drop + 1 h.
 5. **A time changes:** refresh finds a later time for the same episode → the row shows "Delayed" with the old time → widgets and the activity are rescheduled.
 6. **Report a wrong time (Should):** Show detail → "Report a wrong time" → an email opens, prefilled with show, episode, time shown, source and time zone (while the repo is private) → a prefilled GitHub issue once the repo is public (D-34).
@@ -47,7 +47,7 @@ This version is a **portfolio project**: it's built in one week, ends at a priva
 - [ ] An anime episode's UTC instant doesn't move when US clocks change. verify: `TimeResolverTests.animeIgnoresUSDST` with fixtures from either side of 1 Nov 2026.
 - [ ] A per-episode override in the rules file wins over the platform rule. verify: `TimeResolverTests.overrideBeatsRule` using the Stranger Things 5 17:00 PT fixture.
 - [ ] The rules file loads the bundled copy. A fetched copy (Should; behind a flag that stays off until the repo is public, D-34) is used only if it passes schema validation, and the app falls back on a network error or invalid JSON. verify: `RulesStoreTests` with the flag off (no network call made) and on (a stub URLProtocol returning a valid file, invalid JSON and a 500).
-- [ ] Every displayed time carries a source chip: `Broadcast`, `<Platform> rule`, `Confirmed` (a confirmed override), `Adjusted` (an unconfirmed override, or an anime offset), `JP broadcast` or `Date only`. verify: `DropRowViewTests` asserts the chip for each `ReleaseSource` case; the screenshot passes `fidelity/verify-screen.sh upcoming`.
+- [ ] Every displayed time says how sure it is in words (D-40): `Out`/`Released` for an exact time (broadcast or a confirmed override), `Expected` for an estimate (a platform rule, an unconfirmed override or an offset), `Airs in Japan` for an AniList time, and `time not announced` for a date-only drop; Show detail explains the source in one sentence. No colour code or dot carries certainty. verify: `ReleaseWordingTests` asserts the wording and explanation for each `ReleaseSource` case; the screenshot passes `fidelity/verify-screen.sh upcoming`.
 - [ ] `dateOnly` drops show their airdate and "time not announced" with no ticking timer, in the app and in widgets. The airdate is the same calendar day whatever zone is used to show it. verify: `DateOnlyTests` formats one `dateOnly` drop in Africa/Lagos, America/New_York and Pacific/Auckland and gets the same day each time; a widget preview for `dateOnly` shows no timer.
 - [ ] The provider label shows the origin network or channel and its country ("HBO · US"); "No official stream in your country" appears only when a rules-file entry lists the viewer's country. The viewer's country is the country of the current time zone (bundled zone-to-country table), unless Settings overrides it. verify: `ProviderLabelTests` covering network, web channel, the no-stream flag, Africa/Lagos → NG, and the Settings override.
 - [ ] Search never auto-selects; each result shows year, network or channel, and status; AniList results with `isAdult == true` are excluded. verify: `SearchViewModelTests` with the "Euphoria" fixture (2 results) and an adult AniList fixture.
@@ -120,7 +120,7 @@ This version is a **portfolio project**: it's built in one week, ends at a priva
 | --- | --- | --- |
 | Welcome (one screen) | Explain, then follow the first show | Shows your time zone ("Times shown for Lagos, UTC+1"), a button to follow shows, a prompt to add a widget |
 | Search | Find TV (TVmaze) and anime (AniList or TVmaze, D-19) | Segmented TV / Anime; each result shows year, network and status; never auto-pick the first result (searching "Euphoria" also returns an Israeli show) |
-| Upcoming (home) | Every followed show sorted by time to drop | Big countdown, show name, `S1E4`, local day and time, source chip, provider label (D-20); sections: Out now · Next 24 hours · This week · Later · Date only · Nothing scheduled |
+| Upcoming (home) | Every followed show sorted by time to drop | Big countdown, show name, `S1E4`, local day and time worded by certainty ("Out", "Expected", "Airs in Japan", D-40), provider label (D-20); sections: Out now · Next 24 hours · This week · Later · Date only · Nothing scheduled |
 | Show detail | One show | Next drop, the last 3 aired episodes, a Live Activity toggle, an anime offset field, "Report a wrong time", unfollow |
 | Settings | Preferences | Time zone override, Live Activity lead time (30 min to 6 h), Live Activities permission state, credits, Debug menu (Debug builds only) |
 | Credits | Licences | TVmaze (CC BY-SA, with link), AniList, and a "no data collected" statement |
@@ -166,7 +166,7 @@ SwiftData (app only): a `FollowedShow` holds `catalog`, `externalID`, `name`, `p
 
 0. **Override:** if the rules file has an entry for this episode ID (or, failing that, this show), use it → `exact` if the entry says `confirmed`, otherwise `estimated`; `.override(note)`.
 1. **AniList:** `airingAt` + the show's `animeOffsetMinutes` → `exact` if the offset is 0 (labelled "JP broadcast"), otherwise `estimated` (`adjusted`).
-   **TVmaze anime fallback (D-19):** a TVmaze show whose network country is JP resolves through step 2 but gets the chip "JP broadcast", and the per-show offset applies in the same way.
+   **TVmaze anime fallback (D-19):** a TVmaze show whose network country is JP resolves through step 2 but is worded as a Japanese TV time ("Airs in Japan …"), and the per-show offset applies in the same way.
 2. **TVmaze with `airtime != ""`:** trust `airstamp` → `exact`, `broadcast(network)`.
 3. **TVmaze with `airtime == ""`:** look up the platform rule by `webChannel.name` or `network.name` → `estimated`. Placeholders are detected **only** by the empty airtime (D-25).
 4. Otherwise → `dateOnly` ("Wed 29 Apr · time not announced").
@@ -224,7 +224,7 @@ Both API clients are `actor`s with exponential backoff on 429 (honouring `Retry-
 | `accessoryInline` | `Silo · 2d 4h` |
 | `accessoryCircular` | Big numeral ("2d" / "4h" / "38m") with a progress ring over the last 7 days |
 | `accessoryRectangular` | Show name, countdown, `Wed 02:00 · Apple TV` |
-| `systemSmall` | Huge typographic countdown, the show name small, the source chip |
+| `systemSmall` | Huge typographic countdown, the show name small, the out line ("Out Sun 21:00", "Expected Mon 09:00") |
 | `systemMedium` | The next 3 drops as rows |
 
 - The provider reads `DropSnapshot` from the App Group. Timeline: one entry now, one at each of the next 5 drops (and drop + 1 h for "Out now → next"), all at least 5 minutes apart. Reload policy is `.after(nextDrop)`.

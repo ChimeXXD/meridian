@@ -77,7 +77,7 @@ struct NightSkyUpcoming: View {
                                 .fixedSize()
                         }
                     }
-                    Text(DirectionCopy.outLine(drop, now: now, formatter: formatter))
+                    Text(ReleaseWording.outLine(drop, now: now, formatter: formatter))
                         .font(.subheadline)
                         .foregroundStyle(NightInk.secondary)
                         .accessibilityIdentifier("drop-row-\(index)-time")
@@ -142,7 +142,7 @@ struct NightSkyHeadline: View {
             CountdownText(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate, now: now,
                           size: countdownSize, tint: .white, formatter: formatter)
                 .environment(\.numeralStudy, .night)
-            Text(DirectionCopy.outLine(drop, now: now, formatter: formatter, naming: true))
+            Text(ReleaseWording.outLine(drop, now: now, formatter: formatter, naming: true))
                 .font(.body.weight(.medium))
                 .foregroundStyle(.white)
                 .padding(.top, Tokens.Space.xxs)
@@ -151,31 +151,15 @@ struct NightSkyHeadline: View {
     }
 }
 
-/// "S4E1 · Apple TV" in muted text, then the time's certainty in words for the chosen `TrustStyle`: nothing in A
-/// (the out line says it), a flag on the exceptions in B, the source named in C.
+/// "S4E1 · Apple TV" in muted text. How sure the time is, is said by the out line's verb (D-40).
 struct NightSkyMeta: View {
     let drop: Drop
-    var style: TrustStyle = .launched
 
     var body: some View {
-        HStack(spacing: Tokens.Space.xs) {
-            Text(style == .sourced
-                 ? "\(DirectionCopy.episodeAndProvider(drop)) · \(DirectionCopy.sourcePhrase(drop))"
-                 : DirectionCopy.episodeAndProvider(drop))
-                .font(.footnote)
-                .foregroundStyle(NightInk.muted)
-                .lineLimit(1)
-            if style == .flagged, let flag = DirectionCopy.flag(drop) {
-                Text(flag)
-                    .font(.footnote.weight(.medium))
-                    .foregroundStyle(NightInk.primary)
-                    .padding(.horizontal, 6)
-                    .padding(.vertical, 2)
-                    .overlay(Capsule().strokeBorder(NightInk.primary.opacity(0.35)))
-                    .fixedSize()  // the episode and provider truncate first, never the flag
-                    .accessibilityIdentifier("trust-flag")
-            }
-        }
+        Text(DirectionCopy.episodeAndProvider(drop))
+            .font(.footnote)
+            .foregroundStyle(NightInk.muted)
+            .lineLimit(1)
     }
 }
 #endif
