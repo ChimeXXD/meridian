@@ -71,3 +71,16 @@ extension TVmazeEpisode {
         try? Date(text, strategy: .iso8601)
     }
 }
+
+/// One entry of `/shows/:id/images`. Only URLs are used; the images themselves are fetched at runtime (D-37).
+struct TVmazeImage: Codable, Hashable, Sendable {
+    struct Resolution: Codable, Hashable, Sendable {
+        let url: URL
+        let width: Int?
+        let height: Int?
+    }
+
+    let type: String?
+    let main: Bool
+    let resolutions: [String: Resolution]
+}

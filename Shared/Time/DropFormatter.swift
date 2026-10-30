@@ -62,6 +62,12 @@ struct DropFormatter: Sendable {
         }
     }
 
+    /// The zone's short name at that moment, in US English so New York reads "EDT"/"EST" rather than "GMT-4".
+    func zoneAbbreviation(_ date: Date) -> String {
+        let style: NSTimeZone.NameStyle = timeZone.isDaylightSavingTime(for: date) ? .shortDaylightSaving : .shortStandard
+        return timeZone.localizedName(for: style, locale: Locale(identifier: "en_US")) ?? timeZone.identifier
+    }
+
     /// "Wed 02:00", for the rectangular widget and rows.
     func weekdayTime(_ date: Date) -> String {
         "\(weekday(date)) \(localTime(date))"

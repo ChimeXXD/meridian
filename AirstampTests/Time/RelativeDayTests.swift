@@ -22,6 +22,14 @@ struct RelativeDayTests {
         #expect(Self.lagos.relativeDay(Date(iso: iso), now: Self.now) == expected)
     }
 
+    @Test("broadcast zones read as their US abbreviations on both sides of the clock change", arguments: [
+        ("2026-10-30T01:00:00Z", "EDT"), ("2026-11-06T01:00:00Z", "EST"),
+    ])
+    func zoneAbbreviation(iso: String, expected: String) {
+        let newYork = DropFormatter(zoneIdentifier: "America/New_York", locale: Locale(identifier: "en_GB"))
+        #expect(newYork.zoneAbbreviation(Date(iso: iso)) == expected)
+    }
+
     @Test("weekday and time for widgets and rows")
     func weekdayTime() {
         #expect(Self.lagos.weekdayTime(Date(iso: "2026-11-04T01:00:00Z")) == "Wed 02:00")

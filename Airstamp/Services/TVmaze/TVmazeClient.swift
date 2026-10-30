@@ -35,6 +35,11 @@ actor TVmazeClient {
                                        URLQueryItem(name: "embed[]", value: "previousepisode")])
     }
 
+    /// Posters, backgrounds and banners for a show, as URLs (D-37).
+    func images(showID: Int) async throws -> [TVmazeImage] {
+        try await get("/shows/\(showID)/images", [])
+    }
+
     func episodes(showID: Int) async throws -> [TVmazeEpisode] {
         try await get("/shows/\(showID)/episodes", [])
     }
