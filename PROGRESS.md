@@ -16,6 +16,8 @@ Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 **Not verified**
 - Times are samples. Widgets still use the filled chip.
 
+**Also:** Silo's sample source corrected from "Broadcast" to "Apple TV rule" (Apple TV is a streamer; the recorded TVmaze fixture has no air time). `docs/design/direction-board/guide.html` explains every part of the Silo screens with numbered marks on the screenshots (shots git-ignored).
+
 **Next:** Chime's verdict on the unslopped screens. Then delete the old artwork-led views, rewrite UI-BRIEF §1–3 for Night Sky, and build the real Upcoming on it (Day 3).
 
 ## Day 2: Night Sky cleaned up (Fri 30 Oct 2026)

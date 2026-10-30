@@ -82,7 +82,8 @@ struct DesignPreview: View {
         typealias Sample = (id: Int, name: String, season: Int, number: Int, confidence: Confidence, source: ReleaseSource,
                             provider: ProviderLabel, delayed: Bool)
         var timed: [Sample] = [
-            (38052, "Silo", 4, 1, .exact, .broadcast(network: "Apple TV"),
+            // Apple TV is a streamer: TVmaze lists no air time (recorded fixture), so the platform rule sets it.
+            (38052, "Silo", 4, 1, .estimated, .platformRule("Apple TV rule"),
              ProviderLabel(name: "Apple TV", countryCode: nil, noOfficialStream: false), false),
             (69956, "Frieren: Beyond Journey's End", 2, 8, .exact, .anilist,
              ProviderLabel(name: "Crunchyroll", countryCode: nil, noOfficialStream: false), false),
