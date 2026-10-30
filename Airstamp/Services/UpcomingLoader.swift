@@ -1,0 +1,66 @@
+import Foundation
+
+/// Turns followed shows into drops: TVmaze's next episode for each, resolved by `TimeResolver` against the rules
+/// file, with a provider label for the viewer's country. A show TVmaze can't serve is reported, never dropped
+/// silently. AniList shows are added with the AniList client.
+struct UpcomingLoader: Sendable {
+    struct Request: Hashable, Sendable {
+        var catalog: Catalog
+        var id: Int
+        var name: String
+        var offsetMinutes: Int
+    }
+
+    struct Result: Equatable, Sendable {
+        var drops: [Drop] = []
+        /// Followed shows with no next episode listed, in follow order.
+        var nothingScheduled: [String] = []
+        /// Followed shows that couldn't be loaded this time.
+        var failed: [String] = []
+    }
+
+    private enum Outcome: Sendable {
+        case drop(Drop), nothing(String), failed(String)
+    }
+
+    let client: TVmazeClient
+    let rules: RulesFile
+    /// ISO country code, for "No official stream in your country" (CLAUDE.md rule 11).
+    let viewerCountry: String?
+
+    func load(_ requests: [Request], now: Date) async -> Result {
+        let outcomes = await withTaskGroup(of: (Int, Outcome).self) { group in
+            for (index, request) in requests.enumerated() where request.catalog == .tvmaze {
+                group.addTask { (index, await load(request, now: now)) }
+            }
+            var collected: [(Int, Outcome)] = []
+            for await outcome in group { collected.append(outcome) }
+            return collected.sorted { $0.0 < $1.0 }.map(\.1)
+        }
+        var result = Result()
+        for outcome in outcomes {
+            switch outcome {
+            case .drop(let drop): result.drops.append(drop)
+            case .nothing(let name): result.nothingScheduled.append(name)
+            case .failed(let name): result.failed.append(name)
+            }
+        }
+        result.drops.sort { $0.date < $1.date }
+        return result
+    }
+
+    private func load(_ request: Request, now: Date) async -> Outcome {
+        guard let show = try? await client.show(id: request.id) else { return .failed(request.name) }
+        guard let next = show.embedded?.nextepisode else { return .nothing(show.name) }
+        let resolution = TimeResolver.resolve(next.listing(show: show), rules: rules, offsetMinutes: request.offsetMinutes,
+                                              now: now)
+        let channel = show.network ?? show.webChannel
+        let provider = channel.map {
+            ProviderLabel(name: $0.name, countryCode: show.network?.country?.code, viewerCountry: viewerCountry, rules: rules)
+        }
+        return .drop(Drop(id: "tvmaze:\(show.id):\(next.id)", showID: String(show.id), showName: show.name,
+                          season: next.season, number: next.number, episodeTitle: next.name, date: resolution.date,
+                          airdate: resolution.airdate, confidence: resolution.confidence, source: resolution.source,
+                          provider: provider, previousDate: nil))
+    }
+}
