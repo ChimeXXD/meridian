@@ -42,10 +42,12 @@ struct TVmazeShow: Codable, Hashable, Sendable {
     let webChannel: TVmazeChannel?
     /// TVmaze's popularity score, 0–100.
     let weight: Int?
+    /// The main poster: "medium" is 210 × 295, "original" full size. Nil when TVmaze has none.
+    let image: TVmazeShowImage?
     let embedded: Embedded?
 
     enum CodingKeys: String, CodingKey {
-        case id, name, type, language, status, premiered, network, webChannel, weight
+        case id, name, type, language, status, premiered, network, webChannel, weight, image
         case embedded = "_embedded"
     }
 }
@@ -69,6 +71,11 @@ struct TVmazeScheduleItem: Decodable, Sendable {
         show = try container.decodeIfPresent(TVmazeShow.self, forKey: .show)
             ?? container.decodeIfPresent(Embedded.self, forKey: .embedded)?.show
     }
+}
+
+struct TVmazeShowImage: Codable, Hashable, Sendable {
+    let medium: URL?
+    let original: URL?
 }
 
 struct TVmazeSearchResult: Codable, Hashable, Sendable {

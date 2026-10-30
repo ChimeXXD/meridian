@@ -1,8 +1,10 @@
 import SwiftData
 import SwiftUI
 
-/// Search (SPEC §1, UI-BRIEF §5.3): find a show on TVmaze and follow it. Every result shows year, network and status,
-/// and nothing is followed until you tap its button. Anime search (AniList) joins with the AniList client.
+/// Search (SPEC §1, UI-BRIEF §5.3), poster-led from Chime's picks on `docs/design/search-board`: before you type, a
+/// three-across poster grid of shows airing in the next few days (Plex "Popular Searches"); results are poster rows on
+/// dark rounded cards with a serif title and year · network · status (Plex, Apple TV, Hypelist). Nothing is followed
+/// until you tap its button. Anime search (AniList) joins with the AniList client.
 struct SearchView: View {
     let client: TVmazeClient
 
@@ -16,47 +18,20 @@ struct SearchView: View {
 
     private enum Phase: Equatable { case idle, searching, done, failed }
 
+    private static let page = ArtworkPalette.neutral.night.color
+
     var body: some View {
         NavigationStack {
-            List {
-                switch state {
-                case .idle where airingSoon.isEmpty:
-                    Text("Search TVmaze for a show to follow")
-                        .foregroundStyle(NightInk.muted)
-                        .accessibilityIdentifier("search-empty")
-                case .idle:
-                    Section {
-                        ForEach(Array(airingSoon.enumerated()), id: \.element.id) { index, result in
-                            row(result, index: index + 1, prefix: "airing")
-                        }
-                    } header: {
-                        Text("Airing in the next few days")
-                            .font(.subheadline.weight(.medium))
-                            .foregroundStyle(NightInk.muted)
-                            .textCase(nil)
-                            .accessibilityIdentifier("search-airing-header")
-                    }
-                case .searching:
-                    ProgressView()
-                case .failed:
-                    Text("Couldn't reach TVmaze. Check your connection and try again.")
-                        .foregroundStyle(NightInk.muted)
-                        .accessibilityIdentifier("search-error")
-                case .done where results.isEmpty:
-                    Text("No shows match \u{201C}\(query)\u{201D}")
-                        .foregroundStyle(NightInk.muted)
-                        .accessibilityIdentifier("search-no-results")
-                case .done:
-                    ForEach(Array(results.enumerated()), id: \.element.id) { index, result in
-                        row(result, index: index + 1)
-                    }
-                }
+            ScrollView {
+                content
+                    .padding(.horizontal, Tokens.Space.m)
+                    .padding(.bottom, Tokens.Space.xl)
             }
-            .listStyle(.plain)
-            .scrollContentBackground(.hidden)
-            .background(Color(white: 0.08))
+            .scrollIndicators(.hidden)
+            .scrollDismissesKeyboard(.immediately)
+            .background(Self.page)
             .navigationTitle("Search")
-            .searchable(text: $query, prompt: "Search")
+            .searchable(text: $query, prompt: "Shows and anime")
             .onSubmit(of: .search) { Task { await search() } }
             .task {
                 guard airingSoon.isEmpty, let shows = await AiringSoon.load(client: client) else { return }
@@ -76,34 +51,119 @@ struct SearchView: View {
         #endif
     }
 
-    private func row(_ result: SearchResult, index: Int, prefix: String = "search-result") -> some View {
-        let following = followed.contains { $0.key == FollowedShow.key(catalog: result.catalog, id: result.id) }
-        return HStack(spacing: Tokens.Space.m) {
+    @ViewBuilder private var content: some View {
+        switch state {
+        case .idle where airingSoon.isEmpty:
+            message("Search TVmaze for a show to follow", id: "search-empty")
+        case .idle:
+            airingGrid
+        case .searching:
+            ProgressView().frame(maxWidth: .infinity).padding(.top, Tokens.Space.xl)
+        case .failed:
+            message("Couldn't reach TVmaze. Check your connection and try again.", id: "search-error")
+        case .done where results.isEmpty:
+            message("No shows match \u{201C}\(query)\u{201D}", id: "search-no-results")
+        case .done:
+            LazyVStack(spacing: Tokens.Space.s) {
+                ForEach(Array(results.enumerated()), id: \.element.id) { index, result in
+                    resultCard(result, index: index + 1)
+                }
+            }
+            .padding(.top, Tokens.Space.s)
+        }
+    }
+
+    private func message(_ text: String, id: String) -> some View {
+        Text(text)
+            .foregroundStyle(NightInk.muted)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, Tokens.Space.l)
+            .accessibilityIdentifier(id)
+    }
+
+    // MARK: Before you type: Plex's poster grid
+
+    private var airingGrid: some View {
+        VStack(alignment: .leading, spacing: Tokens.Space.s) {
+            Text("Airing in the next few days")
+                .font(.system(size: 22, design: .serif))
+                .accessibilityAddTraits(.isHeader)
+                .accessibilityIdentifier("search-airing-header")
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: Tokens.Space.s, alignment: .top), count: 3),
+                      spacing: Tokens.Space.m) {
+                ForEach(Array(airingSoon.enumerated()), id: \.element.id) { index, result in
+                    gridCell(result, index: index + 1)
+                }
+            }
+        }
+        .padding(.top, Tokens.Space.s)
+    }
+
+    private func gridCell(_ result: SearchResult, index: Int) -> some View {
+        VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
+            PosterImage(url: result.poster, cornerRadius: 8)
+                .aspectRatio(2 / 3, contentMode: .fit)
+                .overlay(alignment: .topTrailing) {
+                    followButton(result, size: 32, id: "airing-\(index)-follow").padding(Tokens.Space.xxs)
+                }
+            Text(result.title)
+                .font(.footnote.weight(.medium))
+                .lineLimit(2)
+                .accessibilityIdentifier("airing-\(index)-title")
+            if let network = result.network {
+                Text(network)
+                    .font(.caption)
+                    .foregroundStyle(NightInk.muted)
+                    .lineLimit(1)
+            }
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("airing-\(index)")
+    }
+
+    // MARK: Results: Plex's poster cards
+
+    private func resultCard(_ result: SearchResult, index: Int) -> some View {
+        HStack(spacing: Tokens.Space.m) {
+            PosterImage(url: result.poster, cornerRadius: 6)
+                .frame(width: 56, height: 84)
             VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
                 Text(result.title)
                     .font(.system(size: 20, design: .serif))
-                    .accessibilityIdentifier("\(prefix)-\(index)-title")
+                    .lineLimit(2)
+                    .accessibilityIdentifier("search-result-\(index)-title")
                 Text(result.meta)
                     .font(.footnote)
                     .foregroundStyle(NightInk.muted)
-                    .accessibilityIdentifier("\(prefix)-\(index)-meta")
+                    .accessibilityIdentifier("search-result-\(index)-meta")
             }
-            Spacer()
-            Button {
-                let store = FollowStore(context: context)
-                try? following ? store.unfollow(catalog: result.catalog, id: result.id) : store.follow(result.followShow)
-            } label: {
-                Image(systemName: following ? "checkmark.circle.fill" : "plus.circle")
-                    .font(.title2)
-                    .frame(width: 44, height: 44)
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel(following ? "Following \(result.title)" : "Follow \(result.title)")
-            .accessibilityIdentifier("\(prefix)-\(index)-follow")
+            Spacer(minLength: Tokens.Space.xs)
+            followButton(result, size: 44, id: "search-result-\(index)-follow")
         }
-        .listRowBackground(Color.clear)
+        .padding(Tokens.Space.s)
+        .background(.white.opacity(0.06), in: RoundedRectangle(cornerRadius: 14))
         .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("\(prefix)-\(index)")
+        .accessibilityIdentifier("search-result-\(index)")
+    }
+
+    private func followButton(_ result: SearchResult, size: CGFloat, id: String) -> some View {
+        let following = followed.contains { $0.key == FollowedShow.key(catalog: result.catalog, id: result.id) }
+        return Button {
+            let store = FollowStore(context: context)
+            try? following ? store.unfollow(catalog: result.catalog, id: result.id) : store.follow(result.followShow)
+        } label: {
+            Image(systemName: following ? "checkmark" : "plus")
+                .font(.system(size: size * 0.4, weight: .semibold))
+                .foregroundStyle(following ? .black : .white)
+                .frame(width: size, height: size)
+                .background(following ? AnyShapeStyle(.white) : AnyShapeStyle(.black.opacity(0.55)), in: Circle())
+                .overlay(Circle().strokeBorder(.white.opacity(following ? 0 : 0.35)))
+        }
+        .buttonStyle(.plain)
+        .frame(minWidth: 44, minHeight: 44)
+        .contentShape(Rectangle())
+        .accessibilityLabel(following ? "Following \(result.title)" : "Follow \(result.title)")
+        .accessibilityIdentifier(id)
     }
 
     private func search() async {
@@ -120,6 +180,28 @@ struct SearchView: View {
             // Typing on cancels the debounced search; that isn't a connection failure.
             guard !Task.isCancelled, text == query.trimmingCharacters(in: .whitespaces) else { return }
             state = .failed
+        }
+    }
+}
+
+/// A show's poster, loaded at runtime (D-37). Without one, a plain surface with a TV glyph, never a broken image.
+struct PosterImage: View {
+    let url: URL?
+    var cornerRadius: CGFloat = 8
+
+    var body: some View {
+        ArtworkLoaderView(url: url, maxPixel: 420) { loaded in
+            Rectangle()
+                .fill(.white.opacity(0.08))
+                .overlay {
+                    if let image = loaded?.image {
+                        Image(uiImage: image).resizable().scaledToFill()
+                    } else if url == nil {
+                        Image(systemName: "tv").font(.title3).foregroundStyle(NightInk.muted)
+                    }
+                }
+                .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+                .accessibilityHidden(true)
         }
     }
 }

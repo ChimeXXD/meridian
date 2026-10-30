@@ -29,3 +29,18 @@ struct SearchResultTests {
         #expect(show == FollowStore.Show(catalog: .tvmaze, id: 28826, name: "Euphoria", year: 2019, network: "HBO"))
     }
 }
+
+/// Search shows each show's poster (Chime's picks: Plex and Apple TV poster rows, Plex's poster grid).
+@Suite("Search posters")
+struct SearchPosterTests {
+    @Test("a result carries TVmaze's medium poster, and none when TVmaze has no image")
+    func poster() throws {
+        let items = try JSONDecoder().decode([TVmazeScheduleItem].self,
+                                             from: Fixture.data("tvmaze/schedule-web-2026-10-30.json"))
+        let show = try #require(items.first?.show)
+        #expect(SearchResult(show: show).poster?.absoluteString
+                == "https://static.tvmaze.com/uploads/images/medium_portrait/644/1611629.jpg")
+        let euphoria = try JSONDecoder().decode([TVmazeSearchResult].self, from: Fixture.data("tvmaze/search-euphoria.json"))
+        #expect(SearchResult(show: euphoria[0].show).poster == nil)
+    }
+}

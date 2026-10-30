@@ -9,11 +9,14 @@ struct SearchResult: Hashable, Identifiable, Sendable {
     let year: Int?
     let network: String?
     let meta: String
+    /// TVmaze's 210 × 295 poster, loaded at runtime and cached on the phone (D-37).
+    let poster: URL?
 
     init(show: TVmazeShow) {
         id = show.id
         catalog = .tvmaze
         title = show.name
+        poster = show.image?.medium
         year = show.premiered.flatMap { Int($0.prefix(4)) }
         let channel = show.network ?? show.webChannel
         network = channel?.name

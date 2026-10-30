@@ -2,6 +2,21 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Search with posters (Fri 30 Oct 2026)
+
+**Changed**
+- Chime: tab bar order Upcoming · Search · Settings (Search in the middle as a plain tab; D-41 updated), and Search was "too bland". A search reference board (`docs/design/search-board/`, 21 screens) produced 4 picks (`picks.json`): Plex, Apple TV and Hypelist poster rows for results, Plex's "Popular Searches" grid before typing.
+- `SearchView`: before you type, "Airing in the next few days" as a three-across poster grid with a follow button on each poster; results as poster cards (56 × 84 poster, serif title, year · network · country · status, follow button). `PosterImage` loads TVmaze's medium poster at runtime (D-37). `TVmazeShow.image`, `SearchResult.poster`.
+
+**Red → green**
+- `SearchPosterTests` was written with the code, not red first: the memory guard refused the red run (85%). Green: 105 tests in 26 suites.
+
+**Checked**
+- On Chime's iPhone: the poster grid (Boston Blue, Fire Country, Marshals, Sheriff Country, The Gilded Age, The Rainmaker…) and results for "Silo" (Silo 2023 · Apple TV · Running, Silo 2017 · meWATCH, Silk, Solo, Milo), with the new tab order.
+
+**Not verified**
+- The code review of this change.
+
 ## Day 0 device check, and the app on Chime's iPhone (Fri 30 Oct 2026)
 
 **Changed**
