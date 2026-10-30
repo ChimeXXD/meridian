@@ -2,6 +2,20 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Day 2: saying how sure a time is, without dots (Fri 30 Oct 2026)
+
+**Changed**
+- Chime rejected the status dots: they needed explaining, so users won't read them. `TrustStyle` (Debug) builds three word-based options, picked with `trustA|trustB|trustC` after `-designPreview A`: A puts the certainty in the verb ("Expected today at…", "Airs in Japan…", "…, time not announced"), B flags only the exceptions ("Estimated", "Time not announced"), C names the source on every row ("TV schedule", "Usual release time", "Japanese TV time").
+- Show detail replaces the dot and the Broadcast row with one plain sentence on where the time came from (`DirectionCopy.why`).
+
+**Checked**
+- Simulator screenshots of all three options (top and list) and three detail screens; side by side in `docs/design/direction-board/trust.html`.
+
+**Not verified**
+- If Chime picks one, CLAUDE.md rule 3, SPEC's source-chip criterion and D-39 change with it; that needs Chime's OK.
+
+**Next:** Chime picks A, B or C.
+
 ## Day 2: unslop pass on Night Sky (Fri 30 Oct 2026)
 
 **Changed**

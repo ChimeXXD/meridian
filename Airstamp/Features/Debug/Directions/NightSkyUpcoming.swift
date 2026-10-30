@@ -151,17 +151,30 @@ struct NightSkyHeadline: View {
     }
 }
 
-/// "S4E1 · Apple TV  ● Broadcast" in muted text; the source's dot is the signature (D-39).
+/// "S4E1 · Apple TV" in muted text, then the time's certainty in words for the chosen `TrustStyle`: nothing in A
+/// (the out line says it), a flag on the exceptions in B, the source named in C.
 struct NightSkyMeta: View {
     let drop: Drop
+    var style: TrustStyle = .launched
 
     var body: some View {
         HStack(spacing: Tokens.Space.xs) {
-            Text(DirectionCopy.episodeAndProvider(drop))
+            Text(style == .sourced
+                 ? "\(DirectionCopy.episodeAndProvider(drop)) · \(DirectionCopy.sourcePhrase(drop))"
+                 : DirectionCopy.episodeAndProvider(drop))
                 .font(.footnote)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(NightInk.muted)
                 .lineLimit(1)
-            SourceChip(source: drop.source, confidence: drop.confidence, plain: true)
+            if style == .flagged, let flag = DirectionCopy.flag(drop) {
+                Text(flag)
+                    .font(.footnote.weight(.medium))
+                    .foregroundStyle(NightInk.primary)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 2)
+                    .overlay(Capsule().strokeBorder(NightInk.primary.opacity(0.35)))
+                    .fixedSize()  // the episode and provider truncate first, never the flag
+                    .accessibilityIdentifier("trust-flag")
+            }
         }
     }
 }

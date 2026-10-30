@@ -27,11 +27,16 @@ struct NightSkyDetail: View {
                                 NightSkyHeadline(drop: drop, now: context.date, formatter: formatter,
                                                  titleSize: 32, countdownSize: 88, testID: "detail")
                                 NightSkyMeta(drop: drop)
+                                // Where the time came from, as one plain sentence instead of a code to learn.
+                                Text(DirectionCopy.why(drop, zone: broadcastZone, formatter: formatter))
+                                    .font(.subheadline)
+                                    .foregroundStyle(NightInk.secondary)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .padding(.top, Tokens.Space.xs)
+                                    .accessibilityIdentifier("detail-why")
                             }
                             .accessibilityElement(children: .contain)
                             .accessibilityIdentifier("detail-next")
-                            let facts = DirectionCopy.timeFacts(drop, zone: broadcastZone, formatter: formatter)
-                            if !facts.isEmpty { FactRows(rows: facts, ink: .white) }
                             liveActivityRow
                             if !episodes.isEmpty {
                                 VStack(alignment: .leading, spacing: Tokens.Space.xs) {

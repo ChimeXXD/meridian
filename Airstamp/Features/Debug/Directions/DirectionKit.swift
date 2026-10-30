@@ -53,21 +53,25 @@ enum DirectionCopy {
     }
 
     /// When the episode is out, in words: "Out today at 19:21", "Out Sun at 20:31", "Released today at 19:21",
-    /// or "Out Thu 19 Nov" for a date-only drop, whose "Date only" chip says the time isn't announced (D-28).
+    /// or "Out Thu 19 Nov" for a date-only drop (D-28). In style A the verb carries the certainty ("Expected …",
+    /// "Airs in Japan …") and a date-only line says the time isn't announced.
     /// `naming` adds the place whose clock the time is on ("Out today at 19:21 Lagos time"), so the screen says
     /// once which zone its times are in.
-    static func outLine(_ drop: Drop, now: Date, formatter: DropFormatter, naming: Bool = false) -> String {
+    static func outLine(_ drop: Drop, now: Date, formatter: DropFormatter, naming: Bool = false,
+                        style: TrustStyle = .launched) -> String {
         if drop.confidence == .dateOnly {
-            return "Out \(drop.airdate.flatMap(formatter.airdate) ?? "date to be confirmed")"
+            let day = drop.airdate.flatMap(formatter.airdate) ?? "date to be confirmed"
+            return style == .inWords ? "Out \(day), time not announced" : "Out \(day)"
         }
         let day = formatter.relativeDay(drop.date, now: now)
         let spoken = ["Today": "today", "Tomorrow": "tomorrow", "Yesterday": "yesterday"][day] ?? day
-        let line = "\(drop.date <= now ? "Released" : "Out") \(spoken) at \(formatter.localTime(drop.date))"
+        let verb = drop.date <= now ? "Released" : style == .inWords ? verb(drop) : "Out"
+        let line = "\(verb) \(spoken) at \(formatter.localTime(drop.date))"
         return naming ? "\(line) \(place(formatter)) time" : line
     }
 
-    /// Show detail's time facts: only what the headline doesn't already say. "Out today at 21:00 Lagos time" is your
-    /// time, so this is the broadcast time in the network's own city, when there is one.
+    /// The broadcast time in the network's own city, when there is one and it differs from your clock: the headline
+    /// already says your time ("Out today at 21:00 Lagos time"). Feeds Show detail's `why` sentence.
     static func timeFacts(_ drop: Drop, zone: String?, formatter: DropFormatter) -> [(label: String, value: String)] {
         // When the network's clock matches yours, the headline already says it.
         if let zone, TimeZone(identifier: zone)?.secondsFromGMT(for: drop.date)
@@ -97,34 +101,6 @@ struct GlassCircleButton: View {
         .buttonStyle(.plain)
         .glassEffect(.regular.interactive(), in: .circle)
         .accessibilityLabel(label)
-    }
-}
-
-/// Label and value rows with hairlines, coloured by the page's ink.
-struct FactRows: View {
-    let rows: [(label: String, value: String)]
-    let ink: Color
-
-    var body: some View {
-        VStack(spacing: 0) {
-            ForEach(Array(rows.enumerated()), id: \.offset) { index, row in
-                HStack(alignment: .firstTextBaseline) {
-                    Text(row.label).foregroundStyle(ink.opacity(0.7))
-                    Spacer(minLength: Tokens.Space.s)
-                    Text(row.value)
-                        .font(.subheadline.weight(.medium))
-                        .multilineTextAlignment(.trailing)
-                }
-                .font(.subheadline)
-                .padding(.vertical, Tokens.Space.s)
-                .overlay(alignment: .bottom) {
-                    if index < rows.count - 1 { Rectangle().fill(ink.opacity(0.12)).frame(height: 1) }
-                }
-                .accessibilityElement(children: .combine)
-                .accessibilityIdentifier("detail-fact-\(index + 1)")
-            }
-        }
-        .foregroundStyle(ink)
     }
 }
 
