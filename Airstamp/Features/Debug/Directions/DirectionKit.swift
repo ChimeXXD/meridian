@@ -23,20 +23,33 @@ extension ArtworkPalette {
     }
 }
 
+/// Night Sky's three text roles on the dark base (unslop: primary, secondary, muted), named so the two greys are
+/// never confused: secondary is a row's "Out …" line, muted is meta, labels and the source word.
+enum NightInk {
+    static let primary = Color.white
+    static let secondary = Color.white.opacity(0.75)
+    static let muted = Color.secondary
+}
+
 /// Copy shared by the Night Sky screens.
 enum DirectionCopy {
-    /// "Today 21:00", or "Time not announced" for a date-only drop (D-28).
-    static func yourTime(_ drop: Drop, now: Date, formatter: DropFormatter) -> String {
-        drop.confidence == .dateOnly
-            ? "Time not announced"
-            : "\(formatter.relativeDay(drop.date, now: now)) \(formatter.localTime(drop.date))"
-    }
-
-    /// "Thu 21:00 EDT" in the network's zone; only a broadcast time has one.
+    /// "Fri 14:38 New York" in the network's zone; only a broadcast time has one. Zones are named by place
+    /// everywhere ("Lagos", "New York"), never "GMT+1" on one line and "EDT" on the next.
     static func broadcast(_ drop: Drop, zone: String?, formatter: DropFormatter) -> String? {
         guard drop.confidence != .dateOnly, case .broadcast = drop.source, let zone else { return nil }
         let local = DropFormatter(zoneIdentifier: zone, locale: formatter.locale)
-        return "\(local.weekdayTime(drop.date)) \(local.zoneAbbreviation(drop.date))"
+        return "\(local.weekdayTime(drop.date)) \(place(local))"
+    }
+
+    /// The city in a zone's IANA name: "Africa/Lagos" → "Lagos", "America/New_York" → "New York".
+    /// A zone with no city ("UTC", "Etc/GMT+1", a fixed offset) falls back to its GMT name, because "Etc/GMT+1" is
+    /// really UTC-1 and its last component would read the wrong way round.
+    static func place(_ formatter: DropFormatter) -> String {
+        let zone = formatter.timeZone
+        guard zone.identifier.contains("/"), !zone.identifier.hasPrefix("Etc/") else {
+            return zone.localizedName(for: .shortStandard, locale: Locale(identifier: "en_US")) ?? zone.identifier
+        }
+        return String(zone.identifier.split(separator: "/").last ?? "").replacingOccurrences(of: "_", with: " ")
     }
 
     /// When the episode is out, in words: "Out today at 19:21", "Out Sun at 20:31", "Released today at 19:21",
@@ -50,19 +63,16 @@ enum DirectionCopy {
         let day = formatter.relativeDay(drop.date, now: now)
         let spoken = ["Today": "today", "Tomorrow": "tomorrow", "Yesterday": "yesterday"][day] ?? day
         let line = "\(drop.date <= now ? "Released" : "Out") \(spoken) at \(formatter.localTime(drop.date))"
-        guard naming, let place = formatter.timeZone.identifier.split(separator: "/").last else { return line }
-        return "\(line) \(place.replacingOccurrences(of: "_", with: " ")) time"
+        return naming ? "\(line) \(place(formatter)) time" : line
     }
 
-    /// Show detail's time facts: your time with its zone, against the broadcast time when there is one. The
-    /// episode, provider and source are already on the line under the countdown.
-    static func timeFacts(_ drop: Drop, now: Date, zone: String?, formatter: DropFormatter) -> [(label: String, value: String)] {
-        let yours = drop.confidence == .dateOnly
-            ? yourTime(drop, now: now, formatter: formatter)
-            : "\(yourTime(drop, now: now, formatter: formatter)) \(formatter.zoneAbbreviation(drop.date))"
-        var rows = [("Your time", yours)]
-        if let broadcast = broadcast(drop, zone: zone, formatter: formatter) { rows.append(("Broadcast", broadcast)) }
-        return rows
+    /// Show detail's time facts: only what the headline doesn't already say. "Out today at 21:00 Lagos time" is your
+    /// time, so this is the broadcast time in the network's own city, when there is one.
+    static func timeFacts(_ drop: Drop, zone: String?, formatter: DropFormatter) -> [(label: String, value: String)] {
+        // When the network's clock matches yours, the headline already says it.
+        if let zone, TimeZone(identifier: zone)?.secondsFromGMT(for: drop.date)
+            == formatter.timeZone.secondsFromGMT(for: drop.date) { return [] }
+        return broadcast(drop, zone: zone, formatter: formatter).map { [("Broadcast", $0)] } ?? []
     }
 
     /// "S4E1 · Apple TV"
@@ -94,7 +104,6 @@ struct GlassCircleButton: View {
 struct FactRows: View {
     let rows: [(label: String, value: String)]
     let ink: Color
-    var serif = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -103,7 +112,7 @@ struct FactRows: View {
                     Text(row.label).foregroundStyle(ink.opacity(0.7))
                     Spacer(minLength: Tokens.Space.s)
                     Text(row.value)
-                        .font(serif ? .system(.body, design: .serif) : .body.weight(.semibold))
+                        .font(.subheadline.weight(.medium))
                         .multilineTextAlignment(.trailing)
                 }
                 .font(.subheadline)
@@ -123,7 +132,6 @@ struct FactRows: View {
 struct EpisodeRows: View {
     let episodes: [ShowDetailArtView.PastEpisode]
     let ink: Color
-    var serif = false
     var formatter = DropFormatter()
 
     var body: some View {
@@ -134,7 +142,7 @@ struct EpisodeRows: View {
                         .font(.footnote.monospacedDigit().weight(.semibold))
                         .foregroundStyle(ink.opacity(0.6))
                         .frame(width: 50, alignment: .leading)
-                    Text(episode.title).font(serif ? .system(size: 18, design: .serif) : .body.weight(.medium))
+                    Text(episode.title).font(.body.weight(.medium))
                     Spacer()
                     Text(formatter.airdate(episode.airdate) ?? "").font(.footnote).foregroundStyle(ink.opacity(0.6))
                 }

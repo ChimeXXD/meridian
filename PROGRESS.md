@@ -2,6 +2,22 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Day 2: unslop pass on Night Sky (Fri 30 Oct 2026)
+
+**Changed**
+- Installed the `unslop` skill (heydamir/unslop, CC BY 4.0) in `~/.claude/skills/unslop` after reading every file. Audit: light slop (coloured chips and icons on every row, uppercase tracked labels, serif on small text, too many sizes, "GMT+1" against "Lagos time", off-grid spacing). Chime approved the direction and all fixes.
+- Direction: patient, exact, nocturnal; the art and the countdown are the only moments; signature is a small status dot before each time's source (D-39).
+- `SourceChip(plain:)` is now a dot in the status ink plus the word in muted text. Section labels in sentence case; serif only for show titles and the countdown; three text roles (`NightInk`); spacing on the 4-point grid; zones named by place ("Lagos", "New York"); Show detail drops "Your time" (the headline says it) and keeps the broadcast time.
+
+**Checked**
+- Simulator screenshots of Silo, House of the Dragon and Frieren (Upcoming and Show detail) and both screens scrolled; `docs/design/direction-board/variants.html`. The unslop checklist passes on them.
+- `xcodebuild … test`: 67 tests in 16 suites pass.
+
+**Not verified**
+- Times are samples. Widgets still use the filled chip.
+
+**Next:** Chime's verdict on the unslopped screens. Then delete the old artwork-led views, rewrite UI-BRIEF §1–3 for Night Sky, and build the real Upcoming on it (Day 3).
+
 ## Day 2: Night Sky cleaned up (Fri 30 Oct 2026)
 
 **Changed**

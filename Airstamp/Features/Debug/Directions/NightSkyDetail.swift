@@ -22,30 +22,29 @@ struct NightSkyDetail: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 0) {
                         header(image: hero?.image, base: base)
-                        VStack(alignment: .leading, spacing: 36) {
+                        VStack(alignment: .leading, spacing: Tokens.Space.xl) {
                             VStack(alignment: .leading, spacing: Tokens.Space.s) {
                                 NightSkyHeadline(drop: drop, now: context.date, formatter: formatter,
-                                                 titleSize: 38, countdownSize: 92, testID: "detail")
+                                                 titleSize: 32, countdownSize: 88, testID: "detail")
                                 NightSkyMeta(drop: drop)
                             }
                             .accessibilityElement(children: .contain)
                             .accessibilityIdentifier("detail-next")
-                            FactRows(rows: DirectionCopy.timeFacts(drop, now: context.date, zone: broadcastZone,
-                                                                   formatter: formatter),
-                                     ink: .white, serif: true)
+                            let facts = DirectionCopy.timeFacts(drop, zone: broadcastZone, formatter: formatter)
+                            if !facts.isEmpty { FactRows(rows: facts, ink: .white) }
                             liveActivityRow
                             if !episodes.isEmpty {
                                 VStack(alignment: .leading, spacing: Tokens.Space.xs) {
-                                    Text("EPISODES")
-                                        .font(.caption.weight(.semibold)).tracking(1.4)
-                                        .foregroundStyle(.white.opacity(0.5))
+                                    Text("Episodes")
+                                        .font(.subheadline.weight(.medium))
+                                        .foregroundStyle(.secondary)
                                         .accessibilityAddTraits(.isHeader)
-                                    EpisodeRows(episodes: episodes, ink: .white, serif: true, formatter: formatter)
+                                    EpisodeRows(episodes: episodes, ink: .white, formatter: formatter)
                                 }
                             }
                             Button("Report a wrong time") {}
                                 .font(.subheadline)
-                                .foregroundStyle(.white.opacity(0.6))
+                                .foregroundStyle(.secondary)
                                 .accessibilityIdentifier("detail-report")
                         }
                         .padding(.horizontal, Tokens.Space.l)
@@ -79,8 +78,8 @@ struct NightSkyDetail: View {
     private var liveActivityRow: some View {
         Toggle(isOn: $liveActivity) {
             VStack(alignment: .leading, spacing: 2) {
-                Text("Release-night Live Activity").font(.system(size: 18, design: .serif))
-                Text("Starts 2 hours before, on your Lock Screen").font(.footnote).foregroundStyle(.white.opacity(0.6))
+                Text("Release-night Live Activity").font(.body)
+                Text("Starts 2 hours before, on your Lock Screen").font(.footnote).foregroundStyle(.secondary)
             }
         }
         .tint(.white.opacity(0.6))

@@ -5,7 +5,8 @@ import WidgetKit
 /// In tinted or accented widgets the ink becomes primary; the glyph and word still say which source it is.
 struct SourceChip: View {
     let content: SourceChipContent
-    /// Glyph and word only, without the capsule, for quiet lines over dark art (Night Sky, D-38).
+    /// Night Sky's signature (D-39): a small dot in the status ink and the word in secondary text, no capsule and
+    /// no symbol, so the dot is the only colour outside the artwork. The word keeps it from relying on colour.
     var plain = false
 
     @Environment(\.widgetRenderingMode) private var renderingMode
@@ -17,16 +18,21 @@ struct SourceChip: View {
 
     var body: some View {
         let ink = renderingMode == .fullColor ? Color(uiColor: content.kind.ink) : .primary
-        let label = Label(content.label, systemImage: content.kind.glyph)
-            .labelStyle(.titleAndIcon)
-            .font(.caption.weight(.semibold))
-            .foregroundStyle(ink)
-            .lineLimit(1)
         Group {
             if plain {
-                label
+                HStack(spacing: 6) {
+                    Circle().fill(ink).frame(width: 6, height: 6)
+                    Text(content.label)
+                        .font(.footnote.weight(.medium))
+                        .foregroundStyle(.secondary)
+                }
+                .lineLimit(1)
             } else {
-                label
+                Label(content.label, systemImage: content.kind.glyph)
+                    .labelStyle(.titleAndIcon)
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(ink)
+                    .lineLimit(1)
                     .padding(.horizontal, Tokens.Space.xs)
                     .padding(.vertical, Tokens.Space.xxs)
                     .background(ink.opacity(Tokens.chipFillOpacity), in: Capsule())

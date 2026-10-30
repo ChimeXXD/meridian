@@ -26,12 +26,14 @@ struct NightSkyUpcoming: View {
                         }
                         VStack(alignment: .leading, spacing: Tokens.Space.xl) {
                             ForEach(UpcomingArtView.sections(after: drops, now: context.date), id: \.title) { section in
-                                VStack(alignment: .leading, spacing: Tokens.Space.m) {
-                                    Text(section.title.uppercased())
-                                        .font(.caption.weight(.semibold)).tracking(1.4)
-                                        .foregroundStyle(.white.opacity(0.5))
+                                VStack(alignment: .leading, spacing: Tokens.Space.s) {
+                                    Text(section.title)
+                                        .font(.subheadline.weight(.medium))
+                                        .foregroundStyle(.secondary)
                                         .accessibilityAddTraits(.isHeader)
-                                    ForEach(section.drops) { drop in row(drop, now: context.date) }
+                                    VStack(alignment: .leading, spacing: Tokens.Space.l) {
+                                        ForEach(section.drops) { drop in row(drop, now: context.date) }
+                                    }
                                 }
                             }
                         }
@@ -54,17 +56,17 @@ struct NightSkyUpcoming: View {
         // The hero is drops[0], so the rows number 1...n as in UI-BRIEF.
         let index = drops.firstIndex { $0.id == drop.id } ?? 0
         return Button { onSelect(drop) } label: {
-            HStack(spacing: 14) {
+            HStack(spacing: Tokens.Space.m) {
                 ArtworkLoaderView(url: artwork[drop.showID]?.hero, maxPixel: 300) { loaded in
                     ArtworkFill(image: loaded?.image, palette: .neutral)
                         .frame(width: 64, height: 64)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
-                VStack(alignment: .leading, spacing: 3) {
+                VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
                     // The countdown sits beside the title only, so the meta line below gets the full width.
                     HStack(alignment: .firstTextBaseline) {
                         Text(drop.showName)
-                            .font(.system(size: 19, design: .serif))
+                            .font(.system(size: 20, design: .serif))
                             .lineLimit(2)
                             .accessibilityIdentifier("drop-row-\(index)-title")
                         Spacer(minLength: Tokens.Space.xs)
@@ -77,7 +79,7 @@ struct NightSkyUpcoming: View {
                     }
                     Text(DirectionCopy.outLine(drop, now: now, formatter: formatter))
                         .font(.subheadline)
-                        .foregroundStyle(.white.opacity(0.75))
+                        .foregroundStyle(NightInk.secondary)
                         .accessibilityIdentifier("drop-row-\(index)-time")
                     NightSkyMeta(drop: drop)
                 }
@@ -102,14 +104,14 @@ struct NightSkyHero: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             ZStack {
-                ArtworkFill(image: image, palette: .neutral).frame(height: 470)
+                ArtworkFill(image: image, palette: .neutral).frame(height: 472)
                 LinearGradient(stops: [.init(color: base.opacity(0), location: 0.4), .init(color: base, location: 1)],
                                startPoint: .top, endPoint: .bottom)
                 LinearGradient(colors: [.black.opacity(0.4), .clear], startPoint: .top, endPoint: .init(x: 0.5, y: 0.25))
             }
-            .frame(height: 470)
+            .frame(height: 472)
             VStack(alignment: .leading, spacing: Tokens.Space.s) {
-                NightSkyHeadline(drop: drop, now: now, formatter: formatter, titleSize: 30, countdownSize: 88,
+                NightSkyHeadline(drop: drop, now: now, formatter: formatter, titleSize: 32, countdownSize: 88,
                                  testID: "upcoming-hero")
                 NightSkyMeta(drop: drop)
             }
@@ -126,13 +128,13 @@ struct NightSkyHeadline: View {
     let drop: Drop
     let now: Date
     var formatter = DropFormatter()
-    var titleSize: CGFloat = 30
+    var titleSize: CGFloat = 32
     var countdownSize: CGFloat = 88
     /// Prefix for the test IDs: `upcoming-hero` or `detail` (UI-BRIEF).
     var testID = "headline"
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
             Text(drop.showName)
                 .font(.system(size: titleSize, design: .serif))
                 .lineLimit(2).minimumScaleFactor(0.7)
@@ -141,23 +143,23 @@ struct NightSkyHeadline: View {
                           size: countdownSize, tint: .white, formatter: formatter)
                 .environment(\.numeralStudy, .night)
             Text(DirectionCopy.outLine(drop, now: now, formatter: formatter, naming: true))
-                .font(.headline)
-                .foregroundStyle(.white.opacity(0.9))
+                .font(.body.weight(.medium))
+                .foregroundStyle(.white)
                 .padding(.top, Tokens.Space.xxs)
                 .accessibilityIdentifier("\(testID)-out")
         }
     }
 }
 
-/// "S4E1 · Apple TV · ✓ Broadcast", dim, with the source as plain glyph and word.
+/// "S4E1 · Apple TV  ● Broadcast" in muted text; the source's dot is the signature (D-39).
 struct NightSkyMeta: View {
     let drop: Drop
 
     var body: some View {
-        HStack(spacing: 6) {
+        HStack(spacing: Tokens.Space.xs) {
             Text(DirectionCopy.episodeAndProvider(drop))
-                .font(.caption)
-                .foregroundStyle(.white.opacity(0.55))
+                .font(.footnote)
+                .foregroundStyle(.secondary)
                 .lineLimit(1)
             SourceChip(source: drop.source, confidence: drop.confidence, plain: true)
         }
