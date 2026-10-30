@@ -2,6 +2,8 @@
 
 How each Airstamp screen and surface looks and behaves. There is no Figma (D-31): this brief, `REFERENCES.md` (Chime's 47 reference picks, numbered `#n`) and `SITEMAP.md` go straight into SwiftUI. Chime approves each screen from simulator screenshots, and the approved shots become the `fidelity/refs/` baselines.
 
+> **Being redone (D-37).** Chime rejected the type-only look and the numeral studies, and the app now shows show artwork. The visual direction (§1–3) is re-chosen from the style board (`docs/design/style-board/`). The screen inventory, test IDs, copy and states (§4–6) still stand.
+
 Written 30 Oct 2026 from Chime's picks. Copy marked **SPEC** is quoted from `docs/SPEC.md` and must match it. Copy marked *new* is proposed here and can change at screen review.
 
 ## 1. Direction

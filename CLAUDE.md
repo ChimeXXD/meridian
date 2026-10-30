@@ -77,7 +77,7 @@ Prefer the MobileBuildMCP tools (formerly XcodeBuildMCP: `build_run_sim`, `test_
 6. Use `Activity.request(... start:)`, not `startDate:`, which exists only on iOS 26.0. It requires an `AlertConfiguration` and must be called while the app is in the foreground. Set `staleDate` to the drop so the view shows "Out now" without the app. Always catch `ActivityAuthorizationError`. Scheduled activities count toward an unpublished limit, so keep **at most 3 pending** (D-24).
 7. Keep the Live Activity payload well under 4 KB: `dropIDs`, title, date and a short provider string only.
 8. Filter AniList `isAdult == true` out of search results. Keep AniList under 30 requests a minute (its degraded limit).
-9. Never bundle poster art in the repo or screenshots. The design is typographic.
+9. Show artwork (posters, banners) is fetched at runtime from TVmaze or AniList and cached on the phone (D-37). Never commit artwork files to the repo; tests and committed screenshot baselines use a neutral placeholder.
 10. Every TVmaze, AniList and (later) TMDB/JustWatch use is credited on the Credits screen.
 11. Provider labels show the network and its country ("HBO · US"), never "On HBO" (D-20). Say "No official stream in your country" only when the rules file says so.
 

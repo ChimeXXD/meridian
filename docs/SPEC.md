@@ -18,7 +18,7 @@ This version is a **portfolio project**: it's built in one week, ends at a priva
 - No region-aware "where to watch" from TMDB/JustWatch (see "After the week" in `PLAN.md`).
 - No social features, ratings, reviews or watch history beyond "followed".
 - No importers (TV Time, Trakt), calendar export, Apple Watch app, iCloud sync or paid tier in v1.
-- No poster art or studio key art anywhere, including the repo and screenshots.
+- No artwork files committed to the repo. Show artwork is fetched at runtime from TVmaze or AniList and cached on the phone (D-37).
 - No scraping of LiveChart, Crunchyroll or any site without an API.
 
 ## Users
@@ -75,7 +75,7 @@ This version is a **portfolio project**: it's built in one week, ends at a priva
 - [ ] The privacy manifest declares the UserDefaults reasons `CA92.1` and `1C8F.1`, and `PRIVACY.md` states that no data is collected. verify: `plutil -lint` on `PrivacyInfo.xcprivacy` plus a grep for both codes; `PRIVACY.md` exists and is linked from Credits and the README.
 - [ ] The accuracy audit shows 20 of 20 real drops from the build week correct, including drops on either side of the 1 Nov 2026 US clock change, in the tester's zone. "Correct" means the shown local day is right **and** the shown time is within 5 minutes of the confirmed release; a `dateOnly` drop is correct if its date is right and it shows no time. No more than 4 of the 20 may be `dateOnly`. verify: `docs/research/accuracy-audit.md` lists 20 rows with the app time, the confirmed time and the source, all matching.
 - [ ] The README lets a reader understand the project in 60 seconds: pitch and demo video or GIF at the top, the problem, a Mermaid architecture diagram, the rules table with a sourcing explainer, a CI badge, how to run it, and credits and licences. verify: `scripts/check-readme.sh` greps for each section heading, a ```mermaid block, the badge URL and the video link; Chime reads it on GitHub once it's public.
-- [ ] The repo is public with nothing that shouldn't be in it: no secrets, no poster art, the TVmaze fixtures marked CC BY-SA, LICENSE (MIT) present, and AniList's answer recorded. verify: the open-source checklist in `PLAN.md` Day 7 is ticked; `git log -p | grep -iE "api[_-]?key|secret|token"` finds nothing; `gh repo view --json visibility` returns PUBLIC.
+- [ ] The repo is public with nothing that shouldn't be in it: no secrets, no committed artwork files, the TVmaze fixtures marked CC BY-SA, LICENSE (MIT) present, and AniList's answer recorded. verify: the open-source checklist in `PLAN.md` Day 7 is ticked; `git log -p | grep -iE "api[_-]?key|secret|token"` finds nothing; `gh repo view --json visibility` returns PUBLIC.
 - [ ] CI builds and runs the tests on every push to `main`. verify: `gh run list --branch main --limit 1` shows success, and the README badge is green.
 - [ ] People understand the Upcoming screen at a glance. verify: on Day 3, a 5-second test with 5 people using a screenshot of the simulator build; at least 4 of 5 answer "when and where" correctly, logged in `docs/research/glance-test.md`.
 

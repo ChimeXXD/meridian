@@ -216,7 +216,7 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
 - [ ] **Case study** draft for the portfolio site, in `docs/CASE-STUDY.md`: the problem, the research (TV Time's closure, the placeholder discovery, the clock-change matrix), design decisions with design references, the engineering, the accuracy audit result, and what's next.
 - [ ] **Open-source checklist:**
   - no secrets in the history (`git log -p` grep, and GitHub secret scanning once public)
-  - no poster art anywhere
+  - no artwork files committed (art is fetched at runtime, D-37)
   - the TVmaze fixtures noted as CC BY-SA in `AirstampTests/Fixtures/README.md`
   - AniList's answer recorded (O-5)
   - LICENSE and credits present
