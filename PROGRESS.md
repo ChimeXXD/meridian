@@ -2,6 +2,20 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## D3-8b, anime premieres in Search (Sun 1 Nov 2026)
+
+**Changed**
+- `AniListClient.airingSoon` makes a second request for this week's episode 1s (`airingSchedules`, `episode: 1`, starting on the hour so the 6 h cache works) and merges them into the popular airing list, most popular first, no duplicates. If that request fails, the popular list still shows; a cancelled load still fails.
+- The spec said to widen the popular query to `NOT_YET_RELEASED`. Tried live first: 26 of 50 slots went to shows months away, 0 premieres this week. The direct query found 3 (GROTESQQQUE, Demons' Crest, Cardfight!! Vanguard). SPEC and D3-8b reworded to match. New fixture `anilist/premieres-2026-11-01.json`.
+
+**Red → green**
+- Red: `premieres` (subset, episode 1 and request-count expectations), `premieresCachedWithinTheHour` (4 requests, not 2), `premieresFailing` (`Caught error: .http(status: 500)`). Green: `AniListClientTests` 11/11.
+- Red: `premieresPaged` (page 2 never asked for), `premieresPageLimit` (2 requests, not 4). Green: `AniListClientTests` 14/14. The exact paged query was run live: page 2 of 1–8 Oct held the last 10 premieres, one with popularity 41,634.
+
+**Reviews**
+- `/code-review --fix` (medium): 6 findings, 2 fixed (the premieres request ended up to 59 min early; the no-duplicates test couldn't fail, so `premieresMerged` feeds one show from both requests and checks the request body, with `FakeNetwork.bodies`). Left: the grid caps at 15 before filtering, so premieres (popularity 14,850 and below) don't show until D3-9 stores the whole pool and caps after filtering; a rate-limited premieres request isn't retried until the app restarts; the query can't filter by country, so other countries' episode 1s share the pages; 2 s more on a cold anime load.
+- proof:verifier: FAIL on one page of 50, fixed by paging (above). Also noted a blind spot of up to 6 h: a premiere that airs while the popular list is cached is in neither list.
+
 ## Search filters spec (D-43) and D3-8, the airing-soon pool (Sat 31 Oct 2026)
 
 **Changed**

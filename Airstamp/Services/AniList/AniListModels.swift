@@ -70,6 +70,8 @@ struct AniListAiring: Codable, Hashable, Sendable {
 /// `{ data: { Page: { media | airingSchedules } } }`
 struct AniListPage: Decodable, Sendable {
     struct Page: Decodable, Sendable {
+        struct Info: Decodable, Sendable { let hasNextPage: Bool? }
+        let pageInfo: Info?
         let media: [AniListMedia]?
         let airingSchedules: [AniListAiring]?
     }

@@ -345,12 +345,14 @@
       "priority": "must",
       "title": "Search: anime premieres reach the airing-soon pool (D-43)",
       "criteria": [
-        "AniList airingSoon asks for RELEASING and NOT_YET_RELEASED shows, so a season whose episode 1 airs in the 7-day window is kept",
-        "adult titles stay excluded; the rate limit and cache are unchanged"
+        "AniList airingSoon also asks for this week's episode 1s (airingSchedules, episode: 1), so a NOT_YET_RELEASED season premiering in the 7-day window is kept; widening the popular query instead was tried and found none (1 Nov 2026)",
+        "merged most popular first with no duplicates; adult titles stay excluded; a failed premieres request still returns the popular list",
+        "the premieres request starts on the hour, so loads within the same hour are served from the cache",
+        "a season's opening week (60 episode 1s in 1-8 Oct 2026) is read across pages, at most 3"
       ],
-      "verify": "AniListClientTests checks the query's status_in and, over a recorded fixture with an episode-1 show, that it's kept",
-      "passes": false,
-      "evidence": ""
+      "verify": "AniListClientTests over releasing-2026-10-31 + premieres-2026-11-01: premieres kept, popularity order, no duplicates, 500 on the second request, two loads in one hour make 2 requests, page 2 read, 3-page limit",
+      "passes": true,
+      "evidence": "1 Nov: xcodebuild -only-testing AniListClientTests 14/14 (premieres, premieresMerged, premieresPaged, premieresPageLimit, premieresFailing, premieresCachedWithinTheHour); the exact paged query run live against AniList (page 2 of 1-8 Oct: 10 rows, no errors); proof gate build+test+spec; proof:verifier gaps fixed (paging, window end)"
     },
     {
       "id": "D3-9",

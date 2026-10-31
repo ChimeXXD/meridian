@@ -1,0 +1,126 @@
+{
+  "data": {
+    "Page": {
+      "airingSchedules": [
+        {
+          "airingAt": 1793890800,
+          "episode": 1,
+          "media": {
+            "id": 178972,
+            "isAdult": false,
+            "title": {
+              "romaji": "GROTESQQQUE",
+              "english": null
+            },
+            "startDate": {
+              "year": 2026
+            },
+            "status": "NOT_YET_RELEASED",
+            "format": "MOVIE",
+            "popularity": 14850,
+            "countryOfOrigin": "JP",
+            "coverImage": {
+              "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx178972-THp4trZ9uR9b.jpg",
+              "extraLarge": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx178972-THp4trZ9uR9b.jpg"
+            },
+            "bannerImage": null,
+            "nextAiringEpisode": {
+              "airingAt": 1793890800,
+              "episode": 1
+            },
+            "externalLinks": [
+              {
+                "site": "Twitter",
+                "type": "SOCIAL"
+              },
+              {
+                "site": "Official Site",
+                "type": "INFO"
+              }
+            ]
+          }
+        },
+        {
+          "airingAt": 1793930400,
+          "episode": 1,
+          "media": {
+            "id": 203275,
+            "isAdult": false,
+            "title": {
+              "romaji": "Demons' Crest",
+              "english": "Devils' Crest"
+            },
+            "startDate": {
+              "year": 2026
+            },
+            "status": "NOT_YET_RELEASED",
+            "format": "TV",
+            "popularity": 5970,
+            "countryOfOrigin": "JP",
+            "coverImage": {
+              "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/b203275-YyNHygkzIjMC.jpg",
+              "extraLarge": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/b203275-YyNHygkzIjMC.jpg"
+            },
+            "bannerImage": "https://s4.anilist.co/file/anilistcdn/media/anime/banner/203275-g8zkD7HCkJCn.jpg",
+            "nextAiringEpisode": {
+              "airingAt": 1793930400,
+              "episode": 1
+            },
+            "externalLinks": [
+              {
+                "site": "Official Site",
+                "type": "INFO"
+              },
+              {
+                "site": "Twitter",
+                "type": "SOCIAL"
+              },
+              {
+                "site": "Amazon Prime Video",
+                "type": "STREAMING"
+              }
+            ]
+          }
+        },
+        {
+          "airingAt": 1794061800,
+          "episode": 1,
+          "media": {
+            "id": 214536,
+            "isAdult": false,
+            "title": {
+              "romaji": "Cardfight!! Vanguard Divinez Unmei Seisen-hen",
+              "english": "CARDFIGHT!! VANGUARD Divinez: Parallactic Fate"
+            },
+            "startDate": {
+              "year": 2026
+            },
+            "status": "NOT_YET_RELEASED",
+            "format": "TV",
+            "popularity": 450,
+            "countryOfOrigin": "JP",
+            "coverImage": {
+              "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx214536-dl2KJdHcKWJl.jpg",
+              "extraLarge": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx214536-dl2KJdHcKWJl.jpg"
+            },
+            "bannerImage": null,
+            "nextAiringEpisode": {
+              "airingAt": 1794061800,
+              "episode": 1
+            },
+            "externalLinks": [
+              {
+                "site": "Twitter",
+                "type": "SOCIAL"
+              },
+              {
+                "site": "Official Site",
+                "type": "INFO"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

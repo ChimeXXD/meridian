@@ -77,6 +77,89 @@ struct AniListClientTests {
         #expect(media.map { $0.popularity ?? 0 } == media.map { $0.popularity ?? 0 }.sorted(by: >))
     }
 
+    @Test("premieres this week join the list: a season whose episode 1 airs in the window, most popular first")
+    func premieres() async throws {
+        // A new season is NOT_YET_RELEASED until episode 1 airs, so the popular-airing page never has it (D3-8b).
+        let network = TVmazeClientTests.FakeNetwork([try Self.ok("releasing-2026-10-31"), try Self.ok("premieres-2026-11-01")])
+        let media = try await Self.client(network).airingSoon(from: Date(iso: "2026-10-31T23:00:00Z"), days: 7)
+        let ids = media.map(\.id)
+        #expect(Set([178972, 203275, 214536]).isSubset(of: Set(ids)))  // GROTESQQQUE, Demons' Crest, Cardfight!! Vanguard
+        #expect(media.first { $0.id == 178972 }?.nextAiringEpisode?.episode == 1)
+        #expect(Set(ids).count == ids.count)
+        #expect(media.map { $0.popularity ?? 0 } == media.map { $0.popularity ?? 0 }.sorted(by: >))
+        #expect(await network.requests.count == 2)
+    }
+
+    @Test("a show on both lists appears once, and a premiere in the window's last hour is asked for")
+    func premieresMerged() async throws {
+        func body(_ list: String) -> Data {
+            Data("""
+            {"data":{"Page":{\(list)}}}
+            """.utf8)
+        }
+        let show = """
+        {"id":7,"isAdult":false,"title":{"romaji":"S"},"popularity":10,"countryOfOrigin":"JP",
+        "nextAiringEpisode":{"airingAt":1793530000,"episode":1}}
+        """
+        let network = TVmazeClientTests.FakeNetwork([(200, [:], body("\"media\":[\(show)]")),
+                                                     (200, [:], body("\"airingSchedules\":[{\"airingAt\":1793530000,\"episode\":1,\"media\":\(show)}]"))])
+        let from = Date(iso: "2026-10-31T23:40:00Z")
+        let media = try await Self.client(network).airingSoon(from: from, days: 7)
+        #expect(media.map(\.id) == [7])
+        let sent = await network.bodies.last.flatMap { String(data: $0, encoding: .utf8) } ?? ""
+        let end = Int(from.timeIntervalSince1970) + 7 * 86_400
+        let lesser = sent.firstMatch(of: /airingAt_lesser: (\d+)/).flatMap { Int($0.1) } ?? 0
+        #expect(lesser >= end)
+    }
+
+    /// A premieres page of episode-1 airings, as AniList sends it.
+    static func premierePage(ids: [Int], hasNextPage: Bool) -> (status: Int, headers: [String: String], body: Data) {
+        let rows = ids.map { id in
+            "{\"airingAt\":1793530000,\"episode\":1,\"media\":{\"id\":\(id),\"isAdult\":false,\"title\":{\"romaji\":\"S\(id)\"}," +
+                "\"popularity\":\(id),\"countryOfOrigin\":\"JP\",\"nextAiringEpisode\":{\"airingAt\":1793530000,\"episode\":1}}}"
+        }
+        let json = "{\"data\":{\"Page\":{\"pageInfo\":{\"hasNextPage\":\(hasNextPage)}," +
+            "\"airingSchedules\":[\(rows.joined(separator: ","))]}}}"
+        return (200, [:], Data(json.utf8))
+    }
+
+    @Test("a season's opening week has more premieres than one page: the next pages are read too")
+    func premieresPaged() async throws {
+        // 1–8 Oct 2026 had 60 episode-1 airings; page 1 stopped on the Tuesday (checked live, 1 Nov 2026).
+        let network = TVmazeClientTests.FakeNetwork([try Self.ok("releasing-2026-10-31"),
+                                                     Self.premierePage(ids: [11], hasNextPage: true),
+                                                     Self.premierePage(ids: [22], hasNextPage: false)])
+        let media = try await Self.client(network).airingSoon(from: Date(iso: "2026-10-31T23:00:00Z"), days: 7)
+        #expect(Set([11, 22]).isSubset(of: Set(media.map(\.id))))
+        #expect(await network.requests.count == 3)
+        let last = await network.bodies.last.flatMap { String(data: $0, encoding: .utf8) } ?? ""
+        #expect(last.contains("page: 2"))
+    }
+
+    @Test("paging stops after 3 pages, to stay well under AniList's 30 requests a minute")
+    func premieresPageLimit() async throws {
+        let network = TVmazeClientTests.FakeNetwork([try Self.ok("releasing-2026-10-31"),
+                                                     Self.premierePage(ids: [11], hasNextPage: true)])
+        _ = try await Self.client(network).airingSoon(from: Date(iso: "2026-10-31T23:00:00Z"), days: 7)
+        #expect(await network.requests.count == 4)
+    }
+
+    @Test("if the premieres request fails, the popular list still shows")
+    func premieresFailing() async throws {
+        let network = TVmazeClientTests.FakeNetwork([try Self.ok("releasing-2026-10-31"), (500, [:], Data())])
+        let media = try await Self.client(network).airingSoon(from: Date(iso: "2026-10-31T00:00:00Z"), days: 7)
+        #expect(media.map(\.id).prefix(3) == [195516, 195604, 235])
+    }
+
+    @Test("loads within the same hour ask the same question, so the second comes from the cache")
+    func premieresCachedWithinTheHour() async throws {
+        let network = TVmazeClientTests.FakeNetwork([try Self.ok("releasing-2026-10-31"), try Self.ok("premieres-2026-11-01")])
+        let client = Self.client(network)
+        _ = try await client.airingSoon(from: Date(iso: "2026-10-31T23:10:00Z"), days: 7)
+        _ = try await client.airingSoon(from: Date(iso: "2026-10-31T23:40:00Z"), days: 7)
+        #expect(await network.requests.count == 2)
+    }
+
     @Test("a search result reads like a TV one: year, where to watch, status, and the cover")
     func searchResult() throws {
         let page = try JSONDecoder().decode(AniListPage.self, from: Fixture.data("anilist/search-frieren.json"))

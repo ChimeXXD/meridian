@@ -9,6 +9,7 @@ struct TVmazeClientTests {
         private var responses: [(status: Int, headers: [String: String], body: Data)]
         private(set) var requests: [URL] = []
         private(set) var sleeps: [Duration] = []
+        private(set) var bodies: [Data] = []
 
         init(_ responses: [(status: Int, headers: [String: String], body: Data)]) {
             self.responses = responses
@@ -17,6 +18,7 @@ struct TVmazeClientTests {
         func send(_ request: URLRequest) throws -> (Data, HTTPURLResponse) {
             let url = try #require(request.url)
             requests.append(url)
+            if let body = request.httpBody { bodies.append(body) }
             let next = responses.count > 1 ? responses.removeFirst() : responses[0]
             let response = HTTPURLResponse(url: url, statusCode: next.status, httpVersion: nil, headerFields: next.headers)!
             return (next.body, response)
