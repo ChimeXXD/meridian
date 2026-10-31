@@ -323,6 +323,84 @@
       "evidence": ""
     },
     {
+      "id": "D3-8",
+      "day": 3,
+      "priority": "must",
+      "title": "Search: airing-soon pool keeps each show's next episode with its resolved time (D-43)",
+      "criteria": [
+        "TVmaze schedule items decode airtime, airdate, season and number",
+        "each candidate show keeps its soonest upcoming episode, resolved with TimeResolver and the bundled rules; an empty airtime is never exact (D-25)",
+        "'still to come' is judged by the resolved time, never the raw airstamp; a date-only episode stays through its airdate in the viewer's zone (D-28)",
+        "episodes released together keep the lowest season and episode, so a new season keeps episode 1",
+        "schedules are fetched from the viewer's yesterday to two days ahead, because TVmaze dates an episode in its own country",
+        "the pool keeps every qualifying show, by TVmaze weight then name; the 15-show cap applies only after filtering"
+      ],
+      "verify": "AiringSoonTests over the recorded schedules of 30 Oct 2026 (Apple TV placeholder airtime '' at 12:00Z, CBS broadcast, Peacock date-only, Netflix season drop, Paramount+ E10-E13 batch): resolved times, confidence, order, date-only day, tie-break, no placeholder kept after its real release, Auckland asks for yesterday",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D3-8b",
+      "day": 3,
+      "priority": "must",
+      "title": "Search: anime premieres reach the airing-soon pool (D-43)",
+      "criteria": [
+        "AniList airingSoon asks for RELEASING and NOT_YET_RELEASED shows, so a season whose episode 1 airs in the 7-day window is kept",
+        "adult titles stay excluded; the rate limit and cache are unchanged"
+      ],
+      "verify": "AniListClientTests checks the query's status_in and, over a recorded fixture with an episode-1 show, that it's kept",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D3-9",
+      "day": 3,
+      "priority": "must",
+      "title": "Search: filter logic for Today, New seasons, Exact time known and Service (D-43)",
+      "criteria": [
+        "Today: still to come and on the viewer's calendar day in the zone times are formatted in (TimeZone.current; the Settings override once it exists); a date-only episode counts when its airdate is today",
+        "New seasons: the kept episode is episode 1 of any season (TV) or episode 1 (anime), brand-new shows included",
+        "Exact time known (TV only): the time would read 'Out', not 'Expected' (D-40); date-only never counts",
+        "Service (TV only): one at a time; a show's service is its web channel, else its network, matched by name; options come from the whole pool so a chosen one never disappears, most shows first, ties A-Z, at most 6",
+        "filters combine (AND), keep the popular-first order and show at most 15",
+        "changing a filter makes no TVmaze or AniList request; anime offers Today and New seasons only"
+      ],
+      "verify": "SearchFilterTests (a pure function over the D3-8 pool and the D3-8b AniList fixture, fixed clock, Africa/Lagos, America/New_York and Pacific/Auckland): each filter alone, combinations, the service list, the 15 cap, the anime subset; grep shows the filter type has no client dependency",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D3-10",
+      "day": 3,
+      "priority": "must",
+      "title": "Search: filter row design picked by Chime from a reference board (D-43)",
+      "criteria": [
+        "a board of filter-chip rows on search and browse screens, built with scripts/build-reference-board.py",
+        "Chime marks one 'Use this'",
+        "the heading, chip labels and no-match copy are agreed and written into UI-BRIEF §5.3",
+        "Chime decides whether a filtered cell shows its release time (if so, worded by ReleaseWording, rule 3)"
+      ],
+      "verify": "docs/design/search-filter-board/picks.json holds at least one 'use' pick; UI-BRIEF §5.3 has the agreed copy",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D3-11",
+      "day": 3,
+      "priority": "must",
+      "title": "Search: filter row built in Night Sky (D-43)",
+      "criteria": [
+        "chips sit under the TV | Anime switch and show whenever the airing-soon grid shows (no query or under 2 characters), not while loading or failed",
+        "switching to Anime clears Exact time known and Service; filters are kept per catalog for the session",
+        "each chip has an accessibility ID and tells VoiceOver whether it is selected",
+        "a filter with no matches shows one plain line and 'Clear filters', never a blank grid",
+        "copy matches D3-10"
+      ],
+      "verify": "fidelity/verify-screen.sh search-filtered prints ALL PASS (new inventory fidelity/inventory/search-filtered.json, added with Chime's OK); a device screenshot (devicectl) approved by Chime",
+      "passes": false,
+      "evidence": ""
+    },
+    {
       "id": "D4-1",
       "day": 4,
       "priority": "must",
@@ -547,6 +625,21 @@
         "no truncated countdowns"
       ],
       "verify": "AX5LayoutTests; AX5 screenshots pass verify-screen.sh",
+      "passes": false,
+      "evidence": ""
+    },
+    {
+      "id": "D6-9",
+      "day": 6,
+      "priority": "should",
+      "title": "Search: 'Top 10 on Netflix in Nigeria' chip from Netflix's official weekly Top 10 (D-43, option B)",
+      "criteria": [
+        "first: confirm the Netflix country file has Nigeria rows and its terms allow a derived list (O-13)",
+        "a script builds a bundled list for Nigeria only from the latest week, matched to TVmaze IDs; unmatched titles are listed and dropped",
+        "the chip lists the chart's TV shows in chart order, ignoring the airing window and language rule; a show with an episode coming says when, one fully out says 'All episodes out'; it names the week",
+        "no remote fetch until the repo is public (D-34); Netflix credited on Credits"
+      ],
+      "verify": "PopularListTests decodes the script's output from a recorded Top 10 fixture and checks the TVmaze matches; fidelity/verify-screen.sh search-filtered prints ALL PASS",
       "passes": false,
       "evidence": ""
     },

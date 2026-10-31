@@ -20,6 +20,7 @@ This version is a **portfolio project**: it's built in one week, ends at a priva
 - No importers (TV Time, Trakt), calendar export, Apple Watch app, iCloud sync or paid tier in v1.
 - No artwork files committed to the repo. Show artwork is fetched at runtime from TVmaze or AniList and cached on the phone (D-37).
 - No scraping of LiveChart, Crunchyroll or any site without an API.
+- Search filters narrow only the grid shown before typing, not typed results. Popularity comes from keyless sources, with no live trending service that needs a key (D-43, D-06).
 
 ## Users
 
@@ -37,6 +38,7 @@ This version is a **portfolio project**: it's built in one week, ends at a priva
 6. **Report a wrong time (Should):** Show detail → "Report a wrong time" → an email opens, prefilled with show, episode, time shown, source and time zone (while the repo is private) → a prefilled GitHub issue once the repo is public (D-34).
 8. **Publish:** Day 7 → the open-source checklist passes → the repo goes public → the README, video and case study go up on the portfolio site.
 7. **Nothing scheduled:** no followed show has an upcoming episode → the empty state names the next real date, or says "Nothing scheduled for your shows yet. Airstamp checks again each time you open it."
+9. **Browse what's popular (D-43):** Search → TV or Anime → before typing, the grid shows popular shows airing in the next few days → tap Today, New seasons, Exact time known or a service → the grid narrows at once → follow from the grid, or tap "Clear filters".
 
 ## Acceptance criteria
 
@@ -51,6 +53,11 @@ This version is a **portfolio project**: it's built in one week, ends at a priva
 - [ ] `dateOnly` drops show their airdate and "time not announced" with no ticking timer, in the app and in widgets. The airdate is the same calendar day whatever zone is used to show it. verify: `DateOnlyTests` formats one `dateOnly` drop in Africa/Lagos, America/New_York and Pacific/Auckland and gets the same day each time; a widget preview for `dateOnly` shows no timer.
 - [ ] The provider label shows the origin network or channel and its country ("HBO · US"); "No official stream in your country" appears only when a rules-file entry lists the viewer's country. The viewer's country is the country of the current time zone (bundled zone-to-country table), unless Settings overrides it. verify: `ProviderLabelTests` covering network, web channel, the no-stream flag, Africa/Lagos → NG, and the Settings override.
 - [ ] Search never auto-selects; each result shows year, network or channel, and status; AniList results with `isAdult == true` are excluded. verify: `SearchViewModelTests` with the "Euphoria" fixture (2 results) and an adult AniList fixture.
+- [ ] Before typing, Search shows shows airing soon, most popular first (TVmaze `weight` for TV, AniList popularity for anime). **Windows:** TV covers the viewer's today and the next two days, fetched from the viewer's yesterday because TVmaze dates an episode in its own country (east of the US a Friday 21:00 ET episode lands on Saturday); anime covers the next 7 days. Each show keeps its soonest episode still to come, judged by its resolved time, never by a placeholder airstamp (rule 2, D-25). A date-only episode stays through its airdate in the viewer's zone (D-28). Episodes released together keep the lowest season and episode, so a new season keeps episode 1. The 15-show cap applies after filtering. verify: `AiringSoonTests` over the recorded schedules of 30 Oct 2026 (Apple TV placeholder `airtime ""` at 12:00Z, a CBS broadcast, a Peacock date-only episode, a Netflix season drop, a Paramount+ batch of E10–E13) checks resolved times, confidence, order, the date-only day, the tie-break, that a placeholder isn't kept after its real release, and that Auckland asks for the viewer's yesterday.
+- [ ] Anime premieres reach the pool: AniList is asked for shows releasing **and** not yet released, so a season whose episode 1 airs in the window is included. verify: `AniListClientTests` checks the query asks for both statuses and, over a recorded fixture with an episode-1 show, that it's kept.
+- [ ] Search filters (D-43) narrow that grid. **Today**: still to come and on the viewer's calendar day in the zone Airstamp formats times in (`TimeZone.current`; the Settings override once it exists); a date-only episode counts when its airdate is today. **New seasons**: the kept episode is episode 1 of any season, brand-new shows included. **Exact time known** (TV only): the time would read "Out", not "Expected" (D-40); date-only never counts. **Service** (TV only): one at a time; a show's service is its web channel, else its network, matched by name; the options come from the whole pool (so a chosen one never disappears), most shows first, ties A–Z, at most 6. Filters combine, keep the popular-first order and show at most 15. Changing a filter makes no TVmaze or AniList request. Anime offers Today and New seasons. verify: `SearchFilterTests` (a pure function over the `AiringSoonTests` pool and an AniList fixture, fixed clock, run in Africa/Lagos, America/New_York and Pacific/Auckland) covers each filter alone, combinations, the service list, the cap and the anime subset; grep shows the filter type has no client dependency.
+- [ ] The filter row sits under the TV | Anime switch and shows whenever the airing-soon grid shows (no query, or under 2 characters), not while it is loading or has failed. Switching to Anime clears Exact time known and Service; filters are kept per catalog for the session. Each chip tells VoiceOver whether it is selected. A filter with no matches shows one plain line and "Clear filters", never a blank grid. Whether a filtered cell shows its time is decided in the design pick; if it does, the words come from `ReleaseWording` (rule 3). verify: `fidelity/verify-screen.sh search-filtered` prints ALL PASS (a new inventory covering a selected filter and the no-match state, added with Chime's OK); Chime approves a device screenshot.
+- [ ] (Should) A "Top 10 on Netflix in Nigeria" chip lists the TV shows from Netflix's official weekly Top 10 for Nigeria, in chart order, naming the week. It ignores the airing window and the language rule: a show with an episode coming shows when, and one fully out says "All episodes out". The list is built offline by a script into a bundled file for Nigeria only and isn't fetched until the repo is public (D-34). Netflix is credited on Credits. verify: `PopularListTests` decodes the script's output from a recorded Top 10 fixture and checks the TVmaze matches; the screen check as above.
 - [ ] Upcoming is sorted by time to drop, with these sections: **Out now** (drop ≤ now < drop + 1 h), **Next 24 hours** (now < drop ≤ now + 24 h), **This week** (up to now + 7 days), **Later**, **Date only**, **Nothing scheduled**. verify: `UpcomingViewModelTests` with a fixed clock and a drop on each side of every boundary.
 - [ ] The empty state names the next real date ("Silo returns 9 Jul 2027") or shows "Nothing scheduled for your shows yet. Airstamp checks again each time you open it." It never promises a refresh interval. verify: view model tests for both cases; the screenshot passes `fidelity/verify-screen.sh upcoming--empty`.
 - [ ] Widgets never count up after the drop: they use `Text(timerInterval:pauseTime:countsDown:)` and have an "Out now" entry at the drop. verify: grep finds no `.timer` style in `AirstampWidgets/`; `TimelineProviderTests` checks there is an entry at `drop` and at `drop + 1h`.
@@ -102,6 +109,7 @@ This version is a **portfolio project**: it's built in one week, ends at a priva
 - 2026-10-29: About 7 weeks to the App Store with a 14-day beta (D-23). Superseded the same day by D-32.
 - 2026-10-29: Zero spend: free Apple ID signing, no TestFlight, CI on `main` only while private (D-35). Chime's call.
 - 2026-10-29: Portfolio project: one week, private beta, private repo made public on Day 7; no App Store (D-32). Week scope in D-33. Rules fetch and GitHub reporting switch on only once the repo is public (D-34). Chime's call.
+- 2026-10-31: Search filters (Today, New seasons, Exact time known, Service), with popularity taken from TVmaze and AniList now and Netflix's official Top 10 later (D-43). Chime's call, from three options: free scores, official charts bundled, or a keyed trending service. Revisit if the TVmaze ranking looks wrong to Chime, or a keyless consensus source appears.
 
 ## Open questions
 
@@ -109,6 +117,7 @@ This version is a **portfolio project**: it's built in one week, ends at a priva
 - O-3 Trademark and domain check for "Airstamp". Deferred: only needed for an App Store release.
 - O-5 AniList permission, needed before the repo goes public. Owner: Chime, Day 0.
 - O-7 Legal HBO source in Nigeria (sets the provider label copy). Owner: Chime, by Day 3.
+- O-13 Does Netflix's Top 10 country file include Nigeria, and do its terms allow a list built from it in an open-source app? Owner: Claude, before the "Top 10 on Netflix in Nigeria" chip.
 
 ---
 
@@ -119,7 +128,7 @@ This version is a **portfolio project**: it's built in one week, ends at a priva
 | Screen | Purpose | Key content |
 | --- | --- | --- |
 | Welcome (one screen) | Explain, then follow the first show | Shows your time zone ("Times shown for Lagos, UTC+1"), a button to follow shows, a prompt to add a widget |
-| Search | Find TV (TVmaze) and anime (AniList or TVmaze, D-19) | Segmented TV / Anime; each result shows year, network and status; never auto-pick the first result (searching "Euphoria" also returns an Israeli show) |
+| Search | Find TV (TVmaze) and anime (AniList or TVmaze, D-19) | Segmented TV / Anime; before typing, popular shows airing in the next few days with filters (D-43); each result shows year, network and status; never auto-pick the first result (searching "Euphoria" also returns an Israeli show) |
 | Upcoming (home) | Every followed show sorted by time to drop | Big countdown, show name, `S1E4`, local day and time worded by certainty ("Out", "Expected", "Airs in Japan", D-40), provider label (D-20); sections: Out now · Next 24 hours · This week · Later · Date only · Nothing scheduled |
 | Show detail | One show | Next drop, the last 3 aired episodes, a Live Activity toggle, an anime offset field, "Report a wrong time", unfollow |
 | Settings | Preferences | Time zone override, Live Activity lead time (30 min to 6 h), Live Activities permission state, credits, Debug menu (Debug builds only) |

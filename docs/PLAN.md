@@ -38,7 +38,7 @@ The selling point stays: **release times you can trust, wherever you are** (D-17
 | Show detail: next drop, Live Activity toggle, anime offset, unfollow | "Report a wrong time" (email while private, GitHub issue once public) | Interviews, competitor teardown, 14-day beta, 100-drop audit |
 | 5 widget families with countdowns that never count up | Dynamic Type AX5 pass | Drop Day, importers, calendar, Watch, region data, pricing |
 | Scheduled Live Activity and Debug fake drop | `.supplementalActivityFamilies` for the Watch and Mac | |
-| Credits, privacy manifest, VoiceOver labels, CI | | |
+| Credits, privacy manifest, VoiceOver labels, CI | "Top 10 on Netflix in Nigeria" Search chip from Netflix's official Top 10 (D-43) | |
 | README, video, case study, open-source checklist | | |
 
 If a day overruns, cut from its Should column first and never from Day 7. The portfolio material *is* the deliverable.
@@ -146,6 +146,7 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
 - [x] Set up the `proof:build` fidelity check: `fidelity/inventory/<screen>.json` built from the UI brief, plus `fidelity/verify-screen.sh`. (Done 31 Oct: native, an XCUITest per screen checking IDs and copy; scheme `AirstampFidelity`.)
 - [ ] Upcoming (sections, countdown, release wording, provider label, empty state), Show detail, a one-screen welcome showing "Times shown for Lagos, UTC+1" with a widget prompt, Settings (lead time, plus the time-zone override as a Should), and Credits.
 - [ ] For each screen: run `verify-screen.sh` until it prints ALL PASS, then show the screenshots next to their design references. Approved screenshots go to `fidelity/refs/` as baselines.
+- [ ] Search filters (D-43, added 31 Oct at Chime's request, before widgets): the airing-soon pool with resolved times (D3-8), anime premieres (D3-8b), filter logic (D3-9), a reference board for the filter row (D3-10), then the row in Night Sky (D3-11).
 
 ### Chime does
 - [ ] Approve or redirect each screen, with one round of notes per screen.
