@@ -23,6 +23,13 @@ struct SearchResultTests {
         ])
     }
 
+    @Test("a grid cell still tells them apart: year · network · country, then the status on its own line")
+    func gridMeta() throws {
+        let results = try Self.results()
+        #expect(results.map(\.gridMeta) == ["2019 · HBO · US", "2012 · HOT3 · IL", "2025 · RTL+", "2022 · TV3 · ES"])
+        #expect(results.map(\.status) == ["Ended", "Ended", "To be determined", "To be determined"])
+    }
+
     @Test("following a result hands the store its id, name, year and network")
     func followPayload() throws {
         let show = try #require(try Self.results().first).followShow
