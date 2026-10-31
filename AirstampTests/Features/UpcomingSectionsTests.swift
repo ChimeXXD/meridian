@@ -79,5 +79,8 @@ struct UpcomingSectionsTests {
         #expect(twoQuiet.sections.flatMap(\.shows).map(\.name) == ["Arcane"])
         let timed = UpcomingSections.make(drops: [Self.drop("Soon", in: Self.hour)], nothingScheduled: [], now: Self.now)
         #expect(timed.spotlight == nil)
+        // Nothing left to feature (the only drop has gone): no spotlight, so the view falls back to SPEC's sentence.
+        let gone = UpcomingSections.make(drops: [Self.drop("Gone", in: -2 * Self.hour)], nothingScheduled: [], now: Self.now)
+        #expect(gone.hero == nil && gone.spotlight == nil)
     }
 }

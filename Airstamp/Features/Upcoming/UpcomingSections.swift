@@ -21,8 +21,8 @@ struct UpcomingSections: Equatable {
     var sections: [Section]
     /// The soonest date-only drop, named by the empty headline when there's no hero.
     var nextDateOnly: Drop?
-    /// The first show with nothing scheduled.
-    var firstQuiet: UpcomingLoader.Quiet?
+    /// With no countdown, the show the top of the screen features instead of going blank (Chime: "too bland").
+    var spotlight: Spotlight?
 
     /// With no countdown, the show the top of the screen features instead of going blank (Chime: "too bland").
     enum Spotlight: Equatable {
@@ -36,12 +36,6 @@ struct UpcomingSections: Equatable {
         case .quiet(let show): show.showID
         case nil: nil
         }
-    }
-
-    var spotlight: Spotlight? {
-        guard hero == nil else { return nil }
-        if let nextDateOnly { return .dateOnly(nextDateOnly) }
-        return firstQuiet.map(Spotlight.quiet)
     }
 
     static func bucket(_ drop: Drop, now: Date) -> Bucket {
@@ -73,8 +67,9 @@ struct UpcomingSections: Equatable {
         }
         let quiet = lead == nil ? Array(nothingScheduled.dropFirst()) : nothingScheduled
         if !quiet.isEmpty { sections.append(Section(title: "Nothing scheduled", shows: quiet)) }
-        return UpcomingSections(hero: hero, sections: sections, nextDateOnly: nextDateOnly,
-                                firstQuiet: nothingScheduled.first)
+        let spotlight: Spotlight? = if hero != nil { nil } else if let nextDateOnly { .dateOnly(nextDateOnly) }
+            else { nothingScheduled.first.map(Spotlight.quiet) }
+        return UpcomingSections(hero: hero, sections: sections, nextDateOnly: nextDateOnly, spotlight: spotlight)
     }
 
     /// What the top of Upcoming says when no show has a time yet. Names the next real date when there is one;

@@ -14,6 +14,7 @@ Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
 **Checked**
 - On Chime's iPhone: Solo Leveling spotlit, then Silo spotlit with Solo Leveling and House of the Dragon in the grid. `fidelity/verify-screen.sh upcoming`: ALL PASS.
+- `/code-review --fix`: 6 findings, 3 fixed (a blank top when every drop had aired now falls back to SPEC's sentence, with a test; a date-only spotlight is a button that opens Show detail; the spotlight rule lives once in `make`). Left: failed shows are matched by name and re-added at the end (only matters if a catalog renames a show between refreshes); fix by matching show IDs.
 
 ## Screen checks (D3-1) (Sat 31 Oct 2026)
 

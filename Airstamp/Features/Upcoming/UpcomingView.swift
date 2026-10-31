@@ -59,8 +59,20 @@ struct UpcomingView: View {
             .buttonStyle(.plain)
             // On the button: a button hides its label's own container, so the hero is found by this ID.
             .accessibilityIdentifier("upcoming-hero")
-        } else {
+        } else if case .dateOnly(let drop) = sections.spotlight {
+            // Tappable like the hero: the date-only show left its section, so this is the only way to its detail.
+            Button { onSelect(drop) } label: { spotlight(sections, image: image, base: base, now: now) }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("upcoming-spotlight")
+        } else if sections.spotlight != nil {
             spotlight(sections, image: image, base: base, now: now)
+        } else {
+            // Nothing to feature (every drop has gone, or every show failed to load): SPEC's sentence on its own.
+            Text(sections.emptyHeadline(formatter: formatter, now: now))
+                .font(.system(size: 28, design: .serif))
+                .padding(.horizontal, Tokens.Space.l)
+                .padding(.top, 120)
+                .accessibilityIdentifier("upcoming-empty")
         }
     }
 
