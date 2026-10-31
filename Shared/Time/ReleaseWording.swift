@@ -45,6 +45,21 @@ enum ReleaseWording {
         }
     }
 
+    /// Why a followed show has nothing scheduled, and when it last aired: "Ended · last episode Sat 29 Mar 2025",
+    /// "Between seasons · last episode Fri 4 Sep". `status` is TVmaze's or AniList's own value.
+    static func quietNote(status: String?, lastAired: String?, formatter: DropFormatter, now: Date) -> String {
+        let why = switch status {
+        case "Ended", "FINISHED", "CANCELLED": "Ended"
+        case "Running", "RELEASING": "Between seasons"
+        case "HIATUS": "On hiatus"
+        case "To Be Determined": "Waiting for news"
+        case "In Development", "NOT_YET_RELEASED": "Not out yet"
+        default: "No new episode announced"
+        }
+        guard let day = lastAired.flatMap({ formatter.airdate($0, now: now) }) else { return why }
+        return "\(why) · last episode \(day)"
+    }
+
     /// "Lagos, UTC+1" for Welcome's "Times shown for …" (SPEC §1): the place and its offset at `date`.
     static func zoneSummary(_ formatter: DropFormatter, at date: Date) -> String {
         let seconds = formatter.timeZone.secondsFromGMT(for: date)

@@ -44,7 +44,11 @@ struct UpcomingLoaderTests {
         let result = try await Self.loader(TVmazeClientTests.FakeNetwork([(200, [:], body)]))
             .load([Self.silo], now: Date(iso: "2026-10-30T17:00:00Z"))
         #expect(result.drops.isEmpty)
-        #expect(result.nothingScheduled == ["Silo"])
+        let quiet = try #require(result.nothingScheduled.first)
+        #expect(quiet.name == "Silo")
+        #expect(quiet.showID == "38052")
+        #expect(quiet.status == "Running")
+        #expect(quiet.lastAired == "2026-09-04")
     }
 
     @Test("a show TVmaze can't serve is reported, not dropped silently")

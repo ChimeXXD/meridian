@@ -11,10 +11,21 @@ struct UpcomingLoader: Sendable {
         var offsetMinutes: Int
     }
 
+    /// A followed show with no next episode: enough to show its art and say why ("Ended · last episode …").
+    struct Quiet: Equatable, Hashable, Sendable {
+        /// Same form as `Drop.showID`: "38052" or "anilist:154587".
+        var showID: String
+        var name: String
+        /// TVmaze's or AniList's own status, worded by `ReleaseWording.quietNote`.
+        var status: String?
+        /// "yyyy-MM-dd" of the last aired episode, when known.
+        var lastAired: String?
+    }
+
     struct Result: Equatable, Sendable {
         var drops: [Drop] = []
         /// Followed shows with no next episode listed, in follow order.
-        var nothingScheduled: [String] = []
+        var nothingScheduled: [Quiet] = []
         /// Followed shows that couldn't be loaded this time.
         var failed: [String] = []
 
@@ -25,13 +36,14 @@ struct UpcomingLoader: Sendable {
             guard let previous, !failed.isEmpty else { return self }
             var merged = self
             merged.drops += previous.drops.filter { failed.contains($0.showName) }
+            merged.nothingScheduled += previous.nothingScheduled.filter { failed.contains($0.name) }
             merged.drops.sort { $0.date < $1.date }
             return merged
         }
     }
 
     private enum Outcome: Sendable {
-        case drop(Drop), nothing(String), failed(String)
+        case drop(Drop), nothing(Quiet), failed(String)
     }
 
     let client: TVmazeClient
@@ -54,7 +66,7 @@ struct UpcomingLoader: Sendable {
         for outcome in outcomes {
             switch outcome {
             case .drop(let drop): result.drops.append(drop)
-            case .nothing(let name): result.nothingScheduled.append(name)
+            case .nothing(let quiet): result.nothingScheduled.append(quiet)
             case .failed(let name): result.failed.append(name)
             }
         }
@@ -65,7 +77,10 @@ struct UpcomingLoader: Sendable {
     private func load(_ request: Request, now: Date) async -> Outcome {
         if request.catalog == .anilist { return await loadAnime(request, now: now) }
         guard let show = try? await client.show(id: request.id) else { return .failed(request.name) }
-        guard let next = show.embedded?.nextepisode else { return .nothing(show.name) }
+        guard let next = show.embedded?.nextepisode else {
+            return .nothing(Quiet(showID: String(show.id), name: show.name, status: show.status,
+                                  lastAired: show.embedded?.previousepisode?.airdate))
+        }
         let resolution = TimeResolver.resolve(next.listing(show: show), rules: rules, offsetMinutes: request.offsetMinutes,
                                               now: now)
         let channel = show.network ?? show.webChannel
@@ -81,7 +96,10 @@ struct UpcomingLoader: Sendable {
     /// An anime's next episode is its Japanese broadcast (AniList `airingAt`), shifted by the show's offset.
     private func loadAnime(_ request: Request, now: Date) async -> Outcome {
         guard let anilist, let media = try? await anilist.media(id: request.id) else { return .failed(request.name) }
-        guard let next = media.nextAiringEpisode else { return .nothing(media.displayTitle) }
+        guard let next = media.nextAiringEpisode else {
+            return .nothing(Quiet(showID: "anilist:\(media.id)", name: media.displayTitle, status: media.status,
+                                  lastAired: nil))
+        }
         let resolution = TimeResolver.resolveAniList(airingAt: Date(timeIntervalSince1970: TimeInterval(next.airingAt)),
                                                      offsetMinutes: request.offsetMinutes)
         let provider = media.streamingSite.map {

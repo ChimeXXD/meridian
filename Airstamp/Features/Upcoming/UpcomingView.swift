@@ -18,7 +18,7 @@ struct UpcomingView: View {
         TimelineView(.everyMinute) { context in
             let sections = UpcomingSections.make(drops: result?.drops ?? [],
                                                  nothingScheduled: result?.nothingScheduled ?? [], now: context.date)
-            ArtworkLoaderView(url: sections.hero.flatMap { artwork[$0.showID]?.hero },
+            ArtworkLoaderView(url: (sections.hero?.showID ?? sections.spotlightShowID).flatMap { artwork[$0]?.hero },
                               maxPixel: ShowArtwork.idealBackgroundWidth) { hero in
                 let base = (hero?.palette ?? .neutral).night.color
                 ScrollView {
@@ -60,12 +60,48 @@ struct UpcomingView: View {
             // On the button: a button hides its label's own container, so the hero is found by this ID.
             .accessibilityIdentifier("upcoming-hero")
         } else {
-            Text(sections.emptyHeadline(formatter: formatter, now: now))
-                .font(.system(size: 28, design: .serif))
-                .padding(.horizontal, Tokens.Space.l)
-                .padding(.top, 120)
-                .accessibilityIdentifier("upcoming-empty")
+            spotlight(sections, image: image, base: base, now: now)
         }
+    }
+
+    /// No countdown yet: the show's art still leads, with its title and why there's no time (Chime: "too bland").
+    /// SPEC's sentence stays, small, under it.
+    private func spotlight(_ sections: UpcomingSections, image: UIImage?, base: Color, now: Date) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            NightArtHeader(image: image, base: base)
+            VStack(alignment: .leading, spacing: Tokens.Space.xs) {
+                switch sections.spotlight {
+                case .dateOnly(let drop):
+                    Text(drop.showName)
+                        .font(.system(size: 32, design: .serif))
+                        .accessibilityIdentifier("upcoming-spotlight-title")
+                    // The title already names the show, so the line is the usual wording (D-40), not "Silo returns …".
+                    Text(ReleaseWording.outLine(drop, now: now, formatter: formatter))
+                        .font(.body.weight(.medium))
+                        .accessibilityIdentifier("upcoming-spotlight-note")
+                    ReleaseMeta(drop: drop)
+                case .quiet(let show):
+                    Text(show.name)
+                        .font(.system(size: 32, design: .serif))
+                        .accessibilityIdentifier("upcoming-spotlight-title")
+                    Text(ReleaseWording.quietNote(status: show.status, lastAired: show.lastAired, formatter: formatter,
+                                                  now: now))
+                        .font(.body.weight(.medium))
+                        .accessibilityIdentifier("upcoming-spotlight-note")
+                    Text(sections.emptyHeadline(formatter: formatter, now: now))
+                        .font(.footnote)
+                        .foregroundStyle(NightInk.muted)
+                        .padding(.top, Tokens.Space.xs)
+                        .accessibilityIdentifier("upcoming-empty")
+                case nil:
+                    EmptyView()
+                }
+            }
+            .padding(.horizontal, Tokens.Space.l)
+            .padding(.top, -64)
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("upcoming-spotlight")
     }
 
     private var emptyFollow: some View {
@@ -100,16 +136,38 @@ struct UpcomingView: View {
                         ForEach(section.drops) { drop in
                             row(drop, index: (order.firstIndex(of: drop.id) ?? 0) + 1, now: now)
                         }
-                        ForEach(section.shows, id: \.self) { name in
-                            Text(name)
-                                .font(.system(size: 20, design: .serif))
-                                .accessibilityIdentifier("nothing-row-\(name)")
-                        }
+                        if !section.shows.isEmpty { quietGrid(section.shows, now: now) }
                     }
                 }
             }
         }
         .padding(.horizontal, Tokens.Space.l)
+    }
+
+    /// Followed shows with nothing scheduled, as the poster grid Chime picked for Search: poster, title, and why
+    /// there's no time.
+    private func quietGrid(_ shows: [UpcomingLoader.Quiet], now: Date) -> some View {
+        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: Tokens.Space.s, alignment: .top), count: 3),
+                  spacing: Tokens.Space.m) {
+            ForEach(Array(shows.enumerated()), id: \.element.showID) { index, show in
+                VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
+                    PosterImage(url: artwork[show.showID]?.posterThumbnail ?? artwork[show.showID]?.poster, cornerRadius: 8)
+                        .aspectRatio(2 / 3, contentMode: .fit)
+                    Text(show.name)
+                        .font(.footnote.weight(.medium))
+                        .lineLimit(2)
+                        .accessibilityIdentifier("nothing-\(index + 1)-title")
+                    Text(ReleaseWording.quietNote(status: show.status, lastAired: show.lastAired, formatter: formatter,
+                                                  now: now))
+                        .font(.caption)
+                        .foregroundStyle(NightInk.muted)
+                        .lineLimit(3)
+                        .accessibilityIdentifier("nothing-\(index + 1)-note")
+                }
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier("nothing-\(index + 1)")
+            }
+        }
     }
 
     /// Art, then the hero's facts in a smaller size: title with its countdown, when it's out, episode and provider.

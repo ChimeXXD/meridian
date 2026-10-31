@@ -31,7 +31,8 @@ final class UpcomingModel {
         let loaded = await loader.load(requests, now: now)
         guard current == generation else { return }
         result = loaded.keepingLastKnown(from: result)
-        let missing = Set((result?.drops ?? []).map(\.showID)).filter { artwork[$0] == nil }
+        let ids = (result?.drops ?? []).map(\.showID) + (result?.nothingScheduled ?? []).map(\.showID)
+        let missing = Set(ids).filter { artwork[$0] == nil }
         await withTaskGroup(of: (String, ShowArtwork?).self) { group in
             for id in missing {
                 let key = Drop.key(showID: id)

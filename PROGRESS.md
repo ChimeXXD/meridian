@@ -2,6 +2,19 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Upcoming with nothing scheduled, unslopped (Sat 31 Oct 2026)
+
+**Changed**
+- Chime followed Solo Leveling and saw a blank screen of text ("too bland"). With no countdown, Upcoming now spotlights a show: its key art fading into night, the serif title, and either the date-only line ("Out Fri 9 Jul 2027, time not announced") or why there's no time ("Waiting for news · last episode Sat 29 Mar 2025", `ReleaseWording.quietNote`). SPEC's "Nothing scheduled… checks again each time you open it" stays, small, under a quiet spotlight.
+- "Nothing scheduled" is the poster grid from Search, each show with its status line. Whatever leads the screen (hero or spotlight) leaves its section, so no show appears twice.
+- `UpcomingLoader.Quiet` carries the show ID, status and last airdate (TVmaze `previousepisode`, AniList status); quiet shows get artwork and survive a failed refresh. `PosterImage` moved to `Features/Artwork`.
+
+**Red → green**
+- Red: `quietNote` (`no member 'quietNote'`), `UpcomingLoader.Quiet` (`not a member type`), then the duplicate checks (`quietOnly.sections → [Nothing scheduled: Solo Leveling]`, `withDate.sections → [Date only, Nothing scheduled]`). Green: 120 tests in 29 suites.
+
+**Checked**
+- On Chime's iPhone: Solo Leveling spotlit, then Silo spotlit with Solo Leveling and House of the Dragon in the grid. `fidelity/verify-screen.sh upcoming`: ALL PASS.
+
 ## Screen checks (D3-1) (Sat 31 Oct 2026)
 
 **Changed**

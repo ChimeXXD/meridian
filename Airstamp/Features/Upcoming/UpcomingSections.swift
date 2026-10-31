@@ -13,14 +13,36 @@ struct UpcomingSections: Equatable {
     struct Section: Equatable {
         var title: String
         var drops: [Drop] = []
-        /// Names of followed shows with no next episode, for "Nothing scheduled".
-        var shows: [String] = []
+        /// Followed shows with no next episode, for "Nothing scheduled".
+        var shows: [UpcomingLoader.Quiet] = []
     }
 
     var hero: Drop?
     var sections: [Section]
     /// The soonest date-only drop, named by the empty headline when there's no hero.
     var nextDateOnly: Drop?
+    /// The first show with nothing scheduled.
+    var firstQuiet: UpcomingLoader.Quiet?
+
+    /// With no countdown, the show the top of the screen features instead of going blank (Chime: "too bland").
+    enum Spotlight: Equatable {
+        case dateOnly(Drop), quiet(UpcomingLoader.Quiet)
+    }
+
+    /// The spotlighted show's ID, for its art.
+    var spotlightShowID: String? {
+        switch spotlight {
+        case .dateOnly(let drop): drop.showID
+        case .quiet(let show): show.showID
+        case nil: nil
+        }
+    }
+
+    var spotlight: Spotlight? {
+        guard hero == nil else { return nil }
+        if let nextDateOnly { return .dateOnly(nextDateOnly) }
+        return firstQuiet.map(Spotlight.quiet)
+    }
 
     static func bucket(_ drop: Drop, now: Date) -> Bucket {
         if drop.confidence == .dateOnly { return .dateOnly }
@@ -34,20 +56,25 @@ struct UpcomingSections: Equatable {
         }
     }
 
-    static func make(drops: [Drop], nothingScheduled: [String], now: Date) -> UpcomingSections {
+    static func make(drops: [Drop], nothingScheduled: [UpcomingLoader.Quiet], now: Date) -> UpcomingSections {
         let sorted = drops.sorted { $0.date < $1.date }
         let timed = sorted.filter { [.outNow, .next24Hours, .thisWeek, .later].contains(bucket($0, now: now)) }
         let hero = timed.first
-        let rest = sorted.filter { $0.id != hero?.id }
+        // With no countdown, the soonest date-only show (or else the first quiet one) is spotlighted at the top.
+        // Like the hero, whatever leads the screen leaves its section, so nothing appears twice.
+        let nextDateOnly = sorted.first { $0.confidence == .dateOnly }
+        let lead = hero ?? nextDateOnly
+        let rest = sorted.filter { $0.id != lead?.id }
         let titled: [(String, Bucket)] = [("Out now", .outNow), ("Next 24 hours", .next24Hours), ("This week", .thisWeek),
                                           ("Later", .later), ("Date only", .dateOnly)]
         var sections = titled.compactMap { title, kind -> Section? in
             let matching = rest.filter { bucket($0, now: now) == kind }
             return matching.isEmpty ? nil : Section(title: title, drops: matching)
         }
-        if !nothingScheduled.isEmpty { sections.append(Section(title: "Nothing scheduled", shows: nothingScheduled)) }
-        return UpcomingSections(hero: hero, sections: sections,
-                                nextDateOnly: sorted.first { $0.confidence == .dateOnly })
+        let quiet = lead == nil ? Array(nothingScheduled.dropFirst()) : nothingScheduled
+        if !quiet.isEmpty { sections.append(Section(title: "Nothing scheduled", shows: quiet)) }
+        return UpcomingSections(hero: hero, sections: sections, nextDateOnly: nextDateOnly,
+                                firstQuiet: nothingScheduled.first)
     }
 
     /// What the top of Upcoming says when no show has a time yet. Names the next real date when there is one;

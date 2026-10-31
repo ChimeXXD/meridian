@@ -67,6 +67,20 @@ struct ReleaseWordingTests {
         #expect(ReleaseWording.place(DropFormatter(zoneIdentifier: zone)) == expected)
     }
 
+    @Test("a show with nothing scheduled says why, and when it last aired", arguments: [
+        ("Ended", "2025-03-29", "Ended · last episode Sat 29 Mar 2025"),
+        ("FINISHED", "2025-03-29", "Ended · last episode Sat 29 Mar 2025"),
+        ("Running", "2026-09-04", "Between seasons · last episode Fri 4 Sep"),
+        ("HIATUS", nil, "On hiatus"),
+        ("To Be Determined", nil, "Waiting for news"),
+        ("NOT_YET_RELEASED", nil, "Not out yet"),
+        (nil, nil, "No new episode announced"),
+    ] as [(String?, String?, String)])
+    func quietNote(status: String?, lastAired: String?, expected: String) {
+        #expect(ReleaseWording.quietNote(status: status, lastAired: lastAired, formatter: Self.lagos, now: Self.now)
+                == expected)
+    }
+
     @Test("Welcome names the zone and its UTC offset", arguments: [
         ("Africa/Lagos", "Lagos, UTC+1"), ("Europe/London", "London, UTC+0"), ("Asia/Kolkata", "Kolkata, UTC+5:30"),
         ("America/New_York", "New York, UTC-4"),
