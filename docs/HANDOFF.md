@@ -1,6 +1,6 @@
 # Handoff: read this first when you pick the project back up
 
-Written 30 Oct 2026 at the end of a long session with Chime. It summarises the whole conversation so a new session can continue without it. Then read, in order: `CLAUDE.md`, `docs/PLAN.md`, `PROGRESS.md` (newest entry first), `docs/DECISIONS.md`.
+Written 31 Oct 2026 (early hours, Lagos) at the end of the second long session with Chime. It summarises the whole conversation so a new session can continue without it. Then read, in order: `CLAUDE.md`, `docs/PLAN.md`, `PROGRESS.md` (newest entry first), `docs/DECISIONS.md` (D-37 to D-42 are new).
 
 ## What we're building
 
@@ -8,60 +8,60 @@ Written 30 Oct 2026 at the end of a long session with Chime. It summarises the w
 
 ## How Chime wants to work (keep these)
 
-- **Portfolio project, one week** (Thu 29 Oct – Thu 5 Nov 2026), stopping at a **private beta**. No App Store work. Open-sourced (MIT) on Day 7.
-- **$0 budget**: free Apple ID signing, no TestFlight, no paid services.
-- **No Figma.** "We are strictly vibe coding this product." references (MCP) is the reference library; UI goes straight into SwiftUI.
-- **Push to GitHub after every change.** Commit in its own Bash command (the proof gate refuses combined commands), then push.
+- **Portfolio project, one week** (Thu 29 Oct – Thu 5 Nov 2026), stopping at a **private beta** on Chime's iPhone. No App Store work. Open-sourced (MIT) on Day 7. **$0 budget.**
+- **No Figma.** references (MCP) is the reference library; UI goes straight into SwiftUI. Chime picks designs from **HTML boards** of reference screens (`scripts/build-reference-board.py --board <dir>`; picker with Use this / Not for us and Export). They like this workflow.
+- **Show, don't describe.** Chime judges from screenshots on their phone. When explaining a screen, draw numbered marks on the real screenshot (`docs/design/direction-board/guide.html` is the model), not text alone.
+- **No legends.** If a UI needs explaining (colour-coded dots), it's wrong; say it in plain words (D-40). Memory: `no-legend-ui`.
+- **Push to GitHub after every change.** Commit in its own Bash command (the proof gate refuses commands that edit files and commit together), then push.
 - After code changes run `/code-review --fix` (medium; high for risky work), then make sure the checks pass. Never launch `/code-review ultra`.
-- Changes to `.claude/proof.json` need Chime's OK. Never commit a Team ID. No `rm -rf`.
-- **Show, don't describe.** Chime judges from screenshots. Show real rendered screens early.
+- Changes to check definitions (`.claude/proof.json`, anything in `fidelity/`) need Chime's OK. Never commit a Team ID. No `rm -rf`.
+- Chime is happy for background agents to take a unit in parallel (a worktree each). Two simulator jobs at once collide: run one at a time.
+- The Mac has 24 GB and fills up (Figma, browsers, Electron apps). Check `mem.mjs` before builds; never close Chime's apps without naming them and asking.
 
-## The big correction this session (don't repeat it)
+## Design decisions this session (don't reopen)
 
-The first UI pass was **type-only, with no artwork** (old decision D-13) and three numeral studies (System / Mono / Serif). Chime rejected it outright ("terrible", "disgusting"). Two instructions followed:
-1. **Show the artwork.** When a row says Silo, show Silo's banner or poster. Recorded as **D-37** (supersedes D-13): artwork is fetched at runtime from TVmaze/AniList, cached on the phone, and **never committed** to the repo. Committed screenshots and test baselines use a placeholder.
-2. **Pick a new visual style from references.** A style board of 96 screens in 10 directions was built; Chime liked 15.
+1. **Night Sky** (D-38) from three references directions (Glass and Poster Colour were "ugly"): the show's key art fades into a near-black base, giant light serif countdown, serif titles. **No brown**: warm art gets neutral charcoal (`ArtworkPalette.night`). Memory: `airstamp-visual-direction`.
+2. **Unslopped** with the `unslop` skill (installed in `~/.claude/skills/unslop`, CC BY 4.0): no player controls or progress bar, sentence-case labels, serif only for titles and countdown, three greys (`NightInk`), zones named by place ("Lagos", "New York").
+3. **Certainty in words, not dots** (D-40, supersedes D-39 and the source chip): "Out today at 21:00", "Expected Mon at 09:00", "Airs in Japan …", "Out Thu 19 Nov, time not announced". Show detail explains the source in one sentence. Code: `Shared/Time/ReleaseWording`. CLAUDE.md rule 3 was rewritten for this.
+4. **Tab bar** (D-41): Upcoming · Search · Settings, Search in the middle as a plain tab.
+5. **Search is a poster grid only** (Chime's picks on `docs/design/search-board/picks.json`: Plex "Popular Searches" grid). Before typing: "Airing in the next few days" (TV, from TVmaze schedules) or "Airing in Japan this week" (Anime, AniList). Results use the same grid with "year · network · country" and status. The list/card design was killed.
+6. **Nothing scheduled is never blank**: with no countdown, Upcoming spotlights a show (art, title, "Waiting for news · last episode Sat 29 Mar 2025" or "Out Fri 9 Jul 2027, time not announced"); the rest are a poster grid with status lines. A show never appears twice.
+7. **Far placeholder dates** (D-42, closes O-10): no airtime and more than 180 days away → date only.
+8. App icon: a light New York serif "A" on Night Sky charcoal (`scripts/make-app-icon.swift`). Chime hasn't commented on it.
 
-**The chosen direction (artwork-led):** full-bleed key art that fades into a deep colour sampled from the art, a very large **thin serif countdown** over it (Chime: "I like the visual of this product. Let's focus more on this" about **Insight Timer**), and each show as a slab tinted from its own poster. Other liked references: Apple TV, HBO Max and Apple Music heroes; Plex and Paramount+ (page colour from the art); Peacock and Letterboxd poster walls; Apple TV and Spotify widgets; the NFL Dynamic Island; the Duolingo Live Activity ("Love this."); the TIDE glass look; Fixtured colour slabs; the Sunlitt widget. Full list: `docs/design/style-board/picks.json`.
+## Where things stand (commit `22c00fe`, all pushed)
 
-## Where things stand (commit `7359ecc`)
-
-- **Done:** Day 0 setup (except the on-device check); Day 1 time engine (tests first; rules file; TVmaze client); the sitemap (`docs/SITEMAP.md`); the reference board (47 picks, structural) and the style board (15 picks, visual), both saved to the reference collection "Airstamp references"; the UI brief (`docs/design/UI-BRIEF.md`, §1–3 marked "being redone" for D-37, §4–6 still valid; `scripts/check-brief.sh` checks it); tokens and components in `Shared/Design/`.
-- **Latest work:** artwork-led `UpcomingArtView`, `UpcomingHero`, `ArtDropRow` and `ShowDetailArtView`, plus `ArtworkPalette`, `ShowArtwork`, `ArtworkLoader` and `TVmazeClient.images`. They run with live TVmaze art and **sample times** in the Debug-only `DesignPreview`. 65 tests pass.
-- **Waiting on Chime:** feedback on the four screenshots of the artwork-led Upcoming and Show detail. Ask what to change (serif countdown, colour strength, slab rows or poster cards) before building on it.
-
-### See the screens again
-
-```bash
-xcodegen generate
-xcodebuild -scheme Airstamp -destination 'platform=iOS Simulator,name=iPhone 18 Pro,OS=27.0' build
-# install the built Airstamp.app (DerivedData) with `xcrun simctl install booted …`, then:
-xcrun simctl launch booted dev.chime.airstamp -designPreview              # Upcoming
-xcrun simctl launch booted dev.chime.airstamp -designPreview bottom       # Upcoming, scrolled
-xcrun simctl launch booted dev.chime.airstamp -designPreview detail       # Silo's Show detail
-xcrun simctl io booted screenshot shot.png
-```
-Artwork loads a few seconds after launch. Shut the simulator down afterwards (the Mac is tight on memory).
+- **The real app runs on Chime's iPhone 14 Pro** (iOS 27.0.1, free signing, Team ID only in git-ignored `Config/Signing.local.xcconfig`). **Signing expires Fri 6 Nov 2026 ~22:27 Lagos**: plug in and reinstall (commands below).
+- **Built:** Welcome (zone line), tab bar, Search (TVmaze + AniList, poster grid, follow), Upcoming (live data, sections, spotlight, quiet grid, offline keeps last known times), Show detail (per-show Live Activity switch, last 3 episodes, unfollow), Settings (zone, lead time 30 min–6 h), Credits. `FollowStore` (SwiftData), `UpcomingLoader`/`UpcomingModel`, `AniListClient` (adult filter, 2 s spacing, cache), `ViewerCountry` (country from time zone via bundled zone.tab; Lagos → NG).
+- **Day 0 gate passed:** app and widget extension both sign with the App Group `group.dev.chime.airstamp` on free signing.
+- **Tests:** 120 unit tests pass. **Screen checks (D3-1, approved by Chime):** `fidelity/verify-screen.sh [screen]` runs `AirstampUITests/FidelityTests` (scheme `AirstampFidelity`) against `fidelity/inventory/*.json` for welcome, upcoming, upcoming-empty, detail, settings, search, search-results: ALL PASS. Not in `.claude/proof.json`. Search checks need the network.
+- **features.json passing:** D2-1–3, D2-5–7, D3-1 and the Day 0/1 items. D2-4 superseded.
 
 ## Next steps
 
-1. Get Chime's verdict on the artwork-led screens and adjust.
-2. Then clean up: remove the rejected numeral studies (`NumeralStudyBoard`, `StudySurfaces`, `NumeralStudyRenderTests`, `docs/design/studies/`), rewrite UI-BRIEF §1–3 for the artwork-led direction, and mark D2-4 in `docs/features.json` as superseded.
-3. Day 2 leftovers: `AniListClient` behind `CatalogSource` (30 requests a minute, `isAdult` filtered, anime artwork from `coverImage`/`bannerImage`), ProviderLabel country logic, SwiftData `FollowedShow`, Search.
-4. Day 3: real Upcoming data (`UpcomingViewModel` with tested section boundaries) behind the new views; first-run Welcome.
-5. Day 4: widgets and the Live Activity in the artwork style. Widgets can't load from the network, so the app saves small art files to the App Group.
+1. **Day 4: widgets** in Night Sky (`accessoryInline/Circular/Rectangular`, `systemSmall/Medium`), using `ReleaseWording` (never the old `SourceChip`), `Text(timerInterval:pauseTime:countsDown:)`, `SnapshotStore` writing App Group JSON, timeline entries ≥ 5 min apart, `.after(nextDrop)`. The app must save small art files to the App Group (widgets can't download).
+2. Small follow-ups: failed shows in `UpcomingLoader.keepingLastKnown` are matched by name and re-added at the end; match by show ID. UI-BRIEF §1–3 and §5.3 still describe old designs; rewrite for Night Sky and the grid. Old `SourceChip`/`DropRow` survive only for widget mock-ups.
+3. Day 5 Live Activity, Day 6 harden + accuracy audit, Day 7 README/video/case study/open source (never cut).
 
 ## Open questions for Chime
 
-- **O-11 navigation:** tab bar (Upcoming, Search, Settings; recommended) or one screen with toolbar buttons. Needed before Day 3.
-- **O-12:** may README screenshots and the demo video show show artwork? (Claude checks TVmaze/AniList image terms before Day 4.)
-- **Day 0 device check:** sign in to Xcode with an Apple ID, turn on Developer Mode, plug in the iPhone, and send the Team ID (it goes only in `Config/Signing.local.xcconfig`).
-- O-5 (AniList permission email), O-7 (HBO in Nigeria), O-10 (TVmaze placeholder dates, decide by Day 3), confirm D-36 (Disney+ has no default rule).
+- Approve the screens on the phone (Day 3 gate); log real times either side of Sunday 1 Nov's US clock change (D3-7); glance test with 5 people (D3-6).
+- O-12 artwork in README/video; O-5 AniList permission email (before Day 7); O-7 HBO in Nigeria; D-36 Disney+.
+- Skipped review items left for Chime: a poster that fails to load shows an empty tile (no TV glyph); posters are cropped about 6%.
 
-## Useful facts
+## Useful commands
 
-- Simulator: `iPhone 18 Pro, OS=27.0` (the 17 Pro only has iOS 26.5). Use `-collect-test-diagnostics never` on test runs, or a failing run waits 600 s.
-- TVmaze IDs used in the preview: Silo 38052, Frieren 69956, House of the Dragon 44778, Wednesday 53647, The Last of Us 46562, Severance 44933. TVmaze "typography" images are JPEGs (no transparency), so titles are set as text.
-- Board builder: `python3 -I scripts/build-reference-board.py [--board docs/design/style-board] refs.json …`. reference screenshots are git-ignored.
+```bash
+# Build and install on Chime's iPhone (UDID 00008120-001044862EC0201E), then screenshot it
+xcodebuild -scheme Airstamp -destination 'id=00008120-001044862EC0201E' -allowProvisioningUpdates -derivedDataPath build/device build
+xcrun devicectl device install app --device 00008120-001044862EC0201E build/device/Build/Products/Debug-iphoneos/Airstamp.app
+xcrun devicectl device process launch --device 00008120-001044862EC0201E --terminate-existing dev.chime.airstamp -- -tab search
+xcrun devicectl device capture screenshot --device 00008120-001044862EC0201E --destination shot.png
+# Simulator: -designPreview [detail] [bottom] [<TVmaze id>] shows the real views with sample times.
+# Debug launch options: -follow <ids>, -followAnime <ids>, -tab search|settings, -query <text>, -kind anime, -inMemoryStore
+```
+
+- Simulator: `iPhone 18 Pro, OS=27.0`. Use `-collect-test-diagnostics never`. Shut it down after use.
+- Files outside the project (Desktop, Downloads) can't be read; capture the phone screen with `devicectl` instead.
 - references returns a "usage is high this month" notice on searches; show it to Chime verbatim.
-- The full chat transcript is saved by Claude Code; `claude --resume` in this folder reopens it.
+- `claude --resume` in this folder reopens the full transcript.
