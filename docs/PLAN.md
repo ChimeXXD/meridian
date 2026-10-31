@@ -143,7 +143,7 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
 ## Day 3: App screens (Sun 1 Nov, the US clock-change day)
 
 ### Claude CLI does
-- [ ] Set up the `proof:build` fidelity check: `fidelity/inventory/<screen>.json` built from the UI brief, plus `fidelity/verify-screen.sh`.
+- [x] Set up the `proof:build` fidelity check: `fidelity/inventory/<screen>.json` built from the UI brief, plus `fidelity/verify-screen.sh`. (Done 31 Oct: native, an XCUITest per screen checking IDs and copy; scheme `AirstampFidelity`.)
 - [ ] Upcoming (sections, countdown, release wording, provider label, empty state), Show detail, a one-screen welcome showing "Times shown for Lagos, UTC+1" with a widget prompt, Settings (lead time, plus the time-zone override as a Should), and Credits.
 - [ ] For each screen: run `verify-screen.sh` until it prints ALL PASS, then show the screenshots next to their design references. Approved screenshots go to `fidelity/refs/` as baselines.
 

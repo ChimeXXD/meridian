@@ -98,7 +98,33 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
         PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_PREFIX).airstamp.tests
 
+  AirstampUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - AirstampUITests
+      - path: fidelity/inventory
+        type: folder
+        buildPhase: resources
+    dependencies:
+      - target: Airstamp
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_PREFIX).airstamp.uitests
+        TEST_TARGET_NAME: Airstamp
+
 schemes:
+  # Screen checks against fidelity/inventory (D3-1). Separate from the Airstamp scheme so the commit gate stays fast and
+  # offline; run with fidelity/verify-screen.sh <screen>.
+  AirstampFidelity:
+    build:
+      targets:
+        Airstamp: all
+        AirstampUITests: [test]
+    test:
+      targets:
+        - AirstampUITests
   Airstamp:
     build:
       targets:

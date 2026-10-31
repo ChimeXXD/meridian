@@ -22,7 +22,16 @@ struct AirstampApp: App {
         WindowGroup {
             content
         }
-        .modelContainer(for: FollowedShow.self)
+        .modelContainer(for: FollowedShow.self, inMemory: Self.inMemoryStore)
+    }
+
+    /// Debug `-inMemoryStore` starts with nothing followed, for the fidelity checks of Welcome and empty states.
+    private static var inMemoryStore: Bool {
+        #if DEBUG
+        ProcessInfo.processInfo.arguments.contains("-inMemoryStore")
+        #else
+        false
+        #endif
     }
 
     @ViewBuilder private var content: some View {

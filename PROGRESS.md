@@ -2,6 +2,18 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Screen checks (D3-1) (Sat 31 Oct 2026)
+
+**Changed**
+- `fidelity/inventory/<screen>.json` for welcome, upcoming, upcoming-empty, detail and settings: accessibility IDs and, where the UI brief fixes it, the exact copy. `AirstampUITests/FidelityTests` launches the real app on each screen (debug launch arguments, `-inMemoryStore` for a clean start), checks every item and saves a screenshot. `fidelity/verify-screen.sh [screen]` runs it on the separate `AirstampFidelity` scheme and prints ALL PASS. Chime approved the new check script (31 Oct). Not added to `.claude/proof.json`.
+- The Upcoming hero's ID moved onto its button (a button hides its label's container from UI tests).
+
+**Checked**
+- `fidelity/verify-screen.sh`: ALL PASS, 5 tests. Unit tests: 117 pass.
+
+**Not verified**
+- Search's inventory waits for the grid redesign (merging next). No approved baselines in `fidelity/refs/` yet; screenshots go to the git-ignored `fidelity/shots/`.
+
 ## Anime from AniList (Sat 31 Oct 2026)
 
 **Changed**

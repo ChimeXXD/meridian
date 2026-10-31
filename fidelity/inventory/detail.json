@@ -1,0 +1,34 @@
+{
+  "screen": "detail",
+  "brief": "UI-BRIEF §5.4 with sample times (-designPreview detail)",
+  "launch": [
+    "-designPreview",
+    "detail"
+  ],
+  "items": [
+    {
+      "id": "detail-title",
+      "text": "Silo"
+    },
+    {
+      "id": "detail-out",
+      "prefix": "Expected today at "
+    },
+    {
+      "id": "detail-why",
+      "text": "Apple TV doesn't publish release times, so this is when its new episodes usually arrive."
+    },
+    {
+      "id": "detail-live-activity"
+    },
+    {
+      "id": "detail-episode-1",
+      "scroll": true
+    },
+    {
+      "id": "detail-unfollow",
+      "text": "Unfollow",
+      "scroll": true
+    }
+  ]
+}

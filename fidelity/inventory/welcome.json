@@ -1,0 +1,23 @@
+{
+  "screen": "welcome",
+  "brief": "UI-BRIEF §5.1",
+  "launch": [
+    "-inMemoryStore",
+    "-welcomeDone",
+    "NO"
+  ],
+  "items": [
+    {
+      "id": "welcome-zone",
+      "prefix": "Times shown for "
+    },
+    {
+      "id": "welcome-find",
+      "text": "Find a show"
+    },
+    {
+      "id": "welcome-later",
+      "text": "Not now"
+    }
+  ]
+}

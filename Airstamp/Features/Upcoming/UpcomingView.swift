@@ -57,6 +57,8 @@ struct UpcomingView: View {
                 UpcomingHero(drop: hero, image: image, base: base, now: now, formatter: formatter)
             }
             .buttonStyle(.plain)
+            // On the button: a button hides its label's own container, so the hero is found by this ID.
+            .accessibilityIdentifier("upcoming-hero")
         } else {
             Text(sections.emptyHeadline(formatter: formatter, now: now))
                 .font(.system(size: 28, design: .serif))

@@ -1,0 +1,62 @@
+{
+  "screen": "upcoming",
+  "brief": "UI-BRIEF §5.2 with sample times (-designPreview)",
+  "launch": [
+    "-designPreview"
+  ],
+  "items": [
+    {
+      "id": "upcoming-hero"
+    },
+    {
+      "id": "upcoming-hero-title",
+      "text": "Silo"
+    },
+    {
+      "id": "upcoming-hero-out",
+      "prefix": "Expected today at "
+    },
+    {
+      "id": "section-header-next-24",
+      "text": "Next 24 hours"
+    },
+    {
+      "id": "drop-row-1-title",
+      "text": "Frieren: Beyond Journey's End"
+    },
+    {
+      "id": "drop-row-1-time",
+      "prefix": "Airs in Japan "
+    },
+    {
+      "id": "section-header-this-week",
+      "text": "This week",
+      "scroll": true
+    },
+    {
+      "id": "drop-row-2-title",
+      "text": "House of the Dragon",
+      "scroll": true
+    },
+    {
+      "id": "drop-row-3-time",
+      "prefix": "Expected ",
+      "scroll": true
+    },
+    {
+      "id": "section-header-later",
+      "text": "Later",
+      "scroll": true
+    },
+    {
+      "id": "section-header-date-only",
+      "text": "Date only",
+      "scroll": true
+    },
+    {
+      "id": "drop-row-5-time",
+      "text": "Out Thu 19 Nov, time not announced",
+      "scroll": true
+    }
+  ]
+}

@@ -245,8 +245,8 @@
         "one inventory per screen"
       ],
       "verify": "ls fidelity/inventory matches the brief; verify-screen.sh runs",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "fidelity/inventory has welcome, upcoming, upcoming-empty, detail, settings (Search follows the grid redesign); fidelity/verify-screen.sh runs AirstampUITests/FidelityTests (scheme AirstampFidelity): ALL PASS, 5 tests, 31 Oct 2026. Native kit: accessibility IDs and exact copy from UI-BRIEF, no HTML mockup (D-31). Approved by Chime."
     },
     {
       "id": "D3-2",

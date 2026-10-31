@@ -1,0 +1,19 @@
+{
+  "screen": "upcoming-empty",
+  "brief": "UI-BRIEF §5.2, no shows",
+  "launch": [
+    "-inMemoryStore",
+    "-welcomeDone",
+    "YES"
+  ],
+  "items": [
+    {
+      "id": "upcoming-empty-follow",
+      "text": "Follow a show to see its countdown here"
+    },
+    {
+      "id": "upcoming-empty-find",
+      "text": "Find a show"
+    }
+  ]
+}
