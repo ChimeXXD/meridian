@@ -1,0 +1,26 @@
+{
+  "screen": "search",
+  "brief": "UI-BRIEF §5.3, Chime's grid picks (live TVmaze)",
+  "launch": [
+    "-inMemoryStore",
+    "-welcomeDone",
+    "YES",
+    "-tab",
+    "search"
+  ],
+  "items": [
+    {
+      "id": "search-kind"
+    },
+    {
+      "id": "search-airing-header",
+      "text": "Airing in the next few days"
+    },
+    {
+      "id": "airing-1-title"
+    },
+    {
+      "id": "airing-1-follow"
+    }
+  ]
+}

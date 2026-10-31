@@ -1,0 +1,31 @@
+{
+  "screen": "search-results",
+  "brief": "UI-BRIEF §5.3, results as a poster grid (live TVmaze)",
+  "launch": [
+    "-inMemoryStore",
+    "-welcomeDone",
+    "YES",
+    "-tab",
+    "search",
+    "-query",
+    "Silo"
+  ],
+  "items": [
+    {
+      "id": "search-results-header",
+      "text": "Results"
+    },
+    {
+      "id": "search-result-1-title",
+      "text": "Silo"
+    },
+    {
+      "id": "search-result-1-meta",
+      "prefix": "2023 · Apple TV"
+    },
+    {
+      "id": "search-result-1-follow",
+      "text": "Follow Silo"
+    }
+  ]
+}

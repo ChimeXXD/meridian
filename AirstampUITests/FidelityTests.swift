@@ -27,6 +27,8 @@ final class FidelityTests: XCTestCase {
     func test_upcoming_empty() throws { try check("upcoming-empty") }
     func test_detail() throws { try check("detail") }
     func test_settings() throws { try check("settings") }
+    func test_search() throws { try check("search") }
+    func test_search_results() throws { try check("search-results") }
 
     private func check(_ screen: String) throws {
         let url = try XCTUnwrap(Bundle(for: Self.self).url(forResource: screen, withExtension: "json",
