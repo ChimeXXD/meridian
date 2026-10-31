@@ -34,7 +34,7 @@ struct RootView: View {
                 // Search sits in the middle (Chime). A `.search` role tab always floats on the trailing edge on iOS 26,
                 // so this is a plain tab.
                 Tab("Search", systemImage: "magnifyingglass", value: .search) {
-                    SearchView(client: client, anilist: anilist)
+                    SearchView(client: client, anilist: anilist, rules: model.rules)
                 }
                 Tab("Settings", systemImage: "gearshape", value: .settings) {
                     SettingsView()

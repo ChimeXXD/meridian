@@ -9,6 +9,7 @@ import SwiftUI
 struct SearchView: View {
     let client: TVmazeClient
     let anilist: AniListClient
+    let rules: RulesFile
 
     enum Kind: String, CaseIterable { case tv = "TV", anime = "Anime" }
 
@@ -50,8 +51,8 @@ struct SearchView: View {
                 guard airingSoon.isEmpty else { return }
                 switch kind {
                 case .tv:
-                    guard let shows = await AiringSoon.load(client: client) else { return }
-                    airing[.tv] = shows.map(SearchResult.init(show:))
+                    guard let picks = await AiringSoon.load(client: client, rules: rules) else { return }
+                    airing[.tv] = picks.prefix(AiringSoon.limit).map { SearchResult(show: $0.show) }
                 case .anime:
                     guard let media = try? await anilist.airingSoon(from: .now, days: 7) else { return }
                     airing[.anime] = Array(media.prefix(AiringSoon.limit)).map(SearchResult.init(media:))

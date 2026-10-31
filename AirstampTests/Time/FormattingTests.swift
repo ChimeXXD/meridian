@@ -20,6 +20,17 @@ struct FormattingTests {
         #expect(formatter.localTime(Self.instant) == time)
     }
 
+    @Test("stepping days counts calendar days across a clock change, not 24-hour blocks", arguments: [
+        // New York, 00:30 on Sun 1 Nov 2026 (a 25-hour day): two days on is Tue 3 Nov.
+        ("America/New_York", "2026-11-01T04:30:00Z", 2, "2026-11-03"),
+        // London, 00:30 on Mon 29 Mar 2027, just after the 23-hour Sunday: one day back is Sun 28 Mar.
+        ("Europe/London", "2027-03-28T23:30:00Z", -1, "2027-03-28"),
+    ])
+    func stepsCalendarDays(zone: String, now: String, days: Int, day: String) throws {
+        let formatter = DropFormatter(timeZone: try #require(TimeZone(identifier: zone)))
+        #expect(formatter.localDay(Date(iso: now), addingDays: days) == day)
+    }
+
     @Test("a date-only drop shows the same day in every zone", arguments: [
         "Africa/Lagos", "America/New_York", "Pacific/Auckland", "Pacific/Pago_Pago",
     ])

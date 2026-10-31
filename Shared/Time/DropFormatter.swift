@@ -22,6 +22,12 @@ struct DropFormatter: Sendable {
         return String(format: "%04d-%02d-%02d", parts.year ?? 0, parts.month ?? 0, parts.day ?? 0)
     }
 
+    /// "yyyy-MM-dd" of the calendar day `days` away in this zone. Steps calendar days, so a 23- or 25-hour day at a
+    /// clock change neither repeats nor skips a day.
+    func localDay(_ date: Date, addingDays days: Int) -> String {
+        localDay(calendar.date(byAdding: .day, value: days, to: date) ?? date)
+    }
+
     /// "HH:mm" (24-hour) in this zone.
     func localTime(_ date: Date) -> String {
         let parts = calendar.dateComponents([.hour, .minute], from: date)

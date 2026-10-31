@@ -16,6 +16,9 @@ final class UpcomingModel {
     /// mid-load) can't overwrite a newer result.
     private var generation = 0
 
+    /// The rules Upcoming resolves times with, shared with Search so both say the same time for an episode.
+    var rules: RulesFile { loader.rules }
+
     init(client: TVmazeClient, anilist: AniListClient, rules: RulesFile, viewerCountry: String?) {
         self.client = client
         self.anilist = anilist

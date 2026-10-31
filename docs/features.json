@@ -336,8 +336,8 @@
         "the pool keeps every qualifying show, by TVmaze weight then name; the 15-show cap applies only after filtering"
       ],
       "verify": "AiringSoonTests over the recorded schedules of 30 Oct 2026 (Apple TV placeholder airtime '' at 12:00Z, CBS broadcast, Peacock date-only, Netflix season drop, Paramount+ E10-E13 batch): resolved times, confidence, order, date-only day, tie-break, no placeholder kept after its real release, Auckland asks for yesterday",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "31 Oct: xcodebuild -only-testing AiringSoonTests + FormattingTests 17/17 (placeholderResolved, upcomingByResolvedTime, broadcastExact, dateOnlyByDay, sameTimeDropKeepsLowestEpisode, tieBreakIgnoresListOrder, windowEndsOnTheThirdDay, loadsYesterday, stepsCalendarDays); proof gate build+test+spec all pass; proof:verifier PASS (2 gaps fixed)"
     },
     {
       "id": "D3-8b",

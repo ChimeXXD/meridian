@@ -2,6 +2,21 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Search filters spec (D-43) and D3-8, the airing-soon pool (Sat 31 Oct 2026)
+
+**Changed**
+- Chime asked for a filter of popular shows airing soon, plus other filters, with popularity from "consensus of reliable sources". Chime chose: TVmaze `weight` and AniList popularity now, a bundled "Top 10 on Netflix in Nigeria" chip later (Should, D6-9); filters Today, New seasons, Exact time known, Service. D-43; SPEC criteria; features D3-8, D3-8b, D3-9, D3-10, D3-11, D6-9. A fresh verifier read the spec: 11 findings, all folded in (anime premieres need `NOT_YET_RELEASED`, date-only and tie-break rules, viewer's-yesterday fetch, Service definition, per-catalog windows, filter states, chip renamed and freed from the window).
+- D3-8: `TVmazeScheduleItem` decodes its episode. `AiringSoon.pool` keeps each show's soonest episode still to come, resolved by `TimeResolver` with the bundled rules (Search now gets them from `UpcomingModel.rules`), uncapped until filtered. Fixed a rule-2 bug: "still to come" used the raw airstamp, so a placeholder kept an episode "coming" for hours after it was out. Schedules are now fetched from the viewer's yesterday (8 calls), so east of the US a US evening that lands the next day is included.
+
+**Red → green**
+- Red: `AiringSoonTests` didn't compile (`'Pick' is not a member type of enum 'Airstamp.AiringSoon'`). Then `seasonDropKeepsEpisodeOne` failed: the test used Dead-End Job, which is Korean and rightly excluded; switched to English shows. Green: `AiringSoonTests` 11/11. The `picks` test changed from `count == limit` to `count > limit` because the spec moves the cap after filtering.
+- Red: `FormattingTests.stepsCalendarDays` didn't compile (`extra argument 'addingDays' in call`). Green: `AiringSoonTests` + `FormattingTests` 17/17.
+
+**Reviews**
+- `/code-review --fix` (medium): 5 findings, 2 fixed. The TV window now ends on the viewer's third day (`windowEndsOnTheThirdDay`); a special (no season or number) sorts after numbered episodes, so it never displaces episode 1. Left: the grid loads once per catalog and isn't reloaded when the app returns (older behaviour, handle with the filter work, D3-9/D3-11); viewers west of the US make 2 extra cached calls; date-only episodes count by their listed date (D-28, intended).
+- proof:verifier: PASS with 2 gaps, both fixed. The tie-break test couldn't fail because the recording lists batches in order (`tieBreakIgnoresListOrder` feeds it reversed). Days were stepped in 24-hour blocks, which repeats or skips a day at a clock change; `DropFormatter.localDay(_:addingDays:)` steps calendar days (New York 1 Nov 2026, London 29 Mar 2027).
+- Settings: `.claude/settings.json` added (12 read-only allowlist entries from `/fewer-permission-prompts`, Chime's request); the gate flags it as a check-definition change awaiting Chime's OK.
+
 ## Upcoming with nothing scheduled, unslopped (Sat 31 Oct 2026)
 
 **Changed**
