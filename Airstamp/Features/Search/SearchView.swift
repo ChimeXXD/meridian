@@ -1,10 +1,11 @@
 import SwiftData
 import SwiftUI
 
-/// Search (SPEC §1, UI-BRIEF §5.3), poster-led from Chime's picks on `docs/design/search-board`: before you type, a
-/// three-across poster grid of shows airing in the next few days (Plex "Popular Searches"); results are poster rows on
-/// dark rounded cards with a serif title and year · network · status (Plex, Apple TV, Hypelist). Nothing is followed
-/// until you tap its button. A TV | Anime switch (Hypelist's media switch) picks TVmaze or AniList (D-19).
+/// Search (SPEC §1, UI-BRIEF §5.3), one poster grid from Chime's picks (Plex "Popular Searches"): three posters across,
+/// the title and a muted meta line under each, and a round follow button on the poster's corner. Before you type it
+/// holds shows airing in the next few days; once you search, the results, whose year · network · status tells
+/// same-name shows apart. Nothing is followed until you tap its button. A TV | Anime switch (Hypelist's media switch)
+/// picks TVmaze or AniList (D-19).
 struct SearchView: View {
     let client: TVmazeClient
     let anilist: AniListClient
@@ -93,12 +94,15 @@ struct SearchView: View {
         case .done where results.isEmpty:
             message("No shows match \u{201C}\(query)\u{201D}", id: "search-no-results")
         case .done:
-            LazyVStack(spacing: Tokens.Space.s) {
-                ForEach(Array(results.enumerated()), id: \.element.id) { index, result in
-                    resultCard(result, index: index + 1)
+            posterGrid("Results", headerID: "search-results-header", results, idPrefix: "search-result") { result in
+                // The year, network, country and status tell same-name shows apart.
+                VStack(alignment: .leading, spacing: 0) {
+                    if !result.gridMeta.isEmpty { Text(result.gridMeta) }
+                    if let status = result.status { Text(status) }
                 }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(result.meta)
             }
-            .padding(.top, Tokens.Space.s)
         }
     }
 
@@ -110,69 +114,53 @@ struct SearchView: View {
             .accessibilityIdentifier(id)
     }
 
-    // MARK: Before you type: Plex's poster grid
+    // MARK: Plex's poster grid, for both the airing shows and the results
 
     private var airingGrid: some View {
+        posterGrid(kind == .tv ? "Airing in the next few days" : "Airing in Japan this week",
+                   headerID: "search-airing-header", airingSoon, idPrefix: "airing") { result in
+            if let network = result.network { Text(network) }
+        }
+    }
+
+    /// One grid for both lists, so the airing shows and the results can't drift apart. Cells are `<idPrefix>-<n>`.
+    private func posterGrid<Meta: View>(_ header: String, headerID: String, _ shows: [SearchResult], idPrefix: String,
+                                        @ViewBuilder meta: @escaping (SearchResult) -> Meta) -> some View {
         VStack(alignment: .leading, spacing: Tokens.Space.s) {
-            Text(kind == .tv ? "Airing in the next few days" : "Airing in Japan this week")
+            Text(header)
                 .font(.system(size: 22, design: .serif))
                 .accessibilityAddTraits(.isHeader)
-                .accessibilityIdentifier("search-airing-header")
+                .accessibilityIdentifier(headerID)
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: Tokens.Space.s, alignment: .top), count: 3),
                       spacing: Tokens.Space.m) {
-                ForEach(Array(airingSoon.enumerated()), id: \.element.id) { index, result in
-                    gridCell(result, index: index + 1)
+                ForEach(Array(shows.enumerated()), id: \.element.id) { index, result in
+                    posterCell(result, id: "\(idPrefix)-\(index + 1)", meta: meta(result))
                 }
             }
         }
         .padding(.top, Tokens.Space.s)
     }
 
-    private func gridCell(_ result: SearchResult, index: Int) -> some View {
+    private func posterCell(_ result: SearchResult, id: String, meta: some View) -> some View {
         VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
             PosterImage(url: result.poster, cornerRadius: 8)
                 .aspectRatio(2 / 3, contentMode: .fit)
                 .overlay(alignment: .topTrailing) {
-                    followButton(result, size: 32, id: "airing-\(index)-follow").padding(Tokens.Space.xxs)
+                    followButton(result, size: 32, id: "\(id)-follow").padding(Tokens.Space.xxs)
                 }
             Text(result.title)
                 .font(.footnote.weight(.medium))
                 .lineLimit(2)
-                .accessibilityIdentifier("airing-\(index)-title")
-            if let network = result.network {
-                Text(network)
-                    .font(.caption)
-                    .foregroundStyle(NightInk.muted)
-                    .lineLimit(1)
-            }
+                .accessibilityIdentifier("\(id)-title")
+            // Two lines a part, so a long network ("Amazon Prime Video") can't push its country out of the cell.
+            meta
+                .font(.caption)
+                .foregroundStyle(NightInk.muted)
+                .lineLimit(2)
+                .accessibilityIdentifier("\(id)-meta")
         }
         .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("airing-\(index)")
-    }
-
-    // MARK: Results: Plex's poster cards
-
-    private func resultCard(_ result: SearchResult, index: Int) -> some View {
-        HStack(spacing: Tokens.Space.m) {
-            PosterImage(url: result.poster, cornerRadius: 6)
-                .frame(width: 56, height: 84)
-            VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
-                Text(result.title)
-                    .font(.system(size: 20, design: .serif))
-                    .lineLimit(3)
-                    .accessibilityIdentifier("search-result-\(index)-title")
-                Text(result.meta)
-                    .font(.footnote)
-                    .foregroundStyle(NightInk.muted)
-                    .accessibilityIdentifier("search-result-\(index)-meta")
-            }
-            Spacer(minLength: Tokens.Space.xs)
-            followButton(result, size: 44, id: "search-result-\(index)-follow")
-        }
-        .padding(Tokens.Space.s)
-        .background(.white.opacity(0.06), in: RoundedRectangle(cornerRadius: 14))
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("search-result-\(index)")
+        .accessibilityIdentifier(id)
     }
 
     private func followButton(_ result: SearchResult, size: CGFloat, id: String) -> some View {
