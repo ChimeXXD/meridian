@@ -32,6 +32,16 @@ struct WidgetTextTests {
         #expect(WidgetText.when(wonderMan, now: Self.now, formatter: Self.formatter) == "Time not announced")
     }
 
+    @Test("following shows with nothing scheduled says so, never 'Follow a show'")
+    func allQuiet() {
+        let moment = Self.moment(.allQuiet)
+        #expect(moment.state == .nothing)
+        #expect(WidgetText.emptyHeadline(moment, formatter: Self.formatter) == "Nothing scheduled")
+        #expect(WidgetText.emptyDetail(moment) == "Airstamp checks again each time you open it.")
+        #expect(WidgetText.inline(moment, formatter: Self.formatter) == "Nothing scheduled")
+        #expect(WidgetText.emptyHeadline(Self.moment(.nothing), formatter: Self.formatter) == "Follow a show")
+    }
+
     @Test("the tag for shows that don't fit: '+3 more this week', none when all fit")
     func more() {
         #expect(WidgetText.more(3) == "+3 more this week")

@@ -33,7 +33,16 @@ struct MediumWidgetView: View {
                             .padding(.top, index == 0 ? Tokens.Space.xs : 3)
                             .accessibilityIdentifier("widget-medium-row-\(index + 2)")
                     }
+                    ForEach(Array(quiet.enumerated()), id: \.element.showID) { index, show in
+                        WidgetQuietRow(show: show, now: moment.date, poster: posters[show.showID],
+                                       showsPoster: showsPosters, formatter: formatter)
+                            .padding(.top, rows.isEmpty && index == 0 ? Tokens.Space.xs : 3)
+                            .accessibilityIdentifier("widget-medium-row-\(rows.count + index + 2)")
+                    }
                 }
+            } else if !moment.nothingScheduled.isEmpty {
+                WidgetQuietList(moment: moment, posters: posters, shown: Self.shown, formatter: formatter)
+                    .accessibilityIdentifier("widget-medium-empty")
             } else {
                 WidgetEmptyState(moment: moment, formatter: formatter)
                     .accessibilityElement(children: .ignore)
@@ -50,7 +59,11 @@ struct MediumWidgetView: View {
 
     private var rows: [Drop] { moment.rows(showing: Self.shown) }
 
-    private var showsPosters: Bool { !dimmed && rows.contains { posters[$0.showID] != nil } }
+    private var quiet: [QuietShow] { moment.quietRows(showing: Self.shown) }
+
+    private var showsPosters: Bool {
+        !dimmed && (rows.map(\.showID) + quiet.map(\.showID)).contains { posters[$0] != nil }
+    }
 
     private func heroRow(_ drop: Drop) -> some View {
         HStack(alignment: .lastTextBaseline, spacing: Tokens.Space.s) {

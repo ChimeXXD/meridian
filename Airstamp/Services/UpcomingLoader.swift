@@ -9,18 +9,13 @@ struct UpcomingLoader: Sendable {
         var id: Int
         var name: String
         var offsetMinutes: Int
+
+        /// Same form as `Drop.showID` and `QuietShow.showID`: "38052" or "anilist:154587".
+        var showID: String { catalog == .anilist ? "anilist:\(id)" : String(id) }
     }
 
-    /// A followed show with no next episode: enough to show its art and say why ("Ended · last episode …").
-    struct Quiet: Equatable, Hashable, Sendable {
-        /// Same form as `Drop.showID`: "38052" or "anilist:154587".
-        var showID: String
-        var name: String
-        /// TVmaze's or AniList's own status, worded by `ReleaseWording.quietNote`.
-        var status: String?
-        /// "yyyy-MM-dd" of the last aired episode, when known.
-        var lastAired: String?
-    }
+    /// A followed show with no next episode, shared with the widgets through the snapshot.
+    typealias Quiet = QuietShow
 
     struct Result: Equatable, Sendable {
         var drops: [Drop] = []
@@ -31,13 +26,16 @@ struct UpcomingLoader: Sendable {
 
         /// Keeps the last known drop for each show that failed this time (offline, a TVmaze hiccup), so Upcoming
         /// doesn't go empty; the show stays in `failed` so the screen can say so. Shows no longer followed don't
-        /// come back, because only failed names are carried over.
-        func keepingLastKnown(from previous: Result?) -> Result {
+        /// come back, because only failed names are carried over. A kept show with nothing scheduled goes back to its
+        /// place in `followOrder` (followed show IDs, which survive a rename), so the widgets' rows don't reshuffle when a load fails.
+        func keepingLastKnown(from previous: Result?, followOrder: [String] = []) -> Result {
             guard let previous, !failed.isEmpty else { return self }
             var merged = self
             merged.drops += previous.drops.filter { failed.contains($0.showName) }
             merged.nothingScheduled += previous.nothingScheduled.filter { failed.contains($0.name) }
             merged.drops.sort { $0.date < $1.date }
+            let place = Dictionary(followOrder.enumerated().map { ($1, $0) }, uniquingKeysWith: { first, _ in first })
+            merged.nothingScheduled.sort { (place[$0.showID] ?? .max) < (place[$1.showID] ?? .max) }
             return merged
         }
     }

@@ -139,6 +139,24 @@ struct TimelineProviderTests {
         #expect(first.current?.id == drops[0].id)
     }
 
+    @Test("a next return whose listed day has ended is dropped, never 'returns yesterday'")
+    func staleReturn() {
+        let back = Self.drop("9", at: Self.now - 48 * Self.hour, confidence: .dateOnly, airdate: "2026-10-01")
+        #expect(Self.timeline([], nextReturn: back).entries.first?.nextReturn == nil)
+    }
+
+    @Test("followed shows with nothing scheduled reach every entry, in follow order")
+    func nothingScheduled() {
+        let quiet = [QuietShow(showID: "9", name: "From", status: "Running", lastAired: nil),
+                     QuietShow(showID: "anilist:151807", name: "Solo Leveling", status: "FINISHED", lastAired: nil)]
+        let snapshot = DropSnapshot(generatedAt: Self.now, drops: [Self.drop("1", at: Self.now + 3 * Self.hour)],
+                                    nextReturn: nil, nothingScheduled: quiet)
+        let timeline = WidgetTimeline.make(snapshot: snapshot, now: Self.now,
+                                           formatter: DropFormatter(zoneIdentifier: "Africa/Lagos"))
+        #expect(timeline.entries.count > 1)
+        #expect(timeline.entries.allSatisfy { $0.nothingScheduled == quiet })
+    }
+
     @Test("'+N more this week' counts the drops a widget can't fit that are due within 7 days, date-only ones too")
     func moreThisWeek() throws {
         let timed = (1...6).map { Self.drop("\($0)", at: Self.now.addingTimeInterval(Double($0) * 7 * Self.hour)) }

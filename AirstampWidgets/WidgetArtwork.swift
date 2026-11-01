@@ -11,12 +11,14 @@ enum WidgetArtwork {
         return load(SnapshotStore.artworkURL(showID: showID, in: container), maxPixel: maxPixel)
     }
 
-    /// The small posters for the rows after the hero, drawn down to `maxPixel`, by show ID.
-    static func posters(for drops: some Sequence<Drop>, maxPixel: Int) -> [String: UIImage] {
+    /// The small posters for the rows a widget shows (scheduled after the hero, then nothing scheduled), drawn down to
+    /// `maxPixel`, by show ID.
+    static func posters(for moment: WidgetMoment, showing shown: Int, maxPixel: Int) -> [String: UIImage] {
         guard let container = SnapshotStore.container else { return [:] }
+        let ids = moment.rows(showing: shown).map(\.showID) + moment.quietRows(showing: shown).map(\.showID)
         var posters: [String: UIImage] = [:]
-        for drop in drops where posters[drop.showID] == nil {
-            posters[drop.showID] = load(SnapshotStore.posterURL(showID: drop.showID, in: container), maxPixel: maxPixel)
+        for id in ids where posters[id] == nil {
+            posters[id] = load(SnapshotStore.posterURL(showID: id, in: container), maxPixel: maxPixel)
         }
         return posters
     }

@@ -21,7 +21,7 @@ struct WidgetEmptyState: View {
             Text(WidgetText.emptyDetail(moment))
                 .font(.system(size: 12, weight: .medium))
                 .foregroundStyle(WidgetInk.dimmed(WidgetInk.secondary, when: dimmed))
-                .lineLimit(2)
+                .lineLimit(3)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
     }

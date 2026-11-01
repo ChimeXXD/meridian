@@ -2,6 +2,19 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Day 4: followed shows with nothing scheduled on the widgets (Sun 1 Nov 2026)
+
+**Changed** (D-48)
+- Chime follows five shows; three had nothing scheduled and never showed. `UpcomingLoader.Quiet` moved to `Shared/Models/QuietShow` (Codable); `DropSnapshot.nothingScheduled` carries it (old files decode with none); the writer saves only their small posters.
+- Medium and large fill spare rows with `WidgetQuietRow` (poster, name, "Nothing scheduled"; large adds "Between seasons"/"Ended"). With none scheduled, `WidgetQuietList` says "Nothing scheduled" and lists them. Fixed: the widgets said "Follow a show" when shows were followed but none scheduled.
+- New samples `quiet` and `allQuiet`.
+
+**Red → green**
+- `SnapshotStoreTests/nothingScheduled()`, `quietPosterOnly()`, `TimelineProviderTests/nothingScheduled()`, `WidgetTextTests/allQuiet()` failed to compile (no `QuietShow`, no `nothingScheduled`, no `allQuiet`), then passed. 37 widget tests pass.
+
+**Not verified**
+- On the phone with Chime's five shows until they look.
+
 ## Day 4: small posters on widget rows, "+N more this week" (Sun 1 Nov 2026)
 
 **Changed** (D-47)

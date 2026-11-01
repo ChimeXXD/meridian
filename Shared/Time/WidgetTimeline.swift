@@ -41,14 +41,17 @@ struct WidgetTimeline: Hashable, Sendable {
             time > now && !anchors.contains { abs($0.timeIntervalSince(time)) < minimumSpacing }
         }
         let dates = spaced([now] + changes.union(refreshes).sorted())
-        let entries = dates.map { moment(at: $0, drops: drops, nextReturn: snapshot?.nextReturn, formatter: formatter) }
+        let entries = dates.map {
+            moment(at: $0, drops: drops, nextReturn: snapshot?.nextReturn,
+                   nothingScheduled: snapshot?.nothingScheduled ?? [], formatter: formatter)
+        }
         let next = ([timed.first { $0.date > now }?.date] + dayEnds.map(Optional.some)).compactMap(\.self).min()
         return WidgetTimeline(entries: entries, reloadDate: next.map { min($0, horizon) })
     }
 
     /// The moment at `date`: timed drops not yet an hour past, soonest first, then the date-only ones whose day
     /// hasn't ended. A drop is due this week when its time, or a date-only drop's listed day, starts within 7 days.
-    static func moment(at date: Date, drops: [Drop], nextReturn: Drop?,
+    static func moment(at date: Date, drops: [Drop], nextReturn: Drop?, nothingScheduled: [QuietShow] = [],
                        formatter: DropFormatter = DropFormatter()) -> WidgetMoment {
         let showing = live(drops, at: date, formatter: formatter)
         let weekEnd = date.addingTimeInterval(week)
@@ -56,8 +59,12 @@ struct WidgetTimeline: Hashable, Sendable {
             guard drop.confidence == .dateOnly else { return drop.date < weekEnd }
             return dayStart(of: drop, formatter: formatter).map { $0 < weekEnd } ?? false
         }
+        // A return whose listed day has ended would read "Silo returns <yesterday>"; it's gone like its drop.
+        let back = nextReturn.flatMap { drop in
+            (dayEnd(of: drop, formatter: formatter).map { $0 > date } ?? true) ? drop : nil
+        }
         return WidgetMoment(date: date, current: showing.first, upNext: Array(showing.prefix(rowCount)),
-                            nextReturn: nextReturn, thisWeek: thisWeek.map(\.id))
+                            nextReturn: back, thisWeek: thisWeek.map(\.id), nothingScheduled: nothingScheduled)
     }
 
     /// Timed drops whose "Out now" hour hasn't ended at `date`, by time; then date-only drops, by airdate, until the

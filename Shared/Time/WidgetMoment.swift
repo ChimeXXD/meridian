@@ -17,6 +17,13 @@ struct WidgetMoment: Hashable, Sendable {
     var nextReturn: Drop?
     /// The IDs of every drop due within 7 days of `date`, so a widget can say how many it couldn't fit.
     var thisWeek: [String] = []
+    /// Followed shows with no next episode, in follow order; they fill the rows scheduled shows leave free (D-48).
+    var nothingScheduled: [QuietShow] = []
+
+    /// The shows with nothing scheduled that fit when a widget shows `shown` shows in all, after the scheduled ones.
+    func quietRows(showing shown: Int) -> [QuietShow] {
+        Array(nothingScheduled.prefix(max(0, shown - upNext.prefix(shown).count)))
+    }
 
     /// The rows under the hero when a widget shows `shown` drops in all.
     func rows(showing shown: Int) -> [Drop] { Array(upNext.prefix(shown).dropFirst()) }

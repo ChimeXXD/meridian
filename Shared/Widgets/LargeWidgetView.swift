@@ -34,9 +34,19 @@ struct LargeWidgetView: View {
                                             showsThumbnail: showsPosters, formatter: formatter)
                                 .accessibilityIdentifier("widget-large-row-\(index + 2)")
                         }
+                        ForEach(Array(quiet.enumerated()), id: \.element.showID) { index, show in
+                            WidgetQuietRow(show: show, now: moment.date, poster: posters[show.showID],
+                                           showsPoster: showsPosters, posterHeight: MediumWidgetRow.thumbnail,
+                                           detailed: true, formatter: formatter)
+                                .accessibilityIdentifier("widget-large-row-\(rows.count + index + 2)")
+                        }
                     }
                     .padding(.top, Tokens.Space.s)
                 }
+            } else if !moment.nothingScheduled.isEmpty {
+                WidgetQuietList(moment: moment, posters: posters, shown: Self.shown,
+                                posterHeight: MediumWidgetRow.thumbnail, detailed: true, formatter: formatter)
+                    .accessibilityIdentifier("widget-large-empty")
             } else {
                 WidgetEmptyState(moment: moment, lineLimit: 3, formatter: formatter)
                     .accessibilityElement(children: .ignore)
@@ -55,7 +65,11 @@ struct LargeWidgetView: View {
 
     private var rows: [Drop] { moment.rows(showing: Self.shown) }
 
-    private var showsPosters: Bool { !dimmed && rows.contains { posters[$0.showID] != nil } }
+    private var quiet: [QuietShow] { moment.quietRows(showing: Self.shown) }
+
+    private var showsPosters: Bool {
+        !dimmed && (rows.map(\.showID) + quiet.map(\.showID)).contains { posters[$0] != nil }
+    }
 
     private func heroBlock(_ drop: Drop) -> some View {
         VStack(alignment: .leading, spacing: 0) {

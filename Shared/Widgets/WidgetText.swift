@@ -38,16 +38,24 @@ enum WidgetText {
         [drop.episodeLabel, drop.provider?.display].compactMap(\.self).joined(separator: " · ")
     }
 
-    /// With nothing to count down: "Silo returns Fri 9 Jul 2027" when a date is known, else the follow prompt.
+    /// With nothing to count down: "Silo returns Fri 9 Jul 2027" when a date is known; "Nothing scheduled" when shows
+    /// are followed but none has a next episode; else the follow prompt.
     static func emptyHeadline(_ moment: WidgetMoment, formatter: DropFormatter) -> String {
-        guard let back = moment.nextReturn else { return "Follow a show" }
+        guard let back = moment.nextReturn else {
+            return moment.nothingScheduled.isEmpty ? "Follow a show" : nothingScheduled
+        }
         return "\(back.showName) returns \(day(back, now: moment.date, formatter: formatter))"
     }
 
-    /// The line under `emptyHeadline`.
+    /// The line under `emptyHeadline`. The app never promises when it next checks (D-27).
     static func emptyDetail(_ moment: WidgetMoment) -> String {
-        moment.nextReturn == nil ? "Its countdown shows up here." : "Nothing else is scheduled."
+        if moment.nextReturn != nil { return "Nothing else is scheduled." }
+        return moment.nothingScheduled.isEmpty
+            ? "Its countdown shows up here." : "Airstamp checks again each time you open it."
     }
+
+    /// What a followed show with no next episode says in a widget row, where a countdown would be.
+    static let nothingScheduled = "Nothing scheduled"
 
     /// A date-only drop's listed day ("Wed 11 Nov", D-28); a timed one's relative day in the viewer's zone.
     static func day(_ drop: Drop, now: Date, formatter: DropFormatter) -> String {

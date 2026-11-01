@@ -79,6 +79,19 @@ struct SnapshotStoreTests {
         #expect(SnapshotStore.read(from: container)?.drops.isEmpty == true)
     }
 
+    @Test("followed shows with nothing scheduled ride along, and a snapshot written before them still reads")
+    func nothingScheduled() throws {
+        let container = try Self.container()
+        let quiet = QuietShow(showID: "anilist:151807", name: "Solo Leveling", status: "FINISHED", lastAired: "2025-03-29")
+        let snapshot = WidgetSnapshotWriter.snapshot(of: [], nothingScheduled: [quiet], now: Self.now)
+        #expect(snapshot.nothingScheduled == [quiet])
+        try SnapshotStore.write(snapshot, to: container)
+        #expect(SnapshotStore.read(from: container) == snapshot)
+        let older = #"{"drops":[],"generatedAt":"2026-10-30T17:00:00.000Z"}"#
+        try Data(older.utf8).write(to: container.appendingPathComponent("snapshot.json"))
+        #expect(SnapshotStore.read(from: container)?.nothingScheduled == [])
+    }
+
     @Test("no file or a broken file reads as nil, never a crash")
     func missingOrBroken() throws {
         let container = try Self.container()
@@ -149,6 +162,22 @@ struct SnapshotStoreTests {
         #expect(probe.fetched == [url("one"), url("background"), url("three"), url("four"), url("big"), url("medium")],
                 "the wide key art (else the full poster) and the poster thumbnail, only where missing")
         #expect(probe.reloads == 1, "new art reloads the timelines so it shows")
+    }
+
+    @Test("a show with nothing scheduled gets only its small poster, for its row")
+    func quietPosterOnly() async throws {
+        let container = try Self.container()
+        let probe = Probe()
+        let snapshot = WidgetSnapshotWriter.snapshot(
+            of: [], nothingScheduled: [QuietShow(showID: "9", name: "From", status: "Running", lastAired: nil)],
+            now: Self.now)
+        let thumbnail = URL(string: "https://example.com/from.jpg")!
+        await Self.writer(container, probe).saveArt(for: snapshot, artwork: [
+            "9": ShowArtwork(background: URL(string: "https://example.com/wide.jpg")!, posterThumbnail: thumbnail),
+        ])
+        #expect(probe.fetched == [thumbnail])
+        #expect(FileManager.default.fileExists(atPath: SnapshotStore.posterURL(showID: "9", in: container).path))
+        #expect(!FileManager.default.fileExists(atPath: SnapshotStore.artworkURL(showID: "9", in: container).path))
     }
 
     @Test("widget art is a JPEG at most 1000 px on its long side and under 100 KB, never upscaled")

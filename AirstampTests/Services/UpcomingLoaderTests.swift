@@ -77,6 +77,15 @@ struct UpcomingLastKnownTests {
         #expect(merged.failed == ["Silo"])
     }
 
+    @Test("a kept show with nothing scheduled goes back to its place in follow order, which the widgets' rows use")
+    func quietKeepsFollowOrder() {
+        let quiet = { (name: String) in QuietShow(showID: name, name: name, status: "Running", lastAired: nil) }
+        let previous = UpcomingLoader.Result(nothingScheduled: [quiet("From"), quiet("Solo Leveling")])
+        let loaded = UpcomingLoader.Result(nothingScheduled: [quiet("Solo Leveling")], failed: ["From"])
+        let merged = loaded.keepingLastKnown(from: previous, followOrder: ["From", "Silo", "Solo Leveling"])
+        #expect(merged.nothingScheduled.map(\.name) == ["From", "Solo Leveling"])
+    }
+
     @Test("a show that loaded fine replaces its old drop, and an unfollowed show doesn't come back")
     func replacesAndForgets() {
         let previous = UpcomingLoader.Result(drops: [Self.drop("Silo"), Self.drop("Old")])

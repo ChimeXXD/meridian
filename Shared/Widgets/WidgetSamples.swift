@@ -18,7 +18,19 @@ enum WidgetSamples {
         case returns
         /// Six followed shows, five of them this week: more than any widget fits ("+2 more this week").
         case busy
+        /// Two shows scheduled and three with nothing scheduled, which fill the spare rows.
+        case quiet
+        /// Three shows followed, none with a next episode.
+        case allQuiet
     }
+
+    /// Followed shows with no next episode, in follow order.
+    static let quietShows = [
+        QuietShow(showID: "from", name: "From", status: "Running", lastAired: "2025-06-22"),
+        QuietShow(showID: "anilist:151807", name: "Solo Leveling", status: "FINISHED", lastAired: "2025-03-29"),
+        QuietShow(showID: "tlou", name: "The Last of Us", status: "Running", lastAired: "2025-05-25"),
+        QuietShow(showID: "andor", name: "Andor", status: "Ended", lastAired: "2025-05-13"),
+    ]
 
     static func moment(_ sample: Case, now: Date) -> WidgetMoment {
         let hour: TimeInterval = 3_600
@@ -50,10 +62,12 @@ enum WidgetSamples {
         case .ticking: [hotd, silo]
         case .outNow: [hotdOut, silo, frieren]
         case .dateOnly: [wonderMan]
-        case .nothing, .returns: []
+        case .nothing, .returns, .allQuiet: []
         case .busy: [hotd, silo, frieren, severance, bear, wonderMan]
+        case .quiet: [hotd, silo]
         }
-        return WidgetTimeline.moment(at: now, drops: drops, nextReturn: sample == .returns ? siloReturns : nil)
+        return WidgetTimeline.moment(at: now, drops: drops, nextReturn: sample == .returns ? siloReturns : nil,
+                                     nothingScheduled: [.quiet, .allQuiet].contains(sample) ? quietShows : [])
     }
 
     private static func drop(_ showID: String, _ name: String, season: Int, number: Int, at date: Date,

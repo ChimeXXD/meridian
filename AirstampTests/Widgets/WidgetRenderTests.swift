@@ -54,7 +54,8 @@ struct WidgetRenderTests {
             UIColor(white: 0.4, alpha: 1).setFill()
             context.fill(CGRect(x: 0, y: 18, width: 20, height: 12))
         }
-        return Dictionary(moment.upNext.map { ($0.showID, poster) }, uniquingKeysWith: { first, _ in first })
+        let ids = moment.upNext.map(\.showID) + moment.nothingScheduled.map(\.showID)
+        return Dictionary(ids.map { ($0, poster) }, uniquingKeysWith: { first, _ in first })
     }
 
     /// What the system draws behind each family. `containerBackground` does nothing outside a widget.
@@ -114,7 +115,7 @@ struct WidgetRenderTests {
                 context.fill(CGRect(x: size.width / 6, y: size.height / 6, width: size.width * 2 / 3,
                                     height: size.height * 5 / 12))
             }
-            for sample in [WidgetSamples.Case.countdown, .ticking, .busy] {
+            for sample in [WidgetSamples.Case.countdown, .ticking, .busy, .quiet, .allQuiet] {
                 let name = "\(family.rawValue)-\(sample.rawValue)-\(suffix)"
                 let overflow = try Self.render(family, sample, art: art, name: name)
                 #expect(overflow <= 0.5, "\(name) needs \(overflow) pt more height")
