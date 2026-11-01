@@ -2,7 +2,8 @@ import Foundation
 import Observation
 
 /// Loads Upcoming for the followed shows: drops through `UpcomingLoader`, then each show's artwork (D-37). Refreshes
-/// when the app becomes active and on pull-to-refresh; it never promises an interval (D-27).
+/// when the app becomes active, when the followed list changes and on pull-to-refresh; it never promises an interval
+/// (D-27). Each refresh also hands the widgets a fresh snapshot and their small art (D-05, D4-1).
 @MainActor
 @Observable
 final class UpcomingModel {
@@ -12,15 +13,18 @@ final class UpcomingModel {
     private let client: TVmazeClient
     private let anilist: AniListClient
     private let loader: UpcomingLoader
+    private let snapshots: WidgetSnapshotWriter
     /// Bumped by each refresh, so a slower, older refresh (a launch and a foreground at once, or a follow change
     /// mid-load) can't overwrite a newer result.
     private var generation = 0
 
     /// The rules Upcoming resolves times with, shared with Search so both say the same time for an episode.
     var rules: RulesFile { loader.rules }
-    init(client: TVmazeClient, anilist: AniListClient, rules: RulesFile, viewerCountry: String?) {
+    init(client: TVmazeClient, anilist: AniListClient, rules: RulesFile, viewerCountry: String?,
+         snapshots: WidgetSnapshotWriter = .appGroup) {
         self.client = client
         self.anilist = anilist
+        self.snapshots = snapshots
         loader = UpcomingLoader(client: client, anilist: anilist, rules: rules, viewerCountry: viewerCountry)
     }
 
@@ -33,6 +37,8 @@ final class UpcomingModel {
         let loaded = await loader.load(requests, now: now)
         guard current == generation else { return }
         result = loaded.keepingLastKnown(from: result)
+        // The widgets get the times at once; their art follows once it's loaded.
+        let snapshot = snapshots.write(result?.drops ?? [], now: now)
         let ids = (result?.drops ?? []).map(\.showID) + (result?.nothingScheduled ?? []).map(\.showID)
         let missing = Set(ids).filter { artwork[$0] == nil }
         await withTaskGroup(of: (String, ShowArtwork?).self) { group in
@@ -49,6 +55,9 @@ final class UpcomingModel {
                 if let art { artwork[id] = art }
             }
         }
+        // A newer refresh writes its own art; this one mustn't delete what that one needs.
+        guard current == generation, let snapshot else { return }
+        await snapshots.saveArt(for: snapshot, artwork: artwork)
     }
 
     /// The last three aired episodes, newest first, for Show detail.

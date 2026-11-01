@@ -2,13 +2,12 @@ import SwiftData
 import SwiftUI
 
 /// The Upcoming tab: the followed shows from SwiftData, loaded through `UpcomingModel`, with Show detail pushed on
-/// tap. Reloads when the followed list changes and each time the app becomes active (D-27).
+/// tap. `RootView` reloads it when the followed list changes and each time the app becomes active (D-27); here it
+/// reloads on pull-to-refresh.
 struct UpcomingTab: View {
     let model: UpcomingModel
     var onFind: () -> Void = {}
 
-    @Environment(\.modelContext) private var context
-    @Environment(\.scenePhase) private var scenePhase
     @Query(sort: \FollowedShow.followedAt) private var followed: [FollowedShow]
     @State private var path: [Drop] = []
 
@@ -20,10 +19,6 @@ struct UpcomingTab: View {
                 .navigationDestination(for: Drop.self) { drop in
                     ShowDetailScreen(drop: drop, model: model, artwork: model.artwork[drop.showID])
                 }
-        }
-        .task(id: followed.map(\.key)) { await model.refresh(followed) }
-        .onChange(of: scenePhase) { _, phase in
-            if phase == .active { Task { await model.refresh(followed) } }
         }
     }
 }

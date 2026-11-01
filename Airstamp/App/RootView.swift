@@ -2,7 +2,8 @@ import SwiftData
 import SwiftUI
 
 /// The app's top level (D-41): the one-screen Welcome on first run, then a tab bar with Upcoming, Search and
-/// Settings.
+/// Settings. Upcoming reloads from here, when the followed list changes and each time the app becomes active (D-27),
+/// whichever tab is open, so a follow in Search or an unfollow reaches the widgets at once (D4-1).
 struct RootView: View {
     enum AppTab: Hashable { case upcoming, search, settings }
 
@@ -11,12 +12,17 @@ struct RootView: View {
     let model: UpcomingModel
 
     @Environment(\.modelContext) private var context
-    @Query private var followed: [FollowedShow]
+    @Environment(\.scenePhase) private var scenePhase
+    @Query(sort: \FollowedShow.followedAt) private var followed: [FollowedShow]
     @AppStorage("welcomeDone") private var welcomeDone = false
     @State private var tab = AppTab.upcoming
 
     var body: some View {
         content
+            .task(id: followed.map(\.key)) { await model.refresh(followed) }
+            .onChange(of: scenePhase) { _, phase in
+                if phase == .active { Task { await model.refresh(followed) } }
+            }
             #if DEBUG
             // On the root, not the tab bar, so `-follow` also works on a fresh install that opens on Welcome.
             .task { await DebugLaunch.apply(context: context, client: client, anilist: anilist, tab: $tab) }
