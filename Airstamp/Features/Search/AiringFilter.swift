@@ -28,33 +28,27 @@ enum SearchFilter: Hashable, Sendable {
 /// Filters the airing grid on what's already loaded: no TVmaze or AniList request (D-43). Every filter also drops an
 /// episode that has come out since the grid loaded, so a grid left open never lists what's already out.
 enum AiringFilter {
-    /// Services offered as filters, most shows first.
-    static let maxServices = 6
-
-    /// TV: Popular, Today, New seasons, Exact time, then its services. Anime: no exact-time or service filter, because
-    /// every anime time is the Japanese broadcast and AniList names no single service.
-    static func options(for kind: SearchView.Kind, items: [AiringItem],
-                        hasLogo: (String) -> Bool = { _ in false }) -> [SearchFilter] {
+    /// TV: Popular, Today, New seasons, Exact time, then the major platforms. Anime: no exact-time or service filter,
+    /// because every anime time is the Japanese broadcast and AniList names no single service.
+    static func options(for kind: SearchView.Kind) -> [SearchFilter] {
         switch kind {
-        case .tv: [.popular, .today, .newSeasons, .exactTime]
-            + services(in: items, hasLogo: hasLogo).map(SearchFilter.service)
+        case .tv: [.popular, .today, .newSeasons, .exactTime] + services.map(SearchFilter.service)
         case .anime: [.popular, .today, .newSeasons]
         }
     }
 
-    /// The services in the whole pool (not the filtered grid, so a chosen one never disappears), named as each cell
-    /// names it: the network, else the web channel. The 6 with the most shows (ties A to Z), then those with a logo
-    /// first, so logo chips sit together (Chime, D-44).
-    static func services(in items: [AiringItem], hasLogo: (String) -> Bool = { _ in false }) -> [String] {
-        let counts = Dictionary(grouping: items.compactMap(\.result.network), by: \.self).mapValues(\.count)
-        let top = counts.keys.sorted { (counts[$0] ?? 0, $1) > (counts[$1] ?? 0, $0) }.prefix(maxServices)
-        return top.filter(hasLogo) + top.filter { !hasLogo($0) }
-    }
+    /// Every major platform (`PopularServices`, most subscribers first), always and in the same order, so the row
+    /// never changes under the viewer's thumb; one with nothing coming says so when picked (D-45).
+    static var services: [String] { PopularServices.all.map(\.label) }
 
     /// The items that pass `filter` and are still to come at `now`, in their order, at most `limit`.
     static func apply(_ filter: SearchFilter, to items: [AiringItem], now: Date, formatter: DropFormatter,
                       limit: Int = AiringSoon.limit) -> [AiringItem] {
         let today = formatter.localDay(now)
+        // A service's TVmaze names, looked up once rather than per item.
+        let serviceNames: Set<String> = if case .service(let label) = filter {
+            Set(PopularServices.service(label)?.names ?? [label])
+        } else { [] }
         func onToday(_ drop: Drop) -> Bool {
             drop.confidence == .dateOnly ? drop.airdate == today : formatter.localDay(drop.date) == today
         }
@@ -67,7 +61,7 @@ enum AiringFilter {
             case .today: return onToday(drop)
             case .newSeasons: return drop.number == 1
             case .exactTime: return drop.confidence == .exact
-            case .service(let name): return item.result.network == name
+            case .service: return item.result.network.map(serviceNames.contains) ?? false
             }
         }
         return Array(kept.prefix(limit))

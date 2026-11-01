@@ -1,7 +1,8 @@
 import SwiftUI
 
 /// The filters over Search's airing grid, one picked at a time like the TV | Anime switch above it (Chime, D-43):
-/// Popular, Today, New seasons, Exact time, then the services in the grid, those with a logo first (D-44). Night Sky
+/// Popular, Today, New seasons, Exact time, then the 12 major platforms in a fixed order (D-45), each with its logo
+/// (D-44). Night Sky
 /// chips: the picked one is white with black text, the rest are dark with a hairline, like the follow button.
 struct SearchFilterRow: View {
     let options: [SearchFilter]
@@ -23,8 +24,9 @@ struct SearchFilterRow: View {
             .padding(.horizontal, -Tokens.Space.m)
             .scrollIndicators(.hidden)
             // A picked service further along stays in view when Search comes back or TV | Anime switches.
-            .onAppear { proxy.scrollTo(selection, anchor: .center) }
-            .onChange(of: options) { proxy.scrollTo(selection, anchor: .center) }
+            // After this layout pass, or the row hasn't measured its chips yet and stops short.
+            .onAppear { Task { @MainActor in proxy.scrollTo(selection, anchor: .center) } }
+            .onChange(of: options) { Task { @MainActor in proxy.scrollTo(selection, anchor: .center) } }
         }
         .accessibilityIdentifier("search-filters")
     }
@@ -35,7 +37,8 @@ struct SearchFilterRow: View {
             selection = option
         } label: {
             HStack(spacing: 0) {
-                if case .service(let name) = option, let logo = logos.image(for: name) {
+                if case .service(let label) = option,
+                   let logo = PopularServices.service(label)?.names.lazy.compactMap(logos.image(for:)).first {
                     LogoTile(url: logo)
                 }
                 Text(option.label)
@@ -48,9 +51,9 @@ struct SearchFilterRow: View {
         .accessibilityIdentifier(option.identifier)
     }
 
-    /// A service's logo on a small white rounded tile, so dark wordmarks read on the Night Sky chip. The tile appears
-    /// only once its logo has loaded, so a logo that can't load (offline, a renamed file) leaves the plain name rather
-    /// than an empty box. The chip's name says the same, so VoiceOver skips it.
+    /// A service's logo on a small white rounded tile, so dark wordmarks read on the Night Sky chip. The white tile
+    /// appears only once its logo has loaded, so a logo that can't load (offline, a renamed file) never leaves an empty
+    /// box. The chip's name says the same, so VoiceOver skips it.
     private struct LogoTile: View {
         let url: URL
 
@@ -62,8 +65,9 @@ struct SearchFilterRow: View {
                         .background(.white, in: RoundedRectangle(cornerRadius: 5))
                         .padding(.trailing, Tokens.Space.xs)
                 } else {
-                    // Zero-size but present, so the loader's task still runs.
-                    Color.clear.frame(width: 0, height: 0)
+                    // The tile's space, clear: the row keeps its width (and its scroll) while logos load, and one
+                    // that can't load leaves a gap, never a white box.
+                    Color.clear.frame(width: 30, height: 22).padding(.trailing, Tokens.Space.xs)
                 }
             }
             .accessibilityHidden(true)

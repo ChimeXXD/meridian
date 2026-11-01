@@ -96,8 +96,7 @@ struct SearchView: View {
             message(kind == .tv ? "Search TVmaze for a show to follow" : "Search AniList for an anime to follow",
                     id: "search-empty")
         case .idle:
-            SearchFilterRow(options: AiringFilter.options(for: kind, items: airingSoon,
-                                                          hasLogo: { Self.logos.image(for: $0) != nil }),
+            SearchFilterRow(options: AiringFilter.options(for: kind),
                             selection: filter, logos: Self.logos)
                 .padding(.top, Tokens.Space.s)
             airingGrid

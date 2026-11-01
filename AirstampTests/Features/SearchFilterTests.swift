@@ -22,8 +22,9 @@ struct SearchFilterTests {
     }
 
     static func apply(_ filter: SearchFilter, _ items: [AiringItem], at now: String,
-                      zone: String = "Africa/Lagos") -> [AiringItem] {
-        AiringFilter.apply(filter, to: items, now: Date(iso: now), formatter: DropFormatter(zoneIdentifier: zone))
+                      zone: String = "Africa/Lagos", limit: Int = AiringSoon.limit) -> [AiringItem] {
+        AiringFilter.apply(filter, to: items, now: Date(iso: now), formatter: DropFormatter(zoneIdentifier: zone),
+                           limit: limit)
     }
 
     @Test("Popular keeps the most popular first and shows 15 at most")
@@ -86,39 +87,53 @@ struct SearchFilterTests {
     @Test("a service shows only its shows, named as the cell names them")
     func service() throws {
         let items = try Self.tv(at: "2026-10-30T00:00:00Z")
-        let services = AiringFilter.services(in: items)
-        #expect(services.count <= AiringFilter.maxServices)
-        #expect(services.contains("CBS"))
         let shown = Self.apply(.service("CBS"), items, at: "2026-10-30T00:00:00Z")
         #expect(!shown.isEmpty)
         #expect(shown.allSatisfy { $0.result.network == "CBS" })
     }
 
-    @Test("services are listed most shows first, ties A to Z")
-    func serviceOrder() throws {
+    @Test("service chips are always the 12 major platforms, most subscribers first, and never YouTube or BBC iPlayer")
+    func popularServicesOnly() throws {
+        #expect(AiringFilter.services == ["Netflix", "Prime Video", "HBO Max", "Disney+", "Paramount+", "Hulu",
+                                          "Peacock", "Apple TV", "CBS", "NBC", "ABC", "FOX"])
+        #expect(!AiringFilter.services.contains("YouTube") && !AiringFilter.services.contains("BBC iPlayer"))
+        // A platform with nothing coming keeps its chip and says so, rather than vanishing from the row.
         let items = try Self.tv(at: "2026-10-30T00:00:00Z")
-        let counts = Dictionary(grouping: items.compactMap(\.result.network), by: \.self).mapValues(\.count)
-        let services = AiringFilter.services(in: items)
-        #expect(services == services.sorted { (counts[$0] ?? 0, $1) > (counts[$1] ?? 0, $0) })
+        #expect(Self.apply(.service("Disney+"), items, at: "2026-10-30T00:00:00Z").isEmpty)
+        #expect(AiringFilter.noMatch(.service("Disney+"), kind: .tv) == "Nothing on Disney+ in the next few days.")
     }
 
-    @Test("services with a logo come first, so logo chips sit together; the 6 kept are still those with the most shows")
-    func logosGrouped() throws {
-        let items = try Self.tv(at: "2026-10-30T00:00:00Z")
-        let plain = AiringFilter.services(in: items)
-        let withLogo: Set<String> = [plain[1], plain[4]]  // two from the middle, so grouping must move them
-        let grouped = AiringFilter.services(in: items, hasLogo: withLogo.contains)
-        #expect(Set(grouped) == Set(plain))
-        #expect(Array(grouped.prefix(2)) == [plain[1], plain[4]])
-        #expect(Array(grouped.dropFirst(2)) == plain.filter { !withLogo.contains($0) })
+    @Test("every major platform has a logo in the bundled list")
+    func everyServiceHasLogo() {
+        let logos = NetworkLogos.loadBundled()
+        #expect(PopularServices.all.allSatisfy { $0.names.contains { logos.image(for: $0) != nil } })
+    }
+
+    @Test("the HBO Max chip also holds shows on HBO's own channel, so there's one HBO chip")
+    func hboOneChip() throws {
+        // The recording has no English HBO shows, so two small listings: one on HBO's channel, one on HBO Max.
+        func listing(_ id: Int, _ name: String, channel: String) -> String {
+            """
+            {"id":\(id),"season":1,"number":2,"airdate":"2026-10-31","airtime":"21:00",
+             "airstamp":"2026-11-01T01:00:00+00:00","show":{"id":\(id),"name":"\(name)","type":"Scripted",
+             "language":"English","weight":90,"network":{"id":\(id),"name":"\(channel)"}}}
+            """
+        }
+        let json = "[\(listing(1, "On HBO", channel: "HBO")),\(listing(2, "On HBO Max", channel: "HBO Max"))]"
+        let schedule = try JSONDecoder().decode([TVmazeScheduleItem].self, from: Data(json.utf8))
+        let items = AiringSoon.pool(from: schedule, rules: try Fixture.bundledRules(), now: Date(iso: "2026-10-31T00:00:00Z"),
+                                    formatter: DropFormatter(zoneIdentifier: "Africa/Lagos")).map(AiringItem.init(pick:))
+        #expect(!AiringFilter.services.contains("HBO"))
+        let shown = Self.apply(.service("HBO Max"), items, at: "2026-10-31T00:00:00Z")
+        #expect(Set(shown.map(\.result.title)) == ["On HBO", "On HBO Max"])
     }
 
     @Test("TV offers every filter; anime offers Popular, Today and New seasons")
     func options() throws {
-        let tv = AiringFilter.options(for: .tv, items: try Self.tv(at: "2026-10-30T00:00:00Z"))
+        let tv = AiringFilter.options(for: .tv)
         #expect(Array(tv.prefix(4)) == [.popular, .today, .newSeasons, .exactTime])
-        #expect(tv.dropFirst(4).allSatisfy { if case .service = $0 { true } else { false } })
-        #expect(AiringFilter.options(for: .anime, items: try Self.anime()) == [.popular, .today, .newSeasons])
+        #expect(Array(tv.dropFirst(4)) == AiringFilter.services.map(SearchFilter.service))
+        #expect(AiringFilter.options(for: .anime) == [.popular, .today, .newSeasons])
     }
 
     @Test("anime: New seasons finds this week's premieres; Today uses the Japanese broadcast time")

@@ -2,6 +2,20 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Service chips: the 12 major platforms (Sun 1 Nov 2026)
+
+**Changed**
+- Chime: no YouTube or BBC iPlayer ("not relevant"), show "the popular platforms that most people use", and include Paramount+. D-45: the chips are now a fixed list of 12, always shown in subscriber order (Netflix, Prime Video, HBO Max, Disney+, Paramount+, Hulu, Peacock, Apple TV; then CBS, NBC, ABC, FOX). HBO's own channel shares the HBO Max chip. A platform with nothing coming keeps its chip and says so. `PopularServices`; `AiringFilter.services` no longer counts shows.
+- Why Paramount+ was missing: the old rule took the 6 services with the most shows in the 3-day window, and live data had nothing on Paramount+ in it.
+- Each logo tile's space is now held while it loads, so the row doesn't widen after scrolling to the picked chip (it stopped short before); a failed logo leaves a gap, not a white box. Scrolling to the picked chip waits one layout pass.
+
+**Red → green**
+- `hboOneChip` first assumed the recording had English HBO shows (it has none); it now builds two small listings, one on HBO and one on HBO Max. `SearchFilterTests` pass, including `popularServicesOnly` (the exact 12, never YouTube or BBC iPlayer, an empty platform says so) and `everyServiceHasLogo`.
+
+**Checked**
+- Simulator, live data, `-filter service:Paramount+`: Disney+, Paramount+ (picked, centred) and Hulu with logos; "Nothing on Paramount+ in the next few days." (`fidelity/shots/search-services.png`). `search-filtered` ALL PASS.
+- `/code-review --fix` (medium): 6 findings, 5 fixed (the Apple TV chip now also matches "Apple TV+", as the platform rules do; two stale comments; SPEC's failed-logo wording; the service's names looked up once per filter, not per show). Left: three hand-kept alias lists (`PopularServices`, `network-logos.json`, `platform-rules.json`) must change together if TVmaze renames a channel; worth merging later. Gate re-run after the fixes: build+test+spec pass.
+
 ## D3-12, service logos on Search's chips; Netflix chip dropped (Sun 1 Nov 2026)
 
 **Changed**

@@ -363,7 +363,7 @@
         "Today: still to come and on the viewer's calendar day in the zone times are formatted in (TimeZone.current; the Settings override once it exists); a date-only episode counts when its airdate is today",
         "New seasons: the kept episode is episode 1 of any season (TV) or episode 1 (anime), brand-new shows included",
         "Exact time known (TV only): the time would read 'Out', not 'Expected' (D-40); date-only never counts",
-        "Service (TV only): one at a time; the service is the name its cell shows (network, else web channel); options come from the whole pool so a chosen one never disappears, most shows first, ties A-Z, at most 6",
+        "Service (TV only): one of the 12 major platforms, always shown in the same order (D-45, superseding 'most shows first, at most 6'); a show belongs to a platform when the name its cell shows is among its TVmaze names (HBO Max also holds HBO)",
         "one filter at a time (Popular by default), like the TV | Anime switch; keeps the popular-first order and shows at most 15; an episode out since loading drops out",
         "changing a filter makes no TVmaze or AniList request; anime offers Today and New seasons only"
       ],
@@ -646,16 +646,16 @@
       "id": "D3-12",
       "day": 3,
       "priority": "must",
-      "title": "Search: service chips show logos, logo chips grouped together (D-44)",
+      "title": "Search: service chips are the 12 major platforms, each with its logo (D-44, D-45)",
       "criteria": [
-        "a service chip shows its logo on a small white tile before its name when rules/network-logos.json has one (exact TVmaze name)",
-        "the 6 services with the most shows are kept, then ordered logos first, so logo and plain chips aren't mixed",
-        "logos are freely licensed Wikimedia Commons files, loaded at runtime, never committed as images (rule 9); a tile appears once loaded, so a failed logo leaves the plain name",
+        "a service chip shows its logo on a small white tile before its name (rules/network-logos.json, exact TVmaze names)",
+        "the chips are always the 12 major platforms in subscriber order (Netflix … Apple TV, then CBS, NBC, ABC, FOX); no YouTube, BBC iPlayer or small channels; HBO Max also holds HBO; a platform with nothing coming says so",
+        "logos are freely licensed Wikimedia Commons files, loaded at runtime, never committed as images (rule 9); the tile's space is reserved, so the row never shifts, and a failed logo leaves a gap, never a white box",
         "Credits names Wikimedia and lists the credits that licences require; requests carry an Airstamp user agent"
       ],
-      "verify": "NetworkLogosTests + SearchFilterTests.logosGrouped; curl loop: every image URL 200 image/png; fidelity/verify-screen.sh search-filtered; Chime approves a screenshot of the row",
+      "verify": "NetworkLogosTests + SearchFilterTests (popularServicesOnly, everyServiceHasLogo, hboOneChip); curl loop: every image URL 200 image/png; fidelity/verify-screen.sh search-filtered; Chime approves a screenshot of the row",
       "passes": false,
-      "evidence": "1 Nov: NetworkLogosTests + SearchFilterTests pass; curl with the Airstamp user agent: 57/57 200 image/png (tracking tags stripped); simulator -filter service:CBS shows CBS/FOX/YouTube logos, logo chips first (fidelity/shots/search-logos.png); search-filtered ALL PASS; gate build+test+spec pass. Awaiting Chime's look on the phone."
+      "evidence": "1 Nov: NetworkLogosTests + SearchFilterTests pass; curl with the Airstamp user agent: 57/57 200 image/png; simulator -filter service:Paramount+ shows Disney+, Paramount+ (picked, centred) and Hulu with logos and 'Nothing on Paramount+ in the next few days.' (fidelity/shots/search-services.png). Awaiting Chime's look on the phone."
     },
     {
       "id": "D7-1",
