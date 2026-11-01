@@ -35,6 +35,7 @@ final class FidelityTests: XCTestCase {
     func test_search_results() throws { try check("search-results") }
     func test_search_filtered() throws { try check("search-filtered") }
     func test_search_filter_empty() throws { try check("search-filter-empty") }
+    func test_show_preview() throws { try check("show-preview") }
 
     private func check(_ screen: String) throws {
         let url = try XCTUnwrap(Bundle(for: Self.self).url(forResource: screen, withExtension: "json",

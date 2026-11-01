@@ -1,0 +1,36 @@
+{
+  "screen": "show-preview",
+  "brief": "UI-BRIEF §5.3: the show page any Search poster opens (Silo, live TVmaze): poster, title, meta, next release in ReleaseWording words, Follow",
+  "launch": [
+    "-inMemoryStore",
+    "-welcomeDone",
+    "YES",
+    "-tab",
+    "search",
+    "-query",
+    "Silo",
+    "-openFirstResult",
+    "YES"
+  ],
+  "items": [
+    {
+      "id": "show-preview-poster"
+    },
+    {
+      "id": "show-preview-title",
+      "text": "Silo"
+    },
+    {
+      "id": "show-preview-meta",
+      "prefix": "2023 · Apple TV"
+    },
+    {
+      "id": "show-preview-release",
+      "prefix": "Out "
+    },
+    {
+      "id": "show-preview-follow",
+      "text": "Follow Silo"
+    }
+  ]
+}
