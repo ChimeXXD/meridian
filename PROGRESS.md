@@ -2,6 +2,19 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Live countdowns everywhere, and the blank medium widget (Sun 1 Nov 2026)
+
+**Changed** (D-51)
+- Chime: countdowns should be real time in the app, the widgets and the Live Activity; and the medium widget showed only its tag and art once Strictly Come Dancing (under a day away) became the hero.
+- `CountdownFormatter.daySplit` and `clockTemplate`; `CountdownText` now always ticks ("2d 4:10:22" beyond a day) inside a hidden template of its widest value, with an `alignment` for right-hand columns. The inline widget ticks with days too. Likely cause of the blank medium widget: its hero's ticking timer had `fixedSize`, and a ticking text in a widget takes all the width offered; the template bounds it (not reproducible in ImageRenderer, so it is confirmed only on the phone).
+- Fixed my own first version: exactly on a day edge the clock showed a paused "4d 0:00"; it now reads "3d 24:00:00" and ticks.
+
+**Red → green**
+- `CountdownFormatterTests/daySplit()` and `clockTemplate()` failed to compile, then passed; the on-edge case failed with 3 issues, then passed. `WidgetTextTests/inline` now expects the live timer (nil text) for a count days away.
+
+**Not verified**
+- The medium widget on the phone; the app holds "3d 0:00:00" for up to a minute at a day edge (its `TimelineView` redraws every minute).
+
 ## Day 5: Live Activity rebuilt on Chime's picks (Sun 1 Nov 2026)
 
 **Changed** (D-50)

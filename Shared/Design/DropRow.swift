@@ -38,7 +38,7 @@ struct DropRow: View {
             Spacer(minLength: Tokens.Space.s)
             // The countdown is short; it keeps its full size and the text column wraps instead.
             CountdownText(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate, now: now,
-                          size: 28, formatter: formatter)
+                          size: 28, formatter: formatter, alignment: .trailing)
                 .fixedSize()
         }
         .padding(Tokens.Space.m)

@@ -32,7 +32,8 @@ struct WidgetCompactRow: View {
                     .fixedSize(horizontal: true, vertical: false)
                 Spacer(minLength: Tokens.Space.xs)
                 CountdownText(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate, now: now, size: 15,
-                              tint: WidgetInk.dimmed(WidgetInk.secondary, when: dimmed), formatter: formatter)
+                              tint: WidgetInk.dimmed(WidgetInk.secondary, when: dimmed), formatter: formatter,
+                              alignment: .trailing)
                     .environment(\.numeralStudy, .night)
                     .fixedSize(horizontal: true, vertical: false)
             }

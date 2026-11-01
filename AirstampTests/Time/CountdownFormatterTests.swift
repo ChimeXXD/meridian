@@ -25,13 +25,38 @@ struct CountdownFormatterTests {
         #expect(CountdownFormatter.state(drop: Self.drop, confidence: .exact, now: Self.now(minus: secondsBefore)) == expected)
     }
 
-    @Test("more than 24 hours away shows a static count, not a timer")
+    @Test("more than 24 hours away is counted in days (the views tick the rest live, see daySplit)")
     func coarseBeyondADay() {
         let state = CountdownFormatter.state(drop: Self.drop, confidence: .estimated, now: Self.now(minus: 86_401))
         #expect(state == .coarse([CountdownPart(value: 1, unit: .day)]))
     }
 
     static let day: TimeInterval = 86_400, hour: TimeInterval = 3_600, minute: TimeInterval = 60
+
+    @Test("the live countdown splits off whole days; the clock part ticks down to the next day edge")
+    func daySplit() {
+        let split = CountdownFormatter.daySplit(drop: Self.drop, now: Self.now(minus: 2 * Self.day + 4 * Self.hour + 600))
+        #expect(split.days == 2)
+        #expect(split.edge == Self.drop.addingTimeInterval(-2 * Self.day))
+        let underADay = CountdownFormatter.daySplit(drop: Self.drop, now: Self.now(minus: 5 * Self.hour))
+        #expect(underADay.days == 0)
+        #expect(underADay.edge == Self.drop)
+        // Exactly on a day edge (widget entries land on whole hours) it reads "3d 24:00:00" and ticks, never a
+        // frozen "4d 0:00".
+        let onEdge = CountdownFormatter.daySplit(drop: Self.drop, now: Self.now(minus: 4 * Self.day))
+        #expect(onEdge.days == 3)
+        #expect(onEdge.edge == Self.drop.addingTimeInterval(-3 * Self.day))
+        #expect(CountdownFormatter.daySplit(drop: Self.drop, now: Self.now(minus: Self.day)).days == 0)
+    }
+
+    @Test("a ticking countdown is sized from a template as wide as its widest value, so widgets can't stretch it")
+    func clockTemplate() {
+        #expect(CountdownFormatter.clockTemplate(drop: Self.drop, now: Self.now(minus: 5 * Self.hour)) == "0:00:00")
+        #expect(CountdownFormatter.clockTemplate(drop: Self.drop, now: Self.now(minus: 15 * Self.hour)) == "00:00:00")
+        #expect(CountdownFormatter.clockTemplate(drop: Self.drop, now: Self.now(minus: 40 * Self.minute)) == "00:00")
+        #expect(CountdownFormatter.clockTemplate(drop: Self.drop, now: Self.now(minus: 2 * Self.day + Self.hour))
+            == "2d 00:00:00")
+    }
     static let partCases: [(TimeInterval, Int, String)] = [
         (2 * day + 4 * hour + 30 * minute, 2, "2d 4h"),
         (2 * day, 2, "2d"),

@@ -82,7 +82,12 @@ struct TimelineProviderTests {
         let drop = Self.drop("1", at: Self.now.addingTimeInterval(9 * 24 * Self.hour))
         let timeline = Self.timeline([drop])
         #expect(timeline.reloadDate == Self.now.addingTimeInterval(WidgetTimeline.refreshHorizon))
-        #expect(timeline.entries.filter { $0.date > Self.now && $0.date < drop.date }.count <= 49)
+        let horizon = Self.now.addingTimeInterval(WidgetTimeline.refreshHorizon)
+        #expect(timeline.entries.filter { $0.date > Self.now && $0.date <= horizon }.count <= 49)
+        // Past the horizon, only the drop's day edges within a week (D-51), so a late reload never freezes "Nd 0:00".
+        let edges = (1...7).map { drop.date.addingTimeInterval(-Double($0) * 24 * Self.hour) }
+        let beyond = timeline.entries.filter { $0.date > horizon && $0.date < drop.date }
+        #expect(!beyond.isEmpty && beyond.allSatisfy { entry in edges.contains(entry.date) })
     }
 
     @Test("a drop already out stays Out now until its hour ends, then the next one leads")
@@ -129,6 +134,21 @@ struct TimelineProviderTests {
             #expect(timeline.reloadDate == nil)
         }
         #expect(Self.timeline([], nextReturn: back).entries.first?.nextReturn == back)
+    }
+
+    @Test("every day edge of each drop in the next 7 days gets an entry, past the 48 h horizon and next to other changes")
+    func dayEdges() {
+        // Days away, its count reads "Nd" + a timer to the next edge (D-51); a missing entry freezes it at "Nd 0:00".
+        let far = Self.drop("far", at: Self.now + 5 * 24 * Self.hour + 2 * Self.minute)
+        // A date-only drop whose day ends at Lagos midnight, 2 minutes before one of far's edges.
+        let undated = Self.drop("undated", at: Self.now + 24 * Self.hour, confidence: .dateOnly, airdate: "2026-11-02")
+        let timeline = Self.timeline([far, undated])
+        for days in 1...5 {
+            let edge = far.date.addingTimeInterval(-Double(days) * 24 * Self.hour)
+            #expect(timeline.entries.contains { $0.date >= edge && $0.date < edge + WidgetTimeline.minimumSpacing },
+                    "no entry within 5 minutes of the \(days)-day edge \(edge)")
+        }
+        #expect(Self.gaps(timeline).allSatisfy { $0 >= WidgetTimeline.minimumSpacing })
     }
 
     @Test("the rows are the next 4 drops, soonest first (the large widget's hero and 3 rows)")

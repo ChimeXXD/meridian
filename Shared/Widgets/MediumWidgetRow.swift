@@ -32,7 +32,7 @@ struct MediumWidgetRow: View {
             .layoutPriority(1)
             Spacer(minLength: Tokens.Space.xs)
             CountdownText(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate, now: now, size: 22,
-                          tint: WidgetInk.primary, formatter: formatter)
+                          tint: WidgetInk.primary, formatter: formatter, alignment: .trailing)
                 .environment(\.numeralStudy, .night)
                 .fixedSize(horizontal: true, vertical: false)
         }

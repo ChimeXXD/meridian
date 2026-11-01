@@ -6,8 +6,10 @@ import Foundation
 /// - One entry now, one at each of the next 5 timed drops ("Out now" starts) and one an hour after each ("Out now"
 ///   ends and the widget moves to the next drop).
 /// - Refresh entries keep the static counts honest while the current drop counts down: every hour ("2d 4h", the
-///   circular "4h") and every 5 minutes in its last hour (the circular "38m"). Ticking timers need none. They stop at
-///   `refreshHorizon`; the reload is due by then.
+///   circular "4h") and every 5 minutes in its last hour (the circular "38m"). They stop at `refreshHorizon`; the
+///   reload is due by then.
+/// - Every day edge of the drops ahead within 7 days is a change too: the live "2d 4:10:22" timer pauses at 0:00 there
+///   and needs a redraw to step its day count down (`CountdownFormatter.daySplit`, D-51).
 /// - No two entries are closer than 5 minutes. A change that falls inside that gap moves to 5 minutes after the
 ///   entry before it (never earlier, so "Out now" is never shown before the drop), and a refresh entry within 5
 ///   minutes of a drop change is dropped, so drops win.
@@ -34,7 +36,13 @@ struct WidgetTimeline: Hashable, Sendable {
         let horizon = now.addingTimeInterval(refreshHorizon)
         let dayEnds = showing.compactMap { dayEnd(of: $0, formatter: formatter) }.filter { $0 > now }
 
-        let changes = Set(ahead.flatMap { [$0.date, $0.date.addingTimeInterval(outNowWindow)] } + dayEnds)
+        // Each day edge of the drops ahead within a week: the live "Nd" + timer pauses at 0:00 there (D-51), so it is a
+        // change like a drop, never dropped for a nearby one, and kept past the refresh horizon in case the reload is
+        // late.
+        let dayEdges = ahead.flatMap { drop in
+            (1...7).map { drop.date.addingTimeInterval(-Double($0) * 86_400) }
+        }.filter { $0 > now && $0 <= now.addingTimeInterval(week) }
+        let changes = Set(ahead.flatMap { [$0.date, $0.date.addingTimeInterval(outNowWindow)] } + dayEnds + dayEdges)
             .filter { $0 > now }
         let anchors = changes.union([now])
         let refreshes = refreshTimes(ahead, now: now, horizon: horizon).filter { time in

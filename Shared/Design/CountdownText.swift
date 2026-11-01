@@ -1,11 +1,13 @@
 import SwiftUI
 import WidgetKit
 
-/// The countdown for one drop. Within 24 hours it ticks with `Text(timerInterval:pauseTime:countsDown:)`,
-/// so it stops at zero and never counts up (CLAUDE.md rule 4). Further out it shows "2d 4h" with the
-/// digits bright and the units dim (UI-BRIEF §1.3). A `dateOnly` drop shows its airdate, never a timer.
-/// The caller owns `now` and must refresh it: widgets pass their timeline entry's date (with an entry at
-/// the drop, SPEC §5); app screens wrap the list in a `TimelineView` (Day 3), or "Out now" never appears.
+/// The countdown for one drop, live to the second everywhere (Chime, 1 Nov): `Text(timerInterval:pauseTime:countsDown:)`,
+/// so it stops at zero and never counts up (CLAUDE.md rule 4). More than a day away it is the whole days, dim unit,
+/// then the timer to the next day edge: "2d 4:10:22" (`CountdownFormatter.daySplit`). A `dateOnly` drop shows its
+/// airdate, never a timer. The timer is sized from `CountdownFormatter.clockTemplate`, because in a widget a ticking
+/// text otherwise takes all the width it's offered and pushes the rest out (the medium widget went blank, 1 Nov).
+/// The caller owns `now` and must refresh it: widgets pass their timeline entry's date (with an entry at the drop and
+/// on every hour, SPEC §5); app screens wrap the list in a `TimelineView` (Day 3), or "Out now" never appears.
 struct CountdownText: View {
     let drop: Date
     let confidence: Confidence
@@ -14,6 +16,8 @@ struct CountdownText: View {
     var size: CGFloat = 34
     var tint: Color = .primary
     var formatter = DropFormatter()
+    /// Where the digits sit inside the template's width: trailing in right-aligned columns.
+    var alignment: Alignment = .leading
 
     @Environment(\.numeralStudy) private var study
     @ScaledMetric private var scale: CGFloat = 1
@@ -37,20 +41,34 @@ struct CountdownText: View {
         case .released:
             Text("Released").font(study.font(size: size * 0.6 * scale)).foregroundStyle(.secondary)
         case .ticking:
-            Text(timerInterval: now...drop, pauseTime: drop, countsDown: true)
-                .font(study.font(size: size * scale))
+            live
         case .coarse(let parts):
-            coarse(parts).accessibilityLabel(CountdownFormatter.spokenText(parts))
+            live.accessibilityLabel(CountdownFormatter.spokenText(parts))
         }
     }
 
-    private func coarse(_ parts: [CountdownPart]) -> Text {
-        let digits = study.font(size: size * scale)
-        let units = study.font(size: size * 0.5 * scale)
-        return parts.enumerated().reduce(Text(verbatim: "")) { text, item in
-            let gap = item.offset == 0 ? "" : " "
-            return Text("\(text)\(gap)\(Text(verbatim: "\(item.element.value)").font(digits))\(Text(verbatim: item.element.unit.rawValue).font(units).foregroundStyle(.secondary))")
+    private var textAlignment: TextAlignment {
+        switch alignment.horizontal {
+        case .trailing: .trailing
+        case .center: .center
+        default: .leading
         }
+    }
+
+    /// The live count, inside a hidden template as wide as its widest value.
+    private var live: some View {
+        let split = CountdownFormatter.daySplit(drop: drop, now: now)
+        let digits = study.font(size: size * scale).monospacedDigit()
+        let timer = Text(timerInterval: now...split.edge, pauseTime: split.edge, countsDown: true).font(digits)
+        let text = split.days > 0
+            ? Text("\(Text(verbatim: "\(split.days)").font(digits))\(Text(verbatim: "d ").font(study.font(size: size * 0.5 * scale)).foregroundStyle(.secondary))\(timer)")
+            : timer
+        return Text(verbatim: CountdownFormatter.clockTemplate(drop: drop, now: now))
+            .font(digits)
+            .hidden()
+            .overlay(alignment: alignment) {
+                text.multilineTextAlignment(textAlignment)
+            }
     }
 }
 

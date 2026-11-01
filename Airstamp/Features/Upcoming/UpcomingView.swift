@@ -201,7 +201,7 @@ struct UpcomingView: View {
                         Spacer(minLength: Tokens.Space.xs)
                         if drop.confidence != .dateOnly {  // a date-only drop's day is already in the out line
                             CountdownText(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate, now: now,
-                                          size: 24, tint: .white, formatter: formatter)
+                                          size: 24, tint: .white, formatter: formatter, alignment: .trailing)
                                 .environment(\.numeralStudy, .night)
                                 .fixedSize()
                         }

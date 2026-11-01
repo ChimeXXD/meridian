@@ -1,9 +1,10 @@
 import SwiftUI
 import WidgetKit
 
-/// accessoryInline, the line above the Lock Screen clock: "Silo · 2d 4h" (SPEC §5). The system draws it in its own
-/// font. Within a day the count is a ticking `Text(timerInterval:pauseTime:countsDown:)`, which stops at zero
-/// (CLAUDE.md rule 4); the entry at the drop then says "Silo · Out now".
+/// accessoryInline, the line above the Lock Screen clock: "Silo · 2d 4:10:22", live to the second (SPEC §5, Chime 1
+/// Nov). The system draws it in its own font. The count is a ticking `Text(timerInterval:pauseTime:countsDown:)` to
+/// the next day edge, which stops at zero (CLAUDE.md rule 4); the hourly entries step the days down, and the entry at
+/// the drop says "Silo · Out now".
 struct InlineWidgetView: View {
     let moment: WidgetMoment
     var formatter = DropFormatter()
@@ -19,9 +20,13 @@ struct InlineWidgetView: View {
     }
 
     private var line: Text {
-        // Only a ticking count has no static text, and it always has a current drop.
+        // Only a live count has no static text, and it always has a current drop.
         if let text = WidgetText.inline(moment, formatter: formatter) { return Text(text) }
         guard let drop = moment.current else { return Text(verbatim: "") }
-        return Text("\(drop.showName) · \(Text(timerInterval: moment.date...drop.date, pauseTime: drop.date, countsDown: true))")
+        let split = CountdownFormatter.daySplit(drop: drop.date, now: moment.date)
+        let timer = Text(timerInterval: moment.date...split.edge, pauseTime: split.edge, countsDown: true)
+        return split.days > 0
+            ? Text("\(drop.showName) · \(split.days)d \(timer)")
+            : Text("\(drop.showName) · \(timer)")
     }
 }
