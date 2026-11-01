@@ -15,7 +15,9 @@ struct UpcomingView: View {
     var onRefresh: () async -> Void = {}
 
     var body: some View {
-        TimelineView(.everyMinute) { context in
+        // Every second: inside a TimelineView a ticking Text only updates at the timeline's pace, so `.everyMinute`
+        // froze every countdown on screen (Chime, 1 Nov; seen as identical screenshots 3 s apart).
+        TimelineView(.periodic(from: .now, by: 1)) { context in
             let sections = UpcomingSections.make(drops: result?.drops ?? [],
                                                  nothingScheduled: result?.nothingScheduled ?? [], now: context.date)
             ArtworkLoaderView(url: (sections.hero?.showID ?? sections.spotlightShowID).flatMap { artwork[$0]?.hero },

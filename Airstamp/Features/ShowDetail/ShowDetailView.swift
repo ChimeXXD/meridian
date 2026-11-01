@@ -19,7 +19,8 @@ struct ShowDetailView: View {
     @AppStorage(LeadTime.storageKey) private var leadMinutes = LeadTime.defaultMinutes
 
     var body: some View {
-        TimelineView(.everyMinute) { context in
+        // Every second, so the countdown ticks (a TimelineView paces its ticking Text; see UpcomingView).
+        TimelineView(.periodic(from: .now, by: 1)) { context in
             ArtworkLoaderView(url: artwork?.hero, maxPixel: ShowArtwork.idealBackgroundWidth) { hero in
                 let base = (hero?.palette ?? .neutral).night.color
                 ScrollView {

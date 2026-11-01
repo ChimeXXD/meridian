@@ -2,6 +2,12 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## The app's countdowns didn't tick (Sun 1 Nov 2026)
+
+- Chime: "The countdown is not real time. It's not ticking." Checked on the simulator with 8 screenshots over 3 s: byte-identical. Drawing the timer without the template still froze (template ruled out); changing Upcoming's `TimelineView(.everyMinute)` to `.periodic(from: .now, by: 1)` made it tick (2:09:55 → 2:09:52 and 2d 3:59:55 → 2d 3:59:52 in 3 s). Cause: inside a TimelineView a ticking `Text(timerInterval:)` only updates at the timeline's pace. Upcoming, Show detail and the show page now redraw every second; Search's grid (words only) stays per minute.
+- Lesson: "live" is checked by two screenshots seconds apart, never by one render.
+- Not verified here: widgets and the Live Activity (no TimelineView; the system ticks their timers) on the phone.
+
 ## Live countdowns everywhere, and the blank medium widget (Sun 1 Nov 2026)
 
 **Changed** (D-51)

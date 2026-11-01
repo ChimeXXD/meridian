@@ -28,7 +28,8 @@ struct ShowPreviewView: View {
     private var heroURL: URL? { loaded ? artwork?.hero ?? result.largePoster : nil }
 
     var body: some View {
-        TimelineView(.everyMinute) { timeline in
+        // Every second, so the countdown ticks (a TimelineView paces its ticking Text; see UpcomingView).
+        TimelineView(.periodic(from: .now, by: 1)) { timeline in
             ArtworkLoaderView(url: heroURL, maxPixel: ShowArtwork.idealBackgroundWidth) { hero in
                 let base = (hero?.palette ?? .neutral).night.color
                 ScrollView {
