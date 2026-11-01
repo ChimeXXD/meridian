@@ -39,6 +39,7 @@ struct ReleaseHeadline: View {
             Text(drop.showName)
                 .font(.system(size: titleSize, design: .serif))
                 .lineLimit(2).minimumScaleFactor(0.7)
+                .accessibilityAddTraits(.isHeader)
                 .accessibilityIdentifier("\(testID)-title")
             CountdownText(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate, now: now,
                           size: countdownSize, tint: .white, formatter: formatter)

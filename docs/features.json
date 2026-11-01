@@ -409,7 +409,7 @@
       "title": "Search: any poster opens the show's page with its poster, next release date and Follow",
       "criteria": [
         "tapping a poster or its title anywhere on the Search tab (results and the airing grid) opens the show's page; the (+) still follows in one tap",
-        "the page shows the large poster, title, year · network · status, the next release in ReleaseWording words, and Follow/Following",
+        "the page is Night Sky like Upcoming's hero: key art fading into night, title, serif countdown and the next release in ReleaseWording words, year · network · status, Follow/Following",
         "with nothing scheduled (or a failed request) the release line is left out entirely",
         "the time matches Upcoming's (TimeResolver with the bundled rules; AniList's Japanese broadcast)"
       ],

@@ -9,13 +9,48 @@ struct ShowPreviewTests {
     static let now = Date(iso: "2026-11-01T12:00:00Z")
     static let lagos = DropFormatter(zoneIdentifier: "Africa/Lagos", locale: Locale(identifier: "en_GB"))
 
+    static func load(_ catalog: Catalog, id: Int, offsetMinutes: Int = 0, knownDrop: Drop? = nil,
+                     network: TVmazeClientTests.FakeNetwork) async throws -> ShowPreview.Loaded {
+        await ShowPreview.load(catalog: catalog, id: id, knownDrop: knownDrop, client: TVmazeClientTests.client(network),
+                               anilist: AniListClientTests.client(network), rules: try Fixture.bundledRules(),
+                               offsetMinutes: offsetMinutes, now: now)
+    }
+
     static func next(_ catalog: Catalog, id: Int, offsetMinutes: Int = 0,
                      responses: [(status: Int, headers: [String: String], body: Data)]) async throws -> Drop? {
-        let network = TVmazeClientTests.FakeNetwork(responses)
-        return await ShowPreview.nextDrop(catalog: catalog, id: id, client: TVmazeClientTests.client(network),
-                                          anilist: AniListClientTests.client(network),
-                                          rules: try Fixture.bundledRules(), offsetMinutes: offsetMinutes,
-                                          now: now)
+        try await load(catalog, id: id, offsetMinutes: offsetMinutes,
+                       network: TVmazeClientTests.FakeNetwork(responses)).drop
+    }
+
+    @Test("the page's art is TVmaze's landscape key art, as on Upcoming")
+    func tvArtwork() async throws {
+        let network = TVmazeClientTests.FakeNetwork([(200, [:], try Fixture.data("tvmaze/show-silo-embed.json")),
+                                                     (200, [:], try Fixture.data("tvmaze/images-silo.json"))])
+        let loaded = try await Self.load(.tvmaze, id: 44778, network: network)
+        #expect(loaded.drop != nil)
+        let background = try #require(loaded.artwork?.background)
+        #expect(loaded.artwork?.hero == background)
+    }
+
+    @Test("a time the airing grid already knows isn't asked for again; only the art is fetched")
+    func knownDropSkipsShowRequest() async throws {
+        let known = try #require(try await Self.next(.tvmaze, id: 44778,
+                                                     responses: [(200, [:], Fixture.data("tvmaze/show-silo-embed.json"))]))
+        let network = TVmazeClientTests.FakeNetwork([(200, [:], try Fixture.data("tvmaze/images-silo.json"))])
+        let loaded = try await Self.load(.tvmaze, id: 44778, knownDrop: known, network: network)
+        #expect(loaded.drop == known)
+        #expect(loaded.artwork?.background != nil)
+        #expect(await network.requests.count == 1)
+    }
+
+    @Test("an anime's art is its AniList banner, from the same one request as its time")
+    func animeArtwork() async throws {
+        let media = #"{"data":{"Media":{"id":5,"isAdult":false,"title":{"romaji":"A"},"countryOfOrigin":"JP","bannerImage":"https://example.com/banner.jpg","nextAiringEpisode":{"airingAt":1794200000,"episode":4}}}}"#
+        let network = TVmazeClientTests.FakeNetwork([Self.json(media)])
+        let loaded = try await Self.load(.anilist, id: 5, network: network)
+        #expect(loaded.artwork?.background?.absoluteString == "https://example.com/banner.jpg")
+        #expect(loaded.drop?.number == 4)
+        #expect(await network.requests.count == 1)
     }
 
     static func json(_ text: String) -> (status: Int, headers: [String: String], body: Data) {

@@ -1,6 +1,6 @@
 {
   "screen": "show-preview",
-  "brief": "UI-BRIEF §5.3: the show page any Search poster opens (Silo, live TVmaze): poster, title, meta, next release in ReleaseWording words, Follow",
+  "brief": "UI-BRIEF §5.3: the show page any Search poster opens, in Night Sky like Upcoming (Silo, live TVmaze): key art, title, countdown and out line, meta, Follow",
   "launch": [
     "-inMemoryStore",
     "-welcomeDone",
@@ -14,7 +14,7 @@
   ],
   "items": [
     {
-      "id": "show-preview-poster"
+      "id": "show-preview-art"
     },
     {
       "id": "show-preview-title",
@@ -25,7 +25,7 @@
       "prefix": "2023 · Apple TV"
     },
     {
-      "id": "show-preview-release",
+      "id": "show-preview-out",
       "prefix": "Out "
     },
     {
