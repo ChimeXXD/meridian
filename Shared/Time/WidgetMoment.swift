@@ -16,6 +16,9 @@ struct WidgetMoment: Hashable, Sendable {
     /// The next real date when nothing is scheduled: "Silo returns Fri 9 Jul 2027".
     var nextReturn: Drop?
 
+    /// The drop VoiceOver describes: the current one, or the next return when nothing is scheduled.
+    var spokenDrop: Drop? { current ?? nextReturn }
+
     var state: State {
         guard let current else { return .nothing }
         if current.confidence == .dateOnly { return .dateOnly }

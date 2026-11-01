@@ -78,7 +78,9 @@ enum ReleaseWording {
         return String(zone.identifier.split(separator: "/").last ?? "").replacingOccurrences(of: "_", with: " ")
     }
 
-    private static func verb(_ drop: Drop, past: Bool) -> String {
+    /// The certainty word alone ("Out", "Expected", "Airs in Japan"), for lines too short for `outLine`, such as the
+    /// rectangular widget's "Expected Wed 02:00 · Apple TV".
+    static func verb(_ drop: Drop, past: Bool) -> String {
         if case .anilist = drop.source { return past ? "Aired in Japan" : "Airs in Japan" }
         guard drop.confidence == .exact else { return "Expected" }
         return past ? "Released" : "Out"
