@@ -16,12 +16,15 @@ struct SearchResult: Hashable, Identifiable, Sendable {
     let meta: String
     /// TVmaze's 210 × 295 poster, loaded at runtime and cached on the phone (D-37).
     let poster: URL?
+    /// The full-size poster for the show page, falling back to the grid's.
+    let largePoster: URL?
 
     init(show: TVmazeShow) {
         id = show.id
         catalog = .tvmaze
         title = show.name
         poster = show.image?.medium
+        largePoster = show.image?.original ?? show.image?.medium
         year = show.premiered.flatMap { Int($0.prefix(4)) }
         let channel = show.network ?? show.webChannel
         network = channel?.name
@@ -37,6 +40,7 @@ struct SearchResult: Hashable, Identifiable, Sendable {
         catalog = .anilist
         title = media.displayTitle
         poster = media.coverImage?.large
+        largePoster = media.coverImage?.extraLarge ?? media.coverImage?.large
         year = media.startDate?.year
         network = media.streamingSite
         status = media.statusText

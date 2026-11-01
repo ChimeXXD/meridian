@@ -22,15 +22,15 @@ struct AiringItem: Hashable, Identifiable, Sendable {
     }
 
     /// An anime and its next Japanese broadcast; nil when AniList has no next episode.
-    init?(media: AniListMedia) {
+    init?(media: AniListMedia, offsetMinutes: Int = 0) {
         guard let next = media.nextAiringEpisode else { return nil }
         result = SearchResult(media: media)
         weight = media.popularity ?? 0
         let resolution = TimeResolver.resolveAniList(airingAt: Date(timeIntervalSince1970: TimeInterval(next.airingAt)),
-                                                     offsetMinutes: 0)
+                                                     offsetMinutes: offsetMinutes)
         drop = Drop(id: "anilist:\(media.id):\(next.episode)", showID: "anilist:\(media.id)",
                     showName: media.displayTitle, season: nil, number: next.episode, episodeTitle: nil,
-                    date: resolution.date, airdate: nil, confidence: resolution.confidence, source: resolution.source,
+                    date: resolution.date, airdate: resolution.airdate, confidence: resolution.confidence, source: resolution.source,
                     provider: nil, previousDate: nil)
     }
 

@@ -403,6 +403,21 @@
       "evidence": "1 Nov: fidelity/verify-screen.sh search-filtered and search-filter-empty ALL PASS on the final code (contains 'Out ' + selected checks proved by a deliberate failure); awaiting Chime's OK on the new inventories and a device screenshot"
     },
     {
+      "id": "D3-13",
+      "day": 3,
+      "priority": "must",
+      "title": "Search: any poster opens the show's page with its poster, next release date and Follow",
+      "criteria": [
+        "tapping a poster or its title anywhere on the Search tab (results and the airing grid) opens the show's page; the (+) still follows in one tap",
+        "the page shows the large poster, title, year · network · status, the next release in ReleaseWording words, and Follow/Following",
+        "with nothing scheduled (or a failed request) the release line is left out entirely",
+        "the time matches Upcoming's (TimeResolver with the bundled rules; AniList's Japanese broadcast)"
+      ],
+      "verify": "ShowPreviewTests; fidelity/verify-screen.sh show-preview; Chime taps through on the phone",
+      "passes": false,
+      "evidence": ""
+    },
+    {
       "id": "D4-1",
       "day": 4,
       "priority": "must",

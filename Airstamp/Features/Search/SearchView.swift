@@ -36,8 +36,11 @@ struct SearchView: View {
 
     private static let page = ArtworkPalette.neutral.night.color
 
+    /// The show pages opened from posters (any poster on the tab, results or the airing grid).
+    @State private var path: [ShowRoute] = []
+
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     Picker("Kind", selection: $kind) {
@@ -54,6 +57,9 @@ struct SearchView: View {
             .scrollDismissesKeyboard(.immediately)
             .background(Self.page)
             .navigationTitle("Search")
+            .navigationDestination(for: ShowRoute.self) { route in
+                ShowPreviewView(route: route, client: client, anilist: anilist, rules: rules)
+            }
             .searchable(text: $query, prompt: "Shows and anime")
             .onSubmit(of: .search) { Task { await search() } }
             .task(id: kind) {
@@ -64,7 +70,7 @@ struct SearchView: View {
                     airing[.tv] = picks.map(AiringItem.init(pick:))
                 case .anime:
                     guard let media = try? await anilist.airingSoon(from: .now, days: 7) else { return }
-                    airing[.anime] = media.compactMap(AiringItem.init(media:))
+                    airing[.anime] = media.compactMap { AiringItem(media: $0) }
                 }
             }
             .onChange(of: kind) {
@@ -156,7 +162,8 @@ struct SearchView: View {
             }
         } else {
             posterGrid(kind == .tv ? "Airing in the next few days" : "Airing in Japan this week",
-                       headerID: "search-airing-header", shown.map(\.result), idPrefix: "airing") { result in
+                       headerID: "search-airing-header", shown.map(\.result), idPrefix: "airing",
+                       drops: Dictionary(shown.map { ($0.id, $0.drop) }, uniquingKeysWith: { first, _ in first })) { result in
                 VStack(alignment: .leading, spacing: 0) {
                     if let network = result.network { Text(network) }
                     if let line = lines[result.id] { Text(line) }
@@ -167,7 +174,9 @@ struct SearchView: View {
     }
 
     /// One grid for both lists, so the airing shows and the results can't drift apart. Cells are `<idPrefix>-<n>`.
+    /// `drops`: next episodes the grid already knows (the airing grid), so their page needn't ask again.
     private func posterGrid<Meta: View>(_ header: String, headerID: String, _ shows: [SearchResult], idPrefix: String,
+                                        drops: [Int: Drop] = [:],
                                         @ViewBuilder meta: @escaping (SearchResult) -> Meta) -> some View {
         VStack(alignment: .leading, spacing: Tokens.Space.s) {
             Text(header)
@@ -177,14 +186,18 @@ struct SearchView: View {
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: Tokens.Space.s, alignment: .top), count: 3),
                       spacing: Tokens.Space.m) {
                 ForEach(Array(shows.enumerated()), id: \.element.id) { index, result in
-                    posterCell(result, id: "\(idPrefix)-\(index + 1)", meta: meta(result))
+                    posterCell(result, id: "\(idPrefix)-\(index + 1)", meta: meta(result),
+                               route: ShowRoute(result: result, knownDrop: drops[result.id]))
                 }
             }
         }
         .padding(.top, Tokens.Space.s)
     }
 
-    private func posterCell(_ result: SearchResult, id: String, meta: some View) -> some View {
+    /// Tapping the poster or its words opens the show's page; the (+) on the poster still follows in one tap. A tap
+    /// gesture, not a link, so the cell's parts keep their own IDs for the screen checks; VoiceOver opens the page
+    /// from the title.
+    private func posterCell(_ result: SearchResult, id: String, meta: some View, route: ShowRoute) -> some View {
         VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
             PosterImage(url: result.poster, cornerRadius: 8)
                 .aspectRatio(2 / 3, contentMode: .fit)
@@ -194,6 +207,9 @@ struct SearchView: View {
             Text(result.title)
                 .font(.footnote.weight(.medium))
                 .lineLimit(2)
+                .accessibilityAddTraits(.isButton)
+                .accessibilityHint("Opens the show")
+                .accessibilityAction { path.append(route) }
                 .accessibilityIdentifier("\(id)-title")
             // Two lines a part, so a long network ("Amazon Prime Video") can't push its country out of the cell.
             meta
@@ -202,6 +218,8 @@ struct SearchView: View {
                 .lineLimit(2)
                 .accessibilityIdentifier("\(id)-meta")
         }
+        .contentShape(Rectangle())
+        .onTapGesture { path.append(route) }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier(id)
     }
@@ -240,6 +258,11 @@ struct SearchView: View {
             guard text == query.trimmingCharacters(in: .whitespaces) else { return }
             results = found
             state = .done
+            #if DEBUG
+            if DebugLaunch.openFirstResult, path.isEmpty, let first = found.first {
+                path.append(ShowRoute(result: first, knownDrop: nil))
+            }
+            #endif
         } catch {
             // Typing on cancels the debounced search; that isn't a connection failure.
             guard !Task.isCancelled, text == query.trimmingCharacters(in: .whitespaces) else { return }

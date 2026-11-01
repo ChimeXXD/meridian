@@ -18,7 +18,7 @@ struct SearchFilterTests {
         let popular = try decoder.decode(AniListPage.self, from: Fixture.data("anilist/releasing-2026-10-31.json"))
         let premieres = try decoder.decode(AniListPage.self, from: Fixture.data("anilist/premieres-2026-11-01.json"))
         let media = (popular.data.Page.media ?? []) + (premieres.data.Page.airingSchedules ?? []).map(\.media)
-        return media.filter { $0.nextAiringEpisode != nil }.compactMap(AiringItem.init(media:))
+        return media.filter { $0.nextAiringEpisode != nil }.compactMap { AiringItem(media: $0) }
     }
 
     static func apply(_ filter: SearchFilter, _ items: [AiringItem], at now: String,

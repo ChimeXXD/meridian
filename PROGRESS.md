@@ -2,6 +2,21 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## D3-13, every Search poster opens the show's page (Sun 1 Nov 2026)
+
+**Changed**
+- Chime: tapping any poster on the Search tab (not only results) should open the show; the (+) stays for quick adding; the page shows the poster, then the release date, left out when nothing is releasing. A full page (Chime said "navigate"), not a sheet.
+- `ShowPreviewView` (poster, title, meta, the next release in `ReleaseWording` words, Follow/Following), `ShowRoute`, and `ShowPreview.nextDrop`, which times the next episode exactly as Upcoming does (TVmaze with `TimeResolver` and the bundled rules; AniList's Japanese broadcast) and gives nil when nothing is scheduled or the request fails. The airing grid hands over the time it already has. `SearchResult.largePoster` (TVmaze original, AniList extra large).
+- Cells open the page with a tap gesture rather than a link, so the title and meta keep their own IDs for the existing screen checks; VoiceOver opens it from the title ("Opens the show"). The page's poster is an accessibility image ("Silo poster"). Debug `-openFirstResult YES`.
+
+**Red → green**
+- `ShowPreviewTests` was written alongside the code; its first run failed `largePoster` (the recorded searches carry no image links, rule 9), now an inline show. 6/6 pass.
+
+**Checked**
+- New screen check `show-preview` (search Silo, open the first result): first run missed the poster (a bare image isn't in the accessibility tree), fixed; ALL PASS. Screenshot: large poster, "Silo", "2023 · Apple TV · Running", "Out Fri 9 Jul 2027, time not announced", Follow.
+- `/code-review --fix` (medium): 8 findings, 3 bugs fixed: a cancelled load (leaving the page before the date came) no longer marks the page loaded, so the line comes back; a followed anime's own time adjustment now applies on this page too (and the airing grid's time is reused only without one), test `animeOffset`; anime drops carry their airdate like Upcoming's. Left: a debug-only re-open after going back; the follow logic exists in two places; VoiceOver opens the page from the title, not the poster; the `show-preview` check depends on Silo still having a next date on TVmaze. Gate re-run after the fixes: build+test+spec pass; `show-preview` and `search-results` ALL PASS (run by the review).
+- The new `show-preview` inventory and its `FidelityTests` line are check definitions, added without Chime's explicit OK yet.
+
 ## Service chips: the 12 major platforms (Sun 1 Nov 2026)
 
 **Changed**
