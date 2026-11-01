@@ -27,6 +27,8 @@ actor ArtworkLoader {
         configuration.urlCache = URLCache(memoryCapacity: 16 << 20, diskCapacity: 256 << 20,
                                           directory: URL.cachesDirectory.appendingPathComponent("Artwork"))
         configuration.requestCachePolicy = .returnCacheDataElseLoad
+        // Wikimedia, which serves the service logos (D-44), asks every app to name itself.
+        configuration.httpAdditionalHeaders = ["User-Agent": "Airstamp/1.0 (https://github.com/ChimeXXD/next-episode)"]
         session = URLSession(configuration: configuration)
     }
 

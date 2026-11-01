@@ -1,0 +1,577 @@
+{
+  "source": "Wikimedia Commons",
+  "checked": "2026-11-01",
+  "logos": [
+    {
+      "names": [
+        "CBS"
+      ],
+      "file": "File:CBS logo (2020).svg",
+      "page": "https://commons.wikimedia.org/wiki/File:CBS_logo_(2020).svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ee/CBS_logo_%282020%29.svg/120px-CBS_logo_%282020%29.svg.png"
+    },
+    {
+      "names": [
+        "ABC"
+      ],
+      "file": "File:ABC-2021-LOGO.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:ABC-2021-LOGO.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/ABC-2021-LOGO.svg/120px-ABC-2021-LOGO.svg.png"
+    },
+    {
+      "names": [
+        "NBC"
+      ],
+      "file": "File:NBC logo 2022.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:NBC_logo_2022.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/NBC_logo_2022.svg/120px-NBC_logo_2022.svg.png"
+    },
+    {
+      "names": [
+        "FOX"
+      ],
+      "file": "File:Fox Broadcasting Company logo (2019).svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Fox_Broadcasting_Company_logo_(2019).svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c0/Fox_Broadcasting_Company_logo_%282019%29.svg/120px-Fox_Broadcasting_Company_logo_%282019%29.svg.png"
+    },
+    {
+      "names": [
+        "The CW"
+      ],
+      "file": "File:The CW 2024.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:The_CW_2024.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b1/The_CW_2024.svg/120px-The_CW_2024.svg.png"
+    },
+    {
+      "names": [
+        "PBS"
+      ],
+      "file": "File:PBS logo 2019.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:PBS_logo_2019.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/PBS_logo_2019.svg/120px-PBS_logo_2019.svg.png"
+    },
+    {
+      "names": [
+        "HBO"
+      ],
+      "file": "File:HBO logo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:HBO_logo.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/120px-HBO_logo.svg.png"
+    },
+    {
+      "names": [
+        "HBO Max"
+      ],
+      "file": "File:HBO Max May 2025 (Horizontal).svg",
+      "page": "https://commons.wikimedia.org/wiki/File:HBO_Max_May_2025_(Horizontal).svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/HBO_Max_May_2025_%28Horizontal%29.svg/120px-HBO_Max_May_2025_%28Horizontal%29.svg.png"
+    },
+    {
+      "names": [
+        "Netflix"
+      ],
+      "file": "File:Netflix 2015 logo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Netflix_2015_logo.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/120px-Netflix_2015_logo.svg.png"
+    },
+    {
+      "names": [
+        "Apple TV"
+      ],
+      "file": "File:Apple TV logo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Apple_TV_logo.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/Apple_TV_logo.svg/120px-Apple_TV_logo.svg.png"
+    },
+    {
+      "names": [
+        "Prime Video"
+      ],
+      "file": "File:Prime Video logo (2024).svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Prime_Video_logo_(2024).svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/Prime_Video_logo_%282024%29.svg/120px-Prime_Video_logo_%282024%29.svg.png"
+    },
+    {
+      "names": [
+        "Paramount+"
+      ],
+      "file": "File:Paramount+ logo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Paramount%2B_logo.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Paramount%2B_logo.svg/120px-Paramount%2B_logo.svg.png"
+    },
+    {
+      "names": [
+        "Peacock"
+      ],
+      "file": "File:NBCUniversal Peacock Logo (2026).svg",
+      "page": "https://commons.wikimedia.org/wiki/File:NBCUniversal_Peacock_Logo_(2026).svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/NBCUniversal_Peacock_Logo_%282026%29.svg/120px-NBCUniversal_Peacock_Logo_%282026%29.svg.png"
+    },
+    {
+      "names": [
+        "Disney+"
+      ],
+      "file": "File:Disney+ 2024.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Disney%2B_2024.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/64/Disney%2B_2024.svg/120px-Disney%2B_2024.svg.png"
+    },
+    {
+      "names": [
+        "Hulu"
+      ],
+      "file": "File:Hulu logo (2018).svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Hulu_logo_(2018).svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f9/Hulu_logo_%282018%29.svg/120px-Hulu_logo_%282018%29.svg.png"
+    },
+    {
+      "names": [
+        "AMC"
+      ],
+      "file": "File:AMC logo 2019.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:AMC_logo_2019.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/34/AMC_logo_2019.svg/120px-AMC_logo_2019.svg.png"
+    },
+    {
+      "names": [
+        "FX"
+      ],
+      "file": "File:FX International logo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:FX_International_logo.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/FX_International_logo.svg/120px-FX_International_logo.svg.png"
+    },
+    {
+      "names": [
+        "STARZ"
+      ],
+      "file": "File:Starz 2022.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Starz_2022.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/03/Starz_2022.svg/120px-Starz_2022.svg.png"
+    },
+    {
+      "names": [
+        "TBS"
+      ],
+      "file": "File:TBS 2020.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:TBS_2020.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/TBS_2020.svg/120px-TBS_2020.svg.png"
+    },
+    {
+      "names": [
+        "USA Network"
+      ],
+      "file": "File:USA Network 2025 logo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:USA_Network_2025_logo.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5d/USA_Network_2025_logo.svg/120px-USA_Network_2025_logo.svg.png"
+    },
+    {
+      "names": [
+        "Paramount+ with Showtime"
+      ],
+      "file": "File:Paramount+ with Showtime logo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Paramount%2B_with_Showtime_logo.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/09/Paramount%2B_with_Showtime_logo.svg/120px-Paramount%2B_with_Showtime_logo.svg.png"
+    },
+    {
+      "names": [
+        "Showtime on Demand"
+      ],
+      "file": "File:Showtime.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Showtime.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/22/Showtime.svg/120px-Showtime.svg.png"
+    },
+    {
+      "names": [
+        "AMC+"
+      ],
+      "file": "File:AMC+ logo.png",
+      "page": "https://commons.wikimedia.org/wiki/File:AMC%2B_logo.png",
+      "license": "CC BY-SA 4.0",
+      "attribution": "Ardi3005, CC BY-SA 4.0, via Wikimedia Commons",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/AMC%2B_logo.png/120px-AMC%2B_logo.png"
+    },
+    {
+      "names": [
+        "FXX"
+      ],
+      "file": "File:FXX Logo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:FXX_Logo.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/FXX_Logo.svg/120px-FXX_Logo.svg.png"
+    },
+    {
+      "names": [
+        "MGM+"
+      ],
+      "file": "File:MGM+ logo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:MGM%2B_logo.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/MGM%2B_logo.svg/120px-MGM%2B_logo.svg.png"
+    },
+    {
+      "names": [
+        "TNT"
+      ],
+      "file": "File:TNT Logo 2016.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:TNT_Logo_2016.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/TNT_Logo_2016.svg/120px-TNT_Logo_2016.svg.png"
+    },
+    {
+      "names": [
+        "Bravo"
+      ],
+      "file": "File:Bravo 2024.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Bravo_2024.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/22/Bravo_2024.svg/120px-Bravo_2024.svg.png"
+    },
+    {
+      "names": [
+        "Syfy"
+      ],
+      "file": "File:SYFY.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:SYFY.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/be/SYFY.svg/120px-SYFY.svg.png"
+    },
+    {
+      "names": [
+        "Freeform"
+      ],
+      "file": "File:Freeform 2022 pink.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Freeform_2022_pink.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2b/Freeform_2022_pink.svg/120px-Freeform_2022_pink.svg.png"
+    },
+    {
+      "names": [
+        "Lifetime"
+      ],
+      "file": "File:Logo Lifetime 2020.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Logo_Lifetime_2020.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_Lifetime_2020.svg/120px-Logo_Lifetime_2020.svg.png"
+    },
+    {
+      "names": [
+        "A&E"
+      ],
+      "file": "File:A&E Network logo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:A%26E_Network_logo.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/A%26E_Network_logo.svg/120px-A%26E_Network_logo.svg.png"
+    },
+    {
+      "names": [
+        "History"
+      ],
+      "file": "File:History (2021).svg",
+      "page": "https://commons.wikimedia.org/wiki/File:History_(2021).svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/01/History_%282021%29.svg/120px-History_%282021%29.svg.png"
+    },
+    {
+      "names": [
+        "Discovery"
+      ],
+      "file": "File:Discovery Channel - Logo 2019.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Discovery_Channel_-_Logo_2019.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/27/Discovery_Channel_-_Logo_2019.svg/120px-Discovery_Channel_-_Logo_2019.svg.png"
+    },
+    {
+      "names": [
+        "Food Network"
+      ],
+      "file": "File:Food Network logo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Food_Network_logo.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Food_Network_logo.svg/120px-Food_Network_logo.svg.png"
+    },
+    {
+      "names": [
+        "HGTV"
+      ],
+      "file": "File:HGTV 2010.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:HGTV_2010.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/HGTV_2010.svg/120px-HGTV_2010.svg.png"
+    },
+    {
+      "names": [
+        "National Geographic"
+      ],
+      "file": "File:Natgeologo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Natgeologo.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/Natgeologo.svg/120px-Natgeologo.svg.png"
+    },
+    {
+      "names": [
+        "Nickelodeon"
+      ],
+      "file": "File:Nickelodeon 2023 logo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Nickelodeon_2023_logo.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Nickelodeon_2023_logo.svg/120px-Nickelodeon_2023_logo.svg.png"
+    },
+    {
+      "names": [
+        "Cartoon Network"
+      ],
+      "file": "File:Cartoon Network 2010 logo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Cartoon_Network_2010_logo.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/120px-Cartoon_Network_2010_logo.svg.png"
+    },
+    {
+      "names": [
+        "Adult Swim"
+      ],
+      "file": "File:Adult Swim 2003 logo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Adult_Swim_2003_logo.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e4/Adult_Swim_2003_logo.svg/120px-Adult_Swim_2003_logo.svg.png"
+    },
+    {
+      "names": [
+        "Comedy Central"
+      ],
+      "file": "File:Comedy Central 2018.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Comedy_Central_2018.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/aa/Comedy_Central_2018.svg/120px-Comedy_Central_2018.svg.png"
+    },
+    {
+      "names": [
+        "MTV"
+      ],
+      "file": "File:MTV 2021 (brand version).svg",
+      "page": "https://commons.wikimedia.org/wiki/File:MTV_2021_(brand_version).svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/68/MTV_2021_%28brand_version%29.svg/120px-MTV_2021_%28brand_version%29.svg.png"
+    },
+    {
+      "names": [
+        "Hallmark Channel"
+      ],
+      "file": "File:Hallmark Channel 2022 logo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Hallmark_Channel_2022_logo.svg",
+      "license": "CC BY 4.0",
+      "attribution": "Hallmark Media, CC BY 4.0, via Wikimedia Commons",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Hallmark_Channel_2022_logo.svg/120px-Hallmark_Channel_2022_logo.svg.png"
+    },
+    {
+      "names": [
+        "BET"
+      ],
+      "file": "File:BET Logo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:BET_Logo.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/BET_Logo.svg/120px-BET_Logo.svg.png"
+    },
+    {
+      "names": [
+        "YouTube",
+        "YouTube Premium"
+      ],
+      "file": "File:YouTube Logo 2017.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:YouTube_Logo_2017.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b8/YouTube_Logo_2017.svg/120px-YouTube_Logo_2017.svg.png"
+    },
+    {
+      "names": [
+        "Tubi"
+      ],
+      "file": "File:Tubi logo 2024 purple.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Tubi_logo_2024_purple.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Tubi_logo_2024_purple.svg/120px-Tubi_logo_2024_purple.svg.png"
+    },
+    {
+      "names": [
+        "Crunchyroll"
+      ],
+      "file": "File:Crunchyroll 2024.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Crunchyroll_2024.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/Crunchyroll_2024.svg/120px-Crunchyroll_2024.svg.png"
+    },
+    {
+      "names": [
+        "BBC One"
+      ],
+      "file": "File:BBC One logo 2021.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:BBC_One_logo_2021.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/BBC_One_logo_2021.svg/120px-BBC_One_logo_2021.svg.png"
+    },
+    {
+      "names": [
+        "BBC iPlayer"
+      ],
+      "file": "File:BBC iPlayer (2021).svg",
+      "page": "https://commons.wikimedia.org/wiki/File:BBC_iPlayer_(2021).svg",
+      "license": "CC BY-SA 4.0",
+      "attribution": "Carrie847, CC BY-SA 4.0, via Wikimedia Commons",
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ee/BBC_iPlayer_%282021%29.svg/120px-BBC_iPlayer_%282021%29.svg.png"
+    },
+    {
+      "names": [
+        "ITV1"
+      ],
+      "file": "File:ITV1 Logo 2022.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:ITV1_Logo_2022.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e8/ITV1_Logo_2022.svg/120px-ITV1_Logo_2022.svg.png"
+    },
+    {
+      "names": [
+        "Channel 4"
+      ],
+      "file": "File:Channel 4 2022.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Channel_4_2022.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Channel_4_2022.svg/120px-Channel_4_2022.svg.png"
+    },
+    {
+      "names": [
+        "Sky Go"
+      ],
+      "file": "File:Sky logo 2025.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Sky_logo_2025.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/db/Sky_logo_2025.svg/120px-Sky_logo_2025.svg.png"
+    },
+    {
+      "names": [
+        "Sky One"
+      ],
+      "file": "File:Sky One 2026 II.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Sky_One_2026_II.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/ba/Sky_One_2026_II.svg/120px-Sky_One_2026_II.svg.png"
+    },
+    {
+      "names": [
+        "Sky Atlantic"
+      ],
+      "file": "File:Sky Atlantic 2026.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Sky_Atlantic_2026.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a5/Sky_Atlantic_2026.svg/120px-Sky_Atlantic_2026.svg.png"
+    },
+    {
+      "names": [
+        "Crave"
+      ],
+      "file": "File:Crave 2018 logo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Crave_2018_logo.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Crave_2018_logo.svg/120px-Crave_2018_logo.svg.png"
+    },
+    {
+      "names": [
+        "CBC"
+      ],
+      "file": "File:CBC logo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:CBC_logo.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3b/CBC_logo.svg/120px-CBC_logo.svg.png"
+    },
+    {
+      "names": [
+        "Telemundo"
+      ],
+      "file": "File:Telemundo logo 2018.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Telemundo_logo_2018.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/68/Telemundo_logo_2018.svg/120px-Telemundo_logo_2018.svg.png"
+    },
+    {
+      "names": [
+        "Univision"
+      ],
+      "file": "File:Logo Univision 2019.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Logo_Univision_2019.svg",
+      "license": "Public domain (PD-textlogo)",
+      "attribution": null,
+      "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/af/Logo_Univision_2019.svg/120px-Logo_Univision_2019.svg.png"
+    }
+  ]
+}

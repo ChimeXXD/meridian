@@ -1,0 +1,30 @@
+{
+  "source": "Wikimedia Commons",
+  "checked": "2026-11-01",
+  "logos": [
+    {
+      "names": ["NBC"],
+      "file": "File:NBC logo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:NBC_logo.svg",
+      "license": "Public domain",
+      "attribution": null,
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/example/120px-NBC_logo.svg.png"
+    },
+    {
+      "names": ["Netflix"],
+      "file": "File:Netflix 2015 logo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Netflix_2015_logo.svg",
+      "license": "Public domain",
+      "attribution": null,
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/example/120px-Netflix_2015_logo.svg.png"
+    },
+    {
+      "names": ["HBO", "HBO Max"],
+      "file": "File:Example CC BY.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Example_CC_BY.svg",
+      "license": "CC BY-SA 4.0",
+      "attribution": "Example Author, CC BY-SA 4.0, via Wikimedia Commons",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/example/120px-Example.svg.png"
+    }
+  ]
+}

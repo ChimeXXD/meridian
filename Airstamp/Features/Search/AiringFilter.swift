@@ -33,18 +33,22 @@ enum AiringFilter {
 
     /// TV: Popular, Today, New seasons, Exact time, then its services. Anime: no exact-time or service filter, because
     /// every anime time is the Japanese broadcast and AniList names no single service.
-    static func options(for kind: SearchView.Kind, items: [AiringItem]) -> [SearchFilter] {
+    static func options(for kind: SearchView.Kind, items: [AiringItem],
+                        hasLogo: (String) -> Bool = { _ in false }) -> [SearchFilter] {
         switch kind {
-        case .tv: [.popular, .today, .newSeasons, .exactTime] + services(in: items).map(SearchFilter.service)
+        case .tv: [.popular, .today, .newSeasons, .exactTime]
+            + services(in: items, hasLogo: hasLogo).map(SearchFilter.service)
         case .anime: [.popular, .today, .newSeasons]
         }
     }
 
     /// The services in the whole pool (not the filtered grid, so a chosen one never disappears), named as each cell
-    /// names it: the network, else the web channel. Most shows first, ties A to Z.
-    static func services(in items: [AiringItem]) -> [String] {
+    /// names it: the network, else the web channel. The 6 with the most shows (ties A to Z), then those with a logo
+    /// first, so logo chips sit together (Chime, D-44).
+    static func services(in items: [AiringItem], hasLogo: (String) -> Bool = { _ in false }) -> [String] {
         let counts = Dictionary(grouping: items.compactMap(\.result.network), by: \.self).mapValues(\.count)
-        return counts.keys.sorted { (counts[$0] ?? 0, $1) > (counts[$1] ?? 0, $0) }.prefix(maxServices).map(\.self)
+        let top = counts.keys.sorted { (counts[$0] ?? 0, $1) > (counts[$1] ?? 0, $0) }.prefix(maxServices)
+        return top.filter(hasLogo) + top.filter { !hasLogo($0) }
     }
 
     /// The items that pass `filter` and are still to come at `now`, in their order, at most `limit`.

@@ -2,6 +2,26 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## D3-12, service logos on Search's chips; Netflix chip dropped (Sun 1 Nov 2026)
+
+**Changed**
+- Chime: remove the Netflix Top 10 chip ("it takes us to another link"), put each service's logo next to it, and keep the logo chips together. D-44.
+- Netflix chip, its link type and tests removed. `NetworkLogos` reads `rules/network-logos.json` (freely licensed Wikimedia Commons files, matched by exact TVmaze name; only URLs bundled, images load at runtime, rule 9). `AiringFilter.services(in:hasLogo:)` keeps the 6 services with the most shows, then puts logo ones first. `SearchFilterRow` shows the logo on a white 30 × 22 pt tile before the name; the tile holds its place while loading. `ArtworkLoader` sends an "Airstamp/1.0" user agent (Wikimedia asks for one). Credits names Wikimedia and lists required credits.
+- Logo source chosen after measuring: each network's own site icon worked for about half (NBC, ABC, HBO, Netflix missing; hulu.com serves the Disney+ icon), and scraping sites is what blocked the Netflix chart; Google's favicon service is undocumented. An agent built and licence-checked the Commons list in its own worktree.
+
+**Red → green**
+- Red: the build failed on the removed Netflix type, then `NetworkLogosTests.bundled` failed on the empty placeholder list (the other new tests, `lookup`, `credits`, `logosGrouped`, passed once the code compiled). Green once the agent's list landed.
+- The bundled test first required `upload.wikimedia.org`; Commons' API now hands out `thumb.wikimedia.org` thumbnails, so it accepts any `*.wikimedia.org` host. Credits use Commons' own credit wording (it already names the licence).
+
+**Checked**
+- The agent's list: 57 logos for 58 exact TVmaze names (54 public-domain text logos; AMC+, Hallmark Channel and BBC iPlayer need credit, shown on Credits). Skipped: ITVX (no free file). Every image fetched with the Airstamp user agent: 200 image/png (20 checked here, all 57 by the agent).
+- Simulator with `-filter service:CBS`: the row scrolls to the picked chip; CBS, FOX and HBO show their logos on white tiles, logo chips first (`fidelity/shots/search-logos.png`). `fidelity/verify-screen.sh search-filtered` ALL PASS. Gate build+test+spec pass.
+- Added: the row scrolls to keep a picked chip in view.
+
+**Reviews**
+- `/code-review --fix` (medium): 7 findings, all but one handled. Review fixed: `credits` can't crash on an entry with no names (and the bundled test now requires names); the list is decoded once (`NetworkLogos.bundled`). I fixed: a logo that can't load no longer leaves an empty white box (the tile appears only once loaded; a zero-size placeholder keeps the loader's task alive); Commons' `utm_` tracking tags stripped from all 57 links (all still 200 image/png); the unusable hidden test ID removed; the row re-centres on the picked chip when TV | Anime switches. Left: logos go through `ArtworkLoader`, which works out an unused palette and shares the 60-item poster cache (small cost at 120 px).
+- Re-run after the fixes: gate build+test+spec pass; `search-filtered` ALL PASS; simulator screenshot still shows the logos.
+
 ## D6-9, a Netflix Top 10 link chip (Sun 1 Nov 2026)
 
 **Changed**

@@ -102,6 +102,17 @@ struct SearchFilterTests {
         #expect(services == services.sorted { (counts[$0] ?? 0, $1) > (counts[$1] ?? 0, $0) })
     }
 
+    @Test("services with a logo come first, so logo chips sit together; the 6 kept are still those with the most shows")
+    func logosGrouped() throws {
+        let items = try Self.tv(at: "2026-10-30T00:00:00Z")
+        let plain = AiringFilter.services(in: items)
+        let withLogo: Set<String> = [plain[1], plain[4]]  // two from the middle, so grouping must move them
+        let grouped = AiringFilter.services(in: items, hasLogo: withLogo.contains)
+        #expect(Set(grouped) == Set(plain))
+        #expect(Array(grouped.prefix(2)) == [plain[1], plain[4]])
+        #expect(Array(grouped.dropFirst(2)) == plain.filter { !withLogo.contains($0) })
+    }
+
     @Test("TV offers every filter; anime offers Popular, Today and New seasons")
     func options() throws {
         let tv = AiringFilter.options(for: .tv, items: try Self.tv(at: "2026-10-30T00:00:00Z"))

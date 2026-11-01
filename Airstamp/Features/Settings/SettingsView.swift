@@ -36,6 +36,9 @@ struct SettingsView: View {
 
 /// Credits (SPEC §1, UI-BRIEF §5.7): where the data comes from, its licences, and that nothing is collected.
 struct CreditsView: View {
+    /// Credit lines for the logo files whose licence asks for one (D-44).
+    private static let logoCredits = NetworkLogos.bundled.credits
+
     var body: some View {
         List {
             Section {
@@ -49,11 +52,14 @@ struct CreditsView: View {
                     .accessibilityIdentifier("credits-anilist")
                 Text("Show artwork is loaded from TVmaze while the app runs and kept only on your phone")
                     .accessibilityIdentifier("credits-artwork")
+                Text("Service logos from Wikimedia Commons, each under its own free licence")
+                    .accessibilityIdentifier("credits-logos")
+                ForEach(Self.logoCredits, id: \.self) { Text($0).font(.footnote) }
             }
             Section {
                 Text("Airstamp is open source under the MIT licence")
                     .accessibilityIdentifier("credits-licence")
-                Text("Airstamp collects no data. Nothing leaves your phone except requests to TVmaze and AniList.")
+                Text("Airstamp collects no data. Nothing leaves your phone except requests to TVmaze, AniList and Wikimedia.")
                     .accessibilityIdentifier("credits-no-data")
             }
         }

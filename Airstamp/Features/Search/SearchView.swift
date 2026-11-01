@@ -10,7 +10,9 @@ struct SearchView: View {
     let client: TVmazeClient
     let anilist: AniListClient
     let rules: RulesFile
-    let viewerCountry: String?
+
+    /// Service logos for the filter chips (D-44), read once from the bundle.
+    private static let logos = NetworkLogos.bundled
 
     enum Kind: String, CaseIterable { case tv = "TV", anime = "Anime" }
 
@@ -94,8 +96,9 @@ struct SearchView: View {
             message(kind == .tv ? "Search TVmaze for a show to follow" : "Search AniList for an anime to follow",
                     id: "search-empty")
         case .idle:
-            SearchFilterRow(options: AiringFilter.options(for: kind, items: airingSoon), selection: filter,
-                            netflix: kind == .tv ? NetflixTopTenLink(country: viewerCountry) : nil)
+            SearchFilterRow(options: AiringFilter.options(for: kind, items: airingSoon,
+                                                          hasLogo: { Self.logos.image(for: $0) != nil }),
+                            selection: filter, logos: Self.logos)
                 .padding(.top, Tokens.Space.s)
             airingGrid
         case .searching:

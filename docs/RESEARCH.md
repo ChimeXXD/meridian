@@ -155,3 +155,11 @@ Three research passes ran on 29 Oct 2026: competitors and users, Apple platform 
 
 - XcodeBuildMCP is now published as `mobilebuildmcp` (npm 2.7.1, checked 29 Oct). `xcodebuildmcp` 2.7.0 still installs.
 - reference search works. First references are in `design/REFERENCES.md`.
+
+## Network logos (1 Nov 2026)
+
+- **Source:** Wikimedia Commons. `rules/network-logos.json` holds only URLs and licence data. The app loads each logo at runtime, so no artwork is committed (rule 9).
+- **Names:** every `names` string is the exact TVmaze `network.name` / `webChannel.name`, read from the TVmaze API through a known show on that network (for example `singlesearch/shows?q=Severance` gives `Apple TV`). TVmaze names worth knowing: HBO Max is `HBO Max` (webchannel 329), and there is no `Max`. Showtime appears as `Paramount+ with Showtime` (network 9) and `Showtime on Demand` (webchannel 315). ITV is `ITV1`. Sky's UK originals mostly sit on the `Now` webchannel; Sky names in use are `Sky One`, `Sky Atlantic` and `Sky Go`. `History` exists as both a US (53) and a Canadian (118) network.
+- **Licences:** each file's licence came from the Commons API (`prop=imageinfo&iiprop=extmetadata`: `LicenseShortName`, `AttributionRequired`, `Artist`) and its licence templates (`prop=templates`). It was not taken from memory. Only public domain, CC0, CC BY and CC BY-SA files were accepted. 54 files are `PD-textlogo`. Three need credit, which goes in `attribution` and on the Credits screen: AMC+ (CC BY-SA 4.0), Hallmark Channel (CC BY 4.0) and BBC iPlayer (CC BY-SA 4.0).
+- **Image:** `image` is the Commons 120 px wide PNG thumbnail. All 57 URLs returned `200 image/png` with a descriptive User-Agent. Each logo was checked by eye on a white rounded tile at full size and at 20 px tall, and the version that reads on white was chosen (for example purple Tubi over yellow, and pink Freeform over lime).
+- **Count:** 57 entries (58 TVmaze names) cover 54 of the 55 requested networks. **Skipped:** ITVX, because the only logo is a local non-free file on English Wikipedia and Commons has no free file. Names seen in TVmaze but not mapped yet: `Now` (Sky's streaming service), `ITV2` and `BBC Three`.

@@ -634,16 +634,28 @@
       "id": "D6-9",
       "day": 6,
       "priority": "should",
-      "title": "Search: 'Top 10 on Netflix in <country>' link chip to Netflix's own chart (D-43; a bundled list is forbidden by Netflix's terms, O-13)",
+      "title": "Search: Netflix Top 10 chip — DROPPED (Chime, 1 Nov: it only links away; a copied chart is forbidden by Netflix's terms, O-13; D-44)",
       "criteria": [
-        "O-13 checked first: Netflix's Top 10 terms forbid copying, distributing or scraping the chart, so nothing is bundled or fetched",
-        "TV's filter row ends with a chip 'Top 10 on Netflix in <country>' with an arrow, opening https://www.netflix.com/tudum/top10/<country>/tv",
-        "the country is the viewer's (ViewerCountry); no chip when unknown; none on Anime",
-        "VoiceOver reads the label with the hint 'Opens Netflix'"
+        "no Netflix Top 10 chip, bundled list or link in the app"
       ],
-      "verify": "NetflixTopTenLinkTests (NG, GB, US, unknown); fidelity/verify-screen.sh search-filtered finds search-netflix-top10",
+      "verify": "grep finds no NetflixTopTenLink or search-netflix-top10 in Airstamp/, AirstampTests/ or fidelity/",
+      "passes": true,
+      "evidence": "1 Nov: grep -rn 'NetflixTopTenLink|search-netflix-top10' Airstamp AirstampTests fidelity finds nothing; files removed with git rm"
+    },
+    {
+      "id": "D3-12",
+      "day": 3,
+      "priority": "must",
+      "title": "Search: service chips show logos, logo chips grouped together (D-44)",
+      "criteria": [
+        "a service chip shows its logo on a small white tile before its name when rules/network-logos.json has one (exact TVmaze name)",
+        "the 6 services with the most shows are kept, then ordered logos first, so logo and plain chips aren't mixed",
+        "logos are freely licensed Wikimedia Commons files, loaded at runtime, never committed as images (rule 9); a tile appears once loaded, so a failed logo leaves the plain name",
+        "Credits names Wikimedia and lists the credits that licences require; requests carry an Airstamp user agent"
+      ],
+      "verify": "NetworkLogosTests + SearchFilterTests.logosGrouped; curl loop: every image URL 200 image/png; fidelity/verify-screen.sh search-filtered; Chime approves a screenshot of the row",
       "passes": false,
-      "evidence": ""
+      "evidence": "1 Nov: NetworkLogosTests + SearchFilterTests pass; curl with the Airstamp user agent: 57/57 200 image/png (tracking tags stripped); simulator -filter service:CBS shows CBS/FOX/YouTube logos, logo chips first (fidelity/shots/search-logos.png); search-filtered ALL PASS; gate build+test+spec pass. Awaiting Chime's look on the phone."
     },
     {
       "id": "D7-1",

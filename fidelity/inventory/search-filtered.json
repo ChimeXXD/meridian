@@ -33,10 +33,6 @@
       "selected": true
     },
     {
-      "id": "search-netflix-top10",
-      "prefix": "Top 10 on Netflix in "
-    },
-    {
       "id": "search-airing-header",
       "text": "Airing in the next few days"
     },

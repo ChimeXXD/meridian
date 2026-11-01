@@ -32,6 +32,8 @@ targets:
         buildPhase: resources
       - path: rules/zone-countries.json
         buildPhase: resources
+      - path: rules/network-logos.json
+        buildPhase: resources
     info:
       path: Airstamp/Info.plist
       properties:

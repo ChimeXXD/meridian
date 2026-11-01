@@ -38,7 +38,7 @@ The selling point stays: **release times you can trust, wherever you are** (D-17
 | Show detail: next drop, Live Activity toggle, anime offset, unfollow | "Report a wrong time" (email while private, GitHub issue once public) | Interviews, competitor teardown, 14-day beta, 100-drop audit |
 | 5 widget families with countdowns that never count up | Dynamic Type AX5 pass | Drop Day, importers, calendar, Watch, region data, pricing |
 | Scheduled Live Activity and Debug fake drop | `.supplementalActivityFamilies` for the Watch and Mac | |
-| Credits, privacy manifest, VoiceOver labels, CI | "Top 10 on Netflix" Search link chip to Netflix's own chart (D-43, O-13) | |
+| Credits, privacy manifest, VoiceOver labels, CI | | Netflix Top 10 chip (dropped, D-44) |
 | README, video, case study, open-source checklist | | |
 
 If a day overruns, cut from its Should column first and never from Day 7. The portfolio material *is* the deliverable.
