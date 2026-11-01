@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- 2 · Transit (dot matrix): a star's path across the night, the dots growing as it rises to the meridian.
+       Arc centre (50, 70), radius 32; dots every 22.5°, radii 1.6 → 5. -->
+  <path d="M 18 70 A 32 32 0 0 1 82 70" fill="none" stroke="currentColor" stroke-opacity="0.22" stroke-width="1.5" stroke-linecap="round"/>
+  <g fill="currentColor">
+    <circle cx="18" cy="70" r="1.6"/>
+    <circle cx="20.44" cy="57.75" r="2.1"/>
+    <circle cx="27.37" cy="47.37" r="2.7"/>
+    <circle cx="37.75" cy="40.44" r="3.5"/>
+    <circle cx="50" cy="38" r="5"/>
+  </g>
+</svg>

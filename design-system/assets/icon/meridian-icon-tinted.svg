@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Meridian app icon, Tinted: mono source; iOS applies the tint. Proposed. Longitudes mark at 62% (scale 6.2), centred optically. iOS applies the squircle mask. -->
+  <defs><radialGradient id="bg" cx="0.5" cy="0.35" r="0.75"><stop offset="0" stop-color="#1A1A1A"/><stop offset="1" stop-color="#000000"/></radialGradient></defs>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <g transform="translate(202 219) scale(6.2)"><defs><clipPath id="globe"><circle cx="50" cy="56" r="30"/></clipPath></defs><g clip-path="url(#globe)" stroke="#FFFFFF" stroke-opacity="0.32" stroke-width="2.5" stroke-linecap="round" fill="none"><path d="M 22.28 20 V 92"/><path d="M 28.79 20 V 92"/><path d="M 38.52 20 V 92"/><path d="M 61.48 20 V 92"/><path d="M 71.21 20 V 92"/><path d="M 77.72 20 V 92"/></g><path d="M 50 86 V 20" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" fill="none"/><circle cx="50" cy="12" r="3.5" fill="#FFFFFF"/></g>
+</svg>

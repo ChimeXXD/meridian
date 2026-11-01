@@ -1,0 +1,1184 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Meridian Design System</title>
+<meta name="description" content="Every colour, type style, component, widget and Live Activity state in Meridian (formerly Airstamp), built from the app's source.">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="assets/icon/meridian-icon-dark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="sr-only" href="#overview">Skip to content</a>
+
+<!-- Glyph approximations for SF Symbols (the app uses the real symbols; none are fetched here). -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4.5 12.5 10 18 19.5 6.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="currentColor"/><path d="M12 6.5V12h-4" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="4.2" stroke-dasharray="2.6 2.4"/><circle cx="12" cy="12" r="6" fill="currentColor"/><circle cx="12" cy="12" r="2.4" fill="#333"/></symbol>
+  <symbol id="i-tv" viewBox="0 0 24 24"><rect x="2.5" y="4.5" width="19" height="13" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 20.5h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+</svg>
+
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-controls="rail" aria-expanded="false">Sections</button>
+  <a class="brand" href="#overview" aria-label="Meridian design system, top">
+    <span data-logo data-size="28" data-label="Meridian"></span><span class="wordmark">Meridian</span><span class="sub">Design system</span>
+  </a>
+  <div class="spacer"></div>
+  <span class="commit" title="Every value on this page was read from the app's source at this commit">Built from <a href="#provenance">7a4ec07</a></span>
+  <button class="search-btn" id="search-btn" aria-haspopup="dialog" aria-controls="search" aria-label="Search tokens, components and sections">
+    <svg width="16" height="16" aria-hidden="true"><use href="#i-search"/></svg><span class="label">Search</span><span class="k"><kbd>⌘</kbd><kbd>K</kbd></span>
+  </button>
+</header>
+
+<div class="layout">
+<nav class="rail" id="rail" aria-label="On this page">
+  <div class="rail-title">On this page</div>
+  <ol id="rail-list"></ol>
+</nav>
+<main id="main">
+
+<!-- ============================================================ 01 OVERVIEW -->
+<section class="sec" id="overview" data-num="01" data-search="overview principles what is meridian airstamp commit provenance">
+  <div class="sec-head"><span class="num">01</span><h2 id="overview-h">Overview</h2></div>
+  <p class="lede"><b style="color:var(--site-starlight);font-weight:500">Meridian</b> (formerly Airstamp) answers one question at a glance: <em>how long until my next episode, in my time zone, and where is it on?</em> Its edge is <b>release times you can trust, wherever you are</b> (D-17): every time says how sure it is, in words (D-40).</p>
+  <p class="muted">An iPhone app, local-first: no account, no server, no analytics. A live countdown in the app, on the Lock Screen and Home Screen widgets, and a release-night Live Activity in the Dynamic Island. Designed for viewers outside the US first (primary user: Lagos, UTC+1).</p>
+
+  <div class="stats" aria-label="What this page documents">
+    <div class="stat"><b id="stat-tokens">–</b><span>tokens (colour, type, space, radius)</span></div>
+    <div class="stat"><b id="stat-components">–</b><span>component cards, all live HTML</span></div>
+    <div class="stat"><b id="stat-states">–</b><span>states (live + 167 rendered shots)</span></div>
+    <div class="stat"><b id="stat-symbols">–</b><span>SF Symbols in use</span></div>
+    <div class="stat" id="worst-contrast"><b>–</b><span>worst contrast pair</span></div>
+  </div>
+
+  <h3 id="principles">Principles</h3>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><h4>Show, don’t describe</h4><p>The countdown is the picture and the show’s own art is the colour. No legends, no keys, no screens that need explaining (Chime: “I had to ask you to understand it. Obviously, users won’t”).</p></div>
+    <div class="card"><h4>Certainty in words, never colour codes</h4><p>“Out”, “Expected”, “Airs in Japan”, “time not announced”. The verb carries how sure a time is (D-40). No dots, no traffic lights, no chips to learn.</p></div>
+    <div class="card"><h4>One moment, one star</h4><p>Each surface has one hero: the next drop and its giant serif countdown. Everything else is quieter. The logo’s single star is the same idea.</p></div>
+    <div class="card"><h4>Restraint</h4><p>Near-black, three strengths of white, New York for titles and numerals, SF Pro for the rest, and no colour outside the artwork (D-38). Warm art never turns the page brown.</p></div>
+  </div>
+
+  <h3 id="provenance">Provenance</h3>
+  <p>Built from commit <code>7a4ec07</code> (<code>main</code>, 1 Nov 2026) of <code>ChimeXXD/next-episode</code>. Every value cites its source file and line. Labels used on this page:</p>
+  <div class="words">
+    <span class="word"><span class="badge live">live</span> <small>an HTML/CSS replica of the SwiftUI view, from its code</small></span>
+    <span class="word"><span class="badge img">render</span> <small>a 3x <code>ImageRenderer</code> shot from the app’s tests, neutral placeholder art</small></span>
+    <span class="word"><span class="badge proposed">Proposed</span> <small>new on this page; not in the app yet, needs a decision</small></span>
+    <span class="word"><span class="badge legacy">legacy</span> <small>still in the repo, not rendered by any live screen</small></span>
+    <span class="word"><span class="badge system">system</span> <small>resolved by iOS at runtime, not a project constant</small></span>
+  </div>
+  <p class="note">Replicas use the web’s fonts: New York renders only in Safari (via <code>ui-serif</code>); other browsers fall back to Iowan Old Style or Georgia, so serif metrics differ slightly. Point sizes are shown 1 pt = 1 CSS px. Placeholder art is the same neutral grey block the app’s tests use (<code>#8C8C8C</code> with <code>#CCCCCC</code>); real posters are never shown here (CLAUDE.md rule 9).</p>
+</section>
+
+<!-- ============================================================ 02 BRAND -->
+<section class="sec" id="brand" data-num="02" data-search="brand logo icon name meridian longitudes wordmark misuse rejected">
+  <div class="sec-head"><span class="num">02</span><h2 id="brand-h">Brand</h2><span class="badge proposed">Proposed</span></div>
+  <p class="lede">A <b>meridian</b> is the line that sets your local time: noon is the moment the sun crosses yours. It is also the line a star crosses at its highest point, its <em>culmination</em>. The app tells you the moment your episode crosses your line, on your clock.</p>
+
+  <h3 id="logo">Logo: Longitudes</h3>
+  <p>A globe drawn only by its meridians, spaced as on a sphere. One is yours, at full strength, rising past the globe to a single star. It is one colour (<code>currentColor</code>), so it works in every tint mode.</p>
+  <div class="logo-hero">
+    <div class="logo-stage"><span data-logo data-size="240" data-label="Meridian logo, Longitudes"></span></div>
+    <div class="construction" id="construction-wrap" data-search="construction grid meridians sin stroke star globe" data-title="Construction sheet" data-kind="Brand"><div id="construction"></div></div>
+  </div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Part</th><th>Construction (100-unit grid)</th></tr></thead>
+    <tbody>
+      <tr><td>Globe</td><td>Circle r 30 at (50, 56). Not drawn; it clips the background meridians.</td></tr>
+      <tr><td>Background meridians</td><td><code>x = 50 + 30·sin(k·22.5°)</code>, k = ±1, ±2, ±3 → 38.52 / 61.48, 28.79 / 71.21, 22.28 / 77.72. Stroke 2.5, round caps, 32% opacity.</td></tr>
+      <tr><td>Your meridian</td><td>x = 50, from y 86 (the globe’s foot) to y 20 (above the rim at 26). Stroke 3.5, round caps, 100%.</td></tr>
+      <tr><td>Star</td><td>Circle r 3.5 at (50, 12).</td></tr>
+    </tbody></table></div>
+
+  <h3 id="logo-sizes">Sizes</h3>
+  <div class="sizes card">
+    <figure><span data-logo data-size="16"></span><figcaption>16</figcaption></figure>
+    <figure><span data-logo data-size="24"></span><figcaption>24</figcaption></figure>
+    <figure><span data-logo data-size="32"></span><figcaption>32</figcaption></figure>
+    <figure><span data-logo data-size="64"></span><figcaption>64</figcaption></figure>
+    <figure><span data-logo data-size="128"></span><figcaption>128</figcaption></figure>
+  </div>
+  <p class="note"><b>Minimum size: 16 px.</b> Below 24 px the 32% meridians drop under a pixel of ink and read as texture. That is acceptable: the bright meridian and the star carry the mark. <b>Clear space:</b> 12 units on every side, the distance from the star’s centre to the top of the grid. <span class="badge proposed">Proposed</span></p>
+
+  <h3 id="app-icon">App icon</h3>
+  <p>The mark on the app’s own <b>neutral night</b>: a radial gradient from <code>#1C1C1C</code> (centre, 35% from the top) to <code>#0D0D0E</code>, the Night Sky base and the Live Activity base. It is not navy. The glyph is starlight <code>#F4EFE4</code>, set at 62% of the canvas and centred optically. iOS 26 appearances: <span class="badge proposed">Proposed</span></p>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="wall"><div class="icons">
+      <figure><span class="icon-tile" data-icon="dark"></span><figcaption>Default (dark)</figcaption></figure>
+      <figure><span class="icon-tile" data-icon="mono"></span><figcaption>Tinted: the mono source iOS tints</figcaption></figure>
+      <figure><span class="icon-tile" data-icon="tinted"></span><figcaption>Tinted, with an example tint</figcaption></figure>
+    </div></div>
+    <div class="wall light"><div class="icons">
+      <figure><span class="icon-tile" data-icon="light"></span><figcaption style="color:#333">Light: night glyph on a pale ground</figcaption></figure>
+      <figure><span class="icon-tile" data-icon="dark"></span><figcaption style="color:#333">Default icon on a light wallpaper</figcaption></figure>
+    </div></div>
+  </div>
+
+  <h3 id="wordmark">Wordmark lockup</h3>
+  <p>“Meridian” in the serif (New York Regular), the same face as show titles. Mark height ≈ 1.7 × cap height; gap ≈ 0.3 × mark width. <span class="badge proposed">Proposed</span></p>
+  <div class="lockups" style="margin-top:14px">
+    <div class="lockup" id="lockup-horizontal" data-search="wordmark lockup horizontal" data-title="Horizontal lockup" data-kind="Brand"><span data-logo data-size="48"></span><span class="w">Meridian</span></div>
+    <div class="lockup stack" id="lockup-stacked" data-search="wordmark lockup stacked" data-title="Stacked lockup" data-kind="Brand"><span data-logo data-size="64"></span><span class="w">Meridian</span></div>
+    <div class="lockup" style="background:#F4EFE4;color:#1C1C1C"><span data-logo data-size="48"></span><span class="w">Meridian</span></div>
+  </div>
+
+  <h3 id="misuse">Misuse</h3>
+  <div class="grid g3" style="margin-top:14px">
+    <div class="card misuse" id="misuse-recolour" data-search="misuse recolour colours lines" data-title="Don’t recolour the lines" data-kind="Misuse"><div class="stage"><svg viewBox="0 0 100 100" width="84" height="84" aria-hidden="true"><defs><clipPath id="mu1"><circle cx="50" cy="56" r="30"/></clipPath></defs><g clip-path="url(#mu1)" stroke-width="2.5" stroke-linecap="round"><path d="M22.28 20V92" stroke="#ff5e5e"/><path d="M28.79 20V92" stroke="#ffb34d"/><path d="M38.52 20V92" stroke="#ffe14d"/><path d="M61.48 20V92" stroke="#5eff8a"/><path d="M71.21 20V92" stroke="#4dc3ff"/><path d="M77.72 20V92" stroke="#b07bff"/></g><path d="M50 86V20" stroke="#F4EFE4" stroke-width="3.5" stroke-linecap="round"/><circle cx="50" cy="12" r="3.5" fill="#F4EFE4"/></svg></div><span class="dont">✕ Don’t</span><h4 style="margin-top:12px">Recolour the lines</h4><p>The mark is one colour. Colour codes are exactly what the app removed (D-40).</p></div>
+    <div class="card misuse" id="misuse-glow" data-search="misuse glow shadow" data-title="Don’t add a glow" data-kind="Misuse"><div class="stage"><span data-logo data-size="84" style="filter:drop-shadow(0 0 6px #fff) drop-shadow(0 0 14px #E9C46A)"></span></div><span class="dont">✕ Don’t</span><h4 style="margin-top:12px">Add a glow</h4><p>No glows or shadows anywhere in the system; the round-one drafts were rejected for this.</p></div>
+    <div class="card misuse" id="misuse-busy" data-search="misuse busy art background" data-title="Don’t place on busy art" data-kind="Misuse"><div class="stage" style="background:repeating-linear-gradient(35deg,#9a9a9a 0 9px,#4a4a4a 9px 17px,#cfcfcf 17px 22px)"><span data-logo data-size="84"></span></div><span class="dont">✕ Don’t</span><h4 style="margin-top:12px">Set it on busy art</h4><p>Use the night base, or the art’s faded part. Show art belongs to the show, not to the brand.</p></div>
+    <div class="card misuse" id="misuse-stretch" data-search="misuse stretched distort" data-title="Don’t stretch" data-kind="Misuse"><div class="stage"><span data-logo data-size="84" style="transform:scaleX(1.55);display:block"></span></div><span class="dont">✕ Don’t</span><h4 style="margin-top:12px">Stretch or squash</h4><p>The meridian spacing is a sphere’s; distort it and it’s just stripes.</p></div>
+    <div class="card misuse" id="misuse-navy" data-search="misuse navy indigo background" data-title="Don’t use navy" data-kind="Misuse"><div class="stage" style="background:radial-gradient(120% 90% at 50% 30%,#1D2547,#0C0F1D)"><span data-logo data-size="84"></span></div><span class="dont">✕ Don’t</span><h4 style="margin-top:12px">Put it on navy</h4><p>Navy came from the logo drafts without a decision. The app’s night is neutral (unless option C is chosen).</p></div>
+    <div class="card misuse" id="misuse-rotate" data-search="misuse rotate tilt" data-title="Don’t rotate" data-kind="Misuse"><div class="stage"><span data-logo data-size="84" style="transform:rotate(20deg);display:block"></span></div><span class="dont">✕ Don’t</span><h4 style="margin-top:12px">Rotate</h4><p>A meridian runs pole to pole. Tilted, it stops being one.</p></div>
+  </div>
+
+  <h3 id="rejected">Rejected directions</h3>
+  <div class="grid g3 rejected" style="margin-top:14px">
+    <div class="card" id="rejected-cut" data-search="rejected logo the cut phi" data-title="The Cut (rejected)" data-kind="Logo"><div class="stage"><span class="svg-mask" style="-webkit-mask-image:url(assets/logo/rejected/m1-cut.svg);mask-image:url(assets/logo/rejected/m1-cut.svg)" role="img" aria-label="The Cut"></span></div><h4 style="margin-top:12px">The Cut</h4><p>Reads as the Greek letter Φ.</p></div>
+    <div class="card" id="rejected-transit" data-search="rejected logo transit dots" data-title="Transit (rejected)" data-kind="Logo"><div class="stage"><span class="svg-mask" style="-webkit-mask-image:url(assets/logo/rejected/m2-transit.svg);mask-image:url(assets/logo/rejected/m2-transit.svg)" role="img" aria-label="Transit"></span></div><h4 style="margin-top:12px">Transit</h4><p>The small dots fade away at icon sizes.</p></div>
+    <div class="card" id="rejected-monogram" data-search="rejected logo lowercase m monogram trident" data-title="Lowercase m (rejected)" data-kind="Logo"><div class="stage"><span class="svg-mask" style="-webkit-mask-image:url(assets/logo/rejected/m5-monogram.svg);mask-image:url(assets/logo/rejected/m5-monogram.svg)" role="img" aria-label="Lowercase m"></span></div><h4 style="margin-top:12px">Lowercase m</h4><p>Reads as a trident.</p></div>
+    <div class="card" id="rejected-dial" data-search="rejected logo dial stopwatch clock" data-title="Dial (rejected)" data-kind="Logo"><div class="stage"><span class="svg-mask" style="-webkit-mask-image:url(assets/logo/rejected/m6-dial.svg);mask-image:url(assets/logo/rejected/m6-dial.svg)" role="img" aria-label="Dial"></span></div><h4 style="margin-top:12px">Dial</h4><p>A generic stopwatch; could be any timer app.</p></div>
+    <div class="card" id="rejected-terminator" data-search="rejected logo terminator culmination dark mode" data-title="Terminator (rejected)" data-kind="Logo"><div class="stage"><span class="svg-mask" style="-webkit-mask-image:url(assets/logo/rejected/m4-culmination.svg);mask-image:url(assets/logo/rejected/m4-culmination.svg)" role="img" aria-label="Terminator"></span></div><h4 style="margin-top:12px">Terminator</h4><p>Looks like the iOS dark-mode symbol.</p></div>
+    <div class="card" id="rejected-round-one" data-search="rejected logo round one drafts gradients glow navy" data-title="Round-one drafts (rejected)" data-kind="Logo"><div class="stage" style="gap:8px;display:flex;justify-content:center;align-items:center"><img class="png" src="assets/logo/rejected/round1-icon-1.png" alt="Round-one draft: Culmination" style="width:70px;height:70px;border-radius:16px"><img class="png" src="assets/logo/rejected/round1-icon-2.png" alt="Round-one draft: Local Hour" style="width:70px;height:70px;border-radius:16px"><img class="png" src="assets/logo/rejected/round1-icon-3.png" alt="Round-one draft: monogram" style="width:70px;height:70px;border-radius:16px"></div><h4 style="margin-top:12px">Round-one drafts</h4><p>Gradients, glow and too many elements. They also brought in the navy sky.</p></div>
+  </div>
+</section>
+
+<!-- ============================================================ 03 COLOUR -->
+<section class="sec" id="colour" data-num="03" data-search="colour color palette tokens contrast wcag brand accent">
+  <div class="sec-head"><span class="num">03</span><h2 id="colour-h">Colour</h2></div>
+  <p class="lede">Night Sky (D-38): a near-black base that takes only a hint of the show’s art, three strengths of white, and <b>no colour outside the artwork</b>. Click any value to copy it.</p>
+
+  <h3 id="app-tokens">The app’s tokens</h3>
+  <p class="small muted">Alpha colours are previewed on the base they’re used on. CSS variable names are this site’s convention (<span class="badge proposed">Proposed</span>); SwiftUI names are the app’s.</p>
+  <div id="swatch-groups"></div>
+
+  <h3 id="contrast">Contrast matrix</h3>
+  <p>WCAG 2.x relative luminance, computed live in this page: each alpha ink is composited over its base first. AA needs 4.5:1 for text, 3:1 for large text (18 pt, or 14 pt bold); AAA needs 7:1. Faded cells are pairs the app never draws.</p>
+  <div class="table-wrap" id="contrast-table"></div>
+  <p class="note" style="margin-top:12px">Worst real pair: <span id="worst-contrast-note">computing…</span> It is the Always-On muted line on a widget or the Lock Screen banner, where iOS dims the whole screen anyway. Every awake pair passes AA.</p>
+  <h4 style="margin-top:20px" id="contrast-other">Fixed pairs and the brand options</h4>
+  <div class="table-wrap" id="contrast-pairs"></div>
+
+  <h3 id="brand-colour">Brand colour: choose one</h3>
+  <p><b>Today the app has no accent colour.</b> Colour comes from each show’s art: its hue tints the night base (warm art goes neutral so it’s never brown), and controls are white. The tab bar is tinted white. A brand colour is therefore a new decision, not a recovery of an old one. <span class="badge proposed">Proposed</span></p>
+  <div class="options">
+    <article class="option" id="brand-option-a" data-search="brand colour option a night starlight" data-title="Option A: Night & Starlight" data-kind="Brand colour">
+      <div class="preview" style="background:#1C1C1C"><span class="icon-tile" data-icon="dark"></span><div><div class="cd" style="font-size:44px;color:#F4EFE4">2:10:07</div><div style="font:500 13px var(--sans);color:rgba(255,255,255,.75);margin-top:6px">Expected Wed at 23:00</div></div></div>
+      <div class="body"><h4>A · Night &amp; Starlight</h4><p>The app as it is. Neutral night plus a warm white for the brand (the icon and wordmark only). Nothing new to maintain; every screen already matches.</p>
+      <div class="dots"><span><i style="background:#1C1C1C"></i>#1C1C1C</span><span><i style="background:#0D0D0E"></i>#0D0D0E</span><span><i style="background:#F4EFE4"></i>#F4EFE4</span></div></div>
+    </article>
+    <article class="option recommended" id="brand-option-b" data-search="brand colour option b meridian gold recommended out now star" data-title="Option B: + Meridian Gold" data-kind="Brand colour">
+      <div class="preview" style="background:#1C1C1C"><span class="icon-tile" data-icon="gold"></span><div><div class="cd" style="font-size:44px;color:#E9C46A">Out now</div><div style="font:500 13px var(--sans);color:rgba(255,255,255,.75);margin-top:6px">Released today at 21:00</div></div></div>
+      <div class="body"><h4>B · + Meridian Gold <span class="badge rec">Recommended</span></h4><p>A, plus one gold <code>#E9C46A</code> kept for exactly two things: the logo’s star and the “Out now” moment. One moment, one star. It never codes certainty: the words still do that (D-40), and the gold only marks the one moment people wait for.</p>
+      <div class="dots"><span><i style="background:#1C1C1C"></i>#1C1C1C</span><span><i style="background:#F4EFE4"></i>#F4EFE4</span><span><i style="background:#E9C46A"></i>#E9C46A</span></div></div>
+    </article>
+    <article class="option" id="brand-option-c" data-search="brand colour option c night indigo navy" data-title="Option C: Night Indigo" data-kind="Brand colour">
+      <div class="preview" style="background:radial-gradient(120% 90% at 50% 30%,#1D2547,#0C0F1D)"><span class="icon-tile" data-icon="indigo"></span><div><div class="cd" style="font-size:44px;color:#F4EFE4">2:10:07</div><div style="font:500 13px var(--sans);color:rgba(255,255,255,.75);margin-top:6px">Expected Wed at 23:00</div></div></div>
+      <div class="body"><h4>C · Night Indigo</h4><p>The navy sky <code>#1D2547 → #0C0F1D</code> from the logo drafts. It was introduced there without a decision, and it fights cool show art and the neutral widgets. It would mean re-basing the app.</p>
+      <div class="dots"><span><i style="background:#1D2547"></i>#1D2547</span><span><i style="background:#0C0F1D"></i>#0C0F1D</span><span><i style="background:#F4EFE4"></i>#F4EFE4</span></div></div>
+    </article>
+  </div>
+</section>
+
+<!-- ============================================================ 04 TYPE -->
+<section class="sec" id="typography" data-num="04" data-search="typography type font new york sf pro serif scale numerals">
+  <div class="sec-head"><span class="num">04</span><h2 id="typography-h">Typography</h2></div>
+  <p class="lede"><b>New York</b> (<code>design: .serif</code>) for show titles, headers and every countdown numeral; <b>SF Pro</b> for everything else. Numerals are always tabular (<code>.monospacedDigit()</code>), so a ticking timer never jitters. No fonts are bundled.</p>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card" id="font-serif" data-search="new york serif font stack" data-title="New York" data-kind="Font"><h4 class="serif" style="font:30px var(--serif)">New York</h4><p>Titles, headers, countdowns. Countdown cut: <b>Light</b> (<code>NumeralStudy.night</code>).</p><p><button class="copy-val" data-copy='"New York", ui-serif, "Iowan Old Style", Georgia, serif'>"New York", ui-serif, "Iowan Old Style", Georgia, serif</button></p><p class="small muted">New York renders only in Safari; Chrome and Firefox show Iowan Old Style or Georgia.</p></div>
+    <div class="card" id="font-sans" data-search="sf pro sans font stack" data-title="SF Pro" data-kind="Font"><h4 style="font:600 28px var(--sans)">SF Pro</h4><p>Out lines, meta, labels, buttons, lists. Dynamic Type text styles in the app (<code>.body</code>, <code>.subheadline</code>, <code>.footnote</code>, <code>.caption</code>); fixed sizes in widgets.</p><p><button class="copy-val" data-copy='-apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif'>-apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif</button></p></div>
+  </div>
+
+  <h3 id="type-scale-h">Type scale</h3>
+  <p class="small muted">Every font use in the app, from the 88 pt hero countdown down to the 10 pt unit in the circular widget. 1 pt shown as 1 px.</p>
+  <div class="table-wrap" id="type-scale"></div>
+
+  <h3 id="specimens">Specimens</h3>
+  <div class="custom-type">
+    <label class="sr-only" for="custom-text">Type your own</label>
+    <input id="custom-text" type="text" placeholder="Type your own: try a show name or 2:10:07" autocomplete="off">
+    <label class="sr-only" for="custom-family">Face</label>
+    <select id="custom-family"><option value="serif|400">New York Regular</option><option value="serif|300">New York Light</option><option value="serif|500">New York Medium</option><option value="sans|400">SF Pro Regular</option><option value="sans|500">SF Pro Medium</option><option value="sans|600">SF Pro Semibold</option></select>
+    <button class="btn" id="custom-reset">Reset</button>
+  </div>
+  <div class="card" style="background:var(--app-night)"><div id="custom-out" style="font-size:40px;line-height:1.15;color:#fff;overflow-wrap:anywhere">House of the Dragon</div></div>
+  <div id="type-specimens" style="margin-top:8px"></div>
+
+  <h3 id="numerals">Numeral study</h3>
+  <p><code>NumeralStudy</code> (<code>Shared/Design/NumeralStudy.swift</code>) held four directions. <b>Night</b> won (D-37/D-38). The others are still in the code but are drawn only by a legacy preview; the environment default is still <code>.system</code>, so each live countdown sets <code>.night</code> itself.</p>
+  <div class="numerals">
+    <div class="card" style="background:var(--app-night)"><h4>Night <span class="badge live">in use</span></h4><div class="digits" style="font-family:var(--serif);font-weight:300">2d 4:10:22</div><p>New York Light, tabular, white.</p></div>
+    <div class="card"><h4>A · System <span class="badge legacy">legacy</span></h4><div class="digits" style="font-family:var(--sans);font-weight:800">2d 4:10:22</div><p>SF Pro Heavy, tabular, no accent.</p></div>
+    <div class="card"><h4>B · Mono <span class="badge legacy">legacy</span></h4><div class="digits" style="font-family:var(--mono);font-weight:500;color:#C6F432">2d 4:10:22</div><p>SF Mono Medium, lime <code>#C6F432</code>.</p></div>
+    <div class="card"><h4>C · Serif <span class="badge legacy">legacy</span></h4><div class="digits" style="font-family:var(--serif);font-weight:600;color:#FFC940">2d 4:10:22</div><p>New York Semibold, warm yellow <code>#FFC940</code>.</p></div>
+  </div>
+</section>
+
+<!-- ============================================================ 05 COUNTDOWN -->
+<section class="sec" id="countdown" data-num="05" data-search="countdown wording voice certainty words out expected released airs in japan">
+  <div class="sec-head"><span class="num">05</span><h2 id="countdown-h">Countdown &amp; wording</h2></div>
+  <p class="lede">The signature. Every countdown is live to the second (D-51), drawn with <code>Text(timerInterval: now...end, countsDown: true)</code> and <b>no <code>pauseTime</code></b> (D-52). It stops at 0:00 and <b>never counts up</b> (rule 4). More than a day away it reads days, a dim “d”, then a timer to the next day edge.</p>
+
+  <h3 id="countdown-states">Every state, live</h3>
+  <div class="cd-grid">
+    <div class="cd-card" id="cd-ticking" data-search="countdown ticking timer under 24 hours" data-title="Ticking" data-kind="Countdown state"><div class="label">Ticking: ≤ 24 h · <code>.ticking</code></div><div class="cd" data-cd="7807" aria-label="Countdown, 2 hours 10 minutes">2:10:07</div><div class="line">Out today at 22:10</div></div>
+    <div class="cd-card" id="cd-coarse" data-search="countdown days coarse 2d" data-title="Days + timer" data-kind="Countdown state"><div class="label">More than a day · <code>.coarse</code> (live since D-51)</div><div class="cd" data-cd="187822">2<span class="d">d </span>4:10:22</div><div class="line">Expected Wed at 23:00</div></div>
+    <div class="cd-card" id="cd-edge" data-search="countdown day edge 24:00:00" data-title="On a day edge" data-kind="Countdown state"><div class="label">Exactly on a day edge (starts at 24:00:00)</div><div class="cd" data-cd="345600">3<span class="d">d </span>24:00:00</div><div class="line">Airs in Japan Thu at 01:24</div></div>
+    <div class="cd-card" id="cd-outnow" data-search="countdown out now" data-title="Out now" data-kind="Countdown state"><div class="label">From the drop to +1 h · <code>.outNow</code> (0.7 × size)</div><div class="cd"><span style="font-size:.7em">Out now</span></div><div class="line">Released today at 21:00</div></div>
+    <div class="cd-card" id="cd-released" data-search="countdown released" data-title="Released" data-kind="Countdown state"><div class="label">More than 1 h after · <code>.released</code> (0.6 ×, secondary)</div><div class="cd"><span style="font-size:.6em;color:rgba(255,255,255,.6)">Released</span></div><div class="line">Released today at 19:00</div></div>
+    <div class="cd-card" id="cd-dateonly" data-search="countdown date only time not announced" data-title="Date only" data-kind="Countdown state"><div class="label">No time announced · <code>.dateOnly</code> (0.6 ×, never a timer)</div><div class="cd"><span style="font-size:.6em">Thu 19 Nov</span></div><div class="line">Out Thu 19 Nov, time not announced</div></div>
+  </div>
+
+  <h3 id="countdown-demo">Try it</h3>
+  <div class="demo-cd" aria-live="off">
+    <div class="cd" id="demo-cd" data-cd="10" role="timer" aria-label="Demo countdown">0:10</div>
+    <div style="flex:1;min-width:220px">
+      <div class="demo-controls">
+        <button class="btn" data-demo="10">10 s to the drop</button>
+        <button class="btn" data-demo="3725">1:02:05</button>
+        <button class="btn" data-demo="days">2d 4:10:22</button>
+        <button class="btn" data-demo="edge">Day edge</button>
+      </div>
+      <p class="small muted" id="demo-status" style="margin:10px 0 0">Ten seconds to the drop. Watch it stop at 0:00 and turn into “Out now”.</p>
+    </div>
+  </div>
+  <p class="note">Width is reserved for the widest value from now on (<code>CountdownFormatter.clockTemplate</code>: “0:00”, “00:00”, “0:00:00”, “00:00:00”, “2d 00:00:00”), because a ticking text in a widget otherwise takes all the width it is offered (the medium widget went blank, 1 Nov). VoiceOver reads “2 days 4 hours”, never “2 d”.</p>
+
+  <h3 id="certainty-words">The certainty words</h3>
+  <p>How sure a time is, said in the time itself (<code>Shared/Time/ReleaseWording.swift</code>, D-40). The verb is the whole system.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Word</th><th>When</th><th>Example (app)</th><th>Example (widgets, Live Activity)</th></tr></thead>
+    <tbody>
+      <tr id="word-out" data-search="out exact broadcast confirmed" data-title="Out" data-kind="Wording"><td><b>Out</b></td><td>Exact: a broadcast time or a confirmed override</td><td>“Out today at 22:10”</td><td>“Out Wed 02:00” · band “Out in”</td></tr>
+      <tr id="word-released" data-search="released past exact" data-title="Released" data-kind="Wording"><td><b>Released</b></td><td>An exact time that has passed (only exact says it)</td><td>“Released today at 21:00”</td><td>“Released Mon 18:40”</td></tr>
+      <tr id="word-expected" data-search="expected estimate platform rule" data-title="Expected" data-kind="Wording"><td><b>Expected</b></td><td>An estimate: platform rule, unconfirmed override, your offset. Stays “Expected” after the time.</td><td>“Expected Wed at 23:00”</td><td>“Expected Mon 09:00” · band “Expected in”</td></tr>
+      <tr id="word-japan" data-search="airs in japan aired anilist anime" data-title="Airs in Japan" data-kind="Wording"><td><b>Airs in Japan</b> / Aired in Japan</td><td>AniList’s Japanese TV time</td><td>“Airs in Japan tomorrow at 01:24”</td><td>“Airs in Japan Fri 01:00” · VoiceOver “just aired in Japan”</td></tr>
+      <tr id="word-date-only" data-search="time not announced date only" data-title="time not announced" data-kind="Wording"><td><b>time not announced</b></td><td>Date only: a listed day, no time (never a timer)</td><td>“Out Thu 19 Nov, time not announced”</td><td>“Time not announced” (the day sits in the countdown’s place)</td></tr>
+      <tr id="word-out-now" data-search="out now" data-title="Out now" data-kind="Wording"><td><b>Out now</b></td><td>From the drop until an hour after</td><td>Countdown slot</td><td>“Silo · Out now”; Live Activity band and compact slot</td></tr>
+      <tr id="word-nothing" data-search="nothing scheduled quiet" data-title="Nothing scheduled" data-kind="Wording"><td><b>Nothing scheduled</b></td><td>A followed show with no next episode</td><td>Section title; with the reason “Between seasons · last episode Fri 4 Sep”</td><td>Widget row label; headline when none are scheduled</td></tr>
+      <tr id="word-more" data-search="more this week plus" data-title="+3 more this week" data-kind="Wording"><td><b>+3 more this week</b></td><td>Drops due within 7 days that a widget can’t fit (D-47)</td><td>—</td><td>Top-right tag on medium and large widgets</td></tr>
+      <tr id="word-place" data-search="lagos time place zone" data-title="Lagos time" data-kind="Wording"><td><b>… Lagos time</b></td><td>The hero names whose clock it is, once per screen</td><td>“Expected Wed at 23:00 Lagos time”</td><td>—</td></tr>
+    </tbody></table></div>
+  <p class="small muted">Quiet reasons (<code>ReleaseWording.quietNote</code>): “Ended”, “Between seasons”, “On hiatus”, “Waiting for news”, “Not out yet”, “No new episode announced”.</p>
+
+  <h3 id="voice">Voice: Write / Not / Why</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Write</th><th>Not</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td class="write">Expected Wed at 23:00</td><td class="not">~23:00 (est.) ●</td><td>Certainty lives in the verb; no dots or codes to learn (D-40).</td></tr>
+      <tr><td class="write">Out today at 21:00</td><td class="not">Releases at 9 PM EST</td><td>Your clock, 24-hour, relative day first (rule 1).</td></tr>
+      <tr><td class="write">HBO · US</td><td class="not">On HBO</td><td>A Lagos viewer can’t watch on HBO; say where it’s from (D-20).</td></tr>
+      <tr><td class="write">No official stream in your country</td><td class="not">⚠︎ (red icon only)</td><td>Words, only when the rules file says so (rule 11).</td></tr>
+      <tr><td class="write">Out Thu 19 Nov, time not announced</td><td class="not">Thu 19 Nov · 12:00</td><td>Noon is TVmaze’s placeholder; never tick to a made-up time (D-25, D-09).</td></tr>
+      <tr><td class="write">Starts in 2 hours · 02:00 · Apple TV</td><td class="not">Starts in 2 hours (for a Netflix estimate)</td><td>Only a sure time “starts”; an estimate is “Expected in 2 hours” (D-49).</td></tr>
+      <tr><td class="write">… checks again each time you open it.</td><td class="not">Updates every 6 hours</td><td>iOS doesn’t promise background refresh; never promise an interval (D-27).</td></tr>
+      <tr><td class="write">Lagos time</td><td class="not">GMT+1 / WAT</td><td>Zones are named by place (D-39).</td></tr>
+      <tr><td class="write">Between seasons</td><td class="not">RUNNING</td><td>Sentence case, the app’s words, not the API’s.</td></tr>
+      <tr><td class="write">+3 more this week</td><td class="not">… (truncated rows)</td><td>An honest count instead of shrinking everything (D-47).</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- ============================================================ 06 FOUNDATIONS -->
+<section class="sec" id="foundations" data-num="06" data-search="spacing radius elevation glass material motion animation icons sf symbols">
+  <div class="sec-head"><span class="num">06</span><h2 id="foundations-h">Space, shape &amp; motion</h2></div>
+
+  <h3 id="spacing">Spacing</h3>
+  <p class="small muted"><code>Tokens.Space</code>, <code>Shared/Design/Tokens.swift:7-14</code>.</p>
+  <div class="card">
+    <div class="space-row" id="space-xxs" data-token data-search="space xxs 4" data-title="Space xxs · 4" data-kind="Spacing"><code>xxs</code><span class="tnum">4 pt</span><i style="width:4px"></i></div>
+    <div class="space-row" id="space-xs" data-token data-search="space xs 8" data-title="Space xs · 8" data-kind="Spacing"><code>xs</code><span class="tnum">8 pt</span><i style="width:8px"></i></div>
+    <div class="space-row" id="space-s" data-token data-search="space s 12" data-title="Space s · 12" data-kind="Spacing"><code>s</code><span class="tnum">12 pt</span><i style="width:12px"></i></div>
+    <div class="space-row" id="space-m" data-token data-search="space m 16" data-title="Space m · 16" data-kind="Spacing"><code>m</code><span class="tnum">16 pt</span><i style="width:16px"></i></div>
+    <div class="space-row" id="space-l" data-token data-search="space l 24 page margin" data-title="Space l · 24" data-kind="Spacing"><code>l</code><span class="tnum">24 pt</span><i style="width:24px"></i></div>
+    <div class="space-row" id="space-xl" data-token data-search="space xl 32" data-title="Space xl · 32" data-kind="Spacing"><code>xl</code><span class="tnum">32 pt</span><i style="width:32px"></i></div>
+  </div>
+  <div class="table-wrap"><table><thead><tr><th>Layout rule</th><th>Value</th><th>Where</th></tr></thead><tbody>
+    <tr><td>Page margin, Night Sky screens</td><td><code>l</code> 24</td><td>Upcoming, Show detail, show page, Welcome</td></tr>
+    <tr><td>Page margin, Search</td><td><code>m</code> 16</td><td>SearchView.swift:53</td></tr>
+    <tr><td>Content overlaps the art</td><td>−64</td><td>UpcomingHero.swift:20, ShowDetailView.swift:57, ShowPreviewView.swift:69</td></tr>
+    <tr><td>Upcoming page stack / sections / rows</td><td>40 / <code>xl</code> 32 / <code>l</code> 24</td><td>UpcomingView.swift:26,140,148</td></tr>
+    <tr><td>Poster grid</td><td>3 columns, column gap <code>s</code> 12, row gap <code>m</code> 16</td><td>SearchView.swift:186; UpcomingView.swift:163</td></tr>
+    <tr><td>Back button inset</td><td>leading 16, top 58</td><td>ShowDetailView.swift:29-30</td></tr>
+    <tr><td>Raw values outside the tokens</td><td>1, 2, 3, 6, 7, 10, 14, 40, 58, 64, 110, 120, 240</td><td>see Gaps in the inventory</td></tr>
+  </tbody></table></div>
+
+  <h3 id="radius">Radius</h3>
+  <div class="radii card">
+    <figure id="radius-poster" data-token data-search="radius poster 8" data-title="Radius 8 · poster" data-kind="Radius"><div class="r" style="border-radius:8px;width:56px;height:84px"></div>8 · poster</figure>
+    <figure id="radius-row" data-token data-search="radius row art 10" data-title="Radius 10 · row art" data-kind="Radius"><div class="r" style="border-radius:10px;width:64px;height:64px"></div>10 · row art</figure>
+    <figure id="radius-la-art" data-token data-search="radius live activity art 12 continuous" data-title="Radius 12 · expanded art" data-kind="Radius"><div class="r" style="border-radius:12px;width:50px;height:50px"></div>12 · island art</figure>
+    <figure id="radius-logo-tile" data-token data-search="radius logo tile 5" data-title="Radius 5 · logo tile" data-kind="Radius"><div class="r" style="border-radius:5px;width:30px;height:22px;background:#fff"></div>5 · logo tile</figure>
+    <figure id="radius-thumb" data-token data-search="radius widget poster thumb h/6" data-title="Radius h/6 · widget thumb" data-kind="Radius"><div class="r" style="border-radius:5.3px;width:21px;height:32px"></div>h / 6 · thumb</figure>
+    <figure id="radius-mark" data-token data-search="radius poster mark size/4" data-title="Radius size/4 · poster mark" data-kind="Radius"><div class="r" style="border-radius:6px;width:24px;height:24px"></div>size / 4 · mark</figure>
+    <figure id="radius-capsule" data-token data-search="radius capsule chip" data-title="Capsule" data-kind="Radius"><div class="r" style="border-radius:99px;width:96px;height:34px"></div>capsule · chips, Follow, tags</figure>
+    <figure id="radius-circle" data-token data-search="radius circle" data-title="Circle" data-kind="Radius"><div class="r" style="border-radius:50%;width:44px;height:44px"></div>circle · (+), back</figure>
+    <figure id="radius-card" data-token data-search="radius card 14 legacy" data-title="Tokens.Radius.card · 14 (legacy)" data-kind="Radius"><div class="r" style="border-radius:14px;opacity:.5"></div>14 · card <span class="badge legacy">legacy</span></figure>
+  </div>
+  <p class="small muted"><code>Tokens.Radius.sheet</code> (20) and <code>.widget</code> (22) exist but are never used.</p>
+
+  <h3 id="elevation">Elevation &amp; materials</h3>
+  <p><b>No shadows anywhere.</b> Depth comes from art fading into night, two scrims, and one material: <b>Liquid Glass</b> on the back button (<code>.glassEffect(.regular.interactive(), in: .circle)</code>). iOS also draws the tab bar, search field and Dynamic Island.</p>
+  <div class="grid g3">
+    <div class="card" id="material-glass" data-token data-search="glass liquid glass material" data-title="Liquid Glass" data-kind="Material"><div class="stage ph-art" style="height:120px;display:grid;place-items:center"><span class="glass" style="position:relative;z-index:1" aria-hidden="true"><svg><use href="#i-chevron"/></svg></span></div><h4 style="margin-top:10px">Liquid Glass</h4><p>Regular, interactive, circle. The only control on the art. (Approximated with <code>backdrop-filter</code>.)</p></div>
+    <div class="card" id="gradient-art-fade" data-token data-search="gradient art fade night" data-title="Art fade" data-kind="Gradient"><div style="height:120px;border-radius:12px;position:relative;overflow:hidden" class="ph-art"><div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,28,28,0) 40%,#1C1C1C 100%)"></div><div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.4),rgba(0,0,0,0) 25%)"></div></div><h4 style="margin-top:10px">Art fade + top scrim</h4><p>base@0 at 40% → base at 100%; black@0.4 → clear by 25%. NightStyle.swift:59-61</p></div>
+    <div class="card" id="gradient-widget" data-token data-search="gradient widget backdrop fade" data-title="Widget fade" data-kind="Gradient"><div style="height:120px;border-radius:12px;position:relative;overflow:hidden" class="ph-art"><div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,28,28,0) 25%,rgba(28,28,28,.7) 50%,#1C1C1C 75%)"></div></div><h4 style="margin-top:10px">Widget fade</h4><p>clear at 25% → base@0.7 at 50% → base at 75%. WidgetBackdrop.swift:25-27</p></div>
+    <div class="card" id="gradient-la" data-token data-search="gradient live activity art edge" data-title="Live Activity art edge" data-kind="Gradient"><div style="height:120px;border-radius:12px;position:relative;overflow:hidden;background:#0D0D0E"><div class="ph-art" style="position:absolute;right:0;top:0;bottom:0;width:44%"></div><div style="position:absolute;right:0;top:0;bottom:0;width:44%;background:linear-gradient(90deg,#0D0D0E 0%,rgba(13,13,14,.75) 30%,rgba(13,13,14,.15) 75%,rgba(13,13,14,0) 100%)"></div></div><h4 style="margin-top:10px">Lock Screen art edge</h4><p>Art on the right 44%, fading leftwards: 1 → 0.75 at 30% → 0.15 at 75% → clear. LiveActivityArtEdge.swift:29-32</p></div>
+    <div class="card" id="gradient-status-scrim" data-token data-search="status bar scrim" data-title="StatusBarScrim" data-kind="Gradient"><div style="height:120px;border-radius:12px;position:relative;overflow:hidden" class="ph-art"><div style="position:absolute;inset:0 0 auto 0;height:110px;background:linear-gradient(180deg,rgba(28,28,28,.9),rgba(28,28,28,0))"></div></div><h4 style="margin-top:10px">Status-bar scrim</h4><p>Page colour 0.9 → 0, 110 pt, Upcoming only. ArtworkLoaderView.swift:26-35</p></div>
+  </div>
+
+  <h3 id="motion">Motion</h3>
+  <div class="motion-demo card">
+    <div class="motion-stage" aria-hidden="true"><div class="art ph-art in" id="motion-art"></div></div>
+    <div style="flex:1;min-width:220px"><h4>Artwork arrives</h4><p class="small" style="color:var(--site-text-2)"><code>withAnimation(.easeOut(duration: 0.35))</code>, and no animation with Reduce Motion (ArtworkLoaderView.swift:20). It is the app’s only custom animation: no springs, transitions or symbol effects.</p><button class="btn" id="motion-play">Play</button> <span class="small muted">This page honours <code>prefers-reduced-motion</code> the same way.</span></div>
+  </div>
+  <div class="table-wrap"><table><thead><tr><th>Timing</th><th>Value</th><th>Where</th></tr></thead><tbody>
+    <tr id="motion-countdown" data-token data-search="timeline countdown 1 second" data-title="Countdown pace · 1 s" data-kind="Motion"><td>Countdown redraw (app)</td><td><code>TimelineView(.countdown)</code>: every 1 s, anchored on a whole second</td><td>CountdownSchedule.swift:8-11</td></tr>
+    <tr><td>Search grid refresh</td><td><code>.everyMinute</code></td><td>SearchView.swift:143</td></tr>
+    <tr><td>Search debounce</td><td>400 ms</td><td>SearchView.swift:84</td></tr>
+    <tr><td>Live Activity ring and bar</td><td>System <code>ProgressView(timerInterval:)</code>; it moves with no app running</td><td>LiveActivityBar.swift:26; LiveActivityRing.swift:25</td></tr>
+    <tr><td>Widget timeline</td><td>entries ≥ 5 min apart, one every hour and one at the drop; reload <code>.after(nextDrop)</code></td><td>NextDropProvider.swift; WidgetTimeline.swift</td></tr>
+  </tbody></table></div>
+
+  <h3 id="icons">Iconography</h3>
+  <p>SF Symbols only, never drawn by hand in the app. Each always sits beside a word or has an accessibility label. Names are shown here; the symbols themselves aren’t fetched.</p>
+  <div class="symbols">
+    <span class="symbol" id="sym-clock" data-search="clock sf symbol upcoming tab" data-title="clock" data-kind="Icon"><code>clock</code><span>Upcoming tab</span></span>
+    <span class="symbol" id="sym-magnifyingglass" data-search="magnifyingglass sf symbol search tab" data-title="magnifyingglass" data-kind="Icon"><code>magnifyingglass</code><span>Search tab</span></span>
+    <span class="symbol" id="sym-gearshape" data-search="gearshape sf symbol settings tab" data-title="gearshape" data-kind="Icon"><code>gearshape</code><span>Settings tab</span></span>
+    <span class="symbol" id="sym-chevron-left" data-search="chevron.left back glass" data-title="chevron.left" data-kind="Icon"><code>chevron.left</code><span>Glass back button</span></span>
+    <span class="symbol" id="sym-plus" data-search="plus follow" data-title="plus" data-kind="Icon"><code>plus</code><span>Follow (+), Follow button</span></span>
+    <span class="symbol" id="sym-checkmark" data-search="checkmark following" data-title="checkmark" data-kind="Icon"><code>checkmark</code><span>Following</span></span>
+    <span class="symbol" id="sym-tv" data-search="tv poster placeholder circular rectangular widget" data-title="tv" data-kind="Icon"><code>tv</code><span>Poster placeholder; circular and rectangular widgets</span></span>
+    <span class="symbol" id="sym-calendar" data-search="calendar date only circular" data-title="calendar" data-kind="Icon"><code>calendar</code><span>Circular widget, date only</span></span>
+    <span class="symbol" id="sym-legacy" data-search="legacy symbols checkmark.circle.fill slider arrow.uturn.forward exclamationmark.circle" data-title="Legacy symbols" data-kind="Icon"><code>checkmark.circle.fill · slider.horizontal.3 · arrow.uturn.forward · exclamationmark.circle</code><span>Legacy SourceChip, DropRow, ProviderLabelView</span></span>
+  </div>
+</section>
+
+<!-- ============================================================ 07 COMPONENTS -->
+<section class="sec" id="components" data-num="07" data-search="components ui views swiftui">
+  <div class="sec-head"><span class="num">07</span><h2 id="components-h">Components</h2></div>
+  <p class="lede">Every reusable view and screen part, rebuilt in HTML and CSS from its SwiftUI code. States sit side by side; countdowns tick. Each card lists its sizes, tokens, exact copy, the VoiceOver phrase, its accessibility ID, its hit target and a SwiftUI snippet.</p>
+  <p class="note">Glyphs are drawn approximations of the SF Symbols named. Service logos are shown as a neutral letter tile; the app loads freely licensed Wikimedia logos at runtime (D-44). Posters and key art are the neutral placeholder.</p>
+
+  <h3 id="which-component">Which component?</h3>
+  <ol class="decision">
+    <li><span><b>Showing when the next episode is, big?</b> The headline of a screen.</span><a href="#c-release-headline">ReleaseHeadline</a></li>
+    <li><span><b>A countdown anywhere</b> (app, widget, row).</span><a href="#c-countdown-text">CountdownText</a> · <a href="#c-la-countdown">LiveActivityCountdown</a> in the Live Activity</li>
+    <li><span><b>A time in a sentence</b> (“Expected Wed at 23:00”).</span><a href="#word-expected">ReleaseWording.outLine</a>; never a chip or dot</li>
+    <li><span><b>Episode and where it’s on</b>, under a title.</span><a href="#c-release-meta">ReleaseMeta</a></li>
+    <li><span><b>The show’s art at the top of a page.</b></span><a href="#c-night-art-header">NightArtHeader</a> + <a href="#c-glass-button">GlassCircleButton</a> if it can go back</li>
+    <li><span><b>A list of followed drops.</b></span><a href="#c-upcoming-row">Upcoming row</a> under a <a href="#c-section-header">section header</a></li>
+    <li><span><b>Shows with no time</b> (nothing scheduled).</span><a href="#c-quiet-grid">Quiet grid cell</a>; in widgets <a href="#widgets">WidgetQuietRow</a></li>
+    <li><span><b>Browsing or search results.</b></span><a href="#c-poster-cell">Poster grid cell</a> with the <a href="#c-follow-plus">follow (+)</a></li>
+    <li><span><b>Narrowing a grid, one choice at a time.</b></span><a href="#c-filter-chip">Filter chip</a> (or <a href="#c-service-chip">service chip</a>); for two catalogues, the <a href="#c-kind-switch">kind switch</a></li>
+    <li><span><b>The one main action on a page.</b></span><a href="#c-follow-button">Follow capsule</a> / white <a href="#c-welcome">primary button</a></li>
+    <li><span><b>A preference.</b></span><a href="#c-settings-list">System list rows</a>; a per-show switch is the <a href="#c-la-toggle">Live Activity toggle</a></li>
+    <li><span><b>Nothing to show.</b></span><a href="#c-upcoming-empty">Empty states</a>: say what is true and what to do; never promise a refresh interval</li>
+    <li><span><b>How sure a time is, as a colour or icon?</b></span>Don’t. <a href="#c-legacy-source-chip">SourceChip</a> is legacy (D-40).</li>
+  </ol>
+
+  <!-- ===== Navigation ===== -->
+  <div class="group-title"><h3 id="comp-navigation">Navigation</h3></div>
+
+  <article class="comp" id="c-tab-bar" data-search="tab bar tabview upcoming search settings navigation" data-title="Tab bar" data-kind="Component" data-sub="RootView.swift">
+    <div class="comp-head"><h4>Tab bar</h4><span class="badge live">live</span><span class="src">Airstamp/App/RootView.swift:60-74</span></div>
+    <p class="purpose">The app’s top level after Welcome (D-41): Upcoming, Search in the middle as a plain tab (the iOS 26 search role would float it to the trailing edge), Settings.</p>
+    <div class="states">
+      <figure class="state"><div class="stage ph-art" style="padding:24px 18px 18px"><div class="tabbar" style="position:relative;z-index:1"><span class="tab sel"><svg><use href="#i-clock"/></svg>Upcoming</span><span class="tab"><svg><use href="#i-search"/></svg>Search</span><span class="tab"><svg><use href="#i-gear"/></svg>Settings</span></div></div><figcaption><b>Upcoming selected</b> · over art</figcaption></figure>
+      <figure class="state"><div class="stage" style="padding:24px 18px 18px"><div class="tabbar"><span class="tab"><svg><use href="#i-clock"/></svg>Upcoming</span><span class="tab sel"><svg><use href="#i-search"/></svg>Search</span><span class="tab"><svg><use href="#i-gear"/></svg>Settings</span></div></div><figcaption><b>Search selected</b> · on night</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Look</dt><dd>System iOS 26 floating Liquid Glass tab bar, forced dark, <code>.tint(.white)</code></dd>
+      <dt>Symbols</dt><dd><code>clock</code>, <code>magnifyingglass</code>, <code>gearshape</code></dd>
+      <dt>Copy</dt><dd><q>Upcoming</q> · <q>Search</q> · <q>Settings</q></dd>
+      <dt>VoiceOver</dt><dd>“Upcoming, tab, 1 of 3” (system)</dd>
+      <dt>ID</dt><dd>system tab items</dd>
+      <dt>Hit target</dt><dd>system, ≥ 44 pt</dd>
+    </dl></div><div class="codebox"><pre><code>TabView(selection: $tab) {
+    Tab("Upcoming", systemImage: "clock", value: .upcoming) { UpcomingTab(model: model) }
+    Tab("Search", systemImage: "magnifyingglass", value: .search) { SearchView(...) }
+    Tab("Settings", systemImage: "gearshape", value: .settings) { SettingsView(...) }
+}
+.tint(.white)
+.environment(\.colorScheme, .dark)</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-glass-button" data-search="GlassCircleButton glass back button liquid glass chevron" data-title="GlassCircleButton" data-kind="Component" data-sub="NightStyle.swift">
+    <div class="comp-head"><h4>GlassCircleButton</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Common/NightStyle.swift:31-47</span></div>
+    <p class="purpose">A round Liquid Glass button, the only control that sits on the art (the back button on Show detail and the show page).</p>
+    <div class="states">
+      <figure class="state"><div class="stage ph-art" style="width:150px;height:110px;padding:14px 16px"><button class="glass" style="position:relative;z-index:1" aria-label="Back (demo)"><svg><use href="#i-chevron"/></svg></button></div><figcaption><b>Default</b> · on art</figcaption></figure>
+      <figure class="state"><div class="stage ph-art" style="width:150px;height:110px;padding:14px 16px"><span class="glass pressed" style="position:relative;z-index:1" aria-hidden="true"><svg><use href="#i-chevron"/></svg></span></div><figcaption><b>Pressed</b> · interactive glass swells</figcaption></figure>
+      <figure class="state"><div class="stage" style="width:150px;height:110px;padding:14px 16px"><span class="glass" aria-hidden="true"><svg><use href="#i-chevron"/></svg></span></div><figcaption><b>Art loading</b> · on night</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Size</dt><dd>44 × 44 circle; glyph 0.38 × size = 16.7 pt semibold</dd>
+      <dt>Material</dt><dd><code>.glassEffect(.regular.interactive(), in: .circle)</code></dd>
+      <dt>Placement</dt><dd>top-leading over the art: leading 16, top 58</dd>
+      <dt>Symbol</dt><dd><code>chevron.left</code></dd>
+      <dt>VoiceOver</dt><dd>“Back, button”</dd>
+      <dt>ID</dt><dd>— (label “Back”)</dd>
+      <dt>Hit target</dt><dd>44 × 44</dd>
+    </dl></div><div class="codebox"><pre><code>GlassCircleButton(systemImage: "chevron.left", label: "Back") { dismiss() }
+    .padding(.leading, Tokens.Space.m)
+    .padding(.top, 58)</code></pre></div></div>
+  </article>
+
+  <!-- ===== Headers ===== -->
+  <div class="group-title"><h3 id="comp-headers">Headers &amp; art</h3></div>
+
+  <article class="comp" id="c-night-art-header" data-search="NightArtHeader art header key art fade night gradient scrim" data-title="NightArtHeader" data-kind="Component" data-sub="NightStyle.swift">
+    <div class="comp-head"><h4>NightArtHeader</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Common/NightStyle.swift:50-65</span></div>
+    <p class="purpose">The show’s key art at the top of Upcoming, Show detail and the show page, fading into the night base taken from that art.</p>
+    <div class="states">
+      <figure class="state"><div class="stage nah" style="width:200px;height:242px;padding:0"><div class="fill ph-art"></div><div class="fade" style="background:linear-gradient(180deg,rgba(28,28,28,0) 40%,#1C1C1C 100%)"></div><div class="scrim"></div></div><figcaption><b>Art loaded</b> · neutral night</figcaption></figure>
+      <figure class="state"><div class="stage nah" style="width:200px;height:242px;padding:0;background:#181E24"><div class="fill ph-art cool"></div><div class="fade" style="background:linear-gradient(180deg,rgba(24,30,36,0) 40%,#181E24 100%)"></div><div class="scrim"></div></div><figcaption><b>Cool art</b> · blue night <code>#181E24</code></figcaption></figure>
+      <figure class="state"><div class="stage nah" style="width:200px;height:242px;padding:0;background:#1C1A1A"><div class="fill ph-art warm"></div><div class="fade" style="background:linear-gradient(180deg,rgba(28,26,26,0) 40%,#1C1A1A 100%)"></div><div class="scrim"></div></div><figcaption><b>Warm art</b> · charcoal, never brown</figcaption></figure>
+      <figure class="state"><div class="stage nah" style="width:200px;height:242px;padding:0"><div class="scrim"></div></div><figcaption><b>Loading / no art</b> · the base itself, never grey</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Height</dt><dd>472 (Upcoming, spotlight); 500 (Show detail, show page). Shown here at about half</dd>
+      <dt>Layers</dt><dd>ArtworkFill (base behind, art <code>scaledToFill</code>) → base@0 at 40% → base at 100% → black@0.4 to clear by 25%</dd>
+      <dt>Base</dt><dd><code>ArtworkPalette.night</code> of the art, <code>.neutral</code> until it loads</dd>
+      <dt>Motion</dt><dd>art fades in over 0.35 s ease-out; none with Reduce Motion</dd>
+      <dt>VoiceOver</dt><dd>decorative; on the show page “Silo artwork, image”</dd>
+      <dt>ID</dt><dd><code>show-preview-art</code> (show page only)</dd>
+      <dt>Hit target</dt><dd>none (the hero around it is the button)</dd>
+    </dl></div><div class="codebox"><pre><code>ArtworkLoaderView(url: artwork?.hero, maxPixel: ShowArtwork.idealBackgroundWidth) { hero in
+    let base = (hero?.palette ?? .neutral).night.color
+    NightArtHeader(image: hero?.image, base: base, height: 500)
+}</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-release-headline" data-search="ReleaseHeadline headline title countdown out line hero lagos time" data-title="ReleaseHeadline" data-kind="Component" data-sub="UpcomingHero.swift">
+    <div class="comp-head"><h4>ReleaseHeadline</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Upcoming/UpcomingHero.swift:28-54</span></div>
+    <p class="purpose">The three lines that answer the question: the title, a giant light serif countdown, and when it’s out, in the app’s words, naming whose clock it is.</p>
+    <div class="states">
+      <figure class="state"><div class="stage" style="zoom:.6;width:440px"><div class="hl-title">House of the Dragon</div><div class="cd hl-cd" data-cd="11410">3:10:10</div><div class="hl-out">Out today at 22:10 Lagos time</div></div><figcaption><b>Exact</b> · ticking</figcaption></figure>
+      <figure class="state"><div class="stage" style="zoom:.6;width:520px"><div class="hl-title">Silo</div><div class="cd hl-cd" data-cd="187822">2<span class="d">d </span>4:10:22</div><div class="hl-out">Expected Wed at 23:00 Lagos time</div></div><figcaption><b>Estimate</b> · days + timer</figcaption></figure>
+      <figure class="state"><div class="stage" style="zoom:.6;width:520px"><div class="hl-title">Frieren: Beyond Journey’s End</div><div class="cd hl-cd" data-cd="19524">5:25:24</div><div class="hl-out">Airs in Japan tomorrow at 01:24 Lagos time</div></div><figcaption><b>Anime</b> · Japanese TV time</figcaption></figure>
+      <figure class="state"><div class="stage" style="zoom:.6;width:440px"><div class="hl-title">House of the Dragon</div><div class="cd hl-cd"><span style="font-size:.7em">Out now</span></div><div class="hl-out">Released today at 21:00 Lagos time</div></div><figcaption><b>Out now</b> · first hour</figcaption></figure>
+      <figure class="state"><div class="stage" style="zoom:.6;width:440px"><div class="hl-title">Severance</div><div class="cd hl-cd"><span style="font-size:.6em">Thu 19 Nov</span></div><div class="hl-out">Out Thu 19 Nov, time not announced</div></div><figcaption><b>Date only</b> · no timer</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Type</dt><dd>title New York 32 (2 lines, scale ≥ 0.7) · countdown New York Light 88 · out line SF Pro <code>.body</code> medium, top +4</dd>
+      <dt>Ink</dt><dd>all <code>NightInk.primary</code>; stack spacing <code>xxs</code> 4</dd>
+      <dt>Copy</dt><dd><code>ReleaseWording.outLine(naming: true)</code> adds “… Lagos time” (not for date only)</dd>
+      <dt>VoiceOver</dt><dd>“House of the Dragon, heading”, then the timer, then “Out today at 22:10 Lagos time”. Days read “2 days 4 hours”</dd>
+      <dt>IDs</dt><dd><code>&lt;id&gt;-title</code>, <code>countdown</code>, <code>&lt;id&gt;-out</code>, where id is <code>upcoming-hero</code>, <code>detail</code> or <code>show-preview</code></dd>
+      <dt>Hit target</dt><dd>On Upcoming the whole hero is one button</dd>
+    </dl></div><div class="codebox"><pre><code>TimelineView(.countdown) { context in
+    ReleaseHeadline(drop: drop, now: context.date, formatter: formatter, testID: "detail")
+}</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-release-meta" data-search="ReleaseMeta meta episode provider no official stream" data-title="ReleaseMeta" data-kind="Component" data-sub="UpcomingHero.swift">
+    <div class="comp-head"><h4>ReleaseMeta</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Upcoming/UpcomingHero.swift:57-74</span></div>
+    <p class="purpose">The episode and where it’s on (“HBO · US”, never “On HBO”, D-20), and the no-stream line when the rules file says so.</p>
+    <div class="states">
+      <figure class="state"><div class="stage" style="width:260px"><div class="meta">S4E1 · Apple TV</div></div><figcaption><b>Default</b></figcaption></figure>
+      <figure class="state"><div class="stage" style="width:260px"><div class="meta">S3E4 · HBO · US</div><div class="meta" style="margin-top:2px">No official stream in your country</div></div><figcaption><b>No official stream</b></figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Type</dt><dd>SF Pro <code>.footnote</code> (13), <code>NightInk.muted</code>, 1 line; spacing 2</dd>
+      <dt>Copy</dt><dd><q>S4E1 · Apple TV</q> · <q>S3E4 · HBO · US</q> · <q>No official stream in your country</q></dd>
+      <dt>VoiceOver</dt><dd>reads the line as written (“S3E4, HBO, US”)</dd>
+      <dt>ID</dt><dd><code>provider-no-stream</code></dd>
+      <dt>Note</dt><dd>Plain words; no glyph and no red (the legacy view used both)</dd>
+    </dl></div><div class="codebox"><pre><code>VStack(alignment: .leading, spacing: Tokens.Space.s) {
+    ReleaseHeadline(drop: drop, now: now)
+    ReleaseMeta(drop: drop)
+}</code></pre></div></div>
+  </article>
+
+  <!-- ===== Countdown ===== -->
+  <div class="group-title"><h3 id="comp-countdown">Countdown</h3></div>
+
+  <article class="comp" id="c-countdown-text" data-search="CountdownText countdown timer ticking coarse out now released date only" data-title="CountdownText" data-kind="Component" data-sub="CountdownText.swift">
+    <div class="comp-head"><h4>CountdownText</h4><span class="badge live">live</span><span class="src">Shared/Design/CountdownText.swift</span></div>
+    <p class="purpose">The countdown for one drop, in the app and every widget. Live to the second; stops at zero; a date-only drop shows its day.</p>
+    <div class="states">
+      <figure class="state"><div class="stage"><div class="cd" style="font-size:34px" data-cd="2412">40:12</div></div><figcaption><b>Ticking</b> · 34 (default)</figcaption></figure>
+      <figure class="state"><div class="stage"><div class="cd" style="font-size:34px" data-cd="187822">2<span class="d">d </span>4:10:22</div></div><figcaption><b>Coarse</b> · days + timer</figcaption></figure>
+      <figure class="state"><div class="stage"><div class="cd" style="font-size:34px"><span style="font-size:.7em">Out now</span></div></div><figcaption><b>Out now</b> · 0.7 ×</figcaption></figure>
+      <figure class="state"><div class="stage"><div class="cd" style="font-size:34px"><span style="font-size:.6em;color:rgba(255,255,255,.6)">Released</span></div></div><figcaption><b>Released</b> · 0.6 ×, secondary</figcaption></figure>
+      <figure class="state"><div class="stage"><div class="cd" style="font-size:34px"><span style="font-size:.6em">Wed 11 Nov</span></div></div><figcaption><b>Date only</b> · 0.6 ×</figcaption></figure>
+      <figure class="state"><div class="stage" style="text-align:right"><div class="cd" style="font-size:24px" data-cd="99022">1<span class="d">d </span>3:30:22</div></div><figcaption><b>Row</b> · 24, trailing</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Sizes in use</dt><dd>88 hero · 46 / 36 / 32 widget heroes · 26 rectangular · 24 row · 22 large row · 15 compact row</dd>
+      <dt>Type</dt><dd><code>NumeralStudy.night</code>: New York Light, tabular; unit “d ” at 0.5 ×, secondary; scales with Dynamic Type (<code>@ScaledMetric</code>)</dd>
+      <dt>Width</dt><dd>a hidden template of the widest value (“2d 00:00:00”); <code>minimumScaleFactor(0.5)</code>, 1 line</dd>
+      <dt>Widgets</dt><dd><code>.widgetAccentable()</code>: the one element that takes the tint</dd>
+      <dt>VoiceOver</dt><dd>coarse: “2 days 4 hours”; ticking: the timer’s own reading</dd>
+      <dt>ID</dt><dd><code>countdown</code></dd>
+    </dl></div><div class="codebox"><pre><code>CountdownText(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate,
+              now: now, size: 24, tint: .white, formatter: formatter, alignment: .trailing)
+    .environment(\.numeralStudy, .night)   // the default is still .system
+    .fixedSize()</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-la-countdown" data-search="LiveActivityCountdown live activity countdown timer" data-title="LiveActivityCountdown" data-kind="Component" data-sub="LiveActivityCountdown.swift">
+    <div class="comp-head"><h4>LiveActivityCountdown</h4><span class="badge live">live</span><span class="src">Shared/LiveActivity/LiveActivityCountdown.swift</span></div>
+    <p class="purpose">The Live Activity’s timer. A range ending at the drop, with no <code>pauseTime</code> (D-52): with one, WidgetKit froze it at its first value. When the content goes stale the numbers stay at 0:00 and the label above says “Out now”.</p>
+    <div class="states">
+      <figure class="state"><div class="stage la"><div class="cd" style="font-size:36px" data-cd="7207">2:00:07</div></div><figcaption><b>Lock banner</b> · 36 Light</figcaption></figure>
+      <figure class="state"><div class="stage la"><div class="cd" style="font-size:34px" data-cd="5405">1:30:05</div></div><figcaption><b>Expanded</b> · 34 Light</figcaption></figure>
+      <figure class="state"><div class="stage la" style="background:#000"><div class="cd" style="font-size:15px;font-weight:500" data-cd="1805">30:05</div></div><figcaption><b>Compact</b> · 15 Medium, max 60 wide</figcaption></figure>
+      <figure class="state"><div class="stage la"><div class="cd" style="font-size:36px">0:00</div></div><figcaption><b>At the drop</b> · stays 0:00</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Defaults</dt><dd>size 44, weight Light, tint white, leading</dd>
+      <dt>Range</dt><dd><code>min(now, drop)...drop</code>, so a past drop reads 0:00</dd>
+      <dt>VoiceOver</dt><dd>part of the presentation’s full phrase (see Live Activity)</dd>
+      <dt>IDs</dt><dd><code>la-countdown</code>, <code>la-small-countdown</code>, <code>la-compact-timer</code></dd>
+    </dl></div><div class="codebox"><pre><code>LiveActivityCountdown(dropDate: state.dropDate, now: now, size: 36)
+// Text(timerInterval: min(now, dropDate)...dropDate, countsDown: true), no pauseTime (D-52)</code></pre></div></div>
+  </article>
+
+  <!-- ===== Upcoming ===== -->
+  <div class="group-title"><h3 id="comp-upcoming">Lists: Upcoming</h3></div>
+
+  <article class="comp" id="c-upcoming-hero" data-search="UpcomingHero hero upcoming next drop" data-title="Upcoming hero" data-kind="Component" data-sub="UpcomingHero.swift">
+    <div class="comp-head"><h4>Upcoming hero</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Upcoming/UpcomingHero.swift:5-25</span></div>
+    <p class="purpose">The soonest drop that is out now or still to come, at the top of Upcoming: its art fading into night, then the headline and meta, overlapping the art by 64 pt.</p>
+    <div class="states">
+      <figure class="state"><div class="stage" style="zoom:.55;width:390px;padding:0;border-radius:20px"><div class="nah" style="height:472px"><div class="fill ph-art"></div><div class="fade" style="background:linear-gradient(180deg,rgba(28,28,28,0) 40%,#1C1C1C 100%)"></div><div class="scrim"></div></div><div style="padding:0 24px 28px;margin-top:-64px;position:relative"><div class="hl-title">Silo</div><div class="cd hl-cd" data-cd="7807">2:10:07</div><div class="hl-out">Expected today at 23:00 Lagos time</div><div class="meta" style="margin-top:12px">S4E1 · Apple TV</div></div></div><figcaption><b>Counting down</b> · shown at 55%</figcaption></figure>
+      <figure class="state"><div class="stage" style="zoom:.55;width:390px;padding:0;border-radius:20px;background:#181E24"><div class="nah" style="height:472px"><div class="fill ph-art cool"></div><div class="fade" style="background:linear-gradient(180deg,rgba(24,30,36,0) 40%,#181E24 100%)"></div><div class="scrim"></div></div><div style="padding:0 24px 28px;margin-top:-64px;position:relative"><div class="hl-title">House of the Dragon</div><div class="cd hl-cd"><span style="font-size:.7em">Out now</span></div><div class="hl-out">Released today at 21:00 Lagos time</div><div class="meta" style="margin-top:12px">S3E4 · HBO · US</div><div class="meta">No official stream in your country</div></div></div><figcaption><b>Out now</b> · no stream · cool art</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Layout</dt><dd>NightArtHeader 472 → VStack(spacing 12) ReleaseHeadline + ReleaseMeta, sides 24, top −64</dd>
+      <dt>Behaviour</dt><dd>plain button → Show detail; the page redraws every second, so a drop moves to “Out now” without a reload</dd>
+      <dt>VoiceOver</dt><dd>one button: “Silo, heading … Expected today at 23:00 Lagos time, S4E1 · Apple TV”</dd>
+      <dt>ID</dt><dd><code>upcoming-hero</code> (on the button)</dd>
+      <dt>Hit target</dt><dd>the whole hero</dd>
+    </dl></div><div class="codebox"><pre><code>Button { onSelect(hero) } label: {
+    UpcomingHero(drop: hero, image: image, base: base, now: now, formatter: formatter)
+}
+.buttonStyle(.plain)
+.accessibilityIdentifier("upcoming-hero")</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-section-header" data-search="section header out now next 24 hours this week later date only nothing scheduled" data-title="Section header" data-kind="Component" data-sub="UpcomingView.swift">
+    <div class="comp-head"><h4>Section header</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Upcoming/UpcomingView.swift:143-147</span></div>
+    <p class="purpose">Groups Upcoming in SPEC’s order. One quiet line, no count (the counted <code>SectionHeader</code> is legacy).</p>
+    <div class="states">
+      <figure class="state"><div class="stage" style="width:300px;display:grid;gap:14px"><span class="sechead">Out now</span><span class="sechead">Next 24 hours</span><span class="sechead">This week</span><span class="sechead">Later</span><span class="sechead">Date only</span><span class="sechead">Nothing scheduled</span></div><figcaption><b>All six</b>, in order</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Type</dt><dd>SF Pro <code>.subheadline</code> medium (15), <code>NightInk.muted</code></dd>
+      <dt>Buckets</dt><dd>out now: drop ≤ now (until +1 h) · next 24 h · this week (≤ 7 days) · later · date only · nothing scheduled</dd>
+      <dt>VoiceOver</dt><dd>“Next 24 hours, heading”</dd>
+      <dt>IDs</dt><dd><code>section-header-out-now</code>, <code>-next-24</code>, <code>-this-week</code>, <code>-later</code>, <code>-date-only</code>, <code>-nothing</code></dd>
+    </dl></div><div class="codebox"><pre><code>Text(section.title)
+    .font(.subheadline.weight(.medium))
+    .foregroundStyle(NightInk.muted)
+    .accessibilityAddTraits(.isHeader)</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-upcoming-row" data-search="upcoming row drop row list item countdown out line" data-title="Upcoming row" data-kind="Component" data-sub="UpcomingView.swift">
+    <div class="comp-head"><h4>Upcoming row</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Upcoming/UpcomingView.swift:187-221</span></div>
+    <p class="purpose">One followed drop: art, then the hero’s facts smaller. The countdown sits beside the title only, so the lines below get the full width.</p>
+    <div class="states">
+      <figure class="state"><div class="stage" style="width:350px"><div class="urow"><div class="art ph-art"></div><div class="col"><div class="top"><span class="t">Frieren: Beyond Journey’s End</span><span class="cd c" data-cd="19524">5:25:24</span></div><div class="out">Airs in Japan tomorrow at 01:24</div><div class="meta">S2E8 · Crunchyroll</div></div></div></div><figcaption><b>Anime</b> · ticking, 2-line title</figcaption></figure>
+      <figure class="state"><div class="stage" style="width:350px"><div class="urow"><div class="art ph-art"></div><div class="col"><div class="top"><span class="t">Wednesday</span><span class="cd c" data-cd="266422">3<span class="d">d </span>2:00:22</span></div><div class="out">Expected Sat at 09:00</div><div class="meta">S3E1 · Netflix</div></div></div></div><figcaption><b>Estimate</b> · days</figcaption></figure>
+      <figure class="state"><div class="stage" style="width:350px"><div class="urow"><div class="art ph-art cool"></div><div class="col"><div class="top"><span class="t">House of the Dragon</span><span class="cd c" data-cd="187822">2<span class="d">d </span>4:10:22</span></div><div class="out">Out Wed at 02:00</div><div class="meta">S3E4 · HBO · US</div><div class="meta">No official stream in your country</div></div></div></div><figcaption><b>Exact</b> · no official stream</figcaption></figure>
+      <figure class="state"><div class="stage" style="width:350px"><div class="urow"><div class="art" style="background:#525252"></div><div class="col"><div class="top"><span class="t">Severance</span></div><div class="out">Out Thu 19 Nov, time not announced</div><div class="meta">S3E1 · Apple TV</div></div></div></div><figcaption><b>Date only</b> · no countdown; art loading (<code>#525252</code>)</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Layout</dt><dd>art 64 × 64, radius 10 · gap 16 · column spacing 4 · rows 24 apart</dd>
+      <dt>Type</dt><dd>title New York 20 (2 lines) · countdown Light 24, trailing on the first baseline · out line <code>.subheadline</code> secondary · ReleaseMeta</dd>
+      <dt>Copy</dt><dd><code>ReleaseWording.outLine</code> without “Lagos time”</dd>
+      <dt>VoiceOver</dt><dd>one button reading its texts in order: “House of the Dragon, 2 days 4 hours, Out Wed at 02:00, S3E4 · HBO · US, No official stream in your country” (inferred: a plain Button label)</dd>
+      <dt>IDs</dt><dd><code>drop-row-&lt;n&gt;</code>, <code>-title</code>, <code>-time</code></dd>
+      <dt>Hit target</dt><dd>the whole row (<code>contentShape(Rectangle())</code>)</dd>
+      <dt>Gap</dt><dd>A delayed drop (old time struck through) isn’t shown here yet; only the Live Activity shows it</dd>
+    </dl></div><div class="codebox"><pre><code>row(drop, index: n, now: context.date)   // private in UpcomingView
+// title:  .font(.system(size: 20, design: .serif))
+// count:  CountdownText(..., size: 24, tint: .white, alignment: .trailing)
+// line:   Text(ReleaseWording.outLine(drop, now: now, formatter: formatter))
+//           .font(.subheadline).foregroundStyle(NightInk.secondary)</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-quiet-grid" data-search="quiet grid nothing scheduled poster between seasons ended" data-title="Quiet grid cell" data-kind="Component" data-sub="UpcomingView.swift">
+    <div class="comp-head"><h4>Quiet grid cell (Nothing scheduled)</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Upcoming/UpcomingView.swift:162-184</span></div>
+    <p class="purpose">Followed shows with no next episode, as the same three-across poster grid as Search: poster, title, and why there’s no time.</p>
+    <div class="states">
+      <figure class="state"><div class="stage"><div class="pcell"><div class="poster ph-poster"></div><div class="t">From</div><div class="m">Between seasons · last episode Sun 22 Jun 2025</div></div></div><figcaption><b>Between seasons</b></figcaption></figure>
+      <figure class="state"><div class="stage"><div class="pcell"><div class="poster ph-poster"></div><div class="t">Andor</div><div class="m">Ended · last episode Tue 13 May 2025</div></div></div><figcaption><b>Ended</b></figcaption></figure>
+      <figure class="state"><div class="stage"><div class="pcell"><div class="poster empty"><svg width="22" height="22" style="color:var(--app-ink-muted)"><use href="#i-tv"/></svg></div><div class="t">Solo Leveling</div><div class="m">Ended</div></div></div><figcaption><b>No poster</b> · <code>tv</code> glyph</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Grid</dt><dd>3 flexible columns, gap 12, rows 16; cell spacing 4</dd>
+      <dt>Type</dt><dd>title <code>.footnote</code> medium (2 lines) · note <code>.caption</code> muted (3 lines)</dd>
+      <dt>Reasons</dt><dd>Ended · Between seasons · On hiatus · Waiting for news · Not out yet · No new episode announced (+ “· last episode Fri 4 Sep”)</dd>
+      <dt>VoiceOver</dt><dd>“From, Between seasons · last episode Sun 22 Jun 2025”</dd>
+      <dt>IDs</dt><dd><code>nothing-&lt;n&gt;</code>, <code>-title</code>, <code>-note</code></dd>
+      <dt>Hit target</dt><dd>not tappable</dd>
+    </dl></div><div class="codebox"><pre><code>PosterImage(url: art?.posterThumbnail ?? art?.poster, cornerRadius: 8)
+    .aspectRatio(2 / 3, contentMode: .fit)
+Text(ReleaseWording.quietNote(status: show.status, lastAired: show.lastAired,
+                              formatter: formatter, now: now))
+    .font(.caption).foregroundStyle(NightInk.muted).lineLimit(3)</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-spotlight" data-search="spotlight upcoming date only quiet featured" data-title="Spotlight" data-kind="Component" data-sub="UpcomingView.swift">
+    <div class="comp-head"><h4>Spotlight</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Upcoming/UpcomingView.swift:82-118</span></div>
+    <p class="purpose">With no countdown to lead with, the top of Upcoming still features a show’s art, so it never goes blank (Chime: “too bland”).</p>
+    <div class="states">
+      <figure class="state"><div class="stage" style="zoom:.55;width:390px;padding:0;border-radius:20px"><div class="nah" style="height:472px"><div class="fill ph-art"></div><div class="fade" style="background:linear-gradient(180deg,rgba(28,28,28,0) 40%,#1C1C1C 100%)"></div><div class="scrim"></div></div><div style="padding:0 24px 28px;margin-top:-64px;position:relative;display:grid;gap:8px"><div class="hl-title">Severance</div><div class="hl-out" style="margin:0">Out Thu 19 Nov, time not announced</div><div class="meta">S3E1 · Apple TV</div></div></div><figcaption><b>Date only</b> · tappable</figcaption></figure>
+      <figure class="state"><div class="stage" style="zoom:.55;width:390px;padding:0;border-radius:20px"><div class="nah" style="height:472px"><div class="fill ph-art"></div><div class="fade" style="background:linear-gradient(180deg,rgba(28,28,28,0) 40%,#1C1C1C 100%)"></div><div class="scrim"></div></div><div style="padding:0 24px 28px;margin-top:-64px;position:relative;display:grid;gap:8px"><div class="hl-title">Silo</div><div class="hl-out" style="margin:0">Between seasons · last episode Fri 4 Sep</div><div class="meta" style="margin-top:8px">Nothing scheduled for your shows yet. Airstamp checks again each time you open it.</div></div></div><figcaption><b>Quiet show</b> · not tappable</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Type</dt><dd>title New York 32 · note <code>.body</code> medium · footnote muted</dd>
+      <dt>VoiceOver</dt><dd>date only: one button “Severance, Out Thu 19 Nov, time not announced, S3E1 · Apple TV”</dd>
+      <dt>IDs</dt><dd><code>upcoming-spotlight</code>, <code>-title</code>, <code>-note</code>, <code>upcoming-empty</code></dd>
+    </dl></div><div class="codebox"><pre><code>Button { onSelect(drop) } label: { spotlight(sections, image: image, base: base, now: now) }
+    .buttonStyle(.plain)
+    .accessibilityIdentifier("upcoming-spotlight")</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-upcoming-empty" data-search="empty state upcoming follow a show find a show nothing scheduled returns failed loading" data-title="Upcoming empty states" data-kind="Component" data-sub="UpcomingView.swift">
+    <div class="comp-head"><h4>Empty states</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Upcoming/UpcomingView.swift:29-77,120-133 · UpcomingSections.swift:77-82</span></div>
+    <p class="purpose">Each says what is true and what to do next. None promises when the app will check again (D-27).</p>
+    <div class="states">
+      <figure class="state"><div class="stage" style="width:330px;padding:24px"><div style="font:28px/1.2 var(--serif)">Follow a show to see its countdown here</div><div style="margin-top:16px"><span class="btn-primary" style="display:inline-flex;height:34px;padding:0 14px;font-size:15px">Find a show</span></div></div><figcaption><b>No shows</b> · <code>upcoming-empty-follow</code>, <code>upcoming-empty-find</code></figcaption></figure>
+      <figure class="state"><div class="stage" style="width:330px;padding:24px"><div style="font:28px/1.2 var(--serif)">Nothing scheduled for your shows yet. Airstamp checks again each time you open it.</div></div><figcaption><b>Nothing to feature</b> · <code>upcoming-empty</code></figcaption></figure>
+      <figure class="state"><div class="stage" style="width:330px;padding:24px"><div style="font:28px/1.2 var(--serif)">Silo returns Fri 9 Jul 2027</div></div><figcaption><b>A date is known</b></figcaption></figure>
+      <figure class="state"><div class="stage" style="width:330px;padding:24px"><div class="meta">Couldn’t reach TVmaze for Silo and Andor. Pull down to try again.</div></div><figcaption><b>Partial failure</b> · <code>upcoming-failed</code></figcaption></figure>
+      <figure class="state"><div class="stage" style="width:160px;height:110px;display:grid;place-items:center"><span aria-label="Loading" role="img" style="width:22px;height:22px;border-radius:50%;border:2.5px solid rgba(255,255,255,.25);border-top-color:#fff;display:block"></span></div><figcaption><b>Loading</b> · ProgressView, top 240</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Type</dt><dd>headline New York 28 · error <code>.footnote</code> muted</dd>
+      <dt>Button</dt><dd><code>.borderedProminent</code>, white tint, black text (default height)</dd>
+      <dt>Layout</dt><dd>sides 24, top 120</dd>
+      <dt>Rename</dt><dd>“Airstamp checks again…” becomes “Meridian checks again…”</dd>
+    </dl></div><div class="codebox"><pre><code>Button("Find a show", action: onFind)
+    .buttonStyle(.borderedProminent)
+    .tint(.white)
+    .foregroundStyle(.black)
+    .accessibilityIdentifier("upcoming-empty-find")</code></pre></div></div>
+  </article>
+
+  <!-- ===== Search ===== -->
+  <div class="group-title"><h3 id="comp-search">Search</h3></div>
+
+  <article class="comp" id="c-kind-switch" data-search="kind switch segmented picker tv anime" data-title="Kind switch (TV | Anime)" data-kind="Component" data-sub="SearchView.swift">
+    <div class="comp-head"><h4>Kind switch</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Search/SearchView.swift:46-50</span></div>
+    <p class="purpose">Picks the catalogue: TVmaze for TV, AniList for anime (D-19). Switching clears the other catalogue’s results.</p>
+    <div class="states">
+      <figure class="state"><div class="stage" style="width:330px"><div class="seg"><span class="sel">TV</span><span>Anime</span></div></div><figcaption><b>TV</b></figcaption></figure>
+      <figure class="state"><div class="stage" style="width:330px"><div class="seg"><span>TV</span><span class="sel">Anime</span></div></div><figcaption><b>Anime</b></figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Control</dt><dd>system segmented <code>Picker</code>, dark</dd>
+      <dt>Copy</dt><dd><q>TV</q> · <q>Anime</q></dd>
+      <dt>VoiceOver</dt><dd>“TV, selected, 1 of 2” (system)</dd>
+      <dt>ID</dt><dd><code>search-kind</code></dd>
+    </dl></div><div class="codebox"><pre><code>Picker("Kind", selection: $kind) {
+    ForEach(Kind.allCases, id: \.self) { Text($0.rawValue).tag($0) }
+}
+.pickerStyle(.segmented)</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-filter-chip" data-search="filter chip popular today new seasons exact time picked" data-title="Filter chip" data-kind="Component" data-sub="SearchFilterRow.swift">
+    <div class="comp-head"><h4>Filter chip</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Search/SearchFilterRow.swift:34-52,78-92</span></div>
+    <p class="purpose">Narrows the airing grid, one at a time, like the TV | Anime switch (D-43). The row runs to the screen’s edges and keeps the picked chip in view.</p>
+    <div class="states">
+      <figure class="state"><div class="stage" style="max-width:520px"><div class="chiprow"><span class="fchip on">Popular</span><span class="fchip">Today</span><span class="fchip">New seasons</span><span class="fchip">Exact time</span></div></div><figcaption><b>Popular picked</b> (default) · TV</figcaption></figure>
+      <figure class="state"><div class="stage"><div class="chiprow"><span class="fchip">Popular</span><span class="fchip on">Today</span><span class="fchip">New seasons</span></div></div><figcaption><b>Anime</b>: three chips</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Size</dt><dd>capsule min height 34, sides 12; the tap area is min 44 tall; chips 8 apart</dd>
+      <dt>Picked</dt><dd>white fill, black text, <code>.isSelected</code></dd>
+      <dt>Unpicked</dt><dd>black@0.55 fill, white text, white@0.35 hairline</dd>
+      <dt>Type</dt><dd>SF Pro <code>.subheadline</code> medium (15)</dd>
+      <dt>VoiceOver</dt><dd>“Today, selected, button”</dd>
+      <dt>IDs</dt><dd><code>search-filters</code>; <code>search-filter-popular</code>, <code>-today</code>, <code>-new-seasons</code>, <code>-exact-time</code></dd>
+      <dt>Hit target</dt><dd>chip width × 44</dd>
+    </dl></div><div class="codebox"><pre><code>SearchFilterRow(options: AiringFilter.options(for: kind), selection: filter, logos: Self.logos)
+    .padding(.top, Tokens.Space.s)</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-service-chip" data-search="service chip logo tile netflix prime video hbo max disney paramount hulu peacock apple tv cbs nbc abc fox" data-title="Service chip" data-kind="Component" data-sub="SearchFilterRow.swift">
+    <div class="comp-head"><h4>Service chip</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Search/SearchFilterRow.swift:57-75 · PopularServices.swift</span></div>
+    <p class="purpose">A filter chip for one of 12 major platforms, always in the same order (D-45), with its logo on a small white tile (D-44). Shown here with a neutral letter tile in place of the real logo.</p>
+    <div class="states">
+      <figure class="state"><div class="stage" style="max-width:560px"><div class="chiprow"><span class="fchip"><span class="logo-tile">N</span>Netflix</span><span class="fchip on"><span class="logo-tile" style="box-shadow:inset 0 0 0 1px #ddd">P</span>Paramount+</span><span class="fchip"><span class="logo-tile">H</span>Hulu</span></div></div><figcaption><b>Logo loaded</b> · Paramount+ picked</figcaption></figure>
+      <figure class="state"><div class="stage"><div class="chiprow"><span class="fchip"><span class="logo-tile gap"></span>Peacock</span></div></div><figcaption><b>Loading / failed</b> · the space is kept, never a white box</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Order</dt><dd>Netflix, Prime Video, HBO Max, Disney+, Paramount+, Hulu, Peacock, Apple TV, CBS, NBC, ABC, FOX (TV only)</dd>
+      <dt>Logo tile</dt><dd>30 × 22, radius 5, white, logo fitted with 3 pt padding, 8 pt before the name; loaded at 120 px from Wikimedia Commons</dd>
+      <dt>Empty result</dt><dd><q>Nothing on Paramount+ in the next few days.</q> + <q>Show popular</q></dd>
+      <dt>VoiceOver</dt><dd>“Netflix, button” (the logo is hidden; the name says it)</dd>
+      <dt>ID</dt><dd><code>search-filter-service-netflix</code>, <code>-prime-video</code>, <code>-disney-</code>, <code>-paramount-</code>…</dd>
+      <dt>Hit target</dt><dd>chip width × 44</dd>
+    </dl></div><div class="codebox"><pre><code>// SearchFilter.service("Netflix").identifier == "search-filter-service-netflix"
+AiringFilter.options(for: .tv)   // [.popular, .today, .newSeasons, .exactTime] + 12 services</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-follow-plus" data-search="follow plus button poster following checkmark" data-title="Follow (+) button" data-kind="Component" data-sub="SearchView.swift">
+    <div class="comp-head"><h4>Follow (+) button</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Search/SearchView.swift:227-245</span></div>
+    <p class="purpose">Follows a show in one tap from its poster, without opening the page. Nothing is followed until you tap it.</p>
+    <div class="states">
+      <figure class="state"><div class="stage ph-art" style="width:110px;height:110px"><span class="plus" style="z-index:1"><svg><use href="#i-plus"/></svg></span></div><figcaption><b>Follow</b></figcaption></figure>
+      <figure class="state"><div class="stage ph-art" style="width:110px;height:110px"><span class="plus on" style="z-index:1"><svg><use href="#i-check"/></svg></span></div><figcaption><b>Following</b></figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Size</dt><dd>32 circle (glyph 12.8 semibold) inside a 44 × 44 tap area, 4 pt from the poster’s corner</dd>
+      <dt>Follow</dt><dd><code>plus</code>, white on black@0.55 with a white@0.35 ring</dd>
+      <dt>Following</dt><dd><code>checkmark</code>, black on white</dd>
+      <dt>VoiceOver</dt><dd>“Follow Silo, button” / “Following Silo, button”</dd>
+      <dt>ID</dt><dd><code>search-result-&lt;n&gt;-follow</code>, <code>airing-&lt;n&gt;-follow</code></dd>
+      <dt>Hit target</dt><dd>44 × 44</dd>
+    </dl></div><div class="codebox"><pre><code>followButton(result, size: 32, id: "\(id)-follow")
+    .padding(Tokens.Space.xxs)   // overlay(alignment: .topTrailing) on the poster</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-poster-cell" data-search="poster grid cell search result airing meta title" data-title="Poster grid cell" data-kind="Component" data-sub="SearchView.swift">
+    <div class="comp-head"><h4>Poster grid cell</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Search/SearchView.swift:178-225</span></div>
+    <p class="purpose">One show in Search’s three-across grid (Plex “Popular Searches”). Before you type it says where and when; after you type, the year, network, country and status that tell same-name shows apart.</p>
+    <div class="states">
+      <figure class="state"><div class="stage"><div class="pcell"><div class="poster ph-poster"><span class="plus"><svg><use href="#i-plus"/></svg></span></div><div class="t">Tracker</div><div class="m">CBS<br>Out tomorrow at 03:30</div></div></div><figcaption><b>Airing</b> · network + out line</figcaption></figure>
+      <figure class="state"><div class="stage"><div class="pcell"><div class="poster ph-poster"><span class="plus on"><svg><use href="#i-check"/></svg></span></div><div class="t">The Last of Us</div><div class="m">2023 · HBO · US<br>Running</div></div></div><figcaption><b>Result</b> · followed</figcaption></figure>
+      <figure class="state"><div class="stage"><div class="pcell"><div class="poster empty"><svg width="22" height="22" style="color:var(--app-ink-muted)"><use href="#i-tv"/></svg><span class="plus"><svg><use href="#i-plus"/></svg></span></div><div class="t">Frieren: Beyond Journey’s End</div><div class="m">Crunchyroll<br>Airs in Japan Fri at 17:00</div></div></div><figcaption><b>No poster</b> · anime</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Poster</dt><dd>2:3, radius 8; TVmaze 210 × 295 loaded at 420 px</dd>
+      <dt>Type</dt><dd>title <code>.footnote</code> medium, 2 lines · meta <code>.caption</code> muted, 2 lines a part</dd>
+      <dt>Headers</dt><dd>New York 22: <q>Airing in the next few days</q> · <q>Airing in Japan this week</q> · <q>Results</q></dd>
+      <dt>VoiceOver</dt><dd>“Tracker, button, Opens the show”; meta read as one line “2023 · HBO · US · Running”</dd>
+      <dt>IDs</dt><dd><code>airing-&lt;n&gt;</code> / <code>search-result-&lt;n&gt;</code> with <code>-title</code>, <code>-meta</code>, <code>-follow</code>; headers <code>search-airing-header</code>, <code>search-results-header</code></dd>
+      <dt>Hit target</dt><dd>the whole cell opens the show page; the (+) follows</dd>
+    </dl></div><div class="codebox"><pre><code>posterGrid("Results", headerID: "search-results-header", results, idPrefix: "search-result") { result in
+    VStack(alignment: .leading, spacing: 0) {
+        if !result.gridMeta.isEmpty { Text(result.gridMeta) }
+        if let status = result.status { Text(status) }
+    }
+    .accessibilityElement(children: .ignore)
+    .accessibilityLabel(result.meta)
+}</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-search-messages" data-search="search messages empty error no results filter empty show popular" data-title="Search messages" data-kind="Component" data-sub="SearchView.swift">
+    <div class="comp-head"><h4>Search messages</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Search/SearchView.swift:99-135 · AiringFilter.swift:71-80</span></div>
+    <p class="purpose">One plain line in place of a blank grid; a filter with no match offers the way back.</p>
+    <div class="states">
+      <figure class="state"><div class="stage" style="width:320px"><div style="color:var(--app-ink-muted);font-size:17px">Search TVmaze for a show to follow</div></div><figcaption><b>Empty</b> · <code>search-empty</code></figcaption></figure>
+      <figure class="state"><div class="stage" style="width:320px"><div style="color:var(--app-ink-muted);font-size:17px">No shows match “Sillo”</div></div><figcaption><b>No results</b> · <code>search-no-results</code></figcaption></figure>
+      <figure class="state"><div class="stage" style="width:320px"><div style="color:var(--app-ink-muted);font-size:17px">Couldn’t reach TVmaze. Check your connection and try again.</div></div><figcaption><b>Network error</b> · <code>search-error</code></figcaption></figure>
+      <figure class="state"><div class="stage" style="width:320px"><div style="color:var(--app-ink-muted);font-size:17px">Nothing left to air today.</div><div style="margin-top:12px"><span class="btn-bordered">Show popular</span></div></div><figcaption><b>Filter, no match</b> · <code>search-filter-empty</code>, <code>search-filter-clear</code></figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Type</dt><dd>SF Pro <code>.body</code>, <code>NightInk.muted</code>, top 24</dd>
+      <dt>Filter lines</dt><dd>“Nothing airing in the next few days.” · “Nothing left to air today.” · “No new seasons in the next few days.” · “No confirmed times in the next few days.” · “Nothing on Netflix in the next few days.” (anime: “this week”)</dd>
+      <dt>Field</dt><dd>prompt <q>Shows and anime</q>; searches after 2 characters and a 400 ms pause</dd>
+      <dt>Button</dt><dd><code>.bordered</code>, white tint</dd>
+    </dl></div><div class="codebox"><pre><code>Button("Show popular") { filter.wrappedValue = .popular }
+    .buttonStyle(.bordered)
+    .tint(.white)
+    .accessibilityIdentifier("search-filter-clear")</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-follow-button" data-search="follow button capsule following primary" data-title="Follow capsule" data-kind="Component" data-sub="ShowPreviewView.swift">
+    <div class="comp-head"><h4>Follow capsule</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Search/ShowPreviewView.swift:94-110</span></div>
+    <p class="purpose">The show page’s one main action. White until followed, then a dark “Following” with a check, like the poster’s (+).</p>
+    <div class="states">
+      <figure class="state"><div class="stage" style="width:330px"><span class="btn-follow"><svg width="15" height="15"><use href="#i-plus"/></svg>Follow</span></div><figcaption><b>Follow</b></figcaption></figure>
+      <figure class="state"><div class="stage" style="width:330px"><span class="btn-follow on"><svg width="15" height="15"><use href="#i-check"/></svg>Following</span></div><figcaption><b>Following</b></figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Size</dt><dd>full width, min height 50, capsule; <code>.headline</code></dd>
+      <dt>Follow</dt><dd>white fill, black text, <code>plus</code></dd>
+      <dt>Following</dt><dd>white@0.12 fill, white text, white@0.35 stroke, <code>checkmark</code></dd>
+      <dt>VoiceOver</dt><dd>“Follow Silo, button” / “Following Silo, button”</dd>
+      <dt>ID</dt><dd><code>show-preview-follow</code></dd>
+      <dt>Hit target</dt><dd>full width × 50</dd>
+    </dl></div><div class="codebox"><pre><code>Label(following ? "Following" : "Follow", systemImage: following ? "checkmark" : "plus")
+    .font(.headline)
+    .foregroundStyle(following ? .white : .black)
+    .frame(maxWidth: .infinity, minHeight: 50)
+    .background(following ? AnyShapeStyle(.white.opacity(0.12)) : AnyShapeStyle(.white), in: Capsule())</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-show-page" data-search="show page show preview search poster opens follow" data-title="Show page" data-kind="Screen" data-sub="ShowPreviewView.swift">
+    <div class="comp-head"><h4>Show page</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Search/ShowPreviewView.swift</span></div>
+    <p class="purpose">What any poster on the Search tab opens: Night Sky like Upcoming. Key art (else the poster) with the back button, the headline, the year · network · status line, and Follow. With nothing scheduled, only the title.</p>
+    <div class="states">
+      <figure class="state"><div class="stage" style="zoom:.5;width:390px;padding:0;border-radius:24px"><div class="nah" style="height:500px"><div class="fill ph-art"></div><div class="fade" style="background:linear-gradient(180deg,rgba(28,28,28,0) 40%,#1C1C1C 100%)"></div><div class="scrim"></div><span class="glass" style="position:absolute;left:16px;top:58px" aria-hidden="true"><svg><use href="#i-chevron"/></svg></span></div><div style="padding:0 24px 32px;margin-top:-64px;position:relative;display:grid;gap:32px"><div style="display:grid;gap:12px"><div><div class="hl-title">Silo</div><div class="cd hl-cd"><span style="font-size:.6em">Fri 9 Jul 2027</span></div><div class="hl-out">Out Fri 9 Jul 2027, time not announced</div></div><div class="meta">2023 · Apple TV · Running</div></div><span class="btn-follow"><svg width="15" height="15"><use href="#i-plus"/></svg>Follow</span></div></div><figcaption><b>With a drop</b> · date only</figcaption></figure>
+      <figure class="state"><div class="stage" style="zoom:.5;width:390px;padding:0;border-radius:24px"><div class="nah" style="height:500px"><div class="fill ph-art warm"></div><div class="fade" style="background:linear-gradient(180deg,rgba(28,26,26,0) 40%,#1C1A1A 100%)"></div><div class="scrim"></div><span class="glass" style="position:absolute;left:16px;top:58px" aria-hidden="true"><svg><use href="#i-chevron"/></svg></span></div><div style="padding:0 24px 32px;margin-top:-64px;position:relative;display:grid;gap:32px;background:#1C1A1A"><div style="display:grid;gap:12px"><div class="hl-title">Andor</div><div class="meta">2022 · Disney+ · Ended</div></div><span class="btn-follow on"><svg width="15" height="15"><use href="#i-check"/></svg>Following</span></div></div><figcaption><b>Nothing scheduled</b> · following</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Layout</dt><dd>NightArtHeader 500 + glass back · sides 24, top −64 · blocks 32 apart</dd>
+      <dt>IDs</dt><dd><code>show-preview-art</code>, <code>show-preview-title</code>, <code>countdown</code>, <code>show-preview-out</code>, <code>show-preview-meta</code>, <code>show-preview-follow</code></dd>
+      <dt>Data</dt><dd>timed exactly as on Upcoming (same rules), so the two screens never disagree</dd>
+    </dl></div><div class="codebox"><pre><code>.navigationDestination(for: ShowRoute.self) { route in
+    ShowPreviewView(route: route, client: client, anilist: anilist, rules: rules)
+}</code></pre></div></div>
+  </article>
+
+  <!-- ===== Show detail ===== -->
+  <div class="group-title"><h3 id="comp-detail">Show detail</h3></div>
+
+  <article class="comp" id="c-source-sentence" data-search="source sentence explanation where the time came from detail why" data-title="Source sentence" data-kind="Component" data-sub="ReleaseWording.swift">
+    <div class="comp-head"><h4>Source sentence</h4><span class="badge live">live</span><span class="src">Airstamp/Features/ShowDetail/ShowDetailView.swift:78-83 · Shared/Time/ReleaseWording.swift:23-46</span></div>
+    <p class="purpose">Where the time came from, as one plain sentence instead of a code to learn (D-40).</p>
+    <div class="states">
+      <figure class="state"><div class="stage" style="width:330px"><div class="urow out" style="display:block;color:var(--app-ink-secondary);font-size:15px">That’s when HBO airs it in its home zone: Sun 21:00 New York time.</div></div><figcaption><b>Broadcast</b>, another zone</figcaption></figure>
+      <figure class="state"><div class="stage" style="width:330px"><div style="color:var(--app-ink-secondary);font-size:15px">Apple TV doesn’t publish release times, so this is when its new episodes usually arrive.</div></div><figcaption><b>Platform rule</b></figcaption></figure>
+      <figure class="state"><div class="stage" style="width:330px"><div style="color:var(--app-ink-secondary);font-size:15px">This is when it airs on Japanese TV. Streaming services may add it a little later.</div></div><figcaption><b>AniList</b></figcaption></figure>
+      <figure class="state"><div class="stage" style="width:330px"><div style="color:var(--app-ink-secondary);font-size:15px">Only the date is announced. The countdown starts once there’s a time.</div></div><figcaption><b>Date only</b></figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Type</dt><dd><code>.subheadline</code>, <code>NightInk.secondary</code>, wraps, top +8</dd>
+      <dt>All copy</dt><dd>“That’s when HBO airs it.” · “… in its home zone: Sun 21:00 New York time.” · “Apple TV doesn’t publish release times, so this is when its new episodes usually arrive.” · “This time was checked and confirmed.” · “This time was reported but isn’t confirmed yet.” · “Your 30-minute adjustment is added to the Japanese TV time.” (or “taken off”, “Netflix’s usual time”, “listed time”) · “This is when it airs on Japanese TV. Streaming services may add it a little later.” · “Only the date is announced. The countdown starts once there’s a time.”</dd>
+      <dt>ID</dt><dd><code>detail-why</code> inside <code>detail-next</code></dd>
+    </dl></div><div class="codebox"><pre><code>Text(ReleaseWording.explanation(drop, broadcastZone: drop.broadcastZone, formatter: formatter))
+    .font(.subheadline)
+    .foregroundStyle(NightInk.secondary)
+    .fixedSize(horizontal: false, vertical: true)</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-la-toggle" data-search="live activity toggle switch release night detail" data-title="Live Activity toggle" data-kind="Component" data-sub="ShowDetailView.swift">
+    <div class="comp-head"><h4>Live Activity toggle</h4><span class="badge live">live</span><span class="src">Airstamp/Features/ShowDetail/ShowDetailView.swift:89-99</span></div>
+    <p class="purpose">Per show, opt-in to the release-night Live Activity (D-10). Flipping it schedules or cancels at once.</p>
+    <div class="states">
+      <figure class="state"><div class="stage" style="width:340px"><div style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:17px">Release-night Live Activity</div><div class="meta" style="margin-top:2px">Starts 2 hours before, on your Lock Screen</div></div><span class="toggle on" role="img" aria-label="On"></span></div></div><figcaption><b>On</b> (default for a followed show)</figcaption></figure>
+      <figure class="state"><div class="stage" style="width:340px"><div style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:17px">Release-night Live Activity</div><div class="meta" style="margin-top:2px">Starts 30 minutes before, on your Lock Screen</div></div><span class="toggle" role="img" aria-label="Off"></span></div></div><figcaption><b>Off</b> · lead time 30 min</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Control</dt><dd>system <code>Toggle</code>, tint white@0.6</dd>
+      <dt>Type</dt><dd>title <code>.body</code> · subtitle <code>.footnote</code> muted; spacing 2</dd>
+      <dt>Copy</dt><dd>“Starts <i>{lead}</i> before, on your Lock Screen”, lead from Settings: 30 minutes · 1 hour · 2 hours · 3 hours · 4 hours · 6 hours</dd>
+      <dt>VoiceOver</dt><dd>“Release-night Live Activity, Starts 2 hours before, on your Lock Screen, switch, on”</dd>
+      <dt>ID</dt><dd><code>detail-live-activity</code></dd>
+      <dt>Hit target</dt><dd>the full row</dd>
+    </dl></div><div class="codebox"><pre><code>Toggle(isOn: $liveActivity) {
+    VStack(alignment: .leading, spacing: 2) {
+        Text("Release-night Live Activity").font(.body)
+        Text("Starts \(LeadTime.phrase(minutes: leadMinutes)) before, on your Lock Screen")
+            .font(.footnote).foregroundStyle(NightInk.muted)
+    }
+}
+.tint(.white.opacity(0.6))</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-episode-rows" data-search="EpisodeRows episodes past aired list detail" data-title="EpisodeRows" data-kind="Component" data-sub="ShowDetailView.swift">
+    <div class="comp-head"><h4>EpisodeRows</h4><span class="badge live">live</span><span class="src">Airstamp/Features/ShowDetail/ShowDetailView.swift:111-137</span></div>
+    <p class="purpose">The last three aired episodes, newest first, under an “Episodes” header. TVmaze shows only (anime has none, so the block is hidden).</p>
+    <div class="states">
+      <figure class="state"><div class="stage" style="width:360px"><div class="sechead" style="margin-bottom:8px">Episodes</div><div class="ep"><span class="l">S3E10</span><span class="t">Troy</span><span class="d">Fri 4 Sep</span></div><div class="ep"><span class="l">S3E9</span><span class="t">Farewell</span><span class="d">Fri 28 Aug</span></div><div class="ep"><span class="l">S3E8</span><span class="t">Gray Goo</span><span class="d">Fri 21 Aug</span></div></div><figcaption><b>Three episodes</b> (Silo, the recorded fixture)</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Row</dt><dd>label 52 wide, <code>.footnote</code> monospacedDigit semibold, white@0.6 · title <code>.body</code> medium · date <code>.footnote</code> white@0.6 · 12 vertical padding · 1 pt white@0.12 divider</dd>
+      <dt>VoiceOver</dt><dd>“S3E10, Troy, Fri 4 Sep”</dd>
+      <dt>IDs</dt><dd><code>detail-episode-1…3</code></dd>
+    </dl></div><div class="codebox"><pre><code>EpisodeRows(episodes: episodes, ink: .white, formatter: formatter)</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-detail-actions" data-search="unfollow report a wrong time confirmation dialog destructive" data-title="Report & Unfollow" data-kind="Component" data-sub="ShowDetailView.swift">
+    <div class="comp-head"><h4>Report &amp; Unfollow</h4><span class="badge live">live</span><span class="src">Airstamp/Features/ShowDetail/ShowDetailView.swift:45-55,68-70</span></div>
+    <p class="purpose">The quiet actions at the foot of Show detail. Unfollow is the only destructive action and always asks first.</p>
+    <div class="states">
+      <figure class="state"><div class="stage" style="width:300px;display:grid;gap:16px"><span style="font-size:15px;color:var(--app-ink-muted)">Report a wrong time</span><span style="font-size:15px;color:var(--app-ink-muted)">Unfollow</span></div><figcaption><b>Links</b> · Report is hidden until the email route ships (D-34)</figcaption></figure>
+      <figure class="state"><div class="stage" style="width:320px;background:rgba(0,0,0,.6)"><div style="background:rgba(44,44,46,.96);border-radius:14px;overflow:hidden;text-align:center"><div style="padding:14px;font:600 13px var(--sans);color:rgba(235,235,245,.6)">Stop following Silo?</div><div style="border-top:.5px solid rgba(84,84,88,.6);padding:14px;font-size:17px;color:var(--app-sys-red)">Unfollow</div></div><div style="background:rgba(44,44,46,.96);border-radius:14px;margin-top:8px;padding:14px;text-align:center;font:600 17px var(--sans);color:var(--app-sys-blue)">Cancel</div></div><figcaption><b>Confirmation dialog</b> (system)</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Type</dt><dd><code>.subheadline</code>, <code>NightInk.muted</code>, spacing 16</dd>
+      <dt>Copy</dt><dd><q>Report a wrong time</q> · <q>Unfollow</q> · dialog <q>Stop following Silo?</q></dd>
+      <dt>IDs</dt><dd><code>detail-report</code>, <code>detail-unfollow</code></dd>
+      <dt>Hit target</dt><dd>system button, ≥ 44 tall row</dd>
+    </dl></div><div class="codebox"><pre><code>Button("Unfollow", role: .destructive) { confirmingUnfollow = true }
+.confirmationDialog("Stop following \(drop.showName)?", isPresented: $confirmingUnfollow,
+                    titleVisibility: .visible) {
+    Button("Unfollow", role: .destructive) { onUnfollow(); dismiss() }
+}</code></pre></div></div>
+  </article>
+
+  <!-- ===== Settings ===== -->
+  <div class="group-title"><h3 id="comp-settings">Settings</h3></div>
+
+  <article class="comp" id="c-settings-list" data-search="settings rows time zone automatic lead time permission live activities credits debug list" data-title="Settings rows" data-kind="Component" data-sub="SettingsView.swift">
+    <div class="comp-head"><h4>Settings rows</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Settings/SettingsView.swift:15-69</span></div>
+    <p class="purpose">A system list, forced dark: the zone in use, the Live Activity lead time and permission, credits, and Debug in Debug builds.</p>
+    <div class="states">
+      <figure class="state"><div class="stage sys" style="width:360px;padding:0"><div class="list">
+        <div class="lh">Time zone</div><div class="grp"><div class="cell">Automatic<span class="v">Lagos, UTC+1</span></div></div>
+        <div class="lh" style="padding-top:22px"></div><div class="grp"><div class="cell">Live Activity lead time<span class="v">2 hours ⌃⌄</span></div><div class="cell">Live Activities are on</div></div>
+        <div class="lf">The release-night Live Activity starts this long before an episode is out.</div>
+        <div class="lh" style="padding-top:18px"></div><div class="grp"><div class="cell">Credits &amp; licences<span class="chev">›</span></div></div>
+        <div class="lh" style="padding-top:18px"></div><div class="grp"><div class="cell">Debug<span class="chev">›</span></div></div>
+      </div></div><figcaption><b>Permission on</b> · Debug build</figcaption></figure>
+      <figure class="state"><div class="stage sys" style="width:360px;padding:0"><div class="list"><div class="grp"><div class="cell">Live Activity lead time<span class="v">2 hours ⌃⌄</span></div><div class="cell" style="display:block">Live Activities are off in Settings › Airstamp<div class="blue" style="margin-top:4px">Open Settings</div></div></div></div></div><figcaption><b>Permission off</b> · link to iOS Settings</figcaption></figure>
+      <figure class="state"><div class="stage sys" style="width:240px;padding:12px"><div style="background:rgba(44,44,46,.98);border-radius:14px;padding:6px 0;font-size:17px"><div style="padding:8px 16px">30 minutes</div><div style="padding:8px 16px">1 hour</div><div style="padding:8px 16px">✓ 2 hours</div><div style="padding:8px 16px">3 hours</div><div style="padding:8px 16px">4 hours</div><div style="padding:8px 16px">6 hours</div></div></div><figcaption><b>Lead-time picker</b> · open</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Colours</dt><dd>system dark list: background <code>#000000</code>, cells <code>#1C1C1E</code> (<span class="badge system">system</span>; differs from the Night Sky <code>#1C1C1C</code> pages)</dd>
+      <dt>Copy</dt><dd><q>Time zone</q> · <q>Automatic</q> <q>Lagos, UTC+1</q> · <q>Live Activity lead time</q> · <q>Live Activities are on</q> / <q>Live Activities are off in Settings › Airstamp</q> + <q>Open Settings</q> · footer <q>The release-night Live Activity starts this long before an episode is out.</q> · <q>Credits &amp; licences</q> · <q>Debug</q></dd>
+      <dt>IDs</dt><dd><code>settings-zone</code>, <code>settings-lead</code>, <code>settings-la-permission</code>, <code>settings-la-open</code>, <code>settings-credits</code>, <code>settings-debug</code></dd>
+      <dt>Hit target</dt><dd>system rows, ≥ 44</dd>
+    </dl></div><div class="codebox"><pre><code>Section("Time zone") {
+    LabeledContent("Automatic", value: ReleaseWording.zoneSummary(formatter, at: .now))
+}
+Section {
+    Picker("Live Activity lead time", selection: $leadMinutes) {
+        ForEach(LeadTime.choices, id: \.self) { Text(LeadTime.phrase(minutes: $0)).tag($0) }
+    }
+    permission
+} footer: {
+    Text("The release-night Live Activity starts this long before an episode is out.")
+}</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-credits" data-search="credits licences tvmaze anilist wikimedia mit no data privacy" data-title="Credits" data-kind="Screen" data-sub="SettingsView.swift">
+    <div class="comp-head"><h4>Credits &amp; licences</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Settings/SettingsView.swift:73-103</span></div>
+    <p class="purpose">Where the data comes from, its licences, and that nothing is collected.</p>
+    <div class="states">
+      <figure class="state"><div class="stage sys" style="width:380px;padding:0"><div class="list"><div class="grp">
+        <div class="cell" style="display:block">Show and episode data from TVmaze, licensed under CC BY-SA 4.0<div class="blue" style="margin-top:4px">tvmaze.com</div></div>
+        <div class="cell">Anime schedules from AniList</div>
+        <div class="cell">Show artwork is loaded from TVmaze while the app runs and kept only on your phone</div>
+        <div class="cell">Service logos from Wikimedia Commons, each under its own free licence</div>
+        <div class="cell" style="font-size:13px">(one footnote line per logo credit)</div>
+      </div><div class="lh"></div><div class="grp">
+        <div class="cell">Airstamp is open source under the MIT licence</div>
+        <div class="cell">Airstamp collects no data. Nothing leaves your phone except requests to TVmaze, AniList and Wikimedia.</div>
+      </div></div></div><figcaption><b>Default</b></figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>IDs</dt><dd><code>credits-tvmaze</code>, <code>credits-tvmaze-link</code>, <code>credits-anilist</code>, <code>credits-artwork</code>, <code>credits-logos</code>, <code>credits-licence</code>, <code>credits-no-data</code></dd>
+      <dt>Rename</dt><dd>two “Airstamp” lines (see the checklist)</dd>
+    </dl></div><div class="codebox"><pre><code>NavigationLink("Credits & licences") { CreditsView() }
+    .accessibilityIdentifier("settings-credits")</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-debug-menu" data-search="debug menu fake drop live activity simulate delay dump snapshot" data-title="Debug menu" data-kind="Screen" data-sub="DebugMenuView.swift">
+    <div class="comp-head"><h4>Debug menu</h4><span class="badge live">live</span><span class="badge legacy">Debug builds only</span><span class="src">Airstamp/Features/Debug/DebugMenuView.swift</span></div>
+    <p class="purpose">A fake drop to watch a countdown reach zero, a Live Activity for it, a simulated delay, and the widgets’ snapshot as text (D-11).</p>
+    <div class="states">
+      <figure class="state"><div class="stage sys" style="width:380px;padding:0"><div class="list">
+        <div class="lh">Fake drop</div><div class="grp"><div class="cell blue">Fake drop in 2 minutes</div><div class="cell blue">Fake drop in 10 minutes</div><div class="cell blue">Fake drop in 60 minutes</div><div class="cell red">Remove fake drop</div></div>
+        <div class="lf">Adds “Debug Show” to Upcoming and the widgets until the app is relaunched.</div>
+        <div class="lh">Live Activity</div><div class="grp"><div class="cell blue">Live Activity for fake drop in 3 min (lead 1 min)</div><div class="cell blue">Simulate delay +1 h</div></div>
+        <div class="lh"></div><div class="grp"><div class="cell">Dump snapshot<span class="chev">›</span></div></div>
+        <div class="lh">Last action</div><div class="grp"><div class="cell">Fake drop at 21:42, in Upcoming and the widgets.</div></div>
+      </div></div><figcaption><b>After an action</b></figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>IDs</dt><dd><code>debug-fake-2</code>, <code>-10</code>, <code>-60</code>, <code>debug-fake-remove</code>, <code>debug-activity</code>, <code>debug-delay</code>, <code>debug-snapshot</code>, <code>debug-status</code>; snapshot view <code>debug-snapshot-text</code> (footnote monospaced), <code>debug-snapshot-copy</code></dd>
+      <dt>Status copy</dt><dd>“Requested: it appears at 21:41, drop at 21:42.” · “Skipped: 3 Live Activities are already pending.” · “Live Activities are off in Settings › Airstamp.” · “Moved 1 Live Activity 1 hour later.”</dd>
+    </dl></div><div class="codebox"><pre><code>#if DEBUG
+NavigationLink("Debug") { DebugMenuView(model: model, scheduler: scheduler) }
+#endif</code></pre></div></div>
+  </article>
+
+  <!-- ===== Welcome ===== -->
+  <div class="group-title"><h3 id="comp-welcome">Welcome</h3></div>
+
+  <article class="comp" id="c-welcome" data-search="welcome onboarding first run find a show not now zone primary button" data-title="Welcome" data-kind="Screen" data-sub="WelcomeView.swift">
+    <div class="comp-head"><h4>Welcome</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Welcome/WelcomeView.swift</span></div>
+    <p class="purpose">One screen, once (SPEC §1): what the app answers, the detected zone, and a way to follow the first show.</p>
+    <div class="states">
+      <figure class="state"><div class="stage" style="zoom:.62;width:390px;height:760px;padding:24px;display:flex;flex-direction:column;border-radius:28px">
+        <div style="flex:1"></div>
+        <div style="font:500 15px var(--sans);color:var(--app-ink-muted)">Airstamp</div>
+        <div style="font:34px/1.15 var(--serif);margin-top:24px">How long until your next episode, in your time zone, and where it’s on</div>
+        <div style="font:500 17px var(--sans);color:var(--app-ink-secondary);margin-top:24px">Times shown for Lagos, UTC+1</div>
+        <div style="flex:1"></div>
+        <span class="btn-primary">Find a show</span>
+        <div style="height:44px;display:grid;place-items:center;color:var(--app-ink-secondary);font-size:17px;margin-top:12px">Not now</div>
+      </div><figcaption><b>Default</b> · shown at 62%</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Layout</dt><dd>neutral night <code>#1C1C1C</code>; sides and bottom 24; block spacing 24; buttons spacing 12</dd>
+      <dt>Type</dt><dd>wordmark <code>.subheadline</code> medium muted · headline New York 34 · zone <code>.body</code> medium secondary</dd>
+      <dt>Primary</dt><dd><q>Find a show</q>: full width, height 48, <code>.borderedProminent</code>, white tint, black text</dd>
+      <dt>Secondary</dt><dd><q>Not now</q>: secondary ink, height 44</dd>
+      <dt>IDs</dt><dd><code>welcome-zone</code>, <code>welcome-find</code>, <code>welcome-later</code> (<code>welcome-widget-preview</code> from the brief isn’t built)</dd>
+      <dt>Rename</dt><dd>the wordmark line becomes “Meridian” (Proposed: the lockup)</dd>
+    </dl></div><div class="codebox"><pre><code>WelcomeView(onFind: { welcomeDone = true; tab = .search },
+            onLater: { welcomeDone = true })</code></pre></div></div>
+  </article>
+
+  <!-- ===== Artwork utilities ===== -->
+  <div class="group-title"><h3 id="comp-artwork">Artwork</h3></div>
+
+  <article class="comp" id="c-poster-image" data-search="PosterImage ArtworkFill ArtworkLoaderView poster placeholder tv glyph" data-title="PosterImage / ArtworkFill" data-kind="Component" data-sub="PosterImage.swift">
+    <div class="comp-head"><h4>PosterImage · ArtworkFill</h4><span class="badge live">live</span><span class="src">Airstamp/Features/Artwork/PosterImage.swift · ArtworkLoaderView.swift:38-62</span></div>
+    <p class="purpose">Art loaded at runtime and cached on the phone (D-37), never committed. Without art: a plain surface, never a broken image.</p>
+    <div class="states">
+      <figure class="state"><div class="stage"><div style="width:96px;aspect-ratio:2/3;border-radius:8px" class="ph-poster"></div></div><figcaption><b>Loaded</b></figcaption></figure>
+      <figure class="state"><div class="stage"><div style="width:96px;aspect-ratio:2/3;border-radius:8px;background:var(--app-tile)"></div></div><figcaption><b>Loading</b> · white@0.08</figcaption></figure>
+      <figure class="state"><div class="stage"><div style="width:96px;aspect-ratio:2/3;border-radius:8px;background:var(--app-tile);display:grid;place-items:center"><svg width="22" height="22" style="color:var(--app-ink-muted)"><use href="#i-tv"/></svg></div></div><figcaption><b>No URL</b> · <code>tv</code>, <code>.title3</code></figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Radius</dt><dd>8 (default)</dd>
+      <dt>Loads</dt><dd>poster 420 px · row art 300 · hero <code>idealBackgroundWidth</code> · logo 120</dd>
+      <dt>Motion</dt><dd>0.35 s ease-out fade; none with Reduce Motion</dd>
+      <dt>VoiceOver</dt><dd>hidden (decorative)</dd>
+    </dl></div><div class="codebox"><pre><code>PosterImage(url: result.poster, cornerRadius: 8)
+    .aspectRatio(2 / 3, contentMode: .fit)</code></pre></div></div>
+  </article>
+
+  <!-- ===== Legacy ===== -->
+  <div class="group-title"><h3 id="comp-legacy">Legacy</h3><span class="badge legacy">not rendered live</span></div>
+  <p class="small muted">Still in <code>Shared/Design/</code> and drawn only by Xcode previews. Don’t use them in new UI: D-40 moved certainty into words.</p>
+
+  <article class="comp" id="c-legacy-source-chip" data-search="SourceChip source chip legacy broadcast confirmed adjusted jp broadcast date only" data-title="SourceChip (legacy)" data-kind="Legacy" data-sub="SourceChip.swift">
+    <div class="comp-head"><h4>SourceChip</h4><span class="badge legacy">legacy</span><span class="src">Shared/Design/SourceChip.swift · SourceChipContent.swift · SourceKind.swift</span></div>
+    <p class="purpose">Glyph + word capsule for a time’s source. Replaced by the certainty words because the colours needed a legend.</p>
+    <div class="states">
+      <figure class="state"><div class="stage" style="display:flex;flex-wrap:wrap;gap:6px;max-width:420px">
+        <span class="lchip" style="color:#5BE38A;background:rgba(91,227,138,.14)">✓ Broadcast</span>
+        <span class="lchip" style="color:#8AB0FF;background:rgba(138,176,255,.14)">◷ Netflix rule</span>
+        <span class="lchip" style="color:#5BE38A;background:rgba(91,227,138,.14)">✓ Confirmed</span>
+        <span class="lchip" style="color:#C9A6FF;background:rgba(201,166,255,.14)">⚙ Adjusted</span>
+        <span class="lchip" style="color:#5BE38A;background:rgba(91,227,138,.14)">✓ JP broadcast</span>
+        <span class="lchip" style="color:#A8A8B0;background:rgba(168,168,176,.14)">▦ Date only</span>
+      </div><figcaption><b>Every source</b> (dark inks)</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Spec</dt><dd><code>.caption</code> semibold, 8 × 4 padding, ink at 14% fill; ID <code>source-chip</code>; VoiceOver “Source: Broadcast”</dd>
+    </dl></div><div class="codebox"><pre><code>// Don't: SourceChip(source: drop.source, confidence: drop.confidence)
+// Do:    Text(ReleaseWording.outLine(drop, now: now, formatter: formatter))</code></pre></div></div>
+  </article>
+
+  <article class="comp" id="c-legacy-drop-row" data-search="DropRow legacy card delayed provider label section header count" data-title="DropRow, ProviderLabelView, SectionHeader (legacy)" data-kind="Legacy" data-sub="DropRow.swift">
+    <div class="comp-head"><h4>DropRow · ProviderLabelView · SectionHeader</h4><span class="badge legacy">legacy</span><span class="src">Shared/Design/DropRow.swift · ProviderLabelView.swift · SectionHeader.swift</span></div>
+    <p class="purpose">The pre-Night-Sky card row. It is the only view that shows a delay (“Delayed” with the old time struck through), which is worth carrying into the live row.</p>
+    <div class="states">
+      <figure class="state"><div class="stage" style="background:#000;width:400px"><div style="font:600 20px var(--sans)">This week</div><div style="font-size:13px;color:rgba(235,235,245,.6);margin-bottom:10px">3 shows</div>
+        <div style="background:#1C1C1E;border-radius:14px;padding:16px;display:flex;gap:12px"><div style="flex:1;display:grid;gap:6px"><div style="font:600 17px var(--sans)">Stranger Things</div><div style="font-size:15px;color:rgba(235,235,245,.6)">S5E5 · Sat 02:00</div><div style="font:600 12px var(--sans);color:#FDBA74">↻ Delayed <span style="font-weight:400;color:rgba(235,235,245,.6);text-decoration:line-through">01:00</span></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="lchip" style="color:#8AB0FF;background:rgba(138,176,255,.14)">◷ Netflix rule</span><span style="font-size:13px;color:rgba(235,235,245,.6)">Netflix</span></div></div><div class="cd" style="font:800 28px var(--sans);font-variant-numeric:tabular-nums">3d 2:00:00</div></div>
+      </div><figcaption><b>Delayed row</b> · SectionHeader with count</figcaption></figure>
+    </div>
+    <div class="spec-grid"><div><dl class="specs">
+      <dt>Spec</dt><dd>card <code>#1C1C1E</code>, radius 14, padding 16 · countdown 28 SF Heavy (<code>NumeralStudy.system</code>) · no-stream line red with <code>exclamationmark.circle</code></dd>
+      <dt>IDs</dt><dd><code>drop-row-&lt;n&gt;</code>, <code>provider-label</code>, <code>section-header-&lt;id&gt;</code></dd>
+    </dl></div><div class="codebox"><pre><code>// Legacy: DropRow(drop: drop, index: 1, now: now)
+// Live:   UpcomingView.row(_:index:now:)</code></pre></div></div>
+  </article>
+</section>
+
+<!-- ============================================================ 08 WIDGETS -->
+<section class="sec" id="widgets" data-num="08" data-search="widgets home screen lock screen inline circular rectangular small medium large">
+  <div class="sec-head"><span class="num">08</span><h2 id="widgets-h">Widgets</h2><span class="badge img">render</span></div>
+  <p class="lede">One widget, “Next episode”: <em>How long until your next episode, in your time zone, and where it’s on.</em> Six families. These are the app’s own 3x test renders (<code>WidgetRenderTests</code>), with neutral placeholder art, at their real point size.</p>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card" id="w-home" data-search="home screen widget backdrop art fade small medium large" data-title="Home Screen widgets" data-kind="Widget"><h4>Home Screen (small, medium, large)</h4><p>Night base <code>#1C1C1C</code>; the show’s art across the top (all of it on small and medium, 62% on large), fading clear → 0.7 → base. The provider is tagged top-left (“HBO · US”), and “+N more this week” top-right when shows don’t fit (D-47). Name in New York, the countdown in New York Light, the out line in SF Pro medium. Small shows 1 show, medium 3, large 4.</p></div>
+    <div class="card" id="w-lock" data-search="lock screen widget inline circular rectangular tinted" data-title="Lock Screen widgets" data-kind="Widget"><h4>Lock Screen (inline, circular, rectangular)</h4><p>System <code>.primary</code> / <code>.secondary</code>, because the system tints them. Inline: “Silo · 2d 4:10:22”. Circular: an open ring that fills over the last 7 days, a <code>tv</code> glyph and “2d” / “4h” / “38m” in the gap. Rectangular: “Expected Wed 23:00” first, then the name, then the countdown and provider.</p></div>
+    <div class="card" id="w-quiet" data-search="quiet rows nothing scheduled empty state follow a show returns widget" data-title="Quiet rows & empty states" data-kind="Widget"><h4>Quiet rows &amp; empty states</h4><p>Followed shows with nothing scheduled fill the spare rows: poster, name, “Nothing scheduled” (D-48); the large row adds why (“Between seasons”, “Ended”). Empty: “Follow a show” / “Its countdown shows up here.”, “Nothing scheduled” / “Airstamp checks again each time you open it.”, or “Silo returns Fri 9 Jul 2027” / “Nothing else is scheduled.”</p></div>
+    <div class="card" id="w-modes" data-search="always on tinted accented rendering modes widget dimmed" data-title="Rendering modes" data-kind="Widget"><h4>Rendering modes</h4><p>Tinted and accented: only the countdown (and on the Lock Screen the title, ring and value) takes the tint (<code>widgetAccentable</code>); posters go desaturated. Always-On: no art, every ink × 0.7 except the countdown.</p></div>
+    <div class="card" id="w-a11y" data-search="widget voiceover accessibility label phrase" data-title="Widget VoiceOver" data-kind="Widget"><h4>VoiceOver</h4><p>One full phrase per show: “House of the Dragon, in 3 hours, HBO US, no official stream in your country”; “Silo, expected in 2 days 4 hours, Apple TV”; “Nothing scheduled for your shows”. The episode title is left out (spoiler-safe).</p></div>
+    <div class="card" id="w-ids" data-search="widget ids accessibility identifiers" data-title="Widget IDs" data-kind="Widget"><h4>IDs</h4><p><code>widget-inline</code> · <code>widget-circular-ring</code>, <code>-value</code> · <code>widget-rect-meta</code>, <code>-title</code>, <code>-countdown</code>, <code>-provider</code> · <code>widget-small-provider</code>, <code>-title</code>, <code>-countdown</code>, <code>-out</code> · <code>widget-medium-row-1…3</code>, <code>widget-large-row-1…4</code>, <code>widget-more</code>, <code>widget-medium-empty</code>, <code>widget-large-empty</code></p></div>
+  </div>
+  <div class="tabs" id="widget-tabs" role="tablist" aria-label="Widget family">
+    <button role="tab" data-tab="inline" aria-selected="false">Inline</button>
+    <button role="tab" data-tab="circular" aria-selected="false">Circular</button>
+    <button role="tab" data-tab="rectangular" aria-selected="false">Rectangular</button>
+    <button role="tab" data-tab="small" aria-selected="false">Small</button>
+    <button role="tab" data-tab="medium" aria-selected="true">Medium</button>
+    <button role="tab" data-tab="large" aria-selected="false">Large</button>
+  </div>
+  <div id="widget-gallery" style="margin-top:12px"></div>
+  <p class="note">Seen in these renders: the rectangular widget truncates a long provider to “A…” beside a days countdown (<code>rectangular-countdown</code>), and the medium widget shortens “Frieren…” so the certainty words keep their room (by design, D-40).</p>
+</section>
+
+<!-- ============================================================ 09 LIVE ACTIVITY -->
+<section class="sec" id="live-activity" data-num="09" data-search="live activity dynamic island lock screen compact minimal expanded small">
+  <div class="sec-head"><span class="num">09</span><h2 id="live-activity-h">Live Activity</h2><span class="badge img">render</span></div>
+  <p class="lede">The release-night Live Activity (SPEC §6), opt-in per show, scheduled from the lead time (default 2 hours). Night base <code>#0D0D0E</code>, the show’s art on the right edge, plain-words label over a serif countdown. At the drop the content goes stale and every view says “Out now” with no app running.</p>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card" id="la-rules" data-search="live activity rules pause time 160 28 limit payload" data-title="Live Activity rules" data-kind="Live Activity"><h4>Rules</h4><p><b>No <code>pauseTime</code></b> (D-52): with one, the timer was drawn frozen (29:57 for 20 s on the simulator). Lock Screen banner <b>≤ 160 pt</b> tall at 360 wide with the longest name. Minimal view <b>fits 28 pt</b> when the island is limited (24 pt ring). Payload well under 4 KB: IDs, title, date, a short provider. At most 3 pending (D-24).</p></div>
+    <div class="card" id="la-copy" data-search="live activity copy band expected in out now alert starts in" data-title="Live Activity copy" data-kind="Live Activity"><h4>Copy</h4><p>Title “Silo” / “Silo + 1 more”. Details “S2E5 · Apple TV · US”. Band “Out in” / “Expected in” / “Airs in Japan in” → “Out now”. Time “Expected Fri 02:00”, an old one struck through. Alert “Starts in 2 hours · 02:00 · Apple TV” (exact) or “Expected in 2 hours · …”.</p></div>
+    <div class="card" id="la-voiceover" data-search="live activity voiceover accessibility" data-title="Live Activity VoiceOver" data-kind="Live Activity"><h4>VoiceOver and IDs</h4><p>“Silo, expected in 2 hours, delayed from Fri 01:00, Apple TV”. IDs: <code>la-title</code>, <code>la-more</code>, <code>la-details</code>, <code>la-label</code>, <code>la-countdown</code>, <code>la-time</code>, <code>la-previous</code>, <code>la-compact-poster</code>, <code>la-compact-timer</code>, <code>la-minimal</code>, <code>la-expanded-title</code>, <code>-art</code>, <code>-countdown</code>, <code>-bar</code>, <code>la-small-title</code>, <code>la-small-countdown</code>.</p></div>
+  </div>
+  <div class="table-wrap"><table><thead><tr><th>Presentation</th><th>Spec</th></tr></thead><tbody>
+    <tr id="la-lock" data-search="lock screen banner live activity art edge" data-title="Lock Screen banner" data-kind="Live Activity"><td>Lock Screen banner</td><td>padding 16 × 14; 112 pt kept clear on the right for the art (44% of the width, fading leftwards) or a faint initial. Title New York Medium 19 (+ “+ 1 more” 13 semibold) · details 13 muted · label 13 semibold (+12) · countdown Light 36 · time line 13 medium secondary</td></tr>
+    <tr id="la-compact" data-search="compact dynamic island poster timer" data-title="Compact" data-kind="Live Activity"><td>Compact</td><td>leading: poster mark 24, radius 6 (initial on a white@0.16 disc without one) · trailing: timer New York Medium 15, max 60 wide; “Out now” SF semibold 14</td></tr>
+    <tr id="la-minimal" data-search="minimal ring dynamic island" data-title="Minimal" data-kind="Live Activity"><td>Minimal</td><td>24 pt ring (stroke 2.5, track white@0.18, fill white), filling from the activity’s start to the drop, around a circular poster mark; full at “Out now”</td></tr>
+    <tr id="la-expanded" data-search="expanded dynamic island bar" data-title="Expanded" data-kind="Live Activity"><td>Expanded</td><td>leading: title New York Medium 18 over details 13 · trailing: art 50 × 50, radius 12 · bottom: label 14 + countdown Light 34 on one baseline, then a 4 pt bar filling to the drop with the local time (13 medium, tabular) at its end; 16 pt side padding so it clears the island’s corners (D-52)</td></tr>
+    <tr id="la-small" data-search="small family watch mac carplay" data-title=".small family" data-kind="Live Activity"><td>.small (Watch, Mac, CarPlay)</td><td>poster mark 18 + title Medium 15 · label 11 semibold · countdown Light 24 · time line 11 medium; padding 12</td></tr>
+  </tbody></table></div>
+  <div class="tabs" id="la-tabs" role="tablist" aria-label="Live Activity presentation">
+    <button role="tab" data-tab="lock" aria-selected="true">Lock Screen</button>
+    <button role="tab" data-tab="compact" aria-selected="false">Compact</button>
+    <button role="tab" data-tab="minimal" aria-selected="false">Minimal</button>
+    <button role="tab" data-tab="expanded" aria-selected="false">Expanded</button>
+    <button role="tab" data-tab="small" aria-selected="false">Small</button>
+  </div>
+  <div id="la-gallery" style="margin-top:12px"></div>
+</section>
+
+<!-- ============================================================ 10 ACCESSIBILITY -->
+<section class="sec" id="accessibility" data-num="10" data-search="accessibility voiceover dynamic type contrast reduce motion hit targets">
+  <div class="sec-head"><span class="num">10</span><h2 id="accessibility-h">Accessibility</h2></div>
+  <div class="table-wrap"><table><thead><tr><th>Area</th><th>What the app does</th><th>Status</th></tr></thead><tbody>
+    <tr><td>Meaning without colour</td><td>Certainty is a word (“Out”, “Expected”, “Airs in Japan”); no status colour remains in live UI (D-40).</td><td><span class="pill aaa">Done</span></td></tr>
+    <tr><td>VoiceOver phrases</td><td>Widgets and the Live Activity read one full phrase built from the provider label (“Silo, in 2 days 4 hours, Apple TV”); “HBO · US” is read “HBO US”; “2d” is read “2 days”.</td><td><span class="pill aaa">Done</span></td></tr>
+    <tr><td>Headings</td><td>Show titles and section headers carry <code>.isHeader</code>.</td><td><span class="pill aaa">Done</span></td></tr>
+    <tr><td>Hit targets</td><td>Filter chips (34 visible, 44 tall tap area), follow (+) 32 inside 44 × 44, back button 44, Follow 50 tall, “Not now” 44.</td><td><span class="pill aaa">≥ 44</span></td></tr>
+    <tr><td>Contrast</td><td>Every awake text pair passes AA; most pass AAA. Worst real pair: <span id="worst-contrast-a11y">see the matrix</span> (Always-On).</td><td><a href="#contrast">Matrix</a></td></tr>
+    <tr><td>Dynamic Type</td><td>Countdowns scale (<code>@ScaledMetric</code>); <code>.body</code>/<code>.footnote</code> text scales. Serif titles and headers use fixed sizes (32, 34, 28, 22, 20) and don’t grow.</td><td><span class="pill large">Gap</span></td></tr>
+    <tr><td>Reduce Motion</td><td>The one animation (art fade-in, 0.35 s) is skipped.</td><td><span class="pill aaa">Done</span></td></tr>
+    <tr><td>Tinted / Always-On</td><td>Only the countdown takes the widget tint; Always-On hides art and dims everything else.</td><td><span class="pill aaa">Done</span></td></tr>
+    <tr><td>Decorative images</td><td>Art, posters, logos and the poster mark are hidden from VoiceOver; the show page art is “Silo artwork, image”.</td><td><span class="pill aaa">Done</span></td></tr>
+  </tbody></table></div>
+</section>
+
+<!-- ============================================================ 11 DOWNLOADS -->
+<section class="sec" id="downloads" data-num="11" data-search="downloads tokens json svg logo icon">
+  <div class="sec-head"><span class="num">11</span><h2 id="downloads-h">Downloads</h2></div>
+  <div class="downloads">
+    <a class="dl" href="tokens.json" download id="dl-tokens" data-search="tokens.json download" data-title="tokens.json" data-kind="Download"><span class="ic" style="font:600 12px var(--mono)">{ }</span><span>tokens.json<small>Colour, type, space, radius, opacity, motion (W3C design-token format)</small></span></a>
+    <a class="dl" href="assets/logo/meridian-longitudes.svg" download id="dl-logo" data-search="logo svg download" data-title="Logo SVG" data-kind="Download"><span class="ic" data-logo data-size="28"></span><span>meridian-longitudes.svg<small>The mark, one colour (currentColor)</small></span></a>
+    <a class="dl" href="assets/icon/meridian-icon-dark.svg" download id="dl-icon-dark" data-search="icon svg dark download" data-title="App icon (dark)" data-kind="Download"><span class="ic" data-icon="dark"></span><span>meridian-icon-dark.svg<small>1024 × 1024, default (Proposed)</small></span></a>
+    <a class="dl" href="assets/icon/meridian-icon-light.svg" download id="dl-icon-light" data-search="icon svg light download" data-title="App icon (light)" data-kind="Download"><span class="ic" data-icon="light"></span><span>meridian-icon-light.svg<small>Light appearance (Proposed)</small></span></a>
+    <a class="dl" href="assets/icon/meridian-icon-tinted.svg" download id="dl-icon-tinted" data-search="icon svg tinted mono download" data-title="App icon (tinted)" data-kind="Download"><span class="ic" data-icon="mono"></span><span>meridian-icon-tinted.svg<small>Mono source for tinted (Proposed)</small></span></a>
+    <a class="dl" href="assets/icon/meridian-icon-gold.svg" download id="dl-icon-gold" data-search="icon svg gold option b download" data-title="App icon (option B)" data-kind="Download"><span class="ic" data-icon="gold"></span><span>meridian-icon-gold.svg<small>Option B, gold star (Proposed)</small></span></a>
+  </div>
+</section>
+
+<!-- ============================================================ 12 RENAME -->
+<section class="sec" id="rename" data-num="12" data-search="rename checklist airstamp meridian display name">
+  <div class="sec-head"><span class="num">12</span><h2 id="rename-h">Rename checklist</h2></div>
+  <p>Where “Airstamp” is visible today. Nothing here has been changed in the app. Ticks are saved in this browser only.</p>
+  <ul class="checklist" id="rename-list">
+    <li><label><input type="checkbox" id="rn-display"><div><b>Home Screen name</b><div class="now">DISPLAY_NAME = Airstamp</div><div class="where">Config/Base.xcconfig:5 (PRODUCT_NAME in project.yml:53,83 is internal)</div></div></label></li>
+    <li><label><input type="checkbox" id="rn-welcome"><div><b>Welcome wordmark</b><div class="now">“Airstamp”</div><div class="where">Airstamp/Features/Welcome/WelcomeView.swift:13</div></div></label></li>
+    <li><label><input type="checkbox" id="rn-settings"><div><b>Settings permission line</b><div class="now">“Live Activities are off in Settings › Airstamp”</div><div class="where">Airstamp/Features/Settings/SettingsView.swift:60</div></div></label></li>
+    <li><label><input type="checkbox" id="rn-credits-licence"><div><b>Credits: licence</b><div class="now">“Airstamp is open source under the MIT licence”</div><div class="where">Airstamp/Features/Settings/SettingsView.swift:95</div></div></label></li>
+    <li><label><input type="checkbox" id="rn-credits-data"><div><b>Credits: no data</b><div class="now">“Airstamp collects no data. Nothing leaves your phone except requests to TVmaze, AniList and Wikimedia.”</div><div class="where">Airstamp/Features/Settings/SettingsView.swift:97</div></div></label></li>
+    <li><label><input type="checkbox" id="rn-upcoming"><div><b>Upcoming empty headline</b><div class="now">“Nothing scheduled for your shows yet. Airstamp checks again each time you open it.”</div><div class="where">Airstamp/Features/Upcoming/UpcomingSections.swift:81</div></div></label></li>
+    <li><label><input type="checkbox" id="rn-widget"><div><b>Widget empty detail</b><div class="now">“Airstamp checks again each time you open it.”</div><div class="where">Shared/Widgets/WidgetText.swift:53</div></div></label></li>
+    <li><label><input type="checkbox" id="rn-debug"><div><b>Debug only</b><div class="now">Debug status “Live Activities are off in Settings › Airstamp.”; Day-0 placeholder title</div><div class="where">Airstamp/Features/Debug/DebugMenuView.swift:77 · Airstamp/App/PlaceholderView.swift:12</div></div></label></li>
+    <li><label><input type="checkbox" id="rn-ua"><div><b>Not visible, but sent</b><div class="now">User-Agent “Airstamp/1.0 (https://github.com/ChimeXXD/next-episode)”</div><div class="where">Airstamp/Services/Artwork/ArtworkLoader.swift:31</div></div></label></li>
+  </ul>
+  <p class="small muted">The widget’s gallery name is already “Next episode” (NextDropWidget.swift:13). Type names (<code>AirstampApp</code>, <code>AirstampWidgets</code>, the <code>AirstampAppGroup</code> key) aren’t user-visible.</p>
+</section>
+
+<footer class="foot">
+  Meridian design system · built from <code>7a4ec07</code> on 1 Nov 2026 · values read from the app’s source; anything marked <span class="badge proposed">Proposed</span> is new and needs a decision. Widget and Live Activity images are the app’s test renders with placeholder art; no show artwork is published here.
+</footer>
+</main>
+</div>
+
+<div class="search-dialog" id="search" role="dialog" aria-modal="true" aria-label="Search the design system" aria-hidden="true">
+  <div class="search-panel">
+    <label class="sr-only" for="search-input">Search tokens, components and sections</label>
+    <input id="search-input" type="search" placeholder="Search tokens, components, words…" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results" aria-activedescendant="">
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd> <kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span><kbd>esc</kbd> close</span><span><kbd>/</kbd> or <kbd>⌘K</kbd> anywhere</span></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="assets/site.js"></script>
+</body>
+</html>

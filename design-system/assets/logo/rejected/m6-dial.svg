@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- 6 · Dial (layered): a closed clock ring (a gap at twelve read as a power button), the hand at twelve —
+       the meridian — and the star just beyond the rim, where the hand points. -->
+  <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round">
+    <circle cx="50" cy="58" r="27"/>
+    <path d="M 50 58 V 42"/>
+  </g>
+  <circle cx="50" cy="58" r="3.4" fill="currentColor"/>
+  <circle cx="50" cy="17" r="4.2" fill="currentColor"/>
+</svg>
