@@ -80,7 +80,7 @@ struct LiveActivityExpandedView: View {
                     // "Out now 0:00" would read as one odd sentence: at the drop the words take the numbers' place.
                     Text(LiveActivityText.band(attributes, out: true))
                         .font(.system(size: 34, weight: NumeralStudy.night.weight, design: .serif))
-                        .foregroundStyle(LiveActivityInk.primary)
+                        .foregroundStyle(LiveActivityInk.out)
                         .lineLimit(1)
                 } else {
                     Text(LiveActivityText.band(attributes, out: false))

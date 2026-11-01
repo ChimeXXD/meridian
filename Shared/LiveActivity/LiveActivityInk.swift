@@ -1,11 +1,14 @@
 import SwiftUI
 
 /// Night Sky on the Live Activity (D-38): a near-black base, a shade deeper than the widgets' so the banner reads as
-/// night on any wallpaper rather than a grey card, and the widgets' white inks. No colour outside the show's art: the
-/// ring and the bar fill in white. Nothing here says how sure a time is; that is always in words (D-40).
+/// night on any wallpaper rather than a grey card, and the widgets' white inks. The only colour outside the show's art
+/// is Meridian Gold on "Out now" (D-53); the ring and the bar fill in white. Nothing here says how sure a time is;
+/// that is always in words (D-40).
 enum LiveActivityInk {
     static let base = Color(red: 0.05, green: 0.05, blue: 0.055)
     static let primary = WidgetInk.primary
+    /// "Out now", in Meridian Gold.
+    static let out = Color(uiColor: Tokens.gold)
     static let secondary = WidgetInk.secondary
     static let muted = WidgetInk.muted
     /// The ring's and the bar's fill, and the empty part they run along.

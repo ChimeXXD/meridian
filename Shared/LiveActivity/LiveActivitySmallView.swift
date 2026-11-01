@@ -26,7 +26,7 @@ struct LiveActivitySmallView: View {
             .padding(.bottom, 2)
             Text(LiveActivityText.band(attributes, out: out))
                 .font(.system(size: 11, weight: .semibold))
-                .foregroundStyle(out ? LiveActivityInk.primary : LiveActivityInk.muted)
+                .foregroundStyle(out ? LiveActivityInk.out : LiveActivityInk.muted)
                 .lineLimit(1)
             LiveActivityCountdown(dropDate: state.dropDate, now: now, size: 24)
                 .accessibilityIdentifier("la-small-countdown")

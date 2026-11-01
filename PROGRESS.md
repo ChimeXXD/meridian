@@ -2,6 +2,14 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Brand colour: Meridian Gold (Mon 2 Nov 2026)
+
+- Chime chose option B (D-53). `Tokens.gold` (#E9C46A); "Out now" is gold in `CountdownText` (app, Home Screen widgets) and on the Live Activity (Lock Screen label, expanded and compact island, via `LiveActivityInk.out`).
+- Red → green: `TokenContrastTests/goldOnNight()` failed to compile (no `Tokens.gold`), then passed (gold ≥ 4.5:1 on both night bases).
+- Looked at: `fidelity/shots/live-activity/lock-outNow-art.png`, `expanded-outNow.png`, `fidelity/shots/widgets/medium-outNow.png` (gold "Out now").
+- Design system: the brand colour section now states the decision; options A and C moved to the archive; the logo's star and the default app icon are gold on night (ink on paper); the gold token is in the colour table, the contrast table and tokens.json; the "Out now" renders were refreshed.
+- Not verified: the phone (installed, not launched); the simulator's Dynamic Island didn't show the fake activity this time.
+
 ## Widgets and the Dynamic Island didn't tick: `pauseTime` (Sun 1 Nov 2026)
 
 - Chime: real time in the app now, but not on the widgets or the Dynamic Island; and the expanded island's bottom row was cut off by its corners.

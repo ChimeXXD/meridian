@@ -39,7 +39,7 @@ struct LiveActivityLockScreenView: View {
                 }
                 Text(LiveActivityText.band(attributes, out: out))
                     .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(out ? LiveActivityInk.primary : ink(LiveActivityInk.secondary))
+                    .foregroundStyle(out ? LiveActivityInk.out : ink(LiveActivityInk.secondary))
                     .lineLimit(1)
                     .padding(.top, 12)
                     .accessibilityIdentifier("la-label")

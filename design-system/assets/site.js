@@ -23,13 +23,13 @@
     const a11y = label ? `role="img" aria-label="${esc(label)}"` : 'aria-hidden="true" focusable="false"';
     return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" ${a11y}>${logoInner(ink, star, id)}</svg>`;
   }
+  const GOLD = '#E9C46A';
   const ICONS = {
-    dark: { bg: ['#1C1C1C', '#0D0D0E'], ink: '#F4EFE4', star: null, label: 'default' },
+    dark: { bg: ['#1C1C1C', '#0D0D0E'], ink: '#F4EFE4', star: GOLD, label: 'default, gold star' },
     light: { bg: ['#FFFFFF', '#E6E6EA'], ink: '#1C1C1C', star: null, label: 'light' },
     mono: { bg: ['#1A1A1A', '#000000'], ink: '#FFFFFF', star: null, label: 'tinted, the mono source' },
     tinted: { bg: ['#1A1A1A', '#000000'], ink: '#A9C1EA', star: null, label: 'tinted, with an example tint' },
-    gold: { bg: ['#1C1C1C', '#0D0D0E'], ink: '#F4EFE4', star: '#E9C46A', label: 'option B, gold star' },
-    indigo: { bg: ['#1D2547', '#0C0F1D'], ink: '#F4EFE4', star: null, label: 'option C, night indigo' },
+    indigo: { bg: ['#1D2547', '#0C0F1D'], ink: '#F4EFE4', star: null, label: 'night indigo, not chosen' },
   };
   function iconSVG(kind) {
     const k = ICONS[kind] || ICONS.dark; const g = 'mig' + (++uid); const c = 'mic' + (++uid);
@@ -64,7 +64,9 @@
   }
   function renderLogos() {
     $$('[data-logo]').forEach((el) => {
-      el.innerHTML = logoSVG({ size: Number(el.dataset.size || 32), label: el.dataset.label === undefined ? 'Meridian logo' : el.dataset.label });
+      // The star is gold on night; on paper it stays ink, since gold on white is under 2:1.
+      const star = el.closest('.paper') ? null : GOLD;
+      el.innerHTML = logoSVG({ size: Number(el.dataset.size || 32), star, label: el.dataset.label === undefined ? 'Meridian logo' : el.dataset.label });
     });
     $$('[data-icon]').forEach((el) => { el.innerHTML = iconSVG(el.dataset.icon); });
     const c = $('#construction'); if (c) c.innerHTML = construction();
@@ -76,7 +78,8 @@
     text: [
       ['night-ink', 'Primary', 'Primary, app', '#FFFFFF', '#FFFFFF', '--night-ink-primary', 'NightInk.primary', 'Out line on the hero, Show detail and the show page', '#1C1C1C'],
       ['widget-ink', 'Primary', 'Primary, widgets', '#FFFFFF', '#FFFFFF', '--widget-primary', 'WidgetInk.primary', 'Titles, countdowns, tags, the empty headline', '#1C1C1C'],
-      ['la-ink', 'Primary', 'Primary, Live Activity', '#FFFFFF', '#FFFFFF', '--la-primary', 'LiveActivityInk.primary', 'Titles, “Out now”, the countdown, the monogram', '#0D0D0E'],
+      ['brand-gold', 'Gold', 'Meridian Gold', '#E9C46A', '#E9C46A', '--gold', 'Tokens.gold', 'Only the logo’s star and “Out now”, on night', '#1C1C1C'],
+      ['la-ink', 'Primary', 'Primary, Live Activity', '#FFFFFF', '#FFFFFF', '--la-primary', 'LiveActivityInk.primary', 'Titles, the countdown, the monogram', '#0D0D0E'],
       ['night-ink', 'Secondary', 'Secondary, app', 'rgba(255,255,255,.75)', '#FFFFFFBF', '--night-ink-secondary', 'NightInk.secondary', 'Row out line, Show detail source sentence, Welcome zone line, “Not now”', '#1C1C1C'],
       ['widget-ink', 'Secondary', 'Secondary, widgets', 'rgba(255,255,255,.75)', '#FFFFFFBF', '--widget-secondary', 'WidgetInk.secondary', 'Out lines, empty detail, quiet row name, compact-row countdown', '#1C1C1C'],
       ['la-ink', 'Secondary', 'Secondary, Live Activity', 'rgba(255,255,255,.75)', '#FFFFFFBF', '--la-secondary', 'LiveActivityInk.secondary', 'The label “Expected in”, the time line, “+ 1 more”', '#0D0D0E'],
@@ -233,10 +236,9 @@
     const pairs = [
       ['Picked chip, Follow, Find a show', '#000000', ['#FFFFFF']],
       ['Letter on the logo tile', '#1C1C1C', ['#FFFFFF']],
-      ['Option A: starlight on night', '#F4EFE4', ['#1C1C1C']],
-      ['Option B: gold on night', '#E9C46A', ['#1C1C1C']],
-      ['Option B: gold on the Live Activity base', '#E9C46A', ['#0D0D0E']],
-      ['Option C: starlight on indigo', '#F4EFE4', ['#1D2547']],
+      ['Starlight on night', '#F4EFE4', ['#1C1C1C']],
+      ['Gold on the widget night', '#E9C46A', ['#1C1C1C']],
+      ['Gold on the Live Activity night', '#E9C46A', ['#0D0D0E']],
       ['System link blue on a Settings cell', '#0A84FF', ['#1C1C1E']],
     ];
     $('#contrast-pairs').innerHTML = '<table><thead><tr><th scope="col">Pair</th><th scope="col">Sample</th><th scope="col">Ratio</th><th scope="col">Grade</th></tr></thead><tbody>' + pairs.map(([n, fg, layers]) => {

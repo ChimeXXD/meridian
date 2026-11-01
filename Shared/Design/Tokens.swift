@@ -32,6 +32,10 @@ enum Tokens {
         static let noStream = dynamic(light: 0xB01F1F, dark: 0xFF8A80)
     }
 
+    /// Meridian Gold, the brand's one colour (D-53): only the logo's star and the "Out now" moment, and only on the
+    /// night bases. It never says how sure a time is; the words do (D-40).
+    static let gold = rgb(0xE9C46A)
+
     static let background = Color(uiColor: .systemGroupedBackground)
     static let card = Color(uiColor: .secondarySystemGroupedBackground)
 

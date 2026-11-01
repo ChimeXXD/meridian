@@ -37,7 +37,7 @@ struct LiveActivityCompactView: View {
                 if out {
                     Text("Out now")
                         .font(.system(size: 14, weight: .semibold))
-                        .foregroundStyle(LiveActivityInk.primary)
+                        .foregroundStyle(LiveActivityInk.out)
                         .lineLimit(1)
                         .fixedSize()
                 } else {

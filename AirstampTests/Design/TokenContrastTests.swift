@@ -31,6 +31,16 @@ struct TokenContrastTests {
             }
         }
     }
+
+    /// Meridian Gold is drawn only on the night bases, which stay dark in light mode too (D-53).
+    @Test("gold passes AA on the widget and Live Activity night")
+    func goldOnNight() {
+        let gold = RGB(Tokens.gold)
+        for (surface, base) in [("widget", WidgetInk.base), ("Live Activity", LiveActivityInk.base)] {
+            let ratio = gold.contrast(with: RGB(UIColor(base)))
+            #expect(ratio >= 4.5, "gold on the \(surface) night is \(ratio)")
+        }
+    }
 }
 
 private struct RGB {

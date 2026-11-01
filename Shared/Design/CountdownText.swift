@@ -22,6 +22,8 @@ struct CountdownText: View {
 
     @Environment(\.numeralStudy) private var study
     @ScaledMetric private var scale: CGFloat = 1
+    /// Gold only in full colour: tinted, clear and Lock Screen renderings keep the system's tint (D-53).
+    @Environment(\.widgetRenderingMode) private var renderingMode
 
     var body: some View {
         content
@@ -39,6 +41,7 @@ struct CountdownText: View {
                 .font(study.font(size: size * 0.6 * scale))
         case .outNow:
             Text("Out now").font(study.font(size: size * 0.7 * scale))
+                .foregroundStyle(renderingMode == .fullColor ? Color(uiColor: Tokens.gold) : tint)
         case .released:
             Text("Released").font(study.font(size: size * 0.6 * scale)).foregroundStyle(.secondary)
         case .ticking:
