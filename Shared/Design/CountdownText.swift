@@ -1,9 +1,9 @@
 import SwiftUI
 import WidgetKit
 
-/// The countdown for one drop, live to the second everywhere (Chime, 1 Nov): `Text(timerInterval:pauseTime:countsDown:)`,
-/// so it stops at zero and never counts up (CLAUDE.md rule 4). More than a day away it is the whole days, dim unit,
-/// then the timer to the next day edge: "2d 4:10:22" (`CountdownFormatter.daySplit`). A `dateOnly` drop shows its
+/// The countdown for one drop, live to the second everywhere (Chime, 1 Nov): `Text(timerInterval:countsDown:)`
+/// with no `pauseTime` (D-52), so it stops at zero and never counts up (CLAUDE.md rule 4). More than a day away it is
+/// the whole days, dim unit, then the timer to the next day edge: "2d 4:10:22" (`CountdownFormatter.daySplit`). A `dateOnly` drop shows its
 /// airdate, never a timer. The timer is sized from `CountdownFormatter.clockTemplate`, because in a widget a ticking
 /// text otherwise takes all the width it's offered and pushes the rest out (the medium widget went blank, 1 Nov).
 /// The caller owns `now` and must refresh it: widgets pass their timeline entry's date (with an entry at the drop and

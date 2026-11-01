@@ -34,6 +34,26 @@ enum DebugLaunch {
         }
     }
 
+    /// `-fakeActivity 30` starts the Debug fake drop's Live Activity at once, 30 minutes before its drop, so the
+    /// simulator's Dynamic Island can be checked without tapping through Settings › Debug. ActivityKit takes requests
+    /// only in the foreground (CLAUDE.md rule 6) and this runs at launch, so it first waits up to 5 s for the scene.
+    @MainActor
+    static func startFakeActivity(scheduler: ActivityScheduler) async {
+        let minutes = UserDefaults.standard.integer(forKey: "fakeActivity")
+        guard minutes > 0 else { return }
+        var waits = 0
+        while UIApplication.shared.applicationState != .active, waits < 50, !Task.isCancelled {
+            try? await Task.sleep(for: .milliseconds(100))
+            waits += 1
+        }
+        guard UIApplication.shared.applicationState == .active else {
+            return print("-fakeActivity: the app never became active, so no Live Activity was requested.")
+        }
+        let drop = DebugFakeDrop.set(minutes: Double(minutes))
+        let outcome = await scheduler.sync(drops: [drop], optedIn: [DebugFakeDrop.showID], leadMinutes: minutes)
+        print("-fakeActivity: \(outcome)")
+    }
+
     static var query: String? { UserDefaults.standard.string(forKey: "query") }
     static var anime: Bool { UserDefaults.standard.string(forKey: "kind") == "anime" }
 

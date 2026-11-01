@@ -2,7 +2,7 @@ import SwiftUI
 import WidgetKit
 
 /// accessoryInline, the line above the Lock Screen clock: "Silo · 2d 4:10:22", live to the second (SPEC §5, Chime 1
-/// Nov). The system draws it in its own font. The count is a ticking `Text(timerInterval:pauseTime:countsDown:)` to
+/// Nov). The system draws it in its own font. The count is a ticking `Text(timerInterval:countsDown:)` to
 /// the next day edge, which stops at zero (CLAUDE.md rule 4); the hourly entries step the days down, and the entry at
 /// the drop says "Silo · Out now".
 struct InlineWidgetView: View {

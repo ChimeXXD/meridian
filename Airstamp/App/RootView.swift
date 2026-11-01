@@ -31,14 +31,7 @@ struct RootView: View {
             #if DEBUG
             // On the root, not the tab bar, so `-follow` also works on a fresh install that opens on Welcome.
             .task { await DebugLaunch.apply(context: context, client: client, anilist: anilist, tab: $tab) }
-            // `-fakeActivity 30` starts the Debug fake drop's Live Activity at once, 30 minutes before its drop, so
-            // the simulator's Dynamic Island can be checked without tapping through Settings › Debug.
-            .task {
-                let minutes = UserDefaults.standard.integer(forKey: "fakeActivity")
-                guard minutes > 0 else { return }
-                let drop = DebugFakeDrop.set(minutes: Double(minutes))
-                _ = await scheduler.sync(drops: [drop], optedIn: [DebugFakeDrop.showID], leadMinutes: minutes)
-            }
+            .task { await DebugLaunch.startFakeActivity(scheduler: scheduler) }
             #endif
     }
 

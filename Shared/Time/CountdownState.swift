@@ -8,7 +8,7 @@ enum CountdownState: Hashable, Sendable {
     case outNow
     /// More than an hour after the drop.
     case released
-    /// Within 24 hours: a ticking `Text(timerInterval:pauseTime:countsDown:)`.
+    /// Within 24 hours: a ticking `Text(timerInterval:countsDown:)` (no `pauseTime`, D-52).
     case ticking
     /// More than 24 hours away: a static "2d 4h".
     case coarse([CountdownPart])
