@@ -2,7 +2,7 @@ import SwiftUI
 
 /// Upcoming (SPEC §1, UI-BRIEF §5.2) in Night Sky (D-38): the next show's art fades into night with the countdown
 /// and when it's out; everything else is one quiet list in SPEC's sections. Sections are recomputed from the clock
-/// every minute, so a drop moves to "Out now" and on without a reload.
+/// every second (the countdowns' pace), so a drop moves to "Out now" and on without a reload.
 struct UpcomingView: View {
     /// Nil until the first load finishes.
     let result: UpcomingLoader.Result?
@@ -15,9 +15,8 @@ struct UpcomingView: View {
     var onRefresh: () async -> Void = {}
 
     var body: some View {
-        // Every second: inside a TimelineView a ticking Text only updates at the timeline's pace, so `.everyMinute`
-        // froze every countdown on screen (Chime, 1 Nov; seen as identical screenshots 3 s apart).
-        TimelineView(.periodic(from: .now, by: 1)) { context in
+        // Every second (`.countdown`): the sections and the hero's art both follow the clock, so the whole page rides it.
+        TimelineView(.countdown) { context in
             let sections = UpcomingSections.make(drops: result?.drops ?? [],
                                                  nothingScheduled: result?.nothingScheduled ?? [], now: context.date)
             ArtworkLoaderView(url: (sections.hero?.showID ?? sections.spotlightShowID).flatMap { artwork[$0]?.hero },

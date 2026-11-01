@@ -44,11 +44,10 @@ struct DropFormatter: Sendable {
         guard let date = utc.date(from: DateComponents(year: parts.year, month: parts.month, day: parts.day, hour: 12)) else {
             return nil
         }
-        let formatter = DateFormatter()
-        formatter.locale = locale
-        formatter.timeZone = .gmt
-        formatter.dateFormat = "EEE d MMM"
-        let text = formatter.string(from: date)
+        // A format style, not a new DateFormatter: app screens call this every second (their countdowns' pace).
+        let text = date.formatted(Date.VerbatimFormatStyle(
+            format: "\(weekday: .abbreviated) \(day: .defaultDigits) \(month: .abbreviated)",
+            locale: locale, timeZone: .gmt, calendar: utc))
         guard let now, parts.year != calendar.component(.year, from: now) else { return text }
         return "\(text) \(parts.year)"
     }

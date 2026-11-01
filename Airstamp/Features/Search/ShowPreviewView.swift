@@ -28,51 +28,51 @@ struct ShowPreviewView: View {
     private var heroURL: URL? { loaded ? artwork?.hero ?? result.largePoster : nil }
 
     var body: some View {
-        // Every second, so the countdown ticks (a TimelineView paces its ticking Text; see UpcomingView).
-        TimelineView(.periodic(from: .now, by: 1)) { timeline in
-            ArtworkLoaderView(url: heroURL, maxPixel: ShowArtwork.idealBackgroundWidth) { hero in
-                let base = (hero?.palette ?? .neutral).night.color
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 0) {
-                        NightArtHeader(image: hero?.image, base: base, height: 500)
-                            .accessibilityElement()
-                            .accessibilityLabel("\(result.title) artwork")
-                            .accessibilityAddTraits(.isImage)
-                            .accessibilityIdentifier("show-preview-art")
-                            .overlay(alignment: .topLeading) {
-                                GlassCircleButton(systemImage: "chevron.left", label: "Back") { dismiss() }
-                                    .padding(.leading, Tokens.Space.m)
-                                    .padding(.top, 58)
-                            }
-                        VStack(alignment: .leading, spacing: Tokens.Space.xl) {
-                            VStack(alignment: .leading, spacing: Tokens.Space.s) {
-                                if let drop {
-                                    ReleaseHeadline(drop: drop, now: timeline.date, testID: "show-preview")
-                                } else {
-                                    Text(result.title)
-                                        .font(.system(size: 32, design: .serif))
-                                        .lineLimit(2).minimumScaleFactor(0.7)
-                                        .accessibilityAddTraits(.isHeader)
-                                        .accessibilityIdentifier("show-preview-title")
-                                }
-                                if !result.meta.isEmpty {
-                                    Text(result.meta)
-                                        .font(.footnote)
-                                        .foregroundStyle(NightInk.muted)
-                                        .accessibilityIdentifier("show-preview-meta")
-                                }
-                            }
-                            followButton
+        ArtworkLoaderView(url: heroURL, maxPixel: ShowArtwork.idealBackgroundWidth) { hero in
+            let base = (hero?.palette ?? .neutral).night.color
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0) {
+                    NightArtHeader(image: hero?.image, base: base, height: 500)
+                        .accessibilityElement()
+                        .accessibilityLabel("\(result.title) artwork")
+                        .accessibilityAddTraits(.isImage)
+                        .accessibilityIdentifier("show-preview-art")
+                        .overlay(alignment: .topLeading) {
+                            GlassCircleButton(systemImage: "chevron.left", label: "Back") { dismiss() }
+                                .padding(.leading, Tokens.Space.m)
+                                .padding(.top, 58)
                         }
-                        .padding(.horizontal, Tokens.Space.l)
-                        .padding(.top, -64)
+                    VStack(alignment: .leading, spacing: Tokens.Space.xl) {
+                        VStack(alignment: .leading, spacing: Tokens.Space.s) {
+                            if let drop {
+                                // Only the countdown follows the clock, so only it redraws every second.
+                                TimelineView(.countdown) { timeline in
+                                    ReleaseHeadline(drop: drop, now: timeline.date, testID: "show-preview")
+                                }
+                            } else {
+                                Text(result.title)
+                                    .font(.system(size: 32, design: .serif))
+                                    .lineLimit(2).minimumScaleFactor(0.7)
+                                    .accessibilityAddTraits(.isHeader)
+                                    .accessibilityIdentifier("show-preview-title")
+                            }
+                            if !result.meta.isEmpty {
+                                Text(result.meta)
+                                    .font(.footnote)
+                                    .foregroundStyle(NightInk.muted)
+                                    .accessibilityIdentifier("show-preview-meta")
+                            }
+                        }
+                        followButton
                     }
-                    .padding(.bottom, Tokens.Space.xl)
+                    .padding(.horizontal, Tokens.Space.l)
+                    .padding(.top, -64)
                 }
-                .scrollIndicators(.hidden)
-                .background(base)
-                .ignoresSafeArea(edges: .top)
+                .padding(.bottom, Tokens.Space.xl)
             }
+            .scrollIndicators(.hidden)
+            .background(base)
+            .ignoresSafeArea(edges: .top)
         }
         .toolbarVisibility(.hidden, for: .navigationBar)
         .environment(\.colorScheme, .dark)

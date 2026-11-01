@@ -7,7 +7,8 @@ import WidgetKit
 /// airdate, never a timer. The timer is sized from `CountdownFormatter.clockTemplate`, because in a widget a ticking
 /// text otherwise takes all the width it's offered and pushes the rest out (the medium widget went blank, 1 Nov).
 /// The caller owns `now` and must refresh it: widgets pass their timeline entry's date (with an entry at the drop and
-/// on every hour, SPEC §5); app screens wrap the list in a `TimelineView` (Day 3), or "Out now" never appears.
+/// on every hour, SPEC §5); app screens wrap it in `TimelineView(.countdown)`, or "Out now" never appears. The
+/// timeline also paces the ticking text, so a slower one (`.everyMinute`) freezes the count between its entries.
 struct CountdownText: View {
     let drop: Date
     let confidence: Confidence

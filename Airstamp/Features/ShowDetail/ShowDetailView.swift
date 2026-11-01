@@ -19,51 +19,49 @@ struct ShowDetailView: View {
     @AppStorage(LeadTime.storageKey) private var leadMinutes = LeadTime.defaultMinutes
 
     var body: some View {
-        // Every second, so the countdown ticks (a TimelineView paces its ticking Text; see UpcomingView).
-        TimelineView(.periodic(from: .now, by: 1)) { context in
-            ArtworkLoaderView(url: artwork?.hero, maxPixel: ShowArtwork.idealBackgroundWidth) { hero in
-                let base = (hero?.palette ?? .neutral).night.color
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 0) {
-                        NightArtHeader(image: hero?.image, base: base, height: 500)
-                            .overlay(alignment: .topLeading) {
-                                GlassCircleButton(systemImage: "chevron.left", label: "Back") { dismiss() }
-                                    .padding(.leading, Tokens.Space.m)
-                                    .padding(.top, 58)
-                            }
-                        VStack(alignment: .leading, spacing: Tokens.Space.xl) {
-                            next(now: context.date)
-                            liveActivityRow
-                            if !episodes.isEmpty {
-                                VStack(alignment: .leading, spacing: Tokens.Space.xs) {
-                                    Text("Episodes")
-                                        .font(.subheadline.weight(.medium))
-                                        .foregroundStyle(NightInk.muted)
-                                        .accessibilityAddTraits(.isHeader)
-                                    EpisodeRows(episodes: episodes, ink: .white, formatter: formatter)
-                                }
-                            }
-                            VStack(alignment: .leading, spacing: Tokens.Space.m) {
-                                if let onReport {
-                                    Button("Report a wrong time", action: onReport)
-                                        .accessibilityIdentifier("detail-report")
-                                }
-                                Button("Unfollow", role: .destructive) { confirmingUnfollow = true }
-                                    .accessibilityIdentifier("detail-unfollow")
-                            }
-                            .font(.subheadline)
-                            .foregroundStyle(NightInk.muted)
+        ArtworkLoaderView(url: artwork?.hero, maxPixel: ShowArtwork.idealBackgroundWidth) { hero in
+            let base = (hero?.palette ?? .neutral).night.color
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0) {
+                    NightArtHeader(image: hero?.image, base: base, height: 500)
+                        .overlay(alignment: .topLeading) {
+                            GlassCircleButton(systemImage: "chevron.left", label: "Back") { dismiss() }
+                                .padding(.leading, Tokens.Space.m)
+                                .padding(.top, 58)
                         }
-                        .padding(.horizontal, Tokens.Space.l)
-                        .padding(.top, -64)
+                    VStack(alignment: .leading, spacing: Tokens.Space.xl) {
+                        // Only the countdown follows the clock, so only it redraws every second.
+                        TimelineView(.countdown) { context in next(now: context.date) }
+                        liveActivityRow
+                        if !episodes.isEmpty {
+                            VStack(alignment: .leading, spacing: Tokens.Space.xs) {
+                                Text("Episodes")
+                                    .font(.subheadline.weight(.medium))
+                                    .foregroundStyle(NightInk.muted)
+                                    .accessibilityAddTraits(.isHeader)
+                                EpisodeRows(episodes: episodes, ink: .white, formatter: formatter)
+                            }
+                        }
+                        VStack(alignment: .leading, spacing: Tokens.Space.m) {
+                            if let onReport {
+                                Button("Report a wrong time", action: onReport)
+                                    .accessibilityIdentifier("detail-report")
+                            }
+                            Button("Unfollow", role: .destructive) { confirmingUnfollow = true }
+                                .accessibilityIdentifier("detail-unfollow")
+                        }
+                        .font(.subheadline)
+                        .foregroundStyle(NightInk.muted)
                     }
-                    .padding(.bottom, Tokens.Space.xl)
+                    .padding(.horizontal, Tokens.Space.l)
+                    .padding(.top, -64)
                 }
-                .scrollIndicators(.hidden)
-                .defaultScrollAnchor(scrollAnchor)
-                .background(base)
-                .ignoresSafeArea(edges: .top)
+                .padding(.bottom, Tokens.Space.xl)
             }
+            .scrollIndicators(.hidden)
+            .defaultScrollAnchor(scrollAnchor)
+            .background(base)
+            .ignoresSafeArea(edges: .top)
         }
         .toolbarVisibility(.hidden, for: .navigationBar)
         .environment(\.colorScheme, .dark)
