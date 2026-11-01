@@ -4,6 +4,6 @@ import WidgetKit
 @main
 struct AirstampWidgetsBundle: WidgetBundle {
     var body: some Widget {
-        PlaceholderWidget()
+        NextDropWidget()
     }
 }
