@@ -2,6 +2,20 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## D6-9, a Netflix Top 10 link chip (Sun 1 Nov 2026)
+
+**Changed**
+- Chime OK'd the two Search screen checks (committed `709993e`) and chose the link-out for D6-9. TV's filter row ends with "Top 10 on Netflix in <country>" plus an arrow, opening Netflix's own chart (`netflix.com/tudum/top10/<country>/tv`); nothing is copied or fetched (O-13). Country from `ViewerCountry` via `UpcomingModel.viewerCountry`; no chip when unknown or on Anime. `NetflixTopTenLink`; chip in `SearchFilterRow`.
+
+**Red → green**
+- Red: `NetflixTopTenLinkTests` didn't compile (`cannot find 'NetflixTopTenLink'`), then "ZZ" gave "Unknown Region" instead of nil. Green: 2 tests (4 cases).
+
+**Checked**
+- `fidelity/verify-screen.sh search-filtered` ALL PASS with `search-netflix-top10` added to its inventory. Proof gate build+test+spec pass. Not checked: that Netflix's page opens for countries other than Nigeria (only the Nigeria URL was fetched, HTTP 200, by the O-13 agent).
+- `/code-review --fix` (medium): 6 findings, 4 fixed (Netflix's names for CZ "czech-republic" and TR "turkey"; "&" → "and" and one hyphen between words; only two-letter uppercase codes, so "001" and "ZZ" give no chip; one shared `ChipCapsule` style). Tests added for TT, CZ, RE, "001", "ng". Re-run: gate build+test+spec pass; `search-filtered` ALL PASS.
+- Left: Netflix publishes about 90 country charts, and Netflix answers HTTP 200 even for made-up slugs ("czechia", "turkiye" and "ghana" all return 200), so which countries really have a chart couldn't be checked from here. A viewer outside those may land on a generic page.
+- `.claude/settings.json`: Chime OK'd allowlisting the routine build, test, screen-check, gate, commit, push and phone-install commands (1 Nov).
+
 ## D3-9 to D3-11, Search filters; D6-9 blocked (Sun 1 Nov 2026)
 
 **Changed**

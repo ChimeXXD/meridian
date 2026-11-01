@@ -10,6 +10,7 @@ struct SearchView: View {
     let client: TVmazeClient
     let anilist: AniListClient
     let rules: RulesFile
+    let viewerCountry: String?
 
     enum Kind: String, CaseIterable { case tv = "TV", anime = "Anime" }
 
@@ -93,7 +94,8 @@ struct SearchView: View {
             message(kind == .tv ? "Search TVmaze for a show to follow" : "Search AniList for an anime to follow",
                     id: "search-empty")
         case .idle:
-            SearchFilterRow(options: AiringFilter.options(for: kind, items: airingSoon), selection: filter)
+            SearchFilterRow(options: AiringFilter.options(for: kind, items: airingSoon), selection: filter,
+                            netflix: kind == .tv ? NetflixTopTenLink(country: viewerCountry) : nil)
                 .padding(.top, Tokens.Space.s)
             airingGrid
         case .searching:

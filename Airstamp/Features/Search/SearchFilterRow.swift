@@ -6,6 +6,8 @@ import SwiftUI
 struct SearchFilterRow: View {
     let options: [SearchFilter]
     @Binding var selection: SearchFilter
+    /// Netflix's own Top 10 for the viewer's country, last in the row; it opens Netflix instead of filtering (O-13).
+    var netflix: NetflixTopTenLink? = nil
 
     var body: some View {
         ScrollView(.horizontal) {
@@ -13,6 +15,7 @@ struct SearchFilterRow: View {
                 ForEach(options, id: \.self) { option in
                     chip(option)
                 }
+                if let netflix { link(netflix) }
             }
             .padding(.vertical, Tokens.Space.xxs)
         }
@@ -30,17 +33,50 @@ struct SearchFilterRow: View {
         } label: {
             Text(option.label)
                 .font(.subheadline.weight(.medium))
+                .modifier(ChipCapsule(picked: picked))
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(picked ? .isSelected : [])
+        .accessibilityIdentifier(option.identifier)
+    }
+
+    /// Looks like an unpicked chip with an arrow, because it leaves the app.
+    private func link(_ netflix: NetflixTopTenLink) -> some View {
+        Link(destination: netflix.url) {
+            Label(netflix.label, systemImage: "arrow.up.right")
+                .labelStyle(TrailingIcon())
+                .font(.subheadline.weight(.medium))
+                .modifier(ChipCapsule(picked: false))
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(netflix.label)
+        .accessibilityHint("Opens Netflix")
+        .accessibilityIdentifier("search-netflix-top10")
+    }
+
+    /// The Night Sky chip: white with black text when picked, else dark with a hairline.
+    private struct ChipCapsule: ViewModifier {
+        let picked: Bool
+
+        func body(content: Content) -> some View {
+            content
                 .foregroundStyle(picked ? .black : .white)
                 .padding(.horizontal, Tokens.Space.s)
                 .frame(minHeight: 34)
                 .background(picked ? AnyShapeStyle(.white) : AnyShapeStyle(.black.opacity(0.55)), in: Capsule())
                 .overlay(Capsule().strokeBorder(.white.opacity(picked ? 0 : 0.35)))
-                // Inside the label, so the whole 44 pt row is the button's tap area, not just the 34 pt capsule.
+                // Inside the label, so the whole 44 pt row is the tap area, not just the 34 pt capsule.
                 .frame(minHeight: 44)
                 .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
-        .accessibilityAddTraits(picked ? .isSelected : [])
-        .accessibilityIdentifier(option.identifier)
+    }
+
+    private struct TrailingIcon: LabelStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            HStack(spacing: Tokens.Space.xxs) {
+                configuration.title
+                configuration.icon.imageScale(.small)
+            }
+        }
     }
 }

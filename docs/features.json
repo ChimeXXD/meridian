@@ -634,14 +634,14 @@
       "id": "D6-9",
       "day": 6,
       "priority": "should",
-      "title": "Search: 'Top 10 on Netflix in Nigeria' chip from Netflix's official weekly Top 10 (D-43, option B) — BLOCKED by Netflix's Top 10 terms (O-13, 1 Nov)",
+      "title": "Search: 'Top 10 on Netflix in <country>' link chip to Netflix's own chart (D-43; a bundled list is forbidden by Netflix's terms, O-13)",
       "criteria": [
-        "first: confirm the Netflix country file has Nigeria rows and its terms allow a derived list (O-13)",
-        "a script builds a bundled list for Nigeria only from the latest week, matched to TVmaze IDs; unmatched titles are listed and dropped",
-        "the chip lists the chart's TV shows in chart order, ignoring the airing window and language rule; a show with an episode coming says when, one fully out says 'All episodes out'; it names the week",
-        "no remote fetch until the repo is public (D-34); Netflix credited on Credits"
+        "O-13 checked first: Netflix's Top 10 terms forbid copying, distributing or scraping the chart, so nothing is bundled or fetched",
+        "TV's filter row ends with a chip 'Top 10 on Netflix in <country>' with an arrow, opening https://www.netflix.com/tudum/top10/<country>/tv",
+        "the country is the viewer's (ViewerCountry); no chip when unknown; none on Anime",
+        "VoiceOver reads the label with the hint 'Opens Netflix'"
       ],
-      "verify": "PopularListTests decodes the script's output from a recorded Top 10 fixture and checks the TVmaze matches; fidelity/verify-screen.sh search-filtered prints ALL PASS",
+      "verify": "NetflixTopTenLinkTests (NG, GB, US, unknown); fidelity/verify-screen.sh search-filtered finds search-netflix-top10",
       "passes": false,
       "evidence": ""
     },

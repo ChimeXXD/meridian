@@ -12,7 +12,17 @@
       "mcp__figma__whoami",
       "mcp__claude-in-chrome__tabs_context_mcp",
       "mcp__claude_ai_references__search_flows",
-      "mcp__claude-in-chrome__read_page"
+      "mcp__claude-in-chrome__read_page",
+      "Bash(xcodebuild -scheme Airstamp *)",
+      "Bash(xcodegen generate *)",
+      "Bash(xcodegen generate)",
+      "Bash(fidelity/verify-screen.sh *)",
+      "Bash(node \"/Users/chimexd/.claude/plugins/cache/proof/proof/0.4.0/scripts/gate.mjs\" --run *)",
+      "Bash(node \"/Users/chimexd/.claude/plugins/cache/proof/proof/0.4.0/scripts/gate.mjs\" --run)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push -q origin main)",
+      "Bash(xcrun devicectl device install app *)"
     ]
   }
 }

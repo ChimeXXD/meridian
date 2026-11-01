@@ -18,6 +18,8 @@ final class UpcomingModel {
 
     /// The rules Upcoming resolves times with, shared with Search so both say the same time for an episode.
     var rules: RulesFile { loader.rules }
+    /// The viewer's country from the time zone (D2-6), for Search's Netflix Top 10 link.
+    var viewerCountry: String? { loader.viewerCountry }
 
     init(client: TVmazeClient, anilist: AniListClient, rules: RulesFile, viewerCountry: String?) {
         self.client = client
