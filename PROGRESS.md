@@ -2,6 +2,24 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Day 4: widgets, built by two agents in parallel (Sun 1 Nov 2026)
+
+**Changed**
+- Chime asked to fast-track with agents. A contract commit (`584cfeb`) fixed the signatures of `SnapshotStore` and `WidgetAccessibility`, so two worktree agents could build at once without the simulator (the lead ran every test, one at a time).
+- Lane A (D4-1, D4-5): `SnapshotStore` writes `snapshot.json` atomically (ISO 8601 with milliseconds, readable after first unlock); `WidgetSnapshotWriter` builds it after every refresh (sorted, drops over an hour old removed, `nextReturn`), reloads timelines, and saves a ≤ 300 px, < 60 KB JPEG per show under `Artwork/` (stale ones deleted). The refresh triggers moved from `UpcomingTab` to `RootView`, so a follow in Search reaches the widgets at once (switching back to Upcoming no longer refreshes; launch, app-active, follow changes and pull-to-refresh still do). `WidgetAccessibility.label`: "Silo, expected in 2 days 4 hours, Apple TV", "out now" only for an exact time ("expected now", "just aired in Japan" otherwise).
+- Lane B (D4-2, D4-3, D4-4): `WidgetTimeline` (entries now, at each of the next 5 drops and drop + 1 h, 5-minute spacing, hourly refresh entries up to 48 h so static "2d 4h" text doesn't freeze, reload `.after(nextDrop)` capped at 48 h). Five families in Night Sky under `Shared/Widgets/` (inline, circular with a 7-day ring, rectangular, small, medium "Up next"), each with counting down, Out now, date only and nothing ("Silo returns Fri 9 Jul 2027" / "Follow a show"); certainty in `ReleaseWording` words, no source chip; tinted/accented and Always-On handling; `NextDropWidget` replaces the Day-0 placeholder. `ReleaseWording.verb` made internal.
+
+**Checked**
+- Lane A tests (`SnapshotStoreTests`, `AccessibilityLabelTests`) and Lane B tests (`TimelineProviderTests`, `WidgetTextTests`, `WidgetRenderTests`) pass, run by the lead after each merge. Gate build+test+spec pass.
+- Looked at the rendered widgets (`fidelity/shots/widgets/`, 39 PNGs): small, medium, rectangular, circular and inline in their states read correctly in Night Sky. The art placeholder in renders is a grey stand-in (no artwork in the repo).
+
+**Reviews**
+- `/code-review --fix` (medium, the 6 Day 4 commits): 9 findings, 3 fixed by the review (an offline cold launch overwrote the widget snapshot with nothing and deleted the art; it now starts from the snapshot on disk, `WidgetSnapshotWriter.lastWritten()`; the show page fetches its show and images at the same time; the inline text worked out once). I fixed: a date-only drop never expired, so a widget could show a passed day; it now leaves at midnight after its airdate in the viewer's zone, with an entry and a reload then (`TimelineProviderTests.dateOnly`, whose old expectation of "no reload" was the bug). The review's concurrent fetch made `ShowPreviewTests.tvArtwork` order-dependent; `FakeNetwork` gained `init(routes:)` to answer by URL. Left: the "Silo returns …" empty state can't appear in real use (a date-only drop always becomes current; a design call); the circular count can read up to an hour high in the last day (refresh entries sit on the hour); widget art never refreshes once saved; launch can start two refreshes; Show page back button padding is fixed, not safe-area based.
+- Gate build+test+spec pass after the fixes.
+
+**Not verified**
+- Tinted/accented mode (ImageRenderer can't set it), real Always-On, large Dynamic Type, and the widgets on the phone (Chime adds them). "Follow a show, see the widget update within 5 s" (SPEC) is still manual.
+
 ## D3-13, every Search poster opens the show's page (Sun 1 Nov 2026)
 
 **Changed**

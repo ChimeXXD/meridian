@@ -22,14 +22,15 @@ enum ShowPreview {
                      rules: RulesFile, offsetMinutes: Int = 0, now: Date = .now) async -> Loaded {
         switch catalog {
         case .tvmaze:
+            // The art and the show are independent requests, so they run together.
+            async let images = try? client.images(showID: id)
             var drop = knownDrop
             if drop == nil, let show = try? await client.show(id: id), let next = show.embedded?.nextepisode {
                 let resolution = TimeResolver.resolve(next.listing(show: show), rules: rules,
                                                       offsetMinutes: offsetMinutes, now: now)
                 drop = AiringItem(pick: AiringSoon.Pick(show: show, episode: next, resolution: resolution)).drop
             }
-            let artwork = (try? await client.images(showID: id)).map(ShowArtwork.init(images:))
-            return Loaded(drop: drop, artwork: artwork)
+            return Loaded(drop: drop, artwork: await images.map(ShowArtwork.init(images:)))
         case .anilist:
             // One request gives both the next broadcast and the banner.
             guard let media = try? await anilist.media(id: id) else { return Loaded(drop: knownDrop, artwork: nil) }

@@ -11,15 +11,25 @@ struct TVmazeClientTests {
         private(set) var sleeps: [Duration] = []
         private(set) var bodies: [Data] = []
 
+        /// Answers by URL instead of by order, for requests that run at the same time: the first route whose text
+        /// appears in the URL wins.
+        private var routes: [(match: String, response: (status: Int, headers: [String: String], body: Data))] = []
+
         init(_ responses: [(status: Int, headers: [String: String], body: Data)]) {
             self.responses = responses
+        }
+
+        init(routes: [(match: String, response: (status: Int, headers: [String: String], body: Data))]) {
+            self.responses = []
+            self.routes = routes
         }
 
         func send(_ request: URLRequest) throws -> (Data, HTTPURLResponse) {
             let url = try #require(request.url)
             requests.append(url)
             if let body = request.httpBody { bodies.append(body) }
-            let next = responses.count > 1 ? responses.removeFirst() : responses[0]
+            let routed = routes.first { url.absoluteString.contains($0.match) }?.response
+            let next = try routed ?? (responses.count > 1 ? responses.removeFirst() : #require(responses.first))
             let response = HTTPURLResponse(url: url, statusCode: next.status, httpVersion: nil, headerFields: next.headers)!
             return (next.body, response)
         }

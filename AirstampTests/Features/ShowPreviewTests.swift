@@ -24,8 +24,11 @@ struct ShowPreviewTests {
 
     @Test("the page's art is TVmaze's landscape key art, as on Upcoming")
     func tvArtwork() async throws {
-        let network = TVmazeClientTests.FakeNetwork([(200, [:], try Fixture.data("tvmaze/show-silo-embed.json")),
-                                                     (200, [:], try Fixture.data("tvmaze/images-silo.json"))])
+        // The show and its images are fetched at the same time, so the fake answers by URL, not by order.
+        let network = TVmazeClientTests.FakeNetwork(routes: [
+            ("/images", (200, [:], try Fixture.data("tvmaze/images-silo.json"))),
+            ("/shows/44778", (200, [:], try Fixture.data("tvmaze/show-silo-embed.json"))),
+        ])
         let loaded = try await Self.load(.tvmaze, id: 44778, network: network)
         #expect(loaded.drop != nil)
         let background = try #require(loaded.artwork?.background)

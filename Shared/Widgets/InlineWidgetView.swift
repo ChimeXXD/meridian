@@ -20,9 +20,8 @@ struct InlineWidgetView: View {
 
     private var line: Text {
         // Only a ticking count has no static text, and it always has a current drop.
-        guard let drop = moment.current, WidgetText.inline(moment, formatter: formatter) == nil else {
-            return Text(WidgetText.inline(moment, formatter: formatter) ?? "")
-        }
+        if let text = WidgetText.inline(moment, formatter: formatter) { return Text(text) }
+        guard let drop = moment.current else { return Text(verbatim: "") }
         return Text("\(drop.showName) · \(Text(timerInterval: moment.date...drop.date, pauseTime: drop.date, countsDown: true))")
     }
 }

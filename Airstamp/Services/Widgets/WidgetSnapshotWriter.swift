@@ -31,6 +31,11 @@ struct WidgetSnapshotWriter {
         return DropSnapshot(generatedAt: now, drops: kept, nextReturn: nextReturn)
     }
 
+    /// The snapshot the widgets have now, so a launch that can't reach the network keeps it instead of wiping it.
+    func lastWritten() -> DropSnapshot? {
+        container.flatMap { SnapshotStore.read(from: $0) }
+    }
+
     /// Writes the snapshot for these drops and reloads the timelines. Returns what was written, or nil if nothing was.
     @discardableResult
     func write(_ drops: [Drop], now: Date) -> DropSnapshot? {

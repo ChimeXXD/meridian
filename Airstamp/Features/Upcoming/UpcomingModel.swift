@@ -36,7 +36,10 @@ final class UpcomingModel {
         let current = generation
         let loaded = await loader.load(requests, now: now)
         guard current == generation else { return }
-        result = loaded.keepingLastKnown(from: result)
+        // On a cold launch the last snapshot is the last known result, so an offline start doesn't empty the widgets
+        // (and delete their art) for shows that merely failed to load.
+        let previous = result ?? snapshots.lastWritten().map { UpcomingLoader.Result(drops: $0.drops) }
+        result = loaded.keepingLastKnown(from: previous)
         // The widgets get the times at once; their art follows once it's loaded.
         let snapshot = snapshots.write(result?.drops ?? [], now: now)
         let ids = (result?.drops ?? []).map(\.showID) + (result?.nothingScheduled ?? []).map(\.showID)

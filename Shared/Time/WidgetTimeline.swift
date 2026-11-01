@@ -11,8 +11,10 @@ import Foundation
 /// - No two entries are closer than 5 minutes. A change that falls inside that gap moves to 5 minutes after the
 ///   entry before it (never earlier, so "Out now" is never shown before the drop), and a refresh entry within 5
 ///   minutes of a drop change is dropped, so drops win.
-/// - Reload `.after(nextDrop)`: the next timed drop still ahead, or the refresh horizon if that's sooner. Nil means
-///   `.never`: nothing timed is ahead, and the app reloads timelines when it writes a new snapshot.
+/// - A date-only drop shows its airdate until that day ends in the viewer's zone, then leaves: an entry at that
+///   midnight, so a widget never keeps a day that has passed when the app isn't opened.
+/// - Reload `.after(nextDrop)`: the next timed drop still ahead (or a date-only day's end), or the refresh horizon if
+///   that's sooner. Nil means `.never`: nothing is ahead, and the app reloads timelines when it writes a new snapshot.
 struct WidgetTimeline: Hashable, Sendable {
     static let minimumSpacing: TimeInterval = 5 * 60
     static let dropsAhead = 5
@@ -23,36 +25,50 @@ struct WidgetTimeline: Hashable, Sendable {
     var entries: [WidgetMoment]
     var reloadDate: Date?
 
-    static func make(snapshot: DropSnapshot?, now: Date) -> WidgetTimeline {
+    static func make(snapshot: DropSnapshot?, now: Date, formatter: DropFormatter = DropFormatter()) -> WidgetTimeline {
         let drops = snapshot?.drops ?? []
-        let timed = live(drops, at: now).filter { $0.confidence != .dateOnly }
+        let showing = live(drops, at: now, formatter: formatter)
+        let timed = showing.filter { $0.confidence != .dateOnly }
         let ahead = Array(timed.prefix(dropsAhead))
         let horizon = now.addingTimeInterval(refreshHorizon)
+        let dayEnds = showing.compactMap { dayEnd(of: $0, formatter: formatter) }.filter { $0 > now }
 
-        let changes = Set(ahead.flatMap { [$0.date, $0.date.addingTimeInterval(outNowWindow)] }).filter { $0 > now }
+        let changes = Set(ahead.flatMap { [$0.date, $0.date.addingTimeInterval(outNowWindow)] } + dayEnds)
+            .filter { $0 > now }
         let anchors = changes.union([now])
         let refreshes = refreshTimes(ahead, now: now, horizon: horizon).filter { time in
             time > now && !anchors.contains { abs($0.timeIntervalSince(time)) < minimumSpacing }
         }
         let dates = spaced([now] + changes.union(refreshes).sorted())
-        let entries = dates.map { moment(at: $0, drops: drops, nextReturn: snapshot?.nextReturn) }
-        let reload = timed.first { $0.date > now }.map { min($0.date, horizon) }
-        return WidgetTimeline(entries: entries, reloadDate: reload)
+        let entries = dates.map { moment(at: $0, drops: drops, nextReturn: snapshot?.nextReturn, formatter: formatter) }
+        let next = ([timed.first { $0.date > now }?.date] + dayEnds.map(Optional.some)).compactMap(\.self).min()
+        return WidgetTimeline(entries: entries, reloadDate: next.map { min($0, horizon) })
     }
 
-    /// The moment at `date`: timed drops not yet an hour past, soonest first, then the date-only ones.
-    static func moment(at date: Date, drops: [Drop], nextReturn: Drop?) -> WidgetMoment {
-        let showing = live(drops, at: date)
+    /// The moment at `date`: timed drops not yet an hour past, soonest first, then the date-only ones whose day
+    /// hasn't ended.
+    static func moment(at date: Date, drops: [Drop], nextReturn: Drop?,
+                       formatter: DropFormatter = DropFormatter()) -> WidgetMoment {
+        let showing = live(drops, at: date, formatter: formatter)
         return WidgetMoment(date: date, current: showing.first, upNext: Array(showing.prefix(rowCount)),
                             nextReturn: nextReturn)
     }
 
-    /// Timed drops whose "Out now" hour hasn't ended at `date`, by time; then every date-only drop by airdate.
-    /// A date-only drop's `date` is only a sort key (D-28), so it never expires here; the next snapshot drops it.
-    private static func live(_ drops: [Drop], at date: Date) -> [Drop] {
+    /// Timed drops whose "Out now" hour hasn't ended at `date`, by time; then date-only drops, by airdate, until the
+    /// end of their listed day in `formatter`'s zone (their `date` is only a sort key, D-28).
+    private static func live(_ drops: [Drop], at date: Date, formatter: DropFormatter) -> [Drop] {
         let ordered = drops.sorted { ($0.date, $0.id) < ($1.date, $1.id) }
         let timed = ordered.filter { $0.confidence != .dateOnly && $0.date.addingTimeInterval(outNowWindow) > date }
-        return timed + ordered.filter { $0.confidence == .dateOnly }
+        let undated = ordered.filter { drop in
+            drop.confidence == .dateOnly && (dayEnd(of: drop, formatter: formatter).map { $0 > date } ?? true)
+        }
+        return timed + undated
+    }
+
+    /// Midnight after a date-only drop's airdate where the viewer is; nil for a timed drop or one with no airdate.
+    private static func dayEnd(of drop: Drop, formatter: DropFormatter) -> Date? {
+        guard drop.confidence == .dateOnly, let airdate = drop.airdate else { return nil }
+        return WallClock.instant(airdate: airdate, time: "00:00", zone: formatter.timeZone.identifier, dayOffset: 1)
     }
 
     /// While each drop is the one counted down to (from when the drop before it leaves until its own time):

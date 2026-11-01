@@ -16,7 +16,8 @@ struct TimelineProviderTests {
     }
 
     static func timeline(_ drops: [Drop], nextReturn: Drop? = nil, now: Date = now) -> WidgetTimeline {
-        WidgetTimeline.make(snapshot: DropSnapshot(generatedAt: now, drops: drops, nextReturn: nextReturn), now: now)
+        WidgetTimeline.make(snapshot: DropSnapshot(generatedAt: now, drops: drops, nextReturn: nextReturn), now: now,
+                            formatter: DropFormatter(zoneIdentifier: "Africa/Lagos"))
     }
 
     static func gaps(_ timeline: WidgetTimeline) -> [TimeInterval] {
@@ -97,14 +98,19 @@ struct TimelineProviderTests {
         #expect(timeline.reloadDate == next.date)
     }
 
-    @Test("a date-only drop shows its airdate with no timer and asks for no reload")
+    @Test("a date-only drop shows its airdate with no timer until that day ends where you are, then leaves")
     func dateOnly() throws {
         let undated = Self.drop("1", at: Date(iso: "2026-11-11T12:00:00Z"), confidence: .dateOnly, airdate: "2026-11-11")
         let timeline = Self.timeline([undated])
 
-        #expect(timeline.entries.count == 1)
+        // Midnight after Wed 11 Nov in Lagos is 23:00Z: the widget mustn't keep a passed day when the app isn't opened.
+        let dayEnds = Date(iso: "2026-11-11T23:00:00Z")
+        #expect(timeline.entries.map(\.date) == [Self.now, dayEnds])
         #expect(timeline.entries.first?.state == .dateOnly)
-        #expect(timeline.reloadDate == nil)
+        #expect(timeline.entries.last?.state == .nothing)
+        // That's 9 days off, so the reload comes at the 48-hour horizon; on the day itself it comes at midnight.
+        #expect(timeline.reloadDate == Self.now.addingTimeInterval(WidgetTimeline.refreshHorizon))
+        #expect(Self.timeline([undated], now: Date(iso: "2026-11-11T10:00:00Z")).reloadDate == dayEnds)
 
         // A timed drop leads; the date-only one follows it in the rows, even when its sort key is sooner.
         let timed = Self.drop("2", at: Date(iso: "2026-11-14T02:00:00Z"))

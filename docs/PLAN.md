@@ -160,10 +160,10 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
 ## Day 4: Widgets (Mon 2 Nov)
 
 ### Claude CLI does
-- [ ] `SnapshotStore`: App Group JSON written after every change, then `reloadAllTimelines()`.
-- [ ] Timeline provider: entries at least 5 minutes apart, "Out now" at the drop, the next drop an hour later, and `.after(nextDrop)`.
+- [x] `SnapshotStore`: App Group JSON written after every change, then `reloadAllTimelines()`.
+- [x] Timeline provider: entries at least 5 minutes apart, "Out now" at the drop, the next drop an hour later, and `.after(nextDrop)`.
 - [ ] `accessoryInline`, `accessoryCircular`, `accessoryRectangular`, `systemSmall` and `systemMedium` in the chosen style, using `Text(timerInterval:pauseTime:countsDown:)` only, in light, dark, tinted and Always-On.
-- [ ] VoiceOver labels built from the provider label.
+- [x] VoiceOver labels built from the provider label.
 
 ### Chime does
 - [ ] Add the widgets in the simulator (and on your phone if it's ready) and approve their look.

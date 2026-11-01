@@ -427,8 +427,8 @@
         "written after follow, unfollow, refresh"
       ],
       "verify": "SnapshotStoreTests",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "1 Nov: SnapshotStoreTests pass (roundTrip, dateEncoding, overwrite, missingOrBroken, artworkPath, contents, staleArtRemoved, smallJPEG, writtenAfterFollowRefreshUnfollow), run by the lead after merging Lane A; gate build+test+spec pass"
     },
     {
       "id": "D4-2",
@@ -440,8 +440,8 @@
         "never closer than 5 minutes"
       ],
       "verify": "TimelineProviderTests",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "1 Nov: TimelineProviderTests pass (spacingAndPolicy with 6 drops 2 min apart, entries at drop and drop + 1h, refresh entries, horizon reload, dateOnly now expires at the end of its day), run by the lead; gate pass"
     },
     {
       "id": "D4-3",
@@ -454,7 +454,7 @@
       ],
       "verify": "grep finds no .timer style; previews pass verify-screen.sh; Chime approves",
       "passes": false,
-      "evidence": ""
+      "evidence": "1 Nov: WidgetRenderTests renders inline/circular/rectangular in every state to fidelity/shots/widgets/ (looked at); no .timer style (test). Not yet: tinted/Always-On on device, Chime's approval"
     },
     {
       "id": "D4-4",
@@ -466,7 +466,7 @@
       ],
       "verify": "previews pass verify-screen.sh; Chime approves",
       "passes": false,
-      "evidence": ""
+      "evidence": "1 Nov: WidgetRenderTests renders small/medium in every state (looked at). Not yet: accented and Always-On on device, Chime's approval"
     },
     {
       "id": "D4-5",
@@ -477,8 +477,8 @@
         "full phrases, no 'on HBO' where it isn't available"
       ],
       "verify": "AccessibilityLabelTests",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "1 Nov: AccessibilityLabelTests pass (exact, noOfficialStream, estimate, anilist, dateOnly, outNow, released, nothing, units, noProvider, neverOnOrTitle); every widget view sets accessibilityLabel from WidgetAccessibility.label"
     },
     {
       "id": "D5-1",
