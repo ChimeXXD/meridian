@@ -28,4 +28,6 @@ struct DropActivityAttributes: ActivityAttributes {
     var provider: String?
     /// How sure the time is, in `ReleaseWording`'s verb: "Out", "Expected", "Airs in Japan" (D-40).
     var verb: String
+    /// `ProviderLabel.noOfficialStream`: VoiceOver adds "no official stream in your country", as the widgets do.
+    var noOfficialStream = false
 }

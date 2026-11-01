@@ -42,10 +42,18 @@ final class UpcomingModel {
             UpcomingLoader.Result(drops: $0.drops, nothingScheduled: $0.nothingScheduled)
         }
         result = loaded.keepingLastKnown(from: previous, followOrder: requests.map(\.showID))
+        #if DEBUG
+        // Debug → "Fake drop in N minutes" (SPEC §7): the fake show goes to Upcoming and the widgets like a real one.
+        result = DebugFakeDrop.adding(to: result)
+        #endif
         // The widgets get the times at once; their art follows once it's loaded.
         let snapshot = snapshots.write(result?.drops ?? [], nothingScheduled: result?.nothingScheduled ?? [], now: now)
         let ids = (result?.drops ?? []).map(\.showID) + (result?.nothingScheduled ?? []).map(\.showID)
-        let missing = Set(ids).filter { artwork[$0] == nil }
+        var missing = Set(ids).filter { artwork[$0] == nil }
+        #if DEBUG
+        // The fake show has no art; "debug" would ask TVmaze for show 0 on every refresh.
+        missing.remove(DebugFakeDrop.showID)
+        #endif
         await withTaskGroup(of: (String, ShowArtwork?).self) { group in
             for id in missing {
                 let key = Drop.key(showID: id)

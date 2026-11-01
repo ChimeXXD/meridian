@@ -2,6 +2,19 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Day 5: Live Activity and Debug menu, built by two lanes (Sun 1 Nov 2026)
+
+**Changed** (D-49)
+- Contract commit `b9731d6` fixed `DropActivityAttributes` and `LiveActivityText` signatures; two worktree agents built in parallel without the simulator, and the lead merged and tested.
+- Lane A (D5-1, D5-5): `DropLiveActivity` (Lock Screen, Dynamic Island compact/minimal/expanded, `.supplementalActivityFamilies([.small])`), views in `Shared/LiveActivity/` (Night Sky; breadcrumb, band "Expected in" → "Out now" with the numbers staying put, relative countdown then absolute time, merged "Silo + 1 more", delayed time struck through), `LiveActivityText` (alert says "Starts" only for an exact time).
+- Lane B (D5-2, D5-3): `ActivityPlanner` (opt-in, 7 days, no date-only, skip covered, same night = within 3 h, max 3 pending, start = drop − lead or now), `ActivityRequester`/`SystemActivityRequester` (`request(... start:)`, `AlertConfiguration`, `staleDate` = drop, errors caught), `ActivityScheduler` (ends drop + 1 h, flips passed drops to Out now, requests new) run after each refresh while active; Settings shows whether Live Activities are on; Debug menu (Debug builds only): fake drop in 2/10/60 min, fake Live Activity in 3 min (lead 1 min), dump snapshot, simulate delay +1 h.
+
+**Checked**
+- `ActivitySchedulerTests`, `LiveActivityTextTests`, `ActivityPayloadTests`, `LiveActivityLayoutTests`: 26 tests in 4 suites pass (lead, without -quiet). Gate build+test+spec pass. `fidelity/verify-screen.sh settings` ALL PASS. Looked at the renders in `fidelity/shots/live-activity/`.
+
+**Not verified**
+- On the phone: the activity starting at the lead time with an alert, the Dynamic Island countdown, "Out now" with the phone locked (D5-4, Chime's screen recording).
+
 ## Day 4: followed shows with nothing scheduled on the widgets (Sun 1 Nov 2026)
 
 **Changed** (D-48)

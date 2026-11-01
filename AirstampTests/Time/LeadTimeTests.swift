@@ -11,7 +11,7 @@ struct LeadTimeTests {
         #expect(LeadTime.defaultMinutes == 120)
     }
 
-    @Test("reads as words", arguments: [(30, "30 minutes"), (60, "1 hour"), (120, "2 hours"), (360, "6 hours")])
+    @Test("reads as words", arguments: [(1, "1 minute"), (30, "30 minutes"), (60, "1 hour"), (120, "2 hours"), (360, "6 hours")])
     func phrase(minutes: Int, expected: String) {
         #expect(LeadTime.phrase(minutes: minutes) == expected)
     }

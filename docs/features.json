@@ -493,8 +493,8 @@
         "Out now when stale"
       ],
       "verify": "ActivityPayloadTests; LiveActivityLayoutTests (ImageRenderer)",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "1 Nov: ActivityPayloadTests (largest payload under 2 KB) and LiveActivityLayoutTests (Lock Screen at 360 pt is 160 pt or less in every state, minimal fits 28 pt when limited, Out now when stale or .outNow) pass, run without -quiet; renders in fidelity/shots/live-activity/ looked at. dropIDs carried in DropActivityAttributes."
     },
     {
       "id": "D5-2",
@@ -507,8 +507,8 @@
         "denied handled"
       ],
       "verify": "ActivitySchedulerTests with a fake requester",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "1 Nov: ActivitySchedulerTests pass (4th request skipped, same-night merged, covered drop skipped, date-only/>7 days/opted-out excluded, start = drop − lead or now, disabled and denied handled, ends drop + 1 h, passed drop updated to Out now, moved time updated, opted-out ended). SystemActivityRequester uses request(... start:), AlertConfiguration and staleDate = drop. Not yet on device (D5-4)."
     },
     {
       "id": "D5-3",
@@ -520,7 +520,7 @@
       ],
       "verify": "a Release build compiles without it (#if DEBUG); manual run of each action",
       "passes": false,
-      "evidence": ""
+      "evidence": "1 Nov: xcodebuild -configuration Release build succeeds and the Release binary has no 'Debug Show' string; Settings shows the Debug row in Debug builds (fidelity settings shot). Not yet: a manual run of each action on the phone."
     },
     {
       "id": "D5-4",
@@ -544,8 +544,8 @@
         "small family renders"
       ],
       "verify": "preview of activityFamily .small",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "1 Nov: DropLiveActivity declares .supplementalActivityFamilies([.small]); LiveActivitySmallView renders in every state in LiveActivityLayoutTests (fidelity/shots/live-activity/small-*.png, looked at)."
     },
     {
       "id": "D6-1",

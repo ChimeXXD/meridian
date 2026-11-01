@@ -1,11 +1,16 @@
 import SwiftUI
 
-/// Settings (SPEC §1, UI-BRIEF §5.6): the zone Airstamp uses, the Live Activity lead time, credits and privacy. The
-/// zone override (a Should) and the Live Activities permission state join with the scheduler.
+/// Settings (SPEC §1, UI-BRIEF §5.6): the zone Airstamp uses, the Live Activity lead time and whether Live Activities
+/// are allowed, credits and privacy, and the Debug menu in Debug builds. The zone override (a Should) is still to come.
 struct SettingsView: View {
+    let scheduler: ActivityScheduler
+    /// For the Debug menu's fake drop, which reloads Upcoming.
+    let model: UpcomingModel
     var formatter = DropFormatter()
 
     @AppStorage(LeadTime.storageKey) private var leadMinutes = LeadTime.defaultMinutes
+    @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.openURL) private var openURL
 
     var body: some View {
         NavigationStack {
@@ -21,6 +26,7 @@ struct SettingsView: View {
                         }
                     }
                     .accessibilityIdentifier("settings-lead")
+                    permission
                 } footer: {
                     Text("The release-night Live Activity starts this long before an episode is out.")
                 }
@@ -28,8 +34,37 @@ struct SettingsView: View {
                     NavigationLink("Credits & licences") { CreditsView() }
                         .accessibilityIdentifier("settings-credits")
                 }
+                #if DEBUG
+                Section {
+                    NavigationLink("Debug") { DebugMenuView(model: model, scheduler: scheduler) }
+                        .accessibilityIdentifier("settings-debug")
+                }
+                #endif
             }
             .navigationTitle("Settings")
+        }
+        // The switch lives in iOS Settings, so read it again whenever the user may have come back from there.
+        .onAppear { scheduler.refreshPermission() }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { scheduler.refreshPermission() }
+        }
+    }
+
+    /// Whether Live Activities are allowed, in plain words, with a way to iOS Settings when they're off (UI-BRIEF §5.6).
+    @ViewBuilder private var permission: some View {
+        if scheduler.activitiesEnabled {
+            Text("Live Activities are on")
+                .accessibilityIdentifier("settings-la-permission")
+        } else {
+            VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
+                Text("Live Activities are off in Settings › Airstamp")
+                Button("Open Settings") {
+                    if let url = URL(string: UIApplication.openSettingsURLString) { openURL(url) }
+                }
+                .accessibilityIdentifier("settings-la-open")
+            }
+            .accessibilityElement(children: .contain)
+            .accessibilityIdentifier("settings-la-permission")
         }
     }
 }

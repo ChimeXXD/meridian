@@ -20,6 +20,9 @@ final class FollowedShow {
 
     var catalog: Catalog { Catalog(rawValue: catalogRaw) ?? .tvmaze }
 
+    /// Same form as `Drop.showID`: "38052" or "anilist:154587" (as `UpcomingLoader.Request.showID`).
+    var showID: String { catalog == .anilist ? "anilist:\(catalogID)" : String(catalogID) }
+
     init(catalog: Catalog, catalogID: Int, name: String, year: Int?, network: String?, followedAt: Date = .now) {
         key = Self.key(catalog: catalog, id: catalogID)
         catalogRaw = catalog.rawValue

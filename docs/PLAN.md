@@ -175,8 +175,8 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
 ## Day 5: Live Activity and Debug menu (Tue 3 Nov)
 
 ### Claude CLI does
-- [ ] `DropActivityAttributes` (with `dropIDs`) and the compact, minimal, expanded and Lock Screen views. The minimal view fits 28 pt when `isDynamicIslandLimitedInWidth`, and the Lock Screen view is 160 pt tall or less.
-- [ ] `ActivityScheduler`: `request(... start:)` with an `AlertConfiguration` and `staleDate: drop`. At most 3 pending, same-night drops merged, `ActivityAuthorizationError` caught, and expired activities ended when the app opens.
+- [x] `DropActivityAttributes` (with `dropIDs`) and the compact, minimal, expanded and Lock Screen views. The minimal view fits 28 pt when `isDynamicIslandLimitedInWidth`, and the Lock Screen view is 160 pt tall or less.
+- [x] `ActivityScheduler`: `request(... start:)` with an `AlertConfiguration` and `staleDate: drop`. At most 3 pending, same-night drops merged, `ActivityAuthorizationError` caught, and expired activities ended when the app opens.
 - [ ] Debug menu: fake drop in 2, 10 or 60 minutes; fake Live Activity in 3 minutes; dump the snapshot; simulate a delay.
 
 ### Chime does

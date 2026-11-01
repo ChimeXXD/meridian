@@ -6,8 +6,10 @@ struct AirstampApp: App {
     private let client = TVmazeClient()
     private let anilist = AniListClient()
     @State private var model: UpcomingModel
+    @State private var scheduler: ActivityScheduler
 
     init() {
+        _scheduler = State(initialValue: ActivityScheduler())
         // The bundled rules only while the repo is private (D-34); the remote fetch switches on at Day 7.
         let rules = (try? RulesStore.loadBundled())
             ?? RulesFile(schemaVersion: 1, updated: "", platforms: [], overrides: [], providers: [])
@@ -42,10 +44,10 @@ struct AirstampApp: App {
         } else if arguments.contains("-setupCheck") {
             PlaceholderView()
         } else {
-            RootView(client: client, anilist: anilist, model: model)
+            RootView(client: client, anilist: anilist, model: model, scheduler: scheduler)
         }
         #else
-        RootView(client: client, anilist: anilist, model: model)
+        RootView(client: client, anilist: anilist, model: model, scheduler: scheduler)
         #endif
     }
 }
