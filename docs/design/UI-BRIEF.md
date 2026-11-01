@@ -58,7 +58,7 @@ Once Chime picks one, `EnvironmentValues.numeralStudy` defaults to it and the ot
 | Component | Job | Test IDs |
 | --- | --- | --- |
 | `SourceChip` | Glyph + word for a `ReleaseSource` and `Confidence`: `Broadcast`, `Netflix rule`, `Confirmed`, `Adjusted`, `JP broadcast`, `Date only` (**SPEC**). Override shows `Confirmed` when exact, otherwise `Adjusted`. | `source-chip` |
-| `CountdownText` | Over 24 h: static "2d 4h". Within 24 h: a ticking `Text(timerInterval:pauseTime:countsDown:)` (CLAUDE.md rule 4). After the drop: "Out now". `dateOnly`: no timer. Units dim (§1.3). | `countdown` |
+| `CountdownText` | Live everywhere (D-51): over 24 h "2d 4:10:22", within 24 h a ticking `Text(timerInterval:countsDown:)` with no `pauseTime` (CLAUDE.md rule 4, D-52). After the drop: "Out now". `dateOnly`: no timer. Units dim (§1.3). | `countdown` |
 | `ProviderLabelView` | "HBO · US" (D-20); when the rules file says so, "No official stream in your country" (**SPEC**) under it in the no-stream ink with a glyph | `provider-label` |
 | `SectionHeader` | Title plus a small count, e.g. "Next 24 hours" over "2 shows" (#1 Brink) | `section-header-<id>` |
 | `DropRow` | One drop: show name, `S2E5`, local day and time, countdown, source chip, provider label; "Delayed" pill with the old time struck through (#43) | `drop-row-<n>` with children `drop-row-<n>-title` and `drop-row-<n>-time` ("S2E5 · Tomorrow 02:00") |
