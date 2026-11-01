@@ -454,7 +454,7 @@
       ],
       "verify": "grep finds no .timer style; previews pass verify-screen.sh; Chime approves",
       "passes": false,
-      "evidence": "1 Nov: WidgetRenderTests renders inline/circular/rectangular in every state to fidelity/shots/widgets/ (looked at); no .timer style (test). Not yet: tinted/Always-On on device, Chime's approval"
+      "evidence": "1 Nov: WidgetRenderTests renders inline/circular/rectangular in every state to fidelity/shots/widgets/ (looked at); no .timer style (test). Chime approved the rebuilt widgets on the phone (D-46 to D-48, 1 Nov: 'I'm satisfied with this'). Not yet: tinted/Always-On on device"
     },
     {
       "id": "D4-4",
@@ -466,7 +466,7 @@
       ],
       "verify": "previews pass verify-screen.sh; Chime approves",
       "passes": false,
-      "evidence": "1 Nov: WidgetRenderTests renders small/medium in every state (looked at). Not yet: accented and Always-On on device, Chime's approval"
+      "evidence": "1 Nov: WidgetRenderTests renders small/medium/large in every state (looked at). Chime approved small, medium and large on the phone (D-46 to D-48, 1 Nov: 'I'm satisfied with this'). Not yet: accented and Always-On on device"
     },
     {
       "id": "D4-5",

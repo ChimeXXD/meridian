@@ -166,7 +166,7 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
 - [x] VoiceOver labels built from the provider label.
 
 ### Chime does
-- [ ] Add the widgets in the simulator (and on your phone if it's ready) and approve their look.
+- [x] Add the widgets in the simulator (and on your phone if it's ready) and approve their look. (Approved on the phone, 1 Nov; tinted and Always-On still to check.)
 
 **Gate:** all 5 families render and count down to a fake drop, flip to "Out now", and never count up.
 
