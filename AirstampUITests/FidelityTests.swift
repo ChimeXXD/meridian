@@ -9,6 +9,10 @@ final class FidelityTests: XCTestCase {
             let id: String
             var text: String?
             var prefix: String?
+            /// Text the element's label must contain, for a combined label ("CBS, Out Tue at 03:01").
+            var contains: String?
+            /// Whether the element must (or must not) carry the selected trait, e.g. the picked filter chip.
+            var selected: Bool?
             /// Below the first screen: scroll down before looking.
             var scroll: Bool?
         }
@@ -29,6 +33,8 @@ final class FidelityTests: XCTestCase {
     func test_settings() throws { try check("settings") }
     func test_search() throws { try check("search") }
     func test_search_results() throws { try check("search-results") }
+    func test_search_filtered() throws { try check("search-filtered") }
+    func test_search_filter_empty() throws { try check("search-filter-empty") }
 
     private func check(_ screen: String) throws {
         let url = try XCTUnwrap(Bundle(for: Self.self).url(forResource: screen, withExtension: "json",
@@ -56,6 +62,12 @@ final class FidelityTests: XCTestCase {
             }
             if let prefix = item.prefix {
                 XCTAssertTrue(shown.hasPrefix(prefix), "\(screen): \(item.id) reads \"\(shown)\", expected \"\(prefix)…\"")
+            }
+            if let part = item.contains {
+                XCTAssertTrue(shown.contains(part), "\(screen): \(item.id) reads \"\(shown)\", expected \"…\(part)…\"")
+            }
+            if let selected = item.selected {
+                XCTAssertEqual(element.isSelected, selected, "\(screen): \(item.id) selected")
             }
         }
         if scrolled { capture(app, name: "\(screen)-scrolled") }

@@ -1,0 +1,30 @@
+{
+  "screen": "search-filter-empty",
+  "brief": "D-43: a filter with no matches says so in one plain line and offers Show popular, never a blank grid",
+  "launch": [
+    "-inMemoryStore",
+    "-welcomeDone",
+    "YES",
+    "-tab",
+    "search",
+    "-filter",
+    "service:No Such Service"
+  ],
+  "items": [
+    {
+      "id": "search-filters"
+    },
+    {
+      "id": "search-filter-popular",
+      "selected": false
+    },
+    {
+      "id": "search-filter-empty",
+      "text": "Nothing on No Such Service in the next few days."
+    },
+    {
+      "id": "search-filter-clear",
+      "text": "Show popular"
+    }
+  ]
+}

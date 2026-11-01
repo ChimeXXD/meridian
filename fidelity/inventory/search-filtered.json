@@ -1,0 +1,50 @@
+{
+  "screen": "search-filtered",
+  "brief": "D-43: Search's filter row (one at a time, like the TV | Anime switch), Exact time picked (live TVmaze)",
+  "launch": [
+    "-inMemoryStore",
+    "-welcomeDone",
+    "YES",
+    "-tab",
+    "search",
+    "-filter",
+    "exact-time"
+  ],
+  "items": [
+    {
+      "id": "search-kind"
+    },
+    {
+      "id": "search-filter-popular",
+      "text": "Popular",
+      "selected": false
+    },
+    {
+      "id": "search-filter-today",
+      "text": "Today"
+    },
+    {
+      "id": "search-filter-new-seasons",
+      "text": "New seasons"
+    },
+    {
+      "id": "search-filter-exact-time",
+      "text": "Exact time",
+      "selected": true
+    },
+    {
+      "id": "search-airing-header",
+      "text": "Airing in the next few days"
+    },
+    {
+      "id": "airing-1-title"
+    },
+    {
+      "id": "airing-1-meta",
+      "contains": "Out "
+    },
+    {
+      "id": "airing-1-follow"
+    }
+  ]
+}
