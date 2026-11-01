@@ -132,15 +132,16 @@ Navigation is still O-11 (`SITEMAP.md`). This brief assumes the proposed tab bar
 ### 6.1 Widgets
 
 - **Job:** answer "how long, and where is it on" from the Lock Screen and Home Screen without opening the app (SPEC Goal).
-- **Borrows:** #135 Waymo, #128 Apple Sports, #117 one year, #119 Speak, and #114 Cal AI for the in-context preview on Welcome.
+- **Borrows:** Chime's picks from 1 Nov (D-46): Apple TV (medium, large), Tripsy (small), Udemy (Lock Screen). Earlier: #135 Waymo, #117 one year, and #114 Cal AI for the in-context preview on Welcome.
 
 | Family | Content | Test IDs | Borrows | States |
 | --- | --- | --- | --- | --- |
 | `accessoryInline` | `Silo · 2d 4h` (**SPEC**). The system draws it in its own font. | `widget-inline` | — | counting down; Out now ("Silo · Out now", *new*); `dateOnly` ("Silo · Wed 29 Apr"); nothing followed ("Follow a show", *new*) |
-| `accessoryCircular` | Big "2d" / "4h" / "38m" with a ring over the last 7 days | `widget-circular-value`, `widget-circular-ring` | #135 Waymo (big number, small unit) | counting down; Out now (full ring, "Out", *new*); `dateOnly` (calendar glyph and day number, no ring); nothing followed (empty ring) |
-| `accessoryRectangular` | Show name, countdown, `Wed 02:00 · Apple TV` (**SPEC**) | `widget-rect-title`, `widget-rect-countdown`, `widget-rect-meta` | #128 Apple Sports (dot-separated line) | counting down; Out now; `dateOnly` ("Wed 29 Apr · time not announced"); no official stream (the meta line keeps "HBO · US") |
-| `systemSmall` | Huge countdown, the show name small, the source chip | `widget-small-countdown`, `widget-small-title`, `source-chip` | #117 one year (bright number, dim unit) | counting down; Out now; `dateOnly`; nothing followed |
-| `systemMedium` | The next 3 drops as rows under an "UP NEXT" label (*new*) | `widget-medium-row-1`…`-3` | #119 Speak ("UP NEXT") | 1, 2 or 3 drops; nothing followed |
+| `accessoryCircular` | An open ring that fills over the last 7 days, a TV glyph inside, "2d" / "4h" / "38m" in the gap at the bottom | `widget-circular-value`, `widget-circular-ring` | Udemy (open ring, value in the gap); #135 Waymo (big number, small unit) | counting down; Out now (full ring, "Out"); `dateOnly` (calendar glyph and day number, no ring); nothing followed (empty ring) |
+| `accessoryRectangular` | Top line "Out Wed 02:00" / "Expected Mon 09:00" with a TV glyph; the show name; the countdown with the provider beside it | `widget-rect-meta`, `widget-rect-title`, `widget-rect-countdown`, `widget-rect-provider` | Udemy (glyph and status first) | counting down; Out now ("Released Mon 18:40", "Out now"); `dateOnly` ("Time not announced", the day in the countdown's place); no official stream (keeps "HBO · US") |
+| `systemSmall` | The provider tagged top-left over clear art; the name, a big countdown and the out line bottom-left | `widget-small-provider`, `widget-small-title`, `widget-small-countdown`, `widget-small-out` | Tripsy (text bottom-left, art on top); #117 one year (bright number, dim unit) | counting down; Out now; `dateOnly`; nothing followed |
+| `systemMedium` | The next show leads over its fading art (name, out line, big countdown); the next two as one-line rows with their certainty words | `widget-medium-row-1`…`-3`, `widget-medium-empty` | Apple TV (hero over fading art, smaller rows) | 1, 2 or 3 drops; nothing followed |
+| `systemLarge` | Art over the top 62% with the provider tag; the name, a big countdown and the out line over the fade; the next two as rows with thumbnails (D-46) | `widget-large-row-1`…`-3`, `widget-large-empty` | Apple TV (large) | 1, 2 or 3 drops; nothing followed |
 
 - **States:** in every family, counting down; Out now for 1 hour; a `dateOnly` drop shows "Wed 29 Apr" with no timer (**SPEC**); nothing followed.
 - **Rendering modes in every family:** light, dark, tinted/accented and Always-On (SPEC §5). In tinted or accented mode the status inks fall back to primary and secondary, the countdown is the accentable element, and the chip keeps its glyph and word, so no meaning is lost (`SourceChip`, `ProviderLabelView`). Always-On dims everything and keeps the countdown.

@@ -2,6 +2,24 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Day 4: widgets rebuilt on Chime's three picks (Sun 1 Nov 2026)
+
+**Changed** (D-46)
+- Chime picked 3 of 28 widget references from a local picker page: Apple TV, Tripsy, Udemy.
+- Lock Screen (Udemy): circular is an open ring drawn by hand (the system `.accessoryCircular` gauge only moves a dot, so an empty week looked full), with a TV glyph inside and the count in the gap. Rectangular leads with "Out Mon 22:10" / "Expected Wed 23:00" (`WidgetText.when`), then the name, then the countdown with the provider beside it.
+- Small (Tripsy): provider tag (`WidgetProviderTag`) top-left over clear art; name, countdown and out line bottom-left. `WidgetBackdrop` now keeps the top of the art clear and takes a `coverage`.
+- Medium (Apple TV): the next show leads over its art; later shows are one-line `WidgetCompactRow`s whose name truncates before the certainty words.
+- Large (Apple TV, new family): `LargeWidgetView`, art over the top 62%, then two rows with thumbnails. `WidgetEmptyState` is shared by the three Home Screen sizes.
+- Widget art is the wide key art (TVmaze background; an anime's cover, not AniList's thin banner; else the poster), at most 1000 px, saved as `<id>.v2.jpg` so old poster files are deleted and refetched.
+
+**Red → green**
+- `WidgetTextTests/when()`: failed with "type 'WidgetText' has no member 'when'", then passed.
+- `SnapshotStoreTests`: `artworkPath` (v2 name), `staleArtRemoved` (legacy file deleted, key art fetched first), `smallJPEG` (1920×1080 → 600×338) failed with 6 issues, then passed. `writtenAfterFollowRefreshUnfollow` now expects Silo's background (`1151687.jpg`), the intended change.
+- `WidgetRenderTests` gained the large family (338×354) and art on the medium backdrop; 18 tests in 3 suites pass (run without `-quiet`, which hides Swift Testing failures).
+
+**Not verified**
+- Real key art in the widgets (renders use the grey placeholder), tinted/accented mode, real Always-On, the widgets on the phone. Chime's approval of the new look (D4-3, D4-4) is still open.
+
 ## Day 4: widgets, built by two agents in parallel (Sun 1 Nov 2026)
 
 **Changed**

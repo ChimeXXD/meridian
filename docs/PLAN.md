@@ -162,7 +162,7 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
 ### Claude CLI does
 - [x] `SnapshotStore`: App Group JSON written after every change, then `reloadAllTimelines()`.
 - [x] Timeline provider: entries at least 5 minutes apart, "Out now" at the drop, the next drop an hour later, and `.after(nextDrop)`.
-- [ ] `accessoryInline`, `accessoryCircular`, `accessoryRectangular`, `systemSmall` and `systemMedium` in the chosen style, using `Text(timerInterval:pauseTime:countsDown:)` only, in light, dark, tinted and Always-On.
+- [ ] `accessoryInline`, `accessoryCircular`, `accessoryRectangular`, `systemSmall`, `systemMedium` and `systemLarge` (D-46) in the chosen style, using `Text(timerInterval:pauseTime:countsDown:)` only, in light, dark, tinted and Always-On.
 - [x] VoiceOver labels built from the provider label.
 
 ### Chime does

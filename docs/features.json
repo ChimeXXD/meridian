@@ -460,7 +460,7 @@
       "id": "D4-4",
       "day": 4,
       "priority": "must",
-      "title": "Home Screen widgets: systemSmall and systemMedium",
+      "title": "Home Screen widgets: systemSmall, systemMedium and systemLarge (D-46)",
       "criteria": [
         "light, dark, accented, Always-On"
       ],

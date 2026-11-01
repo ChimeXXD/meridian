@@ -36,3 +36,9 @@ private let all = WidgetSamples.Case.allCases.map { WidgetSamples.moment($0, now
 } timeline: {
     all[0]; all[1]; all[2]; all[3]; all[4]; all[5]
 }
+
+#Preview("Large", as: .systemLarge) {
+    NextDropWidget()
+} timeline: {
+    all[0]; all[1]; all[2]; all[3]; all[4]; all[5]
+}

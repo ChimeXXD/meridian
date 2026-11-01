@@ -1,8 +1,8 @@
 import SwiftUI
 import WidgetKit
 
-/// One of systemMedium's rows: an optional small poster, the show name in serif over when it's out (in words, D-40),
-/// and its countdown on the right.
+/// One of systemLarge's rows under the hero (systemMedium's are `WidgetCompactRow`): an optional small thumbnail, the
+/// show name in serif over when it's out (in words, D-40), and its countdown on the right.
 struct MediumWidgetRow: View {
     let drop: Drop
     let now: Date

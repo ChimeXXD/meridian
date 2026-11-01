@@ -20,13 +20,12 @@ enum WidgetText {
         drop.confidence == .dateOnly ? "Time not announced" : ReleaseWording.outLine(drop, now: now, formatter: formatter)
     }
 
-    /// The rectangular widget's last line: "Out Wed 02:00 · Apple TV", "Expected Mon 09:00 · Netflix",
-    /// "Time not announced · Disney+". The provider keeps its country ("HBO · US", D-20).
-    static func meta(_ drop: Drop, now: Date, formatter: DropFormatter) -> String {
-        let when = drop.confidence == .dateOnly
+    /// When it's out, led by how sure that is (#Udemy puts it on the rectangular widget's top line): "Out Wed 02:00",
+    /// "Expected Mon 09:00", "Released Mon 18:40", "Time not announced".
+    static func when(_ drop: Drop, now: Date, formatter: DropFormatter) -> String {
+        drop.confidence == .dateOnly
             ? "Time not announced"
             : "\(ReleaseWording.verb(drop, past: drop.date <= now)) \(formatter.weekdayTime(drop.date))"
-        return [when, drop.provider?.display].compactMap(\.self).joined(separator: " · ")
     }
 
     /// "S4E1 · Apple TV", or "S3E4 · HBO · US".

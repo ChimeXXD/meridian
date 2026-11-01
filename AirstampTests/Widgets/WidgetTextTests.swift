@@ -20,14 +20,16 @@ struct WidgetTextTests {
         #expect(WidgetText.inline(Self.moment(.ticking), formatter: Self.formatter) == nil)
     }
 
-    @Test("rectangular meta says how sure the time is and keeps the provider's country")
-    func meta() throws {
+    @Test("rectangular top line leads with how sure the time is, without the provider (#Udemy)")
+    func when() throws {
         let silo = try #require(Self.moment(.countdown).current)
-        #expect(WidgetText.meta(silo, now: Self.now, formatter: Self.formatter) == "Expected Wed 23:00 · Apple TV")
+        #expect(WidgetText.when(silo, now: Self.now, formatter: Self.formatter) == "Expected Wed 23:00")
         let hotd = try #require(Self.moment(.ticking).current)
-        #expect(WidgetText.meta(hotd, now: Self.now, formatter: Self.formatter) == "Out Mon 22:10 · HBO · US")
+        #expect(WidgetText.when(hotd, now: Self.now, formatter: Self.formatter) == "Out Mon 22:10")
+        let hotdOut = try #require(Self.moment(.outNow).current)
+        #expect(WidgetText.when(hotdOut, now: Self.now, formatter: Self.formatter) == "Released Mon 18:40")
         let wonderMan = try #require(Self.moment(.dateOnly).current)
-        #expect(WidgetText.meta(wonderMan, now: Self.now, formatter: Self.formatter) == "Time not announced · Disney+")
+        #expect(WidgetText.when(wonderMan, now: Self.now, formatter: Self.formatter) == "Time not announced")
     }
 
     @Test("the out line is ReleaseWording's, except a date-only drop, whose day is already in the countdown's place")

@@ -11,7 +11,7 @@ import UIKit
 @Suite("Widget renders")
 struct WidgetRenderTests {
     enum Family: String, CaseIterable {
-        case inline, circular, rectangular, small, medium
+        case inline, circular, rectangular, small, medium, large
 
         /// The smallest current iPhone Pro sizes, in points, so anything that fits here fits everywhere.
         var size: CGSize {
@@ -21,11 +21,12 @@ struct WidgetRenderTests {
             case .rectangular: CGSize(width: 160, height: 72)
             case .small: CGSize(width: 158, height: 158)
             case .medium: CGSize(width: 338, height: 158)
+            case .large: CGSize(width: 338, height: 354)
             }
         }
 
         /// The system widgets get the default 16 pt content margins; Lock Screen ones have none.
-        var margin: CGFloat { self == .small || self == .medium ? 16 : 0 }
+        var margin: CGFloat { [.small, .medium, .large].contains(self) ? 16 : 0 }
     }
 
     static let now = Date(iso: "2026-11-02T18:00:00Z")
@@ -39,18 +40,22 @@ struct WidgetRenderTests {
         case .circular: CircularWidgetView(moment: moment, formatter: formatter)
         case .rectangular: RectangularWidgetView(moment: moment, formatter: formatter)
         case .small: SmallWidgetView(moment: moment, art: art, formatter: formatter)
-        case .medium:
-            MediumWidgetView(moment: moment, art: art.map { image in
-                Dictionary(moment.upNext.map { ($0.showID, image) }, uniquingKeysWith: { first, _ in first })
-            } ?? [:], formatter: formatter)
+        case .medium: MediumWidgetView(moment: moment, art: artByShow(moment, art), formatter: formatter)
+        case .large: LargeWidgetView(moment: moment, art: artByShow(moment, art), formatter: formatter)
         }
+    }
+
+    static func artByShow(_ moment: WidgetMoment, _ art: UIImage?) -> [String: UIImage] {
+        art.map { image in
+            Dictionary(moment.upNext.map { ($0.showID, image) }, uniquingKeysWith: { first, _ in first })
+        } ?? [:]
     }
 
     /// What the system draws behind each family. `containerBackground` does nothing outside a widget.
     @ViewBuilder static func backdrop(_ family: Family, art: UIImage?) -> some View {
         switch family {
-        case .small: WidgetBackdrop(art: art)
-        case .medium: WidgetInk.base
+        case .small, .medium: WidgetBackdrop(art: art)
+        case .large: WidgetBackdrop(art: art, coverage: LargeWidgetView.artCoverage)
         case .inline, .circular, .rectangular: Color.black
         }
     }
@@ -91,18 +96,23 @@ struct WidgetRenderTests {
         #expect(dimmed <= 0.5)
     }
 
-    @Test("the Home Screen widgets read the same over art", arguments: [Family.small, .medium])
+    @Test("the Home Screen widgets read the same over art", arguments: [Family.small, .medium, .large])
     func withArt(family: Family) throws {
-        // A neutral placeholder, never real artwork (CLAUDE.md rule 9).
-        let art = UIGraphicsImageRenderer(size: CGSize(width: 120, height: 120)).image { context in
-            UIColor(white: 0.55, alpha: 1).setFill()
-            context.fill(CGRect(x: 0, y: 0, width: 120, height: 120))
-            UIColor(white: 0.8, alpha: 1).setFill()
-            context.fill(CGRect(x: 20, y: 20, width: 80, height: 50))
-        }
-        for sample in [WidgetSamples.Case.countdown, .ticking] {
-            let overflow = try Self.render(family, sample, art: art, name: "\(family.rawValue)-\(sample.rawValue)-art")
-            #expect(overflow <= 0.5)
+        // Neutral placeholders, never real artwork (CLAUDE.md rule 9): square, and 16:9 like the key art the widgets
+        // save (D-46).
+        for (suffix, size) in [("art", CGSize(width: 120, height: 120)), ("art-wide", CGSize(width: 192, height: 108))] {
+            let art = UIGraphicsImageRenderer(size: size).image { context in
+                UIColor(white: 0.55, alpha: 1).setFill()
+                context.fill(CGRect(origin: .zero, size: size))
+                UIColor(white: 0.8, alpha: 1).setFill()
+                context.fill(CGRect(x: size.width / 6, y: size.height / 6, width: size.width * 2 / 3,
+                                    height: size.height * 5 / 12))
+            }
+            for sample in [WidgetSamples.Case.countdown, .ticking] {
+                let name = "\(family.rawValue)-\(sample.rawValue)-\(suffix)"
+                let overflow = try Self.render(family, sample, art: art, name: name)
+                #expect(overflow <= 0.5, "\(name) needs \(overflow) pt more height")
+            }
         }
     }
 
