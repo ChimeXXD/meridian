@@ -9,9 +9,9 @@ enum LiveActivityText {
         return "\(attributes.showName) \(others)"
     }
 
-    /// The breadcrumb above the countdown: "Silo · S2E5 · Apple TV · US".
-    static func breadcrumb(_ attributes: DropActivityAttributes) -> String {
-        [attributes.showName, attributes.episodeLabel, attributes.provider ?? ""]
+    /// The line under the title: "S2E5 · Apple TV · US"; "" when neither is known.
+    static func details(_ attributes: DropActivityAttributes) -> String {
+        [attributes.episodeLabel, attributes.provider ?? ""]
             .map { $0.trimmingCharacters(in: .whitespaces) }
             .filter { !$0.isEmpty }
             .joined(separator: " · ")
@@ -60,8 +60,8 @@ enum LiveActivityText {
         isStale || state.phase == .outNow || state.dropDate <= now
     }
 
-    /// The header band over the countdown (#146 Strava): "Out in", "Expected in", "Airs in Japan in", flipping to
-    /// "Out now" at the drop while the numbers below stay put.
+    /// The plain-words label over the countdown: "Out in", "Expected in", "Airs in Japan in", flipping to "Out now"
+    /// at the drop while the numbers below stay put (D-49).
     static func band(_ attributes: DropActivityAttributes, out: Bool) -> String {
         out ? "Out now" : "\(verb(attributes)) in"
     }
@@ -69,11 +69,6 @@ enum LiveActivityText {
     /// "+ 1 more" when same-night drops are merged; nil for one drop.
     static func more(_ attributes: DropActivityAttributes) -> String? {
         attributes.dropIDs.count > 1 ? "+ \(attributes.dropIDs.count - 1) more" : nil
-    }
-
-    /// The expanded view's bottom line: "Apple TV · 02:00" (SPEC §6).
-    static func meta(_ attributes: DropActivityAttributes, dropDate: Date, formatter: DropFormatter) -> String {
-        [provider(attributes), formatter.localTime(dropDate)].compactMap(\.self).joined(separator: " · ")
     }
 
     /// The time it was listed for before a delay, struck through next to the new one: "01:00", or "Thu 23:00" when it
@@ -84,7 +79,7 @@ enum LiveActivityText {
             ? formatter.localTime(previous) : formatter.weekdayTime(previous)
     }
 
-    /// The compact view's monogram: the show's first letter or digit, "S" for Silo.
+    /// The show's initial, where there's no poster: its first letter or digit, "S" for Silo.
     static func monogram(_ attributes: DropActivityAttributes) -> String {
         attributes.showName.first(where: { $0.isLetter || $0.isNumber }).map { String($0).uppercased() } ?? "•"
     }

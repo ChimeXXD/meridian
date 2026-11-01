@@ -1,10 +1,12 @@
 import SwiftUI
+import UIKit
 
-/// The `.small` activity family (SPEC §6: Watch Smart Stack, Mac menu bar, CarPlay): the title in serif, the band's
-/// words over the countdown, and the local time. Same words as the Lock Screen, fewer of them.
+/// The `.small` activity family (SPEC §6: Watch Smart Stack, Mac menu bar, CarPlay): the poster mark and the title in
+/// serif, the label's words over the countdown, and the local time. Same words as the Lock Screen, fewer of them.
 struct LiveActivitySmallView: View {
     let attributes: DropActivityAttributes
     let state: DropActivityAttributes.ContentState
+    var poster: UIImage?
     var isStale = false
     var now = Date.now
     var formatter = DropFormatter()
@@ -13,11 +15,15 @@ struct LiveActivitySmallView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(LiveActivityText.title(attributes))
-                .font(.system(size: 15, weight: .medium, design: .serif))
-                .foregroundStyle(LiveActivityInk.primary)
-                .lineLimit(1)
-                .accessibilityIdentifier("la-small-title")
+            HStack(spacing: 6) {
+                LiveActivityPosterMark(attributes: attributes, poster: poster, size: 18)
+                Text(LiveActivityText.title(attributes))
+                    .font(.system(size: 15, weight: .medium, design: .serif))
+                    .foregroundStyle(LiveActivityInk.primary)
+                    .lineLimit(1)
+                    .accessibilityIdentifier("la-small-title")
+            }
+            .padding(.bottom, 2)
             Text(LiveActivityText.band(attributes, out: out))
                 .font(.system(size: 11, weight: .semibold))
                 .foregroundStyle(out ? LiveActivityInk.primary : LiveActivityInk.muted)

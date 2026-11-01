@@ -74,13 +74,15 @@ enum ActivityPlanner {
     }
 
     /// The attributes for a non-empty group: the drop IDs soonest first, and the first drop's name, episode,
-    /// provider (and whether it has no official stream here) and verb.
-    static func attributes(for group: [Drop]) -> DropActivityAttributes {
+    /// provider (and whether it has no official stream here), verb and show (for its art). `start` is when the
+    /// activity appears, so its ring and bar fill from there to the drop.
+    static func attributes(for group: [Drop], start: Date? = nil) -> DropActivityAttributes {
         let first = group[0]
         return DropActivityAttributes(dropIDs: group.map(\.id), showName: first.showName,
                                       episodeLabel: first.episodeLabel ?? "", provider: first.provider?.display,
                                       verb: ReleaseWording.verb(first, past: false),
-                                      noOfficialStream: first.provider?.noOfficialStream ?? false)
+                                      noOfficialStream: first.provider?.noOfficialStream ?? false,
+                                      showID: first.showID, windowStart: start)
     }
 
     /// `group` comes from `nights`, so it's never empty.
@@ -88,7 +90,7 @@ enum ActivityPlanner {
         let first = group[0]
         let start = max(first.date.addingTimeInterval(-Double(max(0, leadMinutes)) * 60), now)
         let minutes = max(1, Int((first.date.timeIntervalSince(start) / 60).rounded()))
-        return Planned(attributes: attributes(for: group),
+        return Planned(attributes: attributes(for: group, start: start),
                        state: DropActivityAttributes.ContentState(phase: .upcoming, dropDate: first.date,
                                                                   delayedFrom: nil),
                        start: start, leadMinutes: minutes)

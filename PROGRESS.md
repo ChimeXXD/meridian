@@ -2,6 +2,18 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Day 5: Live Activity rebuilt on Chime's picks (Sun 1 Nov 2026)
+
+**Changed** (D-50)
+- Chime tried the Live Activity on the phone (following Strictly Come Dancing with a 6-hour lead) and called it "kind of whack". 27 new design references in a local picker; Chime picked Duolingo (Lock Screen), Instagram (compact), Yazio (minimal), Tinder (expanded).
+- `DropActivityAttributes` gained `showID` and `windowStart` (decoding older attributes with defaults). Lock Screen: art on the right edge fading into near-black, no grey band, 36 pt countdown. Compact: rounded poster. Minimal: poster in a ring that fills over the window. Expanded: art top-right and a thin bar to the drop. Art loaded from the App Group, small. Renders with and without placeholder art.
+
+**Checked**
+- `LiveActivityLayoutTests`, `ActivityPayloadTests`, `LiveActivityTextTests`, `ActivitySchedulerTests`: 30 tests in 4 suites pass (without -quiet). Looked at the renders against the four picks.
+
+**Not verified**
+- The live `ProgressView(timerInterval:)` ring and bar (the test renderer draws a static stand-in) and real art on the phone.
+
 ## Day 5: Live Activity and Debug menu, built by two lanes (Sun 1 Nov 2026)
 
 **Changed** (D-49)

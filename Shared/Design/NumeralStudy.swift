@@ -54,9 +54,9 @@ enum NumeralStudy: String, CaseIterable, Sendable {
 
     var accent: Color { Color(uiColor: accentInk) }
 
-    /// Numerals at a point size, with tabular digits so a ticking timer never jitters.
-    func font(size: CGFloat) -> Font {
-        .system(size: size, weight: weight, design: design).monospacedDigit()
+    /// Numerals at a point size (and, optionally, another weight), with tabular digits so a ticking timer never jitters.
+    func font(size: CGFloat, weight: Font.Weight? = nil) -> Font {
+        .system(size: size, weight: weight ?? self.weight, design: design).monospacedDigit()
     }
 }
 

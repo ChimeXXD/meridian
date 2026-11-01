@@ -1,9 +1,9 @@
 import SwiftUI
 import WidgetKit
 
-// The Live Activity in every presentation and every state UI-BRIEF §6.2 lists, from `LiveActivitySamples` (no
-// artwork, CLAUDE.md rule 9). Step through the content states in the canvas. "Out now" is shown here through the
-// `.outNow` phase; a stale context draws the same view.
+// The Live Activity in every presentation and every state UI-BRIEF §6.2 lists, from `LiveActivitySamples`, with
+// whatever art the App Group holds for their show IDs (none is committed, CLAUDE.md rule 9). Step through the content
+// states in the canvas. "Out now" is shown here through the `.outNow` phase; a stale context draws the same view.
 
 private let now = Date.now
 

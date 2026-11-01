@@ -1,7 +1,8 @@
 import Foundation
 
 /// Sample Live Activities for the previews and `LiveActivityLayoutTests`: every state UI-BRIEF §6.2 lists. No artwork
-/// (CLAUDE.md rule 9).
+/// is committed (CLAUDE.md rule 9): the tests pass neutral placeholders. Each
+/// activity started 40 minutes before `now`, so its ring and bar are partly filled.
 enum LiveActivitySamples {
     enum Case: String, CaseIterable, Sendable {
         /// Silo S2E5 by Apple TV's usual time, in 2 hours: an estimate, so "Expected".
@@ -16,19 +17,23 @@ enum LiveActivitySamples {
         case outNow
     }
 
-    static func attributes(_ sample: Case) -> DropActivityAttributes {
-        switch sample {
+    static func attributes(_ sample: Case, now: Date = .now) -> DropActivityAttributes {
+        var attributes = switch sample {
         case .countingDown, .outNow:
             silo
         case .longName:
             DropActivityAttributes(dropIDs: ["anilist:154587:s2e3"], showName: "Frieren: Beyond Journey's End",
-                                   episodeLabel: "S2E3", provider: "Nippon TV · JP", verb: "Airs in Japan")
+                                   episodeLabel: "S2E3", provider: "Nippon TV · JP", verb: "Airs in Japan",
+                                   showID: "anilist:154587")
         case .merged:
             DropActivityAttributes(dropIDs: [silo.dropIDs[0], hotd.dropIDs[0]], showName: silo.showName,
-                                   episodeLabel: silo.episodeLabel, provider: silo.provider, verb: silo.verb)
+                                   episodeLabel: silo.episodeLabel, provider: silo.provider, verb: silo.verb,
+                                   showID: silo.showID)
         case .delayed:
             hotd
         }
+        attributes.windowStart = now - 40 * 60
+        return attributes
     }
 
     static func state(_ sample: Case, now: Date) -> DropActivityAttributes.ContentState {
@@ -44,7 +49,9 @@ enum LiveActivitySamples {
     }
 
     private static let silo = DropActivityAttributes(dropIDs: ["tvmaze:44778:s2e5"], showName: "Silo",
-                                                     episodeLabel: "S2E5", provider: "Apple TV", verb: "Expected")
+                                                     episodeLabel: "S2E5", provider: "Apple TV", verb: "Expected",
+                                                     showID: "44778")
     private static let hotd = DropActivityAttributes(dropIDs: ["tvmaze:44229:s3e4"], showName: "House of the Dragon",
-                                                     episodeLabel: "S3E4", provider: "HBO · US", verb: "Out")
+                                                     episodeLabel: "S3E4", provider: "HBO · US", verb: "Out",
+                                                     showID: "44229")
 }

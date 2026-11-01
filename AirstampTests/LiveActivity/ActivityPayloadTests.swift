@@ -12,7 +12,8 @@ struct ActivityPayloadTests {
         #expect(name.count == 60)
         let attributes = DropActivityAttributes(
             dropIDs: ["tvmaze:38052:s3e1", "tvmaze:44778:s2e10", "anilist:154587:s2e12"],
-            showName: name, episodeLabel: "S12E104", provider: "Paramount+ · US", verb: "Airs in Japan")
+            showName: name, episodeLabel: "S12E104", provider: "Paramount+ · US", verb: "Airs in Japan",
+            noOfficialStream: true, showID: "anilist:154587", windowStart: Date(iso: "2026-11-05T23:00:00Z"))
         let state = DropActivityAttributes.ContentState(phase: .upcoming, dropDate: Date(iso: "2026-11-06T01:00:00Z"),
                                                         delayedFrom: Date(iso: "2026-11-05T23:00:00Z"))
 
@@ -34,6 +35,8 @@ struct ActivityPayloadTests {
         #expect(decodedAttributes.showName == attributes.showName)
         #expect(decodedAttributes.provider == attributes.provider)
         #expect(decodedAttributes.verb == attributes.verb)
+        #expect(decodedAttributes.showID == attributes.showID)
+        #expect(decodedAttributes.windowStart == attributes.windowStart)
         #expect(try JSONDecoder().decode(DropActivityAttributes.ContentState.self, from: JSONEncoder().encode(state))
             == state)
     }

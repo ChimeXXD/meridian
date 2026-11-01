@@ -106,6 +106,9 @@ struct ActivitySchedulerTests {
 
         #expect(plan.requests.map(\.start) == [Self.now, later.date.addingTimeInterval(-120 * Self.minute)])
         #expect(plan.requests.map(\.leadMinutes) == [45, 120])
+        // The ring and bar fill from the start to the drop; the views find the art by the first show's ID.
+        #expect(plan.requests.map(\.attributes.windowStart) == plan.requests.map(\.start))
+        #expect(plan.requests.map(\.attributes.showID) == ["2", "1"])
         #expect(plan.requests.map(\.state) == [Self.state(soon.date), Self.state(later.date)])
     }
 

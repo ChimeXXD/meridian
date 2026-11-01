@@ -5,9 +5,9 @@ import UIKit
 /// widgets look right without it.
 enum WidgetArtwork {
     /// The saved hero art, at full size, or drawn down so its long side is at most `maxPixel` (the small widget needn't
-    /// carry a 1000 px image into the widget's archive).
+    /// carry a 1000 px image into the widget's archive). Nil for an empty ID.
     static func image(showID: String, maxPixel: Int? = nil) -> UIImage? {
-        guard let container = SnapshotStore.container else { return nil }
+        guard !showID.isEmpty, let container = SnapshotStore.container else { return nil }
         return load(SnapshotStore.artworkURL(showID: showID, in: container), maxPixel: maxPixel)
     }
 
@@ -21,6 +21,12 @@ enum WidgetArtwork {
             posters[id] = load(SnapshotStore.posterURL(showID: id, in: container), maxPixel: maxPixel)
         }
         return posters
+    }
+
+    /// One show's saved poster, drawn down so its long side is at most `maxPixel`. Nil for an empty ID or no poster.
+    static func poster(showID: String, maxPixel: Int) -> UIImage? {
+        guard !showID.isEmpty, let container = SnapshotStore.container else { return nil }
+        return load(SnapshotStore.posterURL(showID: showID, in: container), maxPixel: maxPixel)
     }
 
     private static func load(_ url: URL, maxPixel: Int?) -> UIImage? {

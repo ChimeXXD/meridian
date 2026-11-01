@@ -30,13 +30,13 @@ struct LiveActivityTextTests {
         #expect(LiveActivityText.title(Self.attributes(drops: 3)) == "Silo + 2 more")
     }
 
-    @Test("breadcrumb: show · episode · provider with its country, skipping empty parts")
-    func breadcrumb() {
-        #expect(LiveActivityText.breadcrumb(Self.attributes(provider: "Apple TV · US")) == "Silo · S2E5 · Apple TV · US")
-        #expect(LiveActivityText.breadcrumb(Self.attributes()) == "Silo · S2E5 · Apple TV")
-        #expect(LiveActivityText.breadcrumb(Self.attributes(episode: "")) == "Silo · Apple TV")
-        #expect(LiveActivityText.breadcrumb(Self.attributes(provider: nil)) == "Silo · S2E5")
-        #expect(LiveActivityText.breadcrumb(Self.attributes(provider: "")) == "Silo · S2E5")
+    @Test("details: episode · provider with its country, skipping empty parts")
+    func details() {
+        #expect(LiveActivityText.details(Self.attributes(provider: "Apple TV · US")) == "S2E5 · Apple TV · US")
+        #expect(LiveActivityText.details(Self.attributes()) == "S2E5 · Apple TV")
+        #expect(LiveActivityText.details(Self.attributes(episode: "")) == "Apple TV")
+        #expect(LiveActivityText.details(Self.attributes(provider: nil)) == "S2E5")
+        #expect(LiveActivityText.details(Self.attributes(episode: "", provider: "")) == "")
     }
 
     @Test("time line: the certainty verb, then the weekday and local time")
@@ -138,10 +138,8 @@ struct LiveActivityTextTests {
         #expect(LiveActivityText.band(Self.attributes(verb: "Expected"), out: true) == "Out now")
     }
 
-    @Test("expanded meta, the struck-through old time, and the monogram")
+    @Test("the struck-through old time, and the monogram")
     func pieces() {
-        #expect(LiveActivityText.meta(Self.attributes(), dropDate: Self.drop, formatter: Self.lagos) == "Apple TV · 02:00")
-        #expect(LiveActivityText.meta(Self.attributes(provider: nil), dropDate: Self.drop, formatter: Self.lagos) == "02:00")
         #expect(LiveActivityText.previousTime(Self.state(delayedFrom: Self.drop - 3_600), formatter: Self.lagos) == "01:00")
         // 23:00 Thursday in Lagos, the day before the new time.
         #expect(LiveActivityText.previousTime(Self.state(delayedFrom: Self.drop - 3 * 3_600), formatter: Self.lagos)
