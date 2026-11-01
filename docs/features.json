@@ -363,13 +363,13 @@
         "Today: still to come and on the viewer's calendar day in the zone times are formatted in (TimeZone.current; the Settings override once it exists); a date-only episode counts when its airdate is today",
         "New seasons: the kept episode is episode 1 of any season (TV) or episode 1 (anime), brand-new shows included",
         "Exact time known (TV only): the time would read 'Out', not 'Expected' (D-40); date-only never counts",
-        "Service (TV only): one at a time; a show's service is its web channel, else its network, matched by name; options come from the whole pool so a chosen one never disappears, most shows first, ties A-Z, at most 6",
-        "filters combine (AND), keep the popular-first order and show at most 15",
+        "Service (TV only): one at a time; the service is the name its cell shows (network, else web channel); options come from the whole pool so a chosen one never disappears, most shows first, ties A-Z, at most 6",
+        "one filter at a time (Popular by default), like the TV | Anime switch; keeps the popular-first order and shows at most 15; an episode out since loading drops out",
         "changing a filter makes no TVmaze or AniList request; anime offers Today and New seasons only"
       ],
-      "verify": "SearchFilterTests (a pure function over the D3-8 pool and the D3-8b AniList fixture, fixed clock, Africa/Lagos, America/New_York and Pacific/Auckland): each filter alone, combinations, the service list, the 15 cap, the anime subset; grep shows the filter type has no client dependency",
-      "passes": false,
-      "evidence": ""
+      "verify": "SearchFilterTests (a pure function over the D3-8 pool and the D3-8b AniList fixture, fixed clock, Africa/Lagos, America/New_York and Pacific/Auckland): each filter, the service list and order, the 15 cap, the anime subset, dropping what came out since loading, the cell's release line, the no-match copy; grep shows the filter type has no client dependency",
+      "passes": true,
+      "evidence": "1 Nov: xcodebuild -only-testing SearchFilterTests 12/12 (popular, dropsWhatIsOut, today x3 zones, todayDateOnly, newSeasons, exactTime, service, serviceOrder, options, anime, releaseLine, noMatchCopy); mutation run (today/newSeasons/exactTime -> true) failed 4 tests; proof gate build+test+spec; proof:verifier PASS on the logic"
     },
     {
       "id": "D3-10",
@@ -382,9 +382,9 @@
         "the heading, chip labels and no-match copy are agreed and written into UI-BRIEF §5.3",
         "Chime decides whether a filtered cell shows its release time (if so, worded by ReleaseWording, rule 3)"
       ],
-      "verify": "docs/design/search-filter-board/picks.json holds at least one 'use' pick; UI-BRIEF §5.3 has the agreed copy",
-      "passes": false,
-      "evidence": ""
+      "verify": "Chime's pick recorded in UI-BRIEF §5.3 with the agreed copy (a reference board, or Chime's own instruction)",
+      "passes": true,
+      "evidence": "1 Nov: Chime chose the design in words instead of a board ('switch between the options... like the filter that lets you pick between TV and anime'): one-at-a-time chips under the TV / Anime switch; cells show their time (ReleaseWording). Recorded with ids and copy in UI-BRIEF §5.3."
     },
     {
       "id": "D3-11",
@@ -393,14 +393,14 @@
       "title": "Search: filter row built in Night Sky (D-43)",
       "criteria": [
         "chips sit under the TV | Anime switch and show whenever the airing-soon grid shows (no query or under 2 characters), not while loading or failed",
-        "switching to Anime clears Exact time known and Service; filters are kept per catalog for the session",
+        "each catalog keeps its own pick for the session, so Anime (Popular, Today or New seasons) never carries Exact time or a service",
         "each chip has an accessibility ID and tells VoiceOver whether it is selected",
-        "a filter with no matches shows one plain line and 'Clear filters', never a blank grid",
+        "a filter with no matches shows one plain line and 'Show popular', never a blank grid",
         "copy matches D3-10"
       ],
       "verify": "fidelity/verify-screen.sh search-filtered prints ALL PASS (new inventory fidelity/inventory/search-filtered.json, added with Chime's OK); a device screenshot (devicectl) approved by Chime",
       "passes": false,
-      "evidence": ""
+      "evidence": "1 Nov: fidelity/verify-screen.sh search-filtered and search-filter-empty ALL PASS on the final code (contains 'Out ' + selected checks proved by a deliberate failure); awaiting Chime's OK on the new inventories and a device screenshot"
     },
     {
       "id": "D4-1",
@@ -634,7 +634,7 @@
       "id": "D6-9",
       "day": 6,
       "priority": "should",
-      "title": "Search: 'Top 10 on Netflix in Nigeria' chip from Netflix's official weekly Top 10 (D-43, option B)",
+      "title": "Search: 'Top 10 on Netflix in Nigeria' chip from Netflix's official weekly Top 10 (D-43, option B) — BLOCKED by Netflix's Top 10 terms (O-13, 1 Nov)",
       "criteria": [
         "first: confirm the Netflix country file has Nigeria rows and its terms allow a derived list (O-13)",
         "a script builds a bundled list for Nigeria only from the latest week, matched to TVmaze IDs; unmatched titles are listed and dropped",

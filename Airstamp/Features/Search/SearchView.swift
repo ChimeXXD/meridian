@@ -19,9 +19,15 @@ struct SearchView: View {
     @State private var results: [SearchResult] = []
     @State private var state = Phase.idle
     @State private var kind = Kind.tv
-    /// Shows with episodes in the next few days, shown before you type: TV from `AiringSoon`, anime from AniList.
-    @State private var airing: [Kind: [SearchResult]] = [:]
-    private var airingSoon: [SearchResult] { airing[kind] ?? [] }
+    /// Shows with episodes in the next few days, shown before you type: TV from `AiringSoon`, anime from AniList. The
+    /// whole pool is kept; the filter and the 15-show cap apply when it's shown (D-43).
+    @State private var airing: [Kind: [AiringItem]] = [:]
+    /// The filter picked for each catalog this session; Popular until one is picked.
+    @State private var filters: [Kind: SearchFilter] = [:]
+    private var airingSoon: [AiringItem] { airing[kind] ?? [] }
+    private var filter: Binding<SearchFilter> {
+        Binding { filters[kind] ?? .popular } set: { filters[kind] = $0 }
+    }
 
     private enum Phase: Equatable { case idle, searching, done, failed }
 
@@ -52,10 +58,10 @@ struct SearchView: View {
                 switch kind {
                 case .tv:
                     guard let picks = await AiringSoon.load(client: client, rules: rules) else { return }
-                    airing[.tv] = picks.prefix(AiringSoon.limit).map { SearchResult(show: $0.show) }
+                    airing[.tv] = picks.map(AiringItem.init(pick:))
                 case .anime:
                     guard let media = try? await anilist.airingSoon(from: .now, days: 7) else { return }
-                    airing[.anime] = Array(media.prefix(AiringSoon.limit)).map(SearchResult.init(media:))
+                    airing[.anime] = media.compactMap(AiringItem.init(media:))
                 }
             }
             .onChange(of: kind) {
@@ -75,6 +81,7 @@ struct SearchView: View {
         #if DEBUG
         .onAppear {
             if DebugLaunch.anime { kind = .anime }
+            if let debugFilter = DebugLaunch.filter { filters[kind] = debugFilter }
             if let debugQuery = DebugLaunch.query, query.isEmpty { query = debugQuery }
         }
         #endif
@@ -86,6 +93,8 @@ struct SearchView: View {
             message(kind == .tv ? "Search TVmaze for a show to follow" : "Search AniList for an anime to follow",
                     id: "search-empty")
         case .idle:
+            SearchFilterRow(options: AiringFilter.options(for: kind, items: airingSoon), selection: filter)
+                .padding(.top, Tokens.Space.s)
             airingGrid
         case .searching:
             ProgressView().frame(maxWidth: .infinity).padding(.top, Tokens.Space.xl)
@@ -117,10 +126,39 @@ struct SearchView: View {
 
     // MARK: Plex's poster grid, for both the airing shows and the results
 
+    /// The airing grid under the picked filter. Each cell says where and when ("Netflix", "Expected Mon at 09:00"),
+    /// so Today and Exact time show why a show is there (rule 3). Re-read every minute, so an episode that comes out
+    /// while the grid is open leaves it and the "when" lines stay true.
     private var airingGrid: some View {
-        posterGrid(kind == .tv ? "Airing in the next few days" : "Airing in Japan this week",
-                   headerID: "search-airing-header", airingSoon, idPrefix: "airing") { result in
-            if let network = result.network { Text(network) }
+        TimelineView(.everyMinute) { context in
+            airingGrid(now: context.date)
+        }
+    }
+
+    @ViewBuilder private func airingGrid(now: Date) -> some View {
+        let formatter = DropFormatter()
+        let shown = AiringFilter.apply(filter.wrappedValue, to: airingSoon, now: now, formatter: formatter)
+        let lines = Dictionary(shown.map { ($0.id, $0.releaseLine(now: now, formatter: formatter)) },
+                               uniquingKeysWith: { first, _ in first })
+        if shown.isEmpty {
+            VStack(alignment: .leading, spacing: Tokens.Space.s) {
+                message(AiringFilter.noMatch(filter.wrappedValue, kind: kind), id: "search-filter-empty")
+                if filter.wrappedValue != .popular {
+                    Button("Show popular") { filter.wrappedValue = .popular }
+                        .buttonStyle(.bordered)
+                        .tint(.white)
+                        .accessibilityIdentifier("search-filter-clear")
+                }
+            }
+        } else {
+            posterGrid(kind == .tv ? "Airing in the next few days" : "Airing in Japan this week",
+                       headerID: "search-airing-header", shown.map(\.result), idPrefix: "airing") { result in
+                VStack(alignment: .leading, spacing: 0) {
+                    if let network = result.network { Text(network) }
+                    if let line = lines[result.id] { Text(line) }
+                }
+                .accessibilityElement(children: .combine)
+            }
         }
     }
 

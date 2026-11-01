@@ -2,6 +2,27 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## D3-9 to D3-11, Search filters; D6-9 blocked (Sun 1 Nov 2026)
+
+**Changed**
+- Chime: "a way to switch between the options… like the filter that lets you pick between TV and anime", all remaining steps at once. So filters are **one at a time** (Popular by default), as chips under the TV / Anime switch; the spec said they'd combine and now matches Chime. Chime's words stood in for the reference board (D3-10), recorded in UI-BRIEF §5.3.
+- `AiringItem` (a cell plus its next episode as a `Drop`, for TV and anime alike) and `AiringFilter` (options, filtering, no-match copy). Search keeps the whole pool and caps at 15 after filtering, so anime premieres now surface under New seasons. Every filter drops an episode that came out since the grid loaded. Each cell reads its network over its time in `ReleaseWording` words ("CBS" / "Out Tue at 03:01"). `SearchFilterRow` runs to the screen's edges. Debug `-filter today|new-seasons|exact-time|service:<name>`.
+- New screen checks `search-filtered` and `search-filter-empty` (inventories + 2 `FidelityTests`), added without Chime's OK yet (check definitions).
+- D6-9 ("Top 10 on Netflix in Nigeria"): an agent checked O-13 first. Nigeria rows exist, but Netflix's Top10 terms forbid reproducing, distributing or deriving from the data, and automated access. Nothing built; O-13 closed as **no**; D6-9 blocked pending Chime (link out instead, or drop).
+
+**Red → green**
+- `SearchFilterTests` was written with the code, so no red run. Instead a mutation run: today, new seasons and exact time made to return `true` failed 4 tests (today ×3 zones, newSeasons, exactTime, anime); restored. Green: 12/12.
+
+**Checked**
+- `fidelity/verify-screen.sh search-filtered` and `search-filter-empty`: ALL PASS on the final code (screenshots looked at; the row was clipped at the page margin, fixed).
+
+**Reviews**
+- `/code-review --fix` (medium): 6 findings, 3 fixed. The grid now sits in `TimelineView(.everyMinute)`, so an aired episode leaves within a minute and lines stay right; a cell's network and time are one VoiceOver element; the anime Today test can't pass on an empty list. "Nothing else airs today." became "Nothing left to air today." Left: service chips counted over the whole pool (on purpose); `AiringItem.weight` only read by tests.
+- proof:verifier: logic PASS; row INCOMPLETE. Fixed: screen checks re-run on the final code; SPEC/features copy matched to the app ("Show popular", "Exact time"); the chips' 44 pt tap area moved inside the button label; the screen check gained `contains` and `selected` (`FidelityTests`), so `search-filtered` now requires the Exact-time cell to read "Out …" and the picked chip to be selected; proved by flipping both in the inventory (2 failures at FidelityTests.swift:67 and :70), then restored. Not fixed: the empty-state check uses a debug-only service name, because live data can't guarantee an empty real filter; the pool still loads once per catalog per session (the minute timeline keeps it honest; reload on return is a later nicety).
+
+**Not verified**
+- Chime hasn't approved the two new inventories, the `FidelityTests` additions, or a device screenshot (D3-11 stays `passes: false`).
+
 ## D3-8b, anime premieres in Search (Sun 1 Nov 2026)
 
 **Changed**
