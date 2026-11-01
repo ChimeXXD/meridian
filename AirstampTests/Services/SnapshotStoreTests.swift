@@ -87,12 +87,13 @@ struct SnapshotStoreTests {
         #expect(SnapshotStore.read(from: container) == nil)
     }
 
-    @Test("widget art lives under Artwork/, with ':' in an AniList ID made file-safe")
+    @Test("widget art lives under Artwork/ as v2 (wide key art), with ':' in an AniList ID made file-safe")
     func artworkPath() throws {
         let container = try Self.container()
         #expect(SnapshotStore.artworkURL(showID: "38052", in: container)
-            == container.appendingPathComponent("Artwork/38052.jpg"))
-        #expect(SnapshotStore.artworkURL(showID: "anilist:154587", in: container).lastPathComponent == "anilist-154587.jpg")
+            == container.appendingPathComponent("Artwork/38052.v2.jpg"))
+        #expect(SnapshotStore.artworkURL(showID: "anilist:154587", in: container).lastPathComponent
+            == "anilist-154587.v2.jpg")
     }
 
     // MARK: What goes in it
@@ -120,29 +121,41 @@ struct SnapshotStoreTests {
         try FileManager.default.createDirectory(at: artwork, withIntermediateDirectories: true)
         try Data("old".utf8).write(to: SnapshotStore.artworkURL(showID: "anilist:9", in: container))
         try Data("kept".utf8).write(to: SnapshotStore.artworkURL(showID: "1", in: container))
+        // Poster art saved before v2 goes, so the show gets its wide art.
+        let legacy = artwork.appendingPathComponent("1.jpg")
+        try Data("poster".utf8).write(to: legacy)
         let probe = Probe()
         let snapshot = WidgetSnapshotWriter.snapshot(of: [Self.drop("a", show: "1", at: Self.now.addingTimeInterval(60)),
-                                                          Self.drop("b", show: "anilist:2", at: Self.now.addingTimeInterval(90))],
+                                                          Self.drop("b", show: "anilist:2", at: Self.now.addingTimeInterval(90)),
+                                                          Self.drop("c", show: "3", at: Self.now.addingTimeInterval(120))],
                                                      now: Self.now)
         let poster = URL(string: "https://example.com/medium.jpg")!
+        let keyArt = URL(string: "https://example.com/background.jpg")!
         await Self.writer(container, probe).saveArt(for: snapshot, artwork: [
             "1": ShowArtwork(posterThumbnail: URL(string: "https://example.com/one.jpg")!),
             "anilist:2": ShowArtwork(poster: URL(string: "https://example.com/big.jpg")!, posterThumbnail: poster),
+            "3": ShowArtwork(background: keyArt, posterThumbnail: URL(string: "https://example.com/three.jpg")!),
         ])
         #expect(!FileManager.default.fileExists(atPath: SnapshotStore.artworkURL(showID: "anilist:9", in: container).path))
+        #expect(!FileManager.default.fileExists(atPath: legacy.path))
         #expect(try Data(contentsOf: SnapshotStore.artworkURL(showID: "1", in: container)) == Data("kept".utf8))
         #expect(try Data(contentsOf: SnapshotStore.artworkURL(showID: "anilist:2", in: container)) == Self.art)
-        #expect(probe.fetched == [poster], "only the missing show's thumbnail is fetched")
+        #expect(probe.fetched == [keyArt, URL(string: "https://example.com/big.jpg")!],
+                "only missing shows are fetched: the wide key art when there is some, else the full poster")
         #expect(probe.reloads == 1, "new art reloads the timelines so it shows")
     }
 
-    @Test("widget art is a JPEG at most 300 px on its long side and under 60 KB, never upscaled")
+    @Test("widget art is a JPEG at most 1000 px on its long side and under 100 KB, never upscaled")
     func smallJPEG() throws {
+        let wide = try #require(WidgetArt.jpeg(Self.poster(width: 1_920, height: 1_080)))
+        let wideSize = try Self.pixelSize(wide)
+        #expect(wideSize == CGSize(width: 1_000, height: 563))
+        #expect(wide.count < 100_000, "\(wide.count) bytes")
         let big = try #require(WidgetArt.jpeg(Self.poster(width: 1_000, height: 1_400)))
         let size = try Self.pixelSize(big)
-        #expect(max(size.width, size.height) <= 300)
+        #expect(max(size.width, size.height) <= 1_000)
         #expect(size.width > 0 && size.height > size.width)
-        #expect(big.count < 60_000, "\(big.count) bytes")
+        #expect(big.count < 100_000, "\(big.count) bytes")
         let small = try #require(WidgetArt.jpeg(Self.poster(width: 210, height: 295)))
         #expect(try Self.pixelSize(small) == CGSize(width: 210, height: 295))
     }
@@ -192,7 +205,7 @@ struct SnapshotStoreTests {
         let afterEmpty = probe.reloads
         #expect(afterEmpty >= 1)
 
-        // Follow Silo: its date-only return is written, as the next real date too, with its small poster.
+        // Follow Silo: its date-only return is written, as the next real date too, with its wide key art.
         try follows.follow(FollowStoreTests.silo)
         await model.refresh(try follows.shows(), now: Self.now)
         let followed = try #require(SnapshotStore.read(from: container))
@@ -200,7 +213,7 @@ struct SnapshotStoreTests {
         #expect(followed.nextReturn?.airdate == "2027-07-09")
         let art = SnapshotStore.artworkURL(showID: "38052", in: container)
         #expect(try Data(contentsOf: art) == Self.art)
-        #expect(probe.fetched.map(\.lastPathComponent) == ["1577677.jpg"], "the main poster's TVmaze thumbnail")
+        #expect(probe.fetched.map(\.lastPathComponent) == ["1151687.jpg"], "Silo's TVmaze background, not its poster")
         #expect(probe.reloads > afterEmpty)
 
         // A plain refresh rewrites it again.

@@ -50,8 +50,8 @@ struct WidgetSnapshotWriter {
         return snapshot
     }
 
-    /// Saves art for each show in the snapshot that has none yet, from its poster thumbnail (the anime cover for
-    /// AniList shows), and deletes art for shows no longer in it. Reloads the timelines once if anything changed.
+    /// Saves art for each show in the snapshot that has none yet (`ShowArtwork.widget`: the wide key art, or the
+    /// poster), and deletes art for shows no longer in it. Reloads the timelines once if anything changed.
     func saveArt(for snapshot: DropSnapshot, artwork: [String: ShowArtwork]) async {
         guard let container else { return }
         let files = FileManager.default
@@ -67,7 +67,7 @@ struct WidgetSnapshotWriter {
         for id in showIDs.sorted() {
             let destination = SnapshotStore.artworkURL(showID: id, in: container)
             guard !files.fileExists(atPath: destination.path),
-                  let source = artwork[id].flatMap({ $0.posterThumbnail ?? $0.poster }),
+                  let source = artwork[id]?.widget,
                   let data = await fetchArt(source) else { continue }
             if (try? data.write(to: destination, options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication]))
                 != nil { changed = true }

@@ -9,8 +9,16 @@ struct ShowArtwork: Hashable, Sendable {
     /// TVmaze's 210 × 295 poster, for rows and widgets.
     var posterThumbnail: URL?
 
+    /// The background is AniList's banner, a strip about five times wider than tall: fine across the top of a screen,
+    /// too thin to fill a widget.
+    private(set) var backgroundIsStrip = false
+
     /// What a full-bleed hero shows: the background, or the poster when there's no background.
     var hero: URL? { background ?? poster }
+
+    /// What the widgets save (D-46): the wide key art, unless it's a banner strip; else the full poster, which the
+    /// widget art shrinks anyway; else the thumbnail.
+    var widget: URL? { (backgroundIsStrip ? nil : background) ?? poster ?? posterThumbnail }
 
     static let idealBackgroundWidth = 1920
     static let minimumBackgroundWidth = 1200
@@ -23,6 +31,7 @@ struct ShowArtwork: Hashable, Sendable {
     init(media: AniListMedia) {
         self.init(background: media.bannerImage, poster: media.coverImage?.extraLarge ?? media.coverImage?.large,
                   posterThumbnail: media.coverImage?.large)
+        backgroundIsStrip = true
     }
 
     init(images: [TVmazeImage]) {

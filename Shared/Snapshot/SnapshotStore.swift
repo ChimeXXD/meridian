@@ -27,10 +27,11 @@ enum SnapshotStore {
         return try? decoder.decode(DropSnapshot.self, from: data)
     }
 
-    /// Where a show's small widget art lives: `<container>/Artwork/<showID with ':' as '-'>.jpg`. It may not exist.
+    /// Where a show's widget art lives: `<container>/Artwork/<showID with ':' as '-'>.v2.jpg`. It may not exist. v2 is
+    /// the wide key art; the writer deletes any other file in the folder, so poster art saved before it is replaced.
     static func artworkURL(showID: String, in container: URL) -> URL {
         artworkDirectory(in: container)
-            .appendingPathComponent(showID.replacingOccurrences(of: ":", with: "-") + ".jpg")
+            .appendingPathComponent(showID.replacingOccurrences(of: ":", with: "-") + ".v2.jpg")
     }
 
     static func artworkDirectory(in container: URL) -> URL {

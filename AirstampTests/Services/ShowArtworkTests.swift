@@ -14,6 +14,19 @@ struct ShowArtworkTests {
         #expect(url.absoluteString == "https://api.tvmaze.com/shows/38052/images")
     }
 
+    @Test("widgets use the wide key art, but an anime's cover rather than AniList's thin banner strip (D-46)")
+    func widgetArt() throws {
+        let url = { (name: String) in URL(string: "https://example.com/\(name).jpg")! }
+        #expect(ShowArtwork(background: url("bg"), poster: url("p"), posterThumbnail: url("t")).widget == url("bg"))
+        #expect(ShowArtwork(poster: url("p"), posterThumbnail: url("t")).widget == url("p"))
+        #expect(ShowArtwork(posterThumbnail: url("t")).widget == url("t"))
+        let json = #"{"id":5,"isAdult":false,"title":{"romaji":"A"},"countryOfOrigin":"JP","bannerImage":"https://example.com/banner.jpg","coverImage":{"large":"https://example.com/cover.jpg","extraLarge":"https://example.com/cover-xl.jpg"}}"#
+        let media = try JSONDecoder().decode(AniListMedia.self, from: Data(json.utf8))
+        let anime = ShowArtwork(media: media)
+        #expect(anime.background == url("banner"), "heroes in the app still use the banner")
+        #expect(anime.widget == url("cover-xl"))
+    }
+
     @Test("picks a background near 1920 px wide (not the 3840 px original) and the main poster")
     func picksSensibleSizes() throws {
         let images = try JSONDecoder().decode([TVmazeImage].self, from: Fixture.data("tvmaze/images-silo.json"))

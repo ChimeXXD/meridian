@@ -4,14 +4,15 @@ import ImageIO
 import UIKit
 import UniformTypeIdentifiers
 
-/// The small poster a widget shows (D4-1): a JPEG at most 300 px on its long side and, as a rule, under 60 KB, saved
-/// in the App Group because widgets can't download. Made on the phone from the art the app already loads (D-37); it is
-/// never committed to the repo (CLAUDE.md rule 9).
+/// The art a widget shows (D4-1, D-46): a JPEG at most 1000 px on its long side, near the 1014 px a medium or large
+/// widget is wide at 3x, and as a rule under 100 KB, saved in the App Group because widgets can't download. Three
+/// decoded at once are about 7 MB, well inside a widget's memory. Made on the phone from the art the app already loads
+/// (D-37); it is never committed to the repo (CLAUDE.md rule 9).
 enum WidgetArt {
-    static let maxPixel = 300
-    static let targetBytes = 60_000
+    static let maxPixel = 1_000
+    static let targetBytes = 100_000
 
-    /// Downloads a poster through the app's artwork cache (rows already loaded the same thumbnail) and shrinks it.
+    /// Downloads art through the app's artwork cache (heroes and rows may have loaded it already) and shrinks it.
     @Sendable static func fetch(_ url: URL) async -> Data? {
         guard let loaded = try? await ArtworkLoader.shared.load(url, maxPixel: maxPixel),
               let image = loaded.image.cgImage else { return nil }
