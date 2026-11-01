@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Airstamp sitemap</title>
+<title>Meridian sitemap</title>
 <style>
   :root { --bg: #f6f5f2; --surface: #fff; --ink: #17161a; --ink-2: #57545e; --line: #e2dfd8; --accent: #1f5eff; }
   @media (prefers-color-scheme: dark) { :root { --bg: #0f0f12; --surface: #18181d; --ink: #f2f1f4; --ink-2: #b5b2bd; --line: #2c2c34; --accent: #8aa8ff; } }
@@ -28,9 +28,9 @@
 </head>
 <body>
 <main>
-<h1>Airstamp sitemap</h1>
+<h1>Meridian sitemap</h1>
 <p>How the product fits together: the screens inside the app, the surfaces outside it (widgets, Live Activity, alerts), and how you move between them. Built from <code>docs/SPEC.md</code> on 30 Oct 2026. The reference board (<code>docs/design/reference-board/</code>) uses the same section names.</p>
-<p>Airstamp is small on purpose: <strong>four screens, three sheets, and four surfaces outside the app.</strong> Most of the time people use it without opening it, from the Lock Screen.</p>
+<p>Meridian is small on purpose: <strong>four screens, three sheets, and four surfaces outside the app.</strong> Most of the time people use it without opening it, from the Lock Screen.</p>
 <h2>The map</h2>
 <h3>Inside the app</h3>
 <figure class="diagram"><pre class="mermaid">flowchart TD
@@ -86,7 +86,7 @@
     LATER[&quot;Later&lt;br/&gt;&lt;i&gt;days-only countdown, no ticking timer&lt;/i&gt;&quot;] --&gt; DATE
     DATE[&quot;Date only&lt;br/&gt;&lt;i&gt;time not announced&lt;/i&gt;&quot;] --&gt; NONE
     NONE[&quot;Nothing scheduled&lt;br/&gt;&lt;i&gt;e.g. Silo returns 9 Jul 2027&lt;/i&gt;&quot;]</pre></figure>
-<div class="table"><table><thead><tr><th>State</th><th>What Upcoming shows</th></tr></thead><tbody><tr><td>No shows followed</td><td>&quot;Follow a show to see its countdown here&quot;, with Find a show</td></tr><tr><td>Shows followed, nothing scheduled</td><td>&quot;Nothing scheduled for your shows yet. Airstamp checks again each time you open it.&quot;</td></tr><tr><td>Offline</td><td>The last known times plus &quot;Offline · Updated 3 h ago&quot;</td></tr><tr><td>A time moved later</td><td>The row shows &quot;Delayed&quot;, with the old time struck through</td></tr><tr><td>No official stream in your country</td><td>The row keeps the provider (&quot;HBO · US&quot;) and adds &quot;No official stream in your country&quot; under it</td></tr></tbody></table></div>
+<div class="table"><table><thead><tr><th>State</th><th>What Upcoming shows</th></tr></thead><tbody><tr><td>No shows followed</td><td>&quot;Follow a show to see its countdown here&quot;, with Find a show</td></tr><tr><td>Shows followed, nothing scheduled</td><td>&quot;Nothing scheduled for your shows yet. Meridian checks again each time you open it.&quot;</td></tr><tr><td>Offline</td><td>The last known times plus &quot;Offline · Updated 3 h ago&quot;</td></tr><tr><td>A time moved later</td><td>The row shows &quot;Delayed&quot;, with the old time struck through</td></tr><tr><td>No official stream in your country</td><td>The row keeps the provider (&quot;HBO · US&quot;) and adds &quot;No official stream in your country&quot; under it</td></tr></tbody></table></div>
 <h2>Outside the app</h2>
 <div class="table"><table><thead><tr><th>Surface</th><th>Sizes</th><th>What it shows</th><th>Tap goes to</th></tr></thead><tbody><tr><td><strong>Lock Screen widgets</strong></td><td>Inline: &quot;Silo · 2d 4h&quot; · Circular: &quot;2d&quot; with a 7-day ring · Rectangular: name, countdown, &quot;Wed 02:00 · Apple TV&quot;</td><td>The next drop</td><td>Show detail</td></tr><tr><td><strong>Home Screen widgets</strong></td><td>Small: one huge countdown, the name small, the source chip · Medium: the next 3 drops as rows</td><td>The next drop(s)</td><td>Show detail (small) or that row&#x27;s show (medium)</td></tr><tr><td><strong>Release-night alert</strong></td><td>System alert when the Live Activity starts</td><td>&quot;Silo starts in 2 hours · 02:00 · Apple TV&quot;</td><td>The Live Activity</td></tr><tr><td><strong>Live Activity</strong></td><td>Lock Screen banner; Dynamic Island compact, minimal and expanded</td><td>Countdown to the drop, then &quot;Out now&quot; for an hour</td><td>Show detail</td></tr></tbody></table></div>
 <p>The widgets and Live Activity read a JSON snapshot that the app writes (D-05), so they keep counting with the app closed.</p>

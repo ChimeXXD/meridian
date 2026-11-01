@@ -50,7 +50,7 @@ enum WidgetText {
     static func emptyDetail(_ moment: WidgetMoment) -> String {
         if moment.nextReturn != nil { return "Nothing else is scheduled." }
         return moment.nothingScheduled.isEmpty
-            ? "Its countdown shows up here." : "Airstamp checks again each time you open it."
+            ? "Its countdown shows up here." : "Meridian checks again each time you open it."
     }
 
     /// What a followed show with no next episode says in a widget row, where a countdown would be.

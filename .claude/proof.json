@@ -2,14 +2,14 @@
   "checks": [
     {
       "name": "build",
-      "run": "xcodegen generate --quiet && xcodebuild -scheme Airstamp -destination 'platform=iOS Simulator,name=iPhone 18 Pro,OS=27.0' -quiet build",
-      "when": ["project.yml", "Config/", "Airstamp/", "AirstampWidgets/", "Shared/"],
+      "run": "xcodegen generate --quiet && xcodebuild -scheme Meridian -destination 'platform=iOS Simulator,name=iPhone 18 Pro,OS=27.0' -quiet build",
+      "when": ["project.yml", "Config/", "Meridian/", "MeridianWidgets/", "Shared/"],
       "timeout": 900
     },
     {
       "name": "test",
-      "run": "xcodegen generate --quiet && xcodebuild -scheme Airstamp -destination 'platform=iOS Simulator,name=iPhone 18 Pro,OS=27.0' -quiet test",
-      "when": ["project.yml", "Config/", "Airstamp/", "AirstampWidgets/", "Shared/", "AirstampTests/"],
+      "run": "xcodegen generate --quiet && xcodebuild -scheme Meridian -destination 'platform=iOS Simulator,name=iPhone 18 Pro,OS=27.0' -quiet test",
+      "when": ["project.yml", "Config/", "Meridian/", "MeridianWidgets/", "Shared/", "MeridianTests/"],
       "timeout": 1200
     },
     {

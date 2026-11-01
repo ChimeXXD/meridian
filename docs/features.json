@@ -23,9 +23,9 @@
         "App Group on both targets",
         "PrivacyInfo.xcprivacy declares CA92.1 and 1C8F.1"
       ],
-      "verify": "xcodegen generate && xcodebuild -scheme Airstamp -destination 'platform=iOS Simulator,name=iPhone 17 Pro' build; plutil -lint Airstamp/PrivacyInfo.xcprivacy",
+      "verify": "xcodegen generate && xcodebuild -scheme Meridian -destination 'platform=iOS Simulator,name=iPhone 17 Pro' build; plutil -lint Meridian/PrivacyInfo.xcprivacy",
       "passes": true,
-      "evidence": "29 Oct: xcodegen generate + xcodebuild test on iPhone 18 Pro (iOS 27.0) exit 0, 3/3 tests pass; plutil -lint OK on both PrivacyInfo.xcprivacy; built Info.plist AirstampAppGroup=group.dev.chime.airstamp"
+      "evidence": "29 Oct: xcodegen generate + xcodebuild test on iPhone 18 Pro (iOS 27.0) exit 0, 3/3 tests pass; plutil -lint OK on both PrivacyInfo.xcprivacy; built Info.plist MeridianAppGroup=group.dev.chime.meridian"
     },
     {
       "id": "D0-3",
@@ -50,9 +50,9 @@
         "gate runs build and test",
         "collection exists"
       ],
-      "verify": "gh repo view --json visibility returns PRIVATE; node <proof>/scripts/gate.mjs --run exits 0; references list_collections shows 'Airstamp references'",
+      "verify": "gh repo view --json visibility returns PRIVATE; node <proof>/scripts/gate.mjs --run exits 0; references list_collections shows 'Meridian references'",
       "passes": true,
-      "evidence": "29 Oct: gh repo view returns PRIVATE https://github.com/ChimeXXD/next-episode; commit gate ran build/test/spec and passed; reference collection 'Airstamp references' f0d5d969-30dd-480c-b9d2-1e45a64f4557 created"
+      "evidence": "29 Oct: gh repo view returns PRIVATE https://github.com/ChimeXXD/meridian; commit gate ran build/test/spec and passed; reference collection 'Meridian references' f0d5d969-30dd-480c-b9d2-1e45a64f4557 created"
     },
     {
       "id": "D1-1",
@@ -155,7 +155,7 @@
       ],
       "verify": "REFERENCES.md has a section per surface; references get_collection_contents lists the saved screens",
       "passes": true,
-      "evidence": "30 Oct 2026: reference board (154 refs) → Chime liked 47 (docs/design/reference-board/picks.json); scripts/picks-to-references.py writes them into REFERENCES.md grouped by surface with the pattern taken (verifier regenerated it byte-identical); references get_collection_contents on 'Airstamp references' reports 47 iOS screens."
+      "evidence": "30 Oct 2026: reference board (154 refs) → Chime liked 47 (docs/design/reference-board/picks.json); scripts/picks-to-references.py writes them into REFERENCES.md grouped by surface with the pattern taken (verifier regenerated it byte-identical); references get_collection_contents on 'Meridian references' reports 47 iOS screens."
     },
     {
       "id": "D2-2",
@@ -246,7 +246,7 @@
       ],
       "verify": "ls fidelity/inventory matches the brief; verify-screen.sh runs",
       "passes": true,
-      "evidence": "fidelity/inventory has welcome, upcoming, upcoming-empty, detail, settings (Search follows the grid redesign); fidelity/verify-screen.sh runs AirstampUITests/FidelityTests (scheme AirstampFidelity): ALL PASS, 5 tests, 31 Oct 2026. Native kit: accessibility IDs and exact copy from UI-BRIEF, no HTML mockup (D-31). Approved by Chime."
+      "evidence": "fidelity/inventory has welcome, upcoming, upcoming-empty, detail, settings (Search follows the grid redesign); fidelity/verify-screen.sh runs MeridianUITests/FidelityTests (scheme MeridianFidelity): ALL PASS, 5 tests, 31 Oct 2026. Native kit: accessibility IDs and exact copy from UI-BRIEF, no HTML mockup (D-31). Approved by Chime."
     },
     {
       "id": "D3-2",
@@ -653,9 +653,9 @@
       "criteria": [
         "no Netflix Top 10 chip, bundled list or link in the app"
       ],
-      "verify": "grep finds no NetflixTopTenLink or search-netflix-top10 in Airstamp/, AirstampTests/ or fidelity/",
+      "verify": "grep finds no NetflixTopTenLink or search-netflix-top10 in Meridian/, MeridianTests/ or fidelity/",
       "passes": true,
-      "evidence": "1 Nov: grep -rn 'NetflixTopTenLink|search-netflix-top10' Airstamp AirstampTests fidelity finds nothing; files removed with git rm"
+      "evidence": "1 Nov: grep -rn 'NetflixTopTenLink|search-netflix-top10' Meridian MeridianTests fidelity finds nothing; files removed with git rm"
     },
     {
       "id": "D3-12",
@@ -666,11 +666,11 @@
         "a service chip shows its logo on a small white tile before its name (rules/network-logos.json, exact TVmaze names)",
         "the chips are always the 12 major platforms in subscriber order (Netflix … Apple TV, then CBS, NBC, ABC, FOX); no YouTube, BBC iPlayer or small channels; HBO Max also holds HBO; a platform with nothing coming says so",
         "logos are freely licensed Wikimedia Commons files, loaded at runtime, never committed as images (rule 9); the tile's space is reserved, so the row never shifts, and a failed logo leaves a gap, never a white box",
-        "Credits names Wikimedia and lists the credits that licences require; requests carry an Airstamp user agent"
+        "Credits names Wikimedia and lists the credits that licences require; requests carry an Meridian user agent"
       ],
       "verify": "NetworkLogosTests + SearchFilterTests (popularServicesOnly, everyServiceHasLogo, hboOneChip); curl loop: every image URL 200 image/png; fidelity/verify-screen.sh search-filtered; Chime approves a screenshot of the row",
       "passes": false,
-      "evidence": "1 Nov: NetworkLogosTests + SearchFilterTests pass; curl with the Airstamp user agent: 57/57 200 image/png; simulator -filter service:Paramount+ shows Disney+, Paramount+ (picked, centred) and Hulu with logos and 'Nothing on Paramount+ in the next few days.' (fidelity/shots/search-services.png). Awaiting Chime's look on the phone."
+      "evidence": "1 Nov: NetworkLogosTests + SearchFilterTests pass; curl with the Meridian user agent: 57/57 200 image/png; simulator -filter service:Paramount+ shows Disney+, Paramount+ (picked, centred) and Hulu with logos and 'Nothing on Paramount+ in the next few days.' (fidelity/shots/search-services.png). Awaiting Chime's look on the phone."
     },
     {
       "id": "D7-1",

@@ -1,8 +1,8 @@
-# Airstamp sitemap
+# Meridian sitemap
 
 How the product fits together: the screens inside the app, the surfaces outside it (widgets, Live Activity, alerts), and how you move between them. Built from `docs/SPEC.md` on 30 Oct 2026. The reference board (`docs/design/reference-board/`) uses the same section names.
 
-Airstamp is small on purpose: **four screens, three sheets, and four surfaces outside the app.** Most of the time people use it without opening it, from the Lock Screen.
+Meridian is small on purpose: **four screens, three sheets, and four surfaces outside the app.** Most of the time people use it without opening it, from the Lock Screen.
 
 ## The map
 
@@ -104,7 +104,7 @@ flowchart TD
 | State | What Upcoming shows |
 | --- | --- |
 | No shows followed | "Follow a show to see its countdown here", with Find a show |
-| Shows followed, nothing scheduled | "Nothing scheduled for your shows yet. Airstamp checks again each time you open it." |
+| Shows followed, nothing scheduled | "Nothing scheduled for your shows yet. Meridian checks again each time you open it." |
 | Offline | The last known times plus "Offline · Updated 3 h ago" |
 | A time moved later | The row shows "Delayed", with the old time struck through |
 | No official stream in your country | The row keeps the provider ("HBO · US") and adds "No official stream in your country" under it |

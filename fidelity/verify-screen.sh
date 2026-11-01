@@ -6,11 +6,11 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 mkdir -p fidelity/shots
-only=(-only-testing:AirstampUITests/FidelityTests)
-[[ $# -gt 0 ]] && only=(-only-testing:"AirstampUITests/FidelityTests/test_${1//-/_}")
+only=(-only-testing:MeridianUITests/FidelityTests)
+[[ $# -gt 0 ]] && only=(-only-testing:"MeridianUITests/FidelityTests/test_${1//-/_}")
 xcodegen generate --quiet
 log=$(mktemp)
-TEST_RUNNER_FIDELITY_SHOTS="$PWD/fidelity/shots" xcodebuild -scheme AirstampFidelity \
+TEST_RUNNER_FIDELITY_SHOTS="$PWD/fidelity/shots" xcodebuild -scheme MeridianFidelity \
   -destination 'platform=iOS Simulator,name=iPhone 18 Pro,OS=27.0' -collect-test-diagnostics never \
   "${only[@]}" test > "$log" 2>&1 && result=0 || result=$?
 grep -E "error:|Executed .* tests?" "$log" | grep -v "^\s*$" | sort -u || true

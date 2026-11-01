@@ -4,8 +4,8 @@ import Foundation
 /// Its ID comes from `APP_GROUP_ID` in Config/Base.xcconfig, via each target's Info.plist.
 enum AppGroup {
     static let identifier: String = {
-        guard let id = Bundle.main.object(forInfoDictionaryKey: "AirstampAppGroup") as? String, !id.isEmpty else {
-            preconditionFailure("AirstampAppGroup is missing from Info.plist")
+        guard let id = Bundle.main.object(forInfoDictionaryKey: "MeridianAppGroup") as? String, !id.isEmpty else {
+            preconditionFailure("MeridianAppGroup is missing from Info.plist")
         }
         return id
     }()

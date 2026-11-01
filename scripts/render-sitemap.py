@@ -63,7 +63,7 @@ PAGE = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Airstamp sitemap</title>
+<title>Meridian sitemap</title>
 <style>
   :root { --bg: #f6f5f2; --surface: #fff; --ink: #17161a; --ink-2: #57545e; --line: #e2dfd8; --accent: #1f5eff; }
   @media (prefers-color-scheme: dark) { :root { --bg: #0f0f12; --surface: #18181d; --ink: #f2f1f4; --ink-2: #b5b2bd; --line: #2c2c34; --accent: #8aa8ff; } }

@@ -3,7 +3,7 @@
 
 Each fixture pairs TVmaze's show and episode JSON with the release time confirmed
 by an independent source, so tests check the resolver against reality, not against
-itself. Usage: python3 scripts/record-fixtures.py  (writes AirstampTests/Fixtures/rules/)
+itself. Usage: python3 scripts/record-fixtures.py  (writes MeridianTests/Fixtures/rules/)
 """
 import json
 import pathlib
@@ -12,7 +12,7 @@ import urllib.parse
 import urllib.request
 
 API = "https://api.tvmaze.com"
-OUT = pathlib.Path(__file__).resolve().parent.parent / "AirstampTests" / "Fixtures" / "rules"
+OUT = pathlib.Path(__file__).resolve().parent.parent / "MeridianTests" / "Fixtures" / "rules"
 DROP_KEYS = {"image", "summary", "_links", "_embedded", "rating", "weight", "updated", "dvdCountry", "officialSite"}
 
 # (slug, show query, season, number, expected UTC instant or None, confidence, source URL, note)
@@ -116,7 +116,7 @@ def trim_show(show):
 
 
 def record_client():
-    """Raw endpoint responses for TVmazeClient parser tests (AirstampTests/Fixtures/tvmaze/)."""
+    """Raw endpoint responses for TVmazeClient parser tests (MeridianTests/Fixtures/tvmaze/)."""
     out = OUT.parent / "tvmaze"
     out.mkdir(parents=True, exist_ok=True)
 

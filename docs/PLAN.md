@@ -1,4 +1,4 @@
-# Airstamp: the one-week build
+# Meridian: the one-week build
 
 Rewritten 29 Oct 2026. It replaces the 7-week plan, which is archived in `archive/PLAN-7week-2026-10-29.md`. The decisions are D-17 to D-35 in `DECISIONS.md`, and the research is in `RESEARCH.md`.
 
@@ -70,19 +70,19 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
   # Xcode > Settings > Intelligence > "Allow external agents to use Xcode tools", then:
   claude mcp add --transport stdio xcode -- xcrun mcpbridge
   ```
-- [ ] Choose a bundle prefix (e.g. `dev.chime`) and an App Group (`group.dev.chime.airstamp`), and note your Team ID.
+- [ ] Choose a bundle prefix (e.g. `dev.chime`) and an App Group (`group.dev.chime.meridian`), and note your Team ID.
 - [ ] Send the AniList permission email (O-5). It doesn't block the week, but have the answer before the repo goes public.
 
 ### Claude CLI does
 - [x] `git init`, `.gitignore`, `LICENSE` (MIT), `git mv "★ Next Episode.md" docs/PRD.md`.
-- [x] `project.yml`: the `Airstamp`, `AirstampWidgets` and `AirstampTests` targets, the `Shared/` sources, the App Group, `NSSupportsLiveActivities`, and `PrivacyInfo.xcprivacy` (`CA92.1`, `1C8F.1`).
+- [x] `project.yml`: the `Meridian`, `MeridianWidgets` and `MeridianTests` targets, the `Shared/` sources, the App Group, `NSSupportsLiveActivities`, and `PrivacyInfo.xcprivacy` (`CA92.1`, `1C8F.1`).
 - [ ] A placeholder app screen and `systemSmall` widget. Build and take a simulator screenshot, then **install on Chime's iPhone** with free signing and confirm that the widget can read a value the app wrote to the App Group. That proves the free route works before we build on it.
 - [x] `.claude/proof.json` with the build and test checks.
 - [x] Create the **private** repo and push: `gh repo create next-episode --private --source=. --remote=origin --push`.
-- [x] Create the reference collection `Airstamp references`.
+- [x] Create the reference collection `Meridian references`.
 
 **Prompt**
-> Day 0 from docs/PLAN.md. Bundle prefix `<dev.chime>`, App Group `<group.dev.chime.airstamp>`, Personal Team ID `<XXXX>`. Set up git, project.yml, the privacy manifest and placeholder screens. Build, take a screenshot, install on my iPhone with free signing and prove the App Group works, commit, then create the private GitHub repo and push.
+> Day 0 from docs/PLAN.md. Bundle prefix `<dev.chime>`, App Group `<group.dev.chime.meridian>`, Personal Team ID `<XXXX>`. Set up git, project.yml, the privacy manifest and placeholder screens. Build, take a screenshot, install on my iPhone with free signing and prove the App Group works, commit, then create the private GitHub repo and push.
 
 **Gate:** `xcodebuild build` passes, the placeholder widget runs on Chime's iPhone and reads App Group data, and the private repo is on GitHub.
 
@@ -94,7 +94,7 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
 
 ### Claude CLI does
 - [x] Models in `Shared/Models`: `Drop`, `DropSnapshot`, `Confidence`, `ReleaseSource`, `ProviderLabel`.
-- [x] Record fixtures in `AirstampTests/Fixtures/`: 2 real episodes per platform rule, the override examples (Stranger Things 5 at 17:00 PT, the early Fallout S2 premiere), and placeholders at 12:00Z and 16:00Z.
+- [x] Record fixtures in `MeridianTests/Fixtures/`: 2 real episodes per platform rule, the override examples (Stranger Things 5 at 17:00 PT, the early Fallout S2 premiere), and placeholders at 12:00Z and 16:00Z.
 - [x] `rules/platform-rules.json` v1, bundled with the app (SPEC §3.2).
 - [x] `PlatformRules` and `TimeResolver`, plus the test matrix: each rule × 6 zones × US summer and winter, the US, EU and Sydney clock-change dates, placeholders never `exact`, overrides beating rules, and anime unaffected by US clock changes.
 - [x] `TVmazeClient` actor: backoff that honours `Retry-After`, and a 6-hour cache.
@@ -112,7 +112,7 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
 **Goal:** know what each screen looks like before building it. There is no Figma (D-31). design references go into a written brief, and the brief goes straight into SwiftUI.
 
 ### Claude CLI does
-- [x] **reference sweep:** (Done 30 Oct as the reference board: 154 references, Chime liked 47, all saved to the collection.) One iOS search per surface, following the `references:search` skill rules. Save the best 3–5 per surface to `Airstamp references`, and note the pattern taken from each in `docs/design/REFERENCES.md`. The seed pass is already there.
+- [x] **reference sweep:** (Done 30 Oct as the reference board: 154 references, Chime liked 47, all saved to the collection.) One iOS search per surface, following the `references:search` skill rules. Save the best 3–5 per surface to `Meridian references`, and note the pattern taken from each in `docs/design/REFERENCES.md`. The seed pass is already there.
 
   | Surface | Query |
   | --- | --- |
@@ -143,7 +143,7 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
 ## Day 3: App screens (Sun 1 Nov, the US clock-change day)
 
 ### Claude CLI does
-- [x] Set up the `proof:build` fidelity check: `fidelity/inventory/<screen>.json` built from the UI brief, plus `fidelity/verify-screen.sh`. (Done 31 Oct: native, an XCUITest per screen checking IDs and copy; scheme `AirstampFidelity`.)
+- [x] Set up the `proof:build` fidelity check: `fidelity/inventory/<screen>.json` built from the UI brief, plus `fidelity/verify-screen.sh`. (Done 31 Oct: native, an XCUITest per screen checking IDs and copy; scheme `MeridianFidelity`.)
 - [ ] Upcoming (sections, countdown, release wording, provider label, empty state), Show detail, a one-screen welcome showing "Times shown for Lagos, UTC+1" with a widget prompt, Settings (lead time, plus the time-zone override as a Should), and Credits.
 - [ ] For each screen: run `verify-screen.sh` until it prints ALL PASS, then show the screenshots next to their design references. Approved screenshots go to `fidelity/refs/` as baselines.
 - [ ] Search filters (D-43, added 31 Oct at Chime's request, before widgets): the airing-soon pool with resolved times (D3-8), anime premieres (D3-8b), filter logic (D3-9), a reference board for the filter row (D3-10), then the row in Night Sky (D3-11).
@@ -218,7 +218,7 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
 - [ ] **Open-source checklist:**
   - no secrets in the history (`git log -p` grep, and GitHub secret scanning once public)
   - no artwork files committed (art is fetched at runtime, D-37)
-  - the TVmaze fixtures noted as CC BY-SA in `AirstampTests/Fixtures/README.md`
+  - the TVmaze fixtures noted as CC BY-SA in `MeridianTests/Fixtures/README.md`
   - AniList's answer recorded (O-5)
   - LICENSE and credits present
   - personal device IDs removed

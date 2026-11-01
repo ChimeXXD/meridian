@@ -1,4 +1,4 @@
-# Next Episode (Airstamp)
+# Next Episode (Meridian)
 
 **Release-night countdowns for TV and anime, in your time zone.** It's an iPhone app with Lock Screen and Home Screen widgets and a scheduled Live Activity in the Dynamic Island. There's no account and no server. Every time shown says where it came from.
 
@@ -6,7 +6,7 @@
 
 ## Why
 
-TV Time closed on 15 July 2026. Release times are tied to the platform's home zone. Netflix drops at midnight Pacific. Apple TV drops at 9pm Eastern the night before. Anime follows Japan time, which doesn't change when US clocks do. Viewers outside the US have to work out their local time themselves. Airstamp does that maths for them and is honest when a time is only an estimate.
+TV Time closed on 15 July 2026. Release times are tied to the platform's home zone. Netflix drops at midnight Pacific. Apple TV drops at 9pm Eastern the night before. Anime follows Japan time, which doesn't change when US clocks do. Viewers outside the US have to work out their local time themselves. Meridian does that maths for them and is honest when a time is only an estimate.
 
 ## Docs
 

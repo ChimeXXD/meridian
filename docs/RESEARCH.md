@@ -69,7 +69,7 @@ This builds on the original PRD (`★ Next Episode.md`). Each item was checked a
 
 ## Name check
 
-- **Airstamp:** no App Store or brand match found. **Recommended.**
+- **Meridian:** no App Store or brand match found. **Recommended.**
 - **Drop Night:** no tracker found, but the "Drop" space is crowded.
 - **Episode Clock:** free, but descriptive and weak as a trademark.
 - **Taken:** Next Drop (a sneaker app), Airtime (many apps), Dropclock (a Mac screensaver).
@@ -146,7 +146,7 @@ Three research passes ran on 29 Oct 2026: competitors and users, Apple platform 
 
 ## Data sources
 
-- **AniList:** the API is "currently in a degraded state… limited to 30 requests per minute", and rate-limit increases aren't being granted ([docs](https://docs.anilist.co/guide/rate-limiting)). The terms ban "competing, non-complementary… anime and manga list or tracker services" ([terms](https://docs.anilist.co/guide/terms-of-use)). *Inferred:* it's unclear whether Airstamp counts as one. Ask AniList (O-5, D-19).
+- **AniList:** the API is "currently in a degraded state… limited to 30 requests per minute", and rate-limit increases aren't being granted ([docs](https://docs.anilist.co/guide/rate-limiting)). The terms ban "competing, non-complementary… anime and manga list or tracker services" ([terms](https://docs.anilist.co/guide/terms-of-use)). *Inferred:* it's unclear whether Meridian counts as one. Ask AniList (O-5, D-19).
 - **TVmaze:** no changes in 2026. TVmaze shipped its own TV Time importer on 2 Jul 2026 ([blog](https://www.tvmaze.com/blogs/63/the-tv-time-importer-is-now-available)).
 - **TMDB:** the basic licence allows no commercial use. Its logo must be less prominent than ours, cached data can be kept 6 months at most, and watch-provider data needs JustWatch credit ([terms](https://www.themoviedb.org/api-terms-of-use)).
 - **TV Time export (for a later importer):** a zip holding `tracking-prod-records-v2.csv` with columns `s_id` (TVDB), `s_no`, `ep_no`, `episode_id`/`ep_id`. Column names vary between exports ([watchd](https://watchd.pro/articles/tv-time-export-files/), [seriesly](https://seriesly.tv/guide/tv-time-export/)).

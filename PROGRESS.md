@@ -157,7 +157,7 @@ Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
 **Changed**
 - Chime: remove the Netflix Top 10 chip ("it takes us to another link"), put each service's logo next to it, and keep the logo chips together. D-44.
-- Netflix chip, its link type and tests removed. `NetworkLogos` reads `rules/network-logos.json` (freely licensed Wikimedia Commons files, matched by exact TVmaze name; only URLs bundled, images load at runtime, rule 9). `AiringFilter.services(in:hasLogo:)` keeps the 6 services with the most shows, then puts logo ones first. `SearchFilterRow` shows the logo on a white 30 × 22 pt tile before the name; the tile holds its place while loading. `ArtworkLoader` sends an "Airstamp/1.0" user agent (Wikimedia asks for one). Credits names Wikimedia and lists required credits.
+- Netflix chip, its link type and tests removed. `NetworkLogos` reads `rules/network-logos.json` (freely licensed Wikimedia Commons files, matched by exact TVmaze name; only URLs bundled, images load at runtime, rule 9). `AiringFilter.services(in:hasLogo:)` keeps the 6 services with the most shows, then puts logo ones first. `SearchFilterRow` shows the logo on a white 30 × 22 pt tile before the name; the tile holds its place while loading. `ArtworkLoader` sends an "Meridian/1.0" user agent (Wikimedia asks for one). Credits names Wikimedia and lists required credits.
 - Logo source chosen after measuring: each network's own site icon worked for about half (NBC, ABC, HBO, Netflix missing; hulu.com serves the Disney+ icon), and scraping sites is what blocked the Netflix chart; Google's favicon service is undocumented. An agent built and licence-checked the Commons list in its own worktree.
 
 **Red → green**
@@ -165,7 +165,7 @@ Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 - The bundled test first required `upload.wikimedia.org`; Commons' API now hands out `thumb.wikimedia.org` thumbnails, so it accepts any `*.wikimedia.org` host. Credits use Commons' own credit wording (it already names the licence).
 
 **Checked**
-- The agent's list: 57 logos for 58 exact TVmaze names (54 public-domain text logos; AMC+, Hallmark Channel and BBC iPlayer need credit, shown on Credits). Skipped: ITVX (no free file). Every image fetched with the Airstamp user agent: 200 image/png (20 checked here, all 57 by the agent).
+- The agent's list: 57 logos for 58 exact TVmaze names (54 public-domain text logos; AMC+, Hallmark Channel and BBC iPlayer need credit, shown on Credits). Skipped: ITVX (no free file). Every image fetched with the Meridian user agent: 200 image/png (20 checked here, all 57 by the agent).
 - Simulator with `-filter service:CBS`: the row scrolls to the picked chip; CBS, FOX and HBO show their logos on white tiles, logo chips first (`fidelity/shots/search-logos.png`). `fidelity/verify-screen.sh search-filtered` ALL PASS. Gate build+test+spec pass.
 - Added: the row scrolls to keep a picked chip in view.
 
@@ -229,7 +229,7 @@ Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 - D3-8: `TVmazeScheduleItem` decodes its episode. `AiringSoon.pool` keeps each show's soonest episode still to come, resolved by `TimeResolver` with the bundled rules (Search now gets them from `UpcomingModel.rules`), uncapped until filtered. Fixed a rule-2 bug: "still to come" used the raw airstamp, so a placeholder kept an episode "coming" for hours after it was out. Schedules are now fetched from the viewer's yesterday (8 calls), so east of the US a US evening that lands the next day is included.
 
 **Red → green**
-- Red: `AiringSoonTests` didn't compile (`'Pick' is not a member type of enum 'Airstamp.AiringSoon'`). Then `seasonDropKeepsEpisodeOne` failed: the test used Dead-End Job, which is Korean and rightly excluded; switched to English shows. Green: `AiringSoonTests` 11/11. The `picks` test changed from `count == limit` to `count > limit` because the spec moves the cap after filtering.
+- Red: `AiringSoonTests` didn't compile (`'Pick' is not a member type of enum 'Meridian.AiringSoon'`). Then `seasonDropKeepsEpisodeOne` failed: the test used Dead-End Job, which is Korean and rightly excluded; switched to English shows. Green: `AiringSoonTests` 11/11. The `picks` test changed from `count == limit` to `count > limit` because the spec moves the cap after filtering.
 - Red: `FormattingTests.stepsCalendarDays` didn't compile (`extra argument 'addingDays' in call`). Green: `AiringSoonTests` + `FormattingTests` 17/17.
 
 **Reviews**
@@ -254,7 +254,7 @@ Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 ## Screen checks (D3-1) (Sat 31 Oct 2026)
 
 **Changed**
-- `fidelity/inventory/<screen>.json` for welcome, upcoming, upcoming-empty, detail and settings: accessibility IDs and, where the UI brief fixes it, the exact copy. `AirstampUITests/FidelityTests` launches the real app on each screen (debug launch arguments, `-inMemoryStore` for a clean start), checks every item and saves a screenshot. `fidelity/verify-screen.sh [screen]` runs it on the separate `AirstampFidelity` scheme and prints ALL PASS. Chime approved the new check script (31 Oct). Not added to `.claude/proof.json`.
+- `fidelity/inventory/<screen>.json` for welcome, upcoming, upcoming-empty, detail and settings: accessibility IDs and, where the UI brief fixes it, the exact copy. `MeridianUITests/FidelityTests` launches the real app on each screen (debug launch arguments, `-inMemoryStore` for a clean start), checks every item and saves a screenshot. `fidelity/verify-screen.sh [screen]` runs it on the separate `MeridianFidelity` scheme and prints ALL PASS. Chime approved the new check script (31 Oct). Not added to `.claude/proof.json`.
 - The Upcoming hero's ID moved onto its button (a button hides its label's container from UI tests).
 
 **Checked**
@@ -304,14 +304,14 @@ Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 **Changed**
 - Chime's iPhone 14 Pro (iOS 27.0.1) paired with the Mac (`devicectl manage pair`), Developer Mode on, Apple ID in Xcode. Team ID only in the git-ignored `Config/Signing.local.xcconfig`.
 - Chime found the app "basically empty": nothing was followed, Search was blank until you typed, and most known shows are between seasons. Search now opens on **"Airing in the next few days"** (`AiringSoon`): TVmaze's streaming and US schedules for today and the next two days, English drama and animation plus anime, no news or talk shows, most popular first (TVmaze weight), each with a follow button. `TVmazeClient.webSchedule(date:)` and `schedule(country:date:)`; `TVmazeScheduleItem` reads both schedule shapes.
-- App icon: a light New York serif "A" on Night Sky charcoal (`scripts/make-app-icon.swift`, `Airstamp/Resources/Assets.xcassets`).
+- App icon: a light New York serif "A" on Night Sky charcoal (`scripts/make-app-icon.swift`, `Meridian/Resources/Assets.xcassets`).
 - The art header shows the night base while art downloads, not a grey block (seen on the phone).
 
 **Red → green**
 - Red: `AiringSoonTests` (`cannot find type 'TVmazeScheduleItem'`), with fixtures recorded from TVmaze on 30 Oct (`schedule-web-2026-10-30`, `schedule-us-2026-10-30`). Green: 104 tests in 25 suites.
 
 **Checked**
-- Day 0 gate: free signing works for the app **and** the widget extension, both with the App Group `group.dev.chime.airstamp` in their signed entitlements (`codesign -d --entitlements`). Profile expires Fri 6 Nov 2026 21:27 UTC.
+- Day 0 gate: free signing works for the app **and** the widget extension, both with the App Group `group.dev.chime.meridian` in their signed entitlements (`codesign -d --entitlements`). Profile expires Fri 6 Nov 2026 21:27 UTC.
 - On the phone (screenshots via `devicectl device capture screenshot`): Upcoming with a live countdown for Outlander: Blood of My Blood (S2E7, STARZ · US, out tomorrow 01:00 Lagos time), and Silo's Show detail with its art.
 
 **Not verified**
@@ -415,13 +415,13 @@ Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
 **Changed**
 - Chime rejected the artwork-led screens and asked for three style groups from references, each built around Insight Timer (their starred pick) and their other liked picks. `docs/design/direction-board/` (`directions.json`, `index.html`, built by `scripts/build-direction-board.py`): A Night Sky, B Glass, C Poster Colour, 20 references (10 liked, 8 new). Screenshots are git-ignored.
-- Chime asked for all three as variants. `Airstamp/Features/Debug/Directions/` (Debug only): `NightSkyUpcoming`/`NightSkyDetail`, `GlassUpcoming`/`GlassDetail` (Liquid Glass, `glassEffect`), `PosterColourUpcoming`/`PosterColourDetail`, plus `DirectionKit` (muted and vivid tones, ink choice, shared fact and episode rows). `-designPreview A|B|C [detail] [bottom]` opens each; no letter opens the old screens.
+- Chime asked for all three as variants. `Meridian/Features/Debug/Directions/` (Debug only): `NightSkyUpcoming`/`NightSkyDetail`, `GlassUpcoming`/`GlassDetail` (Liquid Glass, `glassEffect`), `PosterColourUpcoming`/`PosterColourDetail`, plus `DirectionKit` (muted and vivid tones, ink choice, shared fact and episode rows). `-designPreview A|B|C [detail] [bottom]` opens each; no letter opens the old screens.
 - `NumeralStudy.glass` (SF Pro Thin) for B.
 - `ArtworkPalette` picks the strongest hue band instead of averaging every hue, so teal-and-orange art (Silo's poster) gives teal or orange, not olive.
 
 **Red → green**
 - Red: `ArtworkPaletteTests.complementaryHuesDontMix`: "hue 101.08773274659956 is neither teal nor orange".
-- Green: `xcodebuild … test -only-testing:AirstampTests`, 66 tests in 16 suites (iPhone 18 Pro, iOS 27.0).
+- Green: `xcodebuild … test -only-testing:MeridianTests`, 66 tests in 16 suites (iPhone 18 Pro, iOS 27.0).
 - `/code-review --fix` (medium): 8 findings, 5 fixed. Greys (hue 0) were voting for the red band, so a muted blue subject on grey came out red (new test `greysDontVoteForRed`, 67 tests pass); three copies of the detail facts merged into `DirectionCopy.facts`; date-only day stamps now show the weekday; Report buttons take the page ink; one predicate for Night Sky's shelf and list. Left: source-chip colours on vivid or glass backgrounds (a design call for the winning direction) and an index lookup in debug code.
 
 **Checked**
@@ -460,11 +460,11 @@ Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 ## Day 2: UI direction (Fri 30 Oct 2026)
 
 **Changed**
-- Chime's picks (47 of 154) saved to `docs/design/reference-board/picks.json` and to the reference collection "Airstamp references" (47 iOS screens). `scripts/picks-to-references.py` writes them into `docs/design/REFERENCES.md`.
+- Chime's picks (47 of 154) saved to `docs/design/reference-board/picks.json` and to the reference collection "Meridian references" (47 iOS screens). `scripts/picks-to-references.py` writes them into `docs/design/REFERENCES.md`.
 - `docs/design/UI-BRIEF.md`: direction from the picks, tokens, three numeral studies, components, and every screen and surface with job, references, test IDs, copy and states. `scripts/check-brief.sh` checks it against SPEC.
 - `Shared/Design/`: `Tokens` (system neutrals, status inks with fixed meanings, spacing, radius), `NumeralStudy` (A System, B Mono, C Serif), `SourceKind`, `SourceChipContent`, and the `SourceChip`, `CountdownText`, `ProviderLabelView`, `SectionHeader` and `DropRow` components, each with a `#Preview`.
 - `Shared/Time/`: `CountdownFormatter` (Out now / ticking / "2d 4h" / date only, matching SPEC's section boundaries), `DropFormatter.relativeDay` (Today, Tomorrow, weekday, then the date, with the year when it differs) and `weekdayTime`; `Drop.episodeLabel` ("S2E5").
-- `Airstamp/Features/Debug/NumeralStudyBoard` + `StudySurfaces`: every surface at real point sizes for each study. `NumeralStudyRenderTests` renders them to `docs/design/studies/` (only with `TEST_RUNNER_STUDIES_OUT` set); compare in `docs/design/studies/index.html`.
+- `Meridian/Features/Debug/NumeralStudyBoard` + `StudySurfaces`: every surface at real point sizes for each study. `NumeralStudyRenderTests` renders them to `docs/design/studies/` (only with `TEST_RUNNER_STUDIES_OUT` set); compare in `docs/design/studies/index.html`.
 - SPEC §1: "Welcome (one screen)" replaces the old "Onboarding (3 cards)", which contradicted the non-goals. SITEMAP: the no-stream row keeps the provider.
 
 **Red → green**
@@ -506,7 +506,7 @@ Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 - `Shared/Models`: Drop (with `airdate`), DropSnapshot, Confidence, Catalog, ReleaseSource (adds `override` and `adjusted`), ProviderLabel, RulesFile, PlatformRule, ReleaseOverride, ProviderRule, RulesValidationError.
 - `Shared/Time`: WallClock (zone-aware wall clock → UTC; IANA-only zones), EpisodeListing, Resolution, TimeResolver (override → broadcast → rule → date only), DropFormatter.
 - `rules/platform-rules.json` v1: Netflix, Prime Video, Apple TV, Paramount+; 4 overrides (Stranger Things 5, Fallout S2, two Disney+ Marvel shows); Disney+ marked no official stream in NG. Bundled in the app.
-- `Airstamp/Services`: RulesStore (remote off while private, validate-or-fallback, once a day, retry in an hour), TVmazeClient (Retry-After capped at 30 s, exponential backoff, 6-hour disk cache), ResponseCache, TVmaze models.
+- `Meridian/Services`: RulesStore (remote off while private, validate-or-fallback, once a day, retry in an hour), TVmazeClient (Retry-After capped at 30 s, exponential backoff, 6-hour disk cache), ResponseCache, TVmaze models.
 - `scripts/record-fixtures.py`: records 17 rule fixtures (real TVmaze data + independently confirmed release time + source) and 4 client fixtures.
 - Decisions: D-36 (Disney+ has no default rule). Open: O-10 (TVmaze placeholder dates such as Silo 2027-07-09).
 
@@ -533,20 +533,20 @@ Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 ## Day 0: Setup (Thu 29 Oct 2026)
 
 **Changed**
-- XcodeGen project (`project.yml`): `Airstamp` app, `AirstampWidgets` extension, `AirstampTests` (Swift Testing). iOS 26.0, Swift 6, strict concurrency.
-- Signing and IDs in `Config/Base.xcconfig` (bundle prefix `dev.chime`, App Group `group.dev.chime.airstamp`), overridden by the git-ignored `Config/Signing.local.xcconfig`, so no Team ID is committed.
+- XcodeGen project (`project.yml`): `Meridian` app, `MeridianWidgets` extension, `MeridianTests` (Swift Testing). iOS 26.0, Swift 6, strict concurrency.
+- Signing and IDs in `Config/Base.xcconfig` (bundle prefix `dev.chime`, App Group `group.dev.chime.meridian`), overridden by the git-ignored `Config/Signing.local.xcconfig`, so no Team ID is committed.
 - `Shared/Snapshot/AppGroup.swift` and `SetupCheck.swift`: the app writes a timestamp to the App Group, and the placeholder `systemSmall` widget reads it.
 - Privacy manifests for the app (`CA92.1`, `1C8F.1`) and the widget (`1C8F.1`).
 - `.claude/proof.json` gate: build, test, spec. Simulator: iPhone 18 Pro, iOS 27.0 (the iPhone 17 Pro only has iOS 26.5, so the default destination didn't match).
 
 **Red → green**
-- Red: `AppGroupTests` failed with "Unable to resolve module dependency: 'Airstamp'" (no app code yet).
+- Red: `AppGroupTests` failed with "Unable to resolve module dependency: 'Meridian'" (no app code yet).
 - Green: `xcodebuild … test`, 3 of 3 tests pass on the iPhone 18 Pro (iOS 27.0) simulator.
 
 **Checked**
 - Build has no compiler warnings.
-- `PrivacyInfo.xcprivacy` is bundled in both `Airstamp.app` and `AirstampWidgets.appex`; `plutil -lint` OK.
-- Built Info.plist: `AirstampAppGroup = group.dev.chime.airstamp`, `NSSupportsLiveActivities = true`, display name `Airstamp`.
+- `PrivacyInfo.xcprivacy` is bundled in both `Meridian.app` and `MeridianWidgets.appex`; `plutil -lint` OK.
+- Built Info.plist: `MeridianAppGroup = group.dev.chime.meridian`, `NSSupportsLiveActivities = true`, display name `Meridian`.
 - Simulator launch: the screen shows "App Group OK · wrote 20:29".
 
 **Not verified yet**

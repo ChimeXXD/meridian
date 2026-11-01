@@ -2,7 +2,7 @@
 """Write rules/zone-countries.json, IANA zone -> ISO country, from the tz database's zone.tab.
 
 Usage: python3 -I scripts/make-zone-countries.py [/usr/share/zoneinfo/zone.tab]
-Airstamp uses it to know the viewer's country from their time zone (D2-6), for "No official stream in your country".
+Meridian uses it to know the viewer's country from their time zone (D2-6), for "No official stream in your country".
 """
 import json
 import pathlib

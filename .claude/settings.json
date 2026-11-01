@@ -13,7 +13,7 @@
       "mcp__claude-in-chrome__tabs_context_mcp",
       "mcp__claude_ai_references__search_flows",
       "mcp__claude-in-chrome__read_page",
-      "Bash(xcodebuild -scheme Airstamp *)",
+      "Bash(xcodebuild -scheme Meridian *)",
       "Bash(xcodegen generate *)",
       "Bash(xcodegen generate)",
       "Bash(fidelity/verify-screen.sh *)",

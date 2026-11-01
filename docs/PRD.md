@@ -95,7 +95,7 @@ People who follow weekly shows and simulcast anime still guess at release times,
 - **Control Center control.** Start the release-night Live Activity from a control via `LiveActivityIntent`.
 - **Shareable countdown card.** Export a poster-free typographic image for group chats.
 - **TV Time and Trakt import.** Read their export files so switchers keep their list.
-- **Name options.** "Next Episode" collides with next-episode.net and its App Store app. Alternatives: **Airstamp**, **Drop Night**, **Tonight's Episode**. Airstamp is short, ownable and names the core idea.
+- **Name options.** "Next Episode" collides with next-episode.net and its App Store app. Alternatives: **Meridian**, **Drop Night**, **Tonight's Episode**. Meridian is short, ownable and names the core idea.
 
 **Chosen direction:**
 
@@ -182,7 +182,7 @@ People who follow weekly shows and simulcast anime still guess at release times,
 
 **Product**
 
-- [ ] Decide final name (Next Episode vs Airstamp) after App Store and trademark search
+- [ ] Decide final name (Next Episode vs Meridian) after App Store and trademark search
 - [ ] Write the one-line positioning and App Store subtitle
 - [ ] Define the time rules table for Netflix, Prime, Showmax, Disney+, HBO Max and Crunchyroll
 - [ ] Define the "nothing new this week" logic and copy
@@ -245,7 +245,7 @@ People who follow weekly shows and simulcast anime still guess at release times,
 - **ShareAlike.** CC BY-SA applies to TVmaze data we redistribute, such as a shareable schedule export. Keep exports under the same licence and credit TVmaze.
 - **Rate limits.** 20 calls per 10 seconds (TVmaze) and 90 a minute (AniList) are per device, which suits local-first. Batch refreshes and cache for 6 hours.
 - **Poster artwork copyright.** Studio key art is copyrighted. Ship a typographic design that needs no posters. Where images appear in the app, load them from TMDB at runtime and never bundle them in screenshots or the repo.
-- **Name collision.** next-episode.net already ships "Next Episode - Track TV Shows" on the App Store with 2.5K ratings. Using the same name risks rejection under guideline 4.1 and a trademark complaint. Keep "Next Episode" as the project codename and launch as Airstamp or similar.
+- **Name collision.** next-episode.net already ships "Next Episode - Track TV Shows" on the App Store with 2.5K ratings. Using the same name risks rejection under guideline 4.1 and a trademark complaint. Keep "Next Episode" as the project codename and launch as Meridian or similar.
 - **Wrong times.** One wrong drop time costs trust. Show the source of every time and mark estimates clearly.
 - **Live Activity limits.** 8 hours active, 4 KB payload and a device cap on simultaneous activities. Allow one activity per night by default and merge same-night drops.
 

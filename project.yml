@@ -1,6 +1,6 @@
 # XcodeGen spec. Edit this file, then run `xcodegen generate`. Never hand-edit the .xcodeproj.
 # Signing and IDs live in Config/Base.xcconfig, overridden by the git-ignored Config/Signing.local.xcconfig.
-name: Airstamp
+name: Meridian
 
 options:
   deploymentTarget:
@@ -21,12 +21,12 @@ settings:
     ENABLE_USER_SCRIPT_SANDBOXING: YES
 
 targets:
-  Airstamp:
+  Meridian:
     type: application
     platform: iOS
     sources:
-      - path: Airstamp
-        excludes: ["Info.plist", "Airstamp.entitlements"]
+      - path: Meridian
+        excludes: ["Info.plist", "Meridian.entitlements"]
       - Shared
       - path: rules/platform-rules.json
         buildPhase: resources
@@ -35,102 +35,102 @@ targets:
       - path: rules/network-logos.json
         buildPhase: resources
     info:
-      path: Airstamp/Info.plist
+      path: Meridian/Info.plist
       properties:
         CFBundleDisplayName: $(DISPLAY_NAME)
         CFBundleShortVersionString: "0.1.0"
         CFBundleVersion: "1"
         UILaunchScreen: {}
         NSSupportsLiveActivities: true
-        AirstampAppGroup: $(APP_GROUP_ID)
+        MeridianAppGroup: $(APP_GROUP_ID)
     entitlements:
-      path: Airstamp/Airstamp.entitlements
+      path: Meridian/Meridian.entitlements
       properties:
         com.apple.security.application-groups:
           - $(APP_GROUP_ID)
     settings:
       base:
-        PRODUCT_NAME: Airstamp
-        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_PREFIX).airstamp
+        PRODUCT_NAME: Meridian
+        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_PREFIX).meridian
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     dependencies:
-      - target: AirstampWidgets
+      - target: MeridianWidgets
         embed: true
 
-  AirstampWidgets:
+  MeridianWidgets:
     type: app-extension
     platform: iOS
     sources:
-      - path: AirstampWidgets
-        excludes: ["Info.plist", "AirstampWidgets.entitlements"]
+      - path: MeridianWidgets
+        excludes: ["Info.plist", "MeridianWidgets.entitlements"]
       - Shared
     info:
-      path: AirstampWidgets/Info.plist
+      path: MeridianWidgets/Info.plist
       properties:
         CFBundleDisplayName: $(DISPLAY_NAME)
         CFBundleShortVersionString: "0.1.0"
         CFBundleVersion: "1"
-        AirstampAppGroup: $(APP_GROUP_ID)
+        MeridianAppGroup: $(APP_GROUP_ID)
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
     entitlements:
-      path: AirstampWidgets/AirstampWidgets.entitlements
+      path: MeridianWidgets/MeridianWidgets.entitlements
       properties:
         com.apple.security.application-groups:
           - $(APP_GROUP_ID)
     settings:
       base:
-        PRODUCT_NAME: AirstampWidgets
-        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_PREFIX).airstamp.widgets
+        PRODUCT_NAME: MeridianWidgets
+        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_PREFIX).meridian.widgets
         SKIP_INSTALL: YES
 
-  AirstampTests:
+  MeridianTests:
     type: bundle.unit-test
     platform: iOS
     sources:
-      - path: AirstampTests
+      - path: MeridianTests
         excludes: ["Fixtures/**"]
-      - path: AirstampTests/Fixtures
+      - path: MeridianTests/Fixtures
         type: folder
         buildPhase: resources
     dependencies:
-      - target: Airstamp
+      - target: Meridian
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
-        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_PREFIX).airstamp.tests
+        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_PREFIX).meridian.tests
 
-  AirstampUITests:
+  MeridianUITests:
     type: bundle.ui-testing
     platform: iOS
     sources:
-      - AirstampUITests
+      - MeridianUITests
       - path: fidelity/inventory
         type: folder
         buildPhase: resources
     dependencies:
-      - target: Airstamp
+      - target: Meridian
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
-        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_PREFIX).airstamp.uitests
-        TEST_TARGET_NAME: Airstamp
+        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_PREFIX).meridian.uitests
+        TEST_TARGET_NAME: Meridian
 
 schemes:
-  # Screen checks against fidelity/inventory (D3-1). Separate from the Airstamp scheme so the commit gate stays fast and
+  # Screen checks against fidelity/inventory (D3-1). Separate from the Meridian scheme so the commit gate stays fast and
   # offline; run with fidelity/verify-screen.sh <screen>.
-  AirstampFidelity:
+  MeridianFidelity:
     build:
       targets:
-        Airstamp: all
-        AirstampUITests: [test]
+        Meridian: all
+        MeridianUITests: [test]
     test:
       targets:
-        - AirstampUITests
-  Airstamp:
+        - MeridianUITests
+  Meridian:
     build:
       targets:
-        Airstamp: all
+        Meridian: all
     test:
       targets:
-        - AirstampTests
+        - MeridianTests

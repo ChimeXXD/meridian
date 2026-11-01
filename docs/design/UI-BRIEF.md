@@ -1,6 +1,6 @@
 # UI brief
 
-How each Airstamp screen and surface looks and behaves. There is no Figma (D-31): this brief, `REFERENCES.md` (Chime's 47 reference picks, numbered `#n`) and `SITEMAP.md` go straight into SwiftUI. Chime approves each screen from simulator screenshots, and the approved shots become the `fidelity/refs/` baselines.
+How each Meridian screen and surface looks and behaves. There is no Figma (D-31): this brief, `REFERENCES.md` (Chime's 47 reference picks, numbered `#n`) and `SITEMAP.md` go straight into SwiftUI. Chime approves each screen from simulator screenshots, and the approved shots become the `fidelity/refs/` baselines.
 
 > **Being redone (D-37).** Chime rejected the type-only look and the numeral studies, and the app now shows show artwork. The visual direction (§1–3) is re-chosen from the style board (`docs/design/style-board/`). The screen inventory, test IDs, copy and states (§4–6) still stand.
 
@@ -18,7 +18,7 @@ What the 47 picks have in common, and the rules that follow from it.
 6. **Quiet honesty.** Freshness is a muted footer line ("Updated 3 h ago", #43 Qantas). A moved time keeps the old one struck through (#43). "No official stream in your country" is added under the provider ("HBO · US" stays) without hiding the show (#53 Grab).
 7. **Surfaces outside the app are dark and spare** (#126 Once, #139 Lumy, #140 Moonlitt). The app follows the system light or dark setting.
 
-Taken as counterexamples, not patterns: #24 Paramount+ (US-only times) and #64 Posh (times in the source zone). They go in the case study as the problem Airstamp solves.
+Taken as counterexamples, not patterns: #24 Paramount+ (US-only times) and #64 Posh (times in the source zone). They go in the case study as the problem Meridian solves.
 
 ## 2. Tokens (`Shared/Design/Tokens.swift`)
 
@@ -85,7 +85,7 @@ Navigation is still O-11 (`SITEMAP.md`). This brief assumes the proposed tab bar
   - rows `drop-row-1…n`
 - **States:**
   - no shows: card with `upcoming-empty-follow` "Follow a show to see its countdown here" (*new*) and "Find a show"
-  - nothing scheduled: "Nothing scheduled for your shows yet. Airstamp checks again each time you open it." (**SPEC**), or the next real date, "Silo returns 9 Jul 2027" (**SPEC**)
+  - nothing scheduled: "Nothing scheduled for your shows yet. Meridian checks again each time you open it." (**SPEC**), or the next real date, "Silo returns 9 Jul 2027" (**SPEC**)
   - offline: last known times plus "Offline · Updated 3 h ago" (*new*)
   - delayed row; no-stream row; `dateOnly` row ("Wed 29 Apr", "time not announced", **SPEC**); long show name (wraps to 2 lines, the countdown is never truncated)
 
@@ -114,9 +114,9 @@ Navigation is still O-11 (`SITEMAP.md`). This brief assumes the proposed tab bar
 ### 5.6 Settings
 
 - **Job:** preferences and information: the zone override, the Live Activity lead time and permission, credits, privacy.
-- **Borrows:** #96 Life Reset ("System: …" / "Airstamp will use: …" summary for the zone override); #103 Lumy (radio list for lead time); #56 Ultrahuman (status and last-sync pairs).
+- **Borrows:** #96 Life Reset ("System: …" / "Meridian will use: …" summary for the zone override); #103 Lumy (radio list for lead time); #56 Ultrahuman (status and last-sync pairs).
 - **Elements:** `settings-zone` with summary; `settings-lead` 30 min, 1 h, 2 h (default), 3 h, 4 h, 6 h, each with the local start time; `settings-la-permission`; `settings-credits`; `settings-privacy`; `settings-debug` (Debug builds only).
-- **Copy:** *new*: "Time zone", "Automatic", "System: Lagos (WAT)" / "Airstamp will use: London (GMT)", "Live Activity lead time", "Starts at 00:00 for a 02:00 drop", "Live Activities: Allowed" / "Off in iOS Settings", "Credits & licences", "Privacy". The lead-time range, 30 min to 6 h, is from SPEC.
+- **Copy:** *new*: "Time zone", "Automatic", "System: Lagos (WAT)" / "Meridian will use: London (GMT)", "Live Activity lead time", "Starts at 00:00 for a 02:00 drop", "Live Activities: Allowed" / "Off in iOS Settings", "Credits & licences", "Privacy". The lead-time range, 30 min to 6 h, is from SPEC.
 - **States:** automatic zone; overridden zone (the summary names both); Live Activities allowed; denied (with a link to iOS Settings); Debug build (Debug row shown); release build (hidden).
 
 ### 5.7 Credits
@@ -124,7 +124,7 @@ Navigation is still O-11 (`SITEMAP.md`). This brief assumes the proposed tab bar
 - **Job:** credit the data sources and licences, and say that no data is collected (SPEC).
 - **Borrows:** #111 Pillow (credits grouped under the licence name, then the works).
 - **Elements:** `credits-tvmaze` with `credits-tvmaze-link`; `credits-anilist`; `credits-licence` (MIT); `credits-no-data`; `credits-privacy` linking `PRIVACY.md`.
-- **Copy:** *new*, written to SPEC's content list (TVmaze CC BY-SA with a link, AniList, no data collected): "Show and episode data from TVmaze, licensed under CC BY-SA 4.0", "Anime schedules from AniList", "Airstamp is open source under the MIT licence", "Airstamp collects no data. Nothing leaves your phone except requests to TVmaze and AniList."
+- **Copy:** *new*, written to SPEC's content list (TVmaze CC BY-SA with a link, AniList, no data collected): "Show and episode data from TVmaze, licensed under CC BY-SA 4.0", "Anime schedules from AniList", "Meridian is open source under the MIT licence", "Meridian collects no data. Nothing leaves your phone except requests to TVmaze and AniList."
 - **States:** default; long licence text at AX5 (scrolls, nothing clipped); link tapped (opens Safari).
 
 ## 6. Surfaces outside the app

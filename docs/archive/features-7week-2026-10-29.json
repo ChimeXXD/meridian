@@ -21,7 +21,7 @@
         "both targets carry the App Group entitlement",
         "PrivacyInfo.xcprivacy declares CA92.1 and 1C8F.1"
       ],
-      "verify": "xcodegen generate && xcodebuild -scheme Airstamp -destination 'platform=iOS Simulator,name=iPhone 17 Pro' build; plutil -lint Airstamp/PrivacyInfo.xcprivacy",
+      "verify": "xcodegen generate && xcodebuild -scheme Meridian -destination 'platform=iOS Simulator,name=iPhone 17 Pro' build; plutil -lint Meridian/PrivacyInfo.xcprivacy",
       "passes": false,
       "evidence": ""
     },
@@ -51,7 +51,7 @@
     {
       "id": "P0-5",
       "phase": 0,
-      "title": "reference collection 'Airstamp references' exists",
+      "title": "reference collection 'Meridian references' exists",
       "criteria": [
         "collection created"
       ],
@@ -64,7 +64,7 @@
       "phase": 1,
       "title": "Record rule fixtures: 2 real episodes per platform rule plus override examples",
       "criteria": [
-        "AirstampTests/Fixtures has 2 files per rule row in SPEC 3.3",
+        "MeridianTests/Fixtures has 2 files per rule row in SPEC 3.3",
         "Stranger Things 5 and Fallout S2 override fixtures exist"
       ],
       "verify": "script lists fixtures per rule and fails if any row has fewer than 2",

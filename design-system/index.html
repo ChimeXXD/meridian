@@ -90,7 +90,7 @@
     <li><a href="#countdown">Countdown and voice</a><span>Every countdown state and the words that say how sure a time is</span></li>
     <li><a href="#components">Components</a><span>Each view at real size, with specs and a SwiftUI call</span></li>
     <li><a href="#surfaces">Widgets and Live Activity</a><span>The app’s own renders of every family and presentation</span></li>
-    <li><a href="#resources">Accessibility and resources</a><span>What the app does for access, downloads and the rename list</span></li>
+    <li><a href="#resources">Accessibility and resources</a><span>What the app does for access, downloads and the rename</span></li>
   </ol>
 
   <h2 id="principles">Principles</h2>
@@ -102,7 +102,7 @@
   </div>
 
   <h2 id="brand">Brand</h2>
-  <p class="note">The name, logo and icon are new and not in the app yet. The brand colour is <a href="#brand-colour">Meridian Gold</a>, on the logo’s star and “Out now”.</p>
+  <p class="note">The name, logo and icon are in the app. The brand colour is <a href="#brand-colour">Meridian Gold</a>, on the logo’s star and “Out now”.</p>
   <p class="statement">A meridian is the line that sets your local time. Noon is the moment the sun crosses yours.</p>
   <p>It is also the line a star crosses at its highest point. Meridian tells you the moment your episode crosses your line, on your clock.</p>
 
@@ -132,7 +132,7 @@
   <p class="small">The smallest size is 16 px. Below 24 px the faint meridians read as texture, and the bright meridian and star carry the mark. Keep 12 units of clear space on every side: the distance from the star’s centre to the top of the grid.</p>
 
   <h3 id="app-icon">App icon</h3>
-  <p>The mark on neutral night: a radial gradient from <code>#1C1C1C</code> to <code>#0D0D0E</code>, the app’s night and Live Activity bases. The glyph is starlight <code>#F4EFE4</code> at 62% of the canvas, centred optically.</p>
+  <p>The mark on neutral night: a radial gradient from <code>#1C1C1C</code> to <code>#0D0D0E</code>, the app’s night and Live Activity bases. The glyph is starlight <code>#F4EFE4</code> at 62% of the canvas, centred optically, with the star in Meridian Gold. The app ships the default for both light and dark mode, plus the tinted source; <code>scripts/make-app-icon.swift</code> draws all three.</p>
   <div class="icon-walls">
     <div class="wall"><div class="icons">
       <figure><span class="icon-tile" data-icon="dark"></span><figcaption>Default</figcaption></figure>
@@ -140,7 +140,7 @@
       <figure><span class="icon-tile" data-icon="tinted"></span><figcaption>Tinted, example tint</figcaption></figure>
     </div></div>
     <div class="wall light"><div class="icons">
-      <figure><span class="icon-tile" data-icon="light"></span><figcaption>Light</figcaption></figure>
+      <figure><span class="icon-tile" data-icon="light"></span><figcaption>Light (not shipped)</figcaption></figure>
       <figure><span class="icon-tile" data-icon="dark"></span><figcaption>Default on a light wallpaper</figcaption></figure>
     </div></div>
   </div>
@@ -1222,20 +1222,20 @@ Section {
     <li><a class="dl" href="assets/icon/meridian-icon-tinted.svg" download id="dl-icon-tinted" data-search="icon svg tinted mono download" data-title="App icon, tinted" data-kind="Download"><span class="ic" data-icon="mono"></span><span><b>meridian-icon-tinted.svg</b><span>The mono source iOS tints</span></span></a></li>
   </ul>
 
-  <h2 id="rename">Rename to Meridian</h2>
-  <p>The app is still called Airstamp in these places. Screens on this site already use the new name. Ticks are saved in this browser only.</p>
+  <h2 id="rename">Renamed to Meridian</h2>
+  <p>Done on 2 November 2026. Every place below now says Meridian, and so do the targets and folders, the bundle ID (<code>dev.chime.meridian</code>), the App Group and the GitHub repo (<code>ChimeXXD/meridian</code>). The app icon is the Longitudes mark.</p>
   <ul class="checklist" id="rename-list">
-    <li><input type="checkbox" id="rn-display" aria-describedby="rn-display-d"><label for="rn-display">Home Screen name</label><p id="rn-display-d"><span class="now">DISPLAY_NAME = Airstamp</span><span class="path">Config/Base.xcconfig:5 (PRODUCT_NAME in project.yml is internal)</span></p></li>
-    <li><input type="checkbox" id="rn-welcome" aria-describedby="rn-welcome-d"><label for="rn-welcome">Welcome wordmark</label><p id="rn-welcome-d"><span class="now">“Airstamp”</span><span class="path">Airstamp/Features/Welcome/WelcomeView.swift:13</span></p></li>
-    <li><input type="checkbox" id="rn-settings" aria-describedby="rn-settings-d"><label for="rn-settings">Settings permission line</label><p id="rn-settings-d"><span class="now">“Live Activities are off in Settings › Airstamp”</span><span class="path">Airstamp/Features/Settings/SettingsView.swift:60</span></p></li>
-    <li><input type="checkbox" id="rn-credits-licence" aria-describedby="rn-credits-licence-d"><label for="rn-credits-licence">Credits: licence</label><p id="rn-credits-licence-d"><span class="now">“Airstamp is open source under the MIT licence”</span><span class="path">Airstamp/Features/Settings/SettingsView.swift:95</span></p></li>
-    <li><input type="checkbox" id="rn-credits-data" aria-describedby="rn-credits-data-d"><label for="rn-credits-data">Credits: no data</label><p id="rn-credits-data-d"><span class="now">“Airstamp collects no data. Nothing leaves your phone except requests to TVmaze, AniList and Wikimedia.”</span><span class="path">Airstamp/Features/Settings/SettingsView.swift:97</span></p></li>
-    <li><input type="checkbox" id="rn-upcoming" aria-describedby="rn-upcoming-d"><label for="rn-upcoming">Upcoming empty headline</label><p id="rn-upcoming-d"><span class="now">“Nothing scheduled for your shows yet. Airstamp checks again each time you open it.”</span><span class="path">Airstamp/Features/Upcoming/UpcomingSections.swift:81</span></p></li>
-    <li><input type="checkbox" id="rn-widget" aria-describedby="rn-widget-d"><label for="rn-widget">Widget empty detail</label><p id="rn-widget-d"><span class="now">“Airstamp checks again each time you open it.”</span><span class="path">Shared/Widgets/WidgetText.swift:53</span></p></li>
-    <li><input type="checkbox" id="rn-debug" aria-describedby="rn-debug-d"><label for="rn-debug">Debug builds only</label><p id="rn-debug-d"><span class="now">The Debug status “Live Activities are off in Settings › Airstamp.”, and the setup-check title</span><span class="path">Airstamp/Features/Debug/DebugMenuView.swift:77 · Airstamp/App/PlaceholderView.swift:12</span></p></li>
-    <li><input type="checkbox" id="rn-ua" aria-describedby="rn-ua-d"><label for="rn-ua">Not visible, but sent with requests</label><p id="rn-ua-d"><span class="now">User-Agent “Airstamp/1.0 (https://github.com/ChimeXXD/next-episode)”</span><span class="path">Airstamp/Services/Artwork/ArtworkLoader.swift:31</span></p></li>
+    <li><input type="checkbox" id="rn-display" checked disabled aria-describedby="rn-display-d"><label for="rn-display">Home Screen name</label><p id="rn-display-d"><span class="now">DISPLAY_NAME = Meridian</span><span class="path">Config/Base.xcconfig:5 (PRODUCT_NAME in project.yml is internal)</span></p></li>
+    <li><input type="checkbox" id="rn-welcome" checked disabled aria-describedby="rn-welcome-d"><label for="rn-welcome">Welcome wordmark</label><p id="rn-welcome-d"><span class="now">“Meridian”</span><span class="path">Meridian/Features/Welcome/WelcomeView.swift:13</span></p></li>
+    <li><input type="checkbox" id="rn-settings" checked disabled aria-describedby="rn-settings-d"><label for="rn-settings">Settings permission line</label><p id="rn-settings-d"><span class="now">“Live Activities are off in Settings › Meridian”</span><span class="path">Meridian/Features/Settings/SettingsView.swift:60</span></p></li>
+    <li><input type="checkbox" id="rn-credits-licence" checked disabled aria-describedby="rn-credits-licence-d"><label for="rn-credits-licence">Credits: licence</label><p id="rn-credits-licence-d"><span class="now">“Meridian is open source under the MIT licence”</span><span class="path">Meridian/Features/Settings/SettingsView.swift:95</span></p></li>
+    <li><input type="checkbox" id="rn-credits-data" checked disabled aria-describedby="rn-credits-data-d"><label for="rn-credits-data">Credits: no data</label><p id="rn-credits-data-d"><span class="now">“Meridian collects no data. Nothing leaves your phone except requests to TVmaze, AniList and Wikimedia.”</span><span class="path">Meridian/Features/Settings/SettingsView.swift:97</span></p></li>
+    <li><input type="checkbox" id="rn-upcoming" checked disabled aria-describedby="rn-upcoming-d"><label for="rn-upcoming">Upcoming empty headline</label><p id="rn-upcoming-d"><span class="now">“Nothing scheduled for your shows yet. Meridian checks again each time you open it.”</span><span class="path">Meridian/Features/Upcoming/UpcomingSections.swift:81</span></p></li>
+    <li><input type="checkbox" id="rn-widget" checked disabled aria-describedby="rn-widget-d"><label for="rn-widget">Widget empty detail</label><p id="rn-widget-d"><span class="now">“Meridian checks again each time you open it.”</span><span class="path">Shared/Widgets/WidgetText.swift:53</span></p></li>
+    <li><input type="checkbox" id="rn-debug" checked disabled aria-describedby="rn-debug-d"><label for="rn-debug">Debug builds only</label><p id="rn-debug-d"><span class="now">The Debug status “Live Activities are off in Settings › Meridian.”, and the setup-check title</span><span class="path">Meridian/Features/Debug/DebugMenuView.swift:77 · Meridian/App/PlaceholderView.swift:12</span></p></li>
+    <li><input type="checkbox" id="rn-ua" checked disabled aria-describedby="rn-ua-d"><label for="rn-ua">Not visible, but sent with requests</label><p id="rn-ua-d"><span class="now">User-Agent “Meridian/1.0 (https://github.com/ChimeXXD/meridian)”</span><span class="path">Meridian/Services/Artwork/ArtworkLoader.swift:31</span></p></li>
   </ul>
-  <p class="small">The widget’s name in the gallery is already “Next episode”. Type names such as <code>AirstampApp</code> and <code>AirstampWidgets</code> aren’t visible to people.</p>
+  <p class="small">The widget’s name in the gallery stays “Next episode”, which describes what it shows.</p>
 
   <h2 id="archive">Archive</h2>
   <p>Kept for reference. Nothing here is drawn by a live screen. Source paths on this site start inside the app’s folder or at <code>Shared/</code>.</p>

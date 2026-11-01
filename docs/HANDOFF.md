@@ -4,7 +4,7 @@ Written 1 Nov 2026 (early hours, Lagos) at the end of the third long session wit
 
 ## What we're building
 
-**Airstamp** (repo `next-episode`, GitHub `ChimeXXD/next-episode`, private until Day 7): an iPhone app that answers "how long until my next episode, in my time zone, and where is it on?". Lock Screen and Home Screen widgets plus a release-night Live Activity. Local-first, no account or server. Primary user: Chime in Lagos (UTC+1, no DST).
+**Meridian** (GitHub `ChimeXXD/meridian`, formerly `next-episode` and Airstamp, private until Day 7): an iPhone app that answers "how long until my next episode, in my time zone, and where is it on?". Lock Screen and Home Screen widgets plus a release-night Live Activity. Local-first, no account or server. Primary user: Chime in Lagos (UTC+1, no DST).
 
 ## How Chime wants to work (keep these)
 
@@ -15,7 +15,7 @@ Written 1 Nov 2026 (early hours, Lagos) at the end of the third long session wit
 - **Push to GitHub after every change.** Commit in its own Bash command, then push.
 - After code changes run `/code-review --fix` (medium; high for risky work), then make sure the checks pass. Never launch `/code-review ultra`.
 - **Check definitions need Chime's OK:** `.claude/proof.json`, anything in `fidelity/` (inventories, `FidelityTests`), and `.claude/settings.json`. The commit gate refuses `.claude/settings.json` changes until Chime confirms after an `NEEDS-INPUT:` line.
-- **Fewer approval prompts (Chime was frustrated by them).** `.claude/settings.json` allowlists read-only tools plus, with Chime's OK, `xcodebuild -scheme Airstamp *`, `xcodegen generate`, `fidelity/verify-screen.sh *`, the proof gate `--run`, `git add/commit *`, `git push -q origin main` and `xcrun devicectl device install app *`. Rules match one simple command, so run **one plain command per Bash call**: no `cd … &&`, no `&&` chains or pipes on these, no `sed`/Python heredocs for edits (use Edit/Write). Chime can also switch on auto mode (Shift+Tab).
+- **Fewer approval prompts (Chime was frustrated by them).** `.claude/settings.json` allowlists read-only tools plus, with Chime's OK, `xcodebuild -scheme Meridian *`, `xcodegen generate`, `fidelity/verify-screen.sh *`, the proof gate `--run`, `git add/commit *`, `git push -q origin main` and `xcrun devicectl device install app *`. Rules match one simple command, so run **one plain command per Bash call**: no `cd … &&`, no `&&` chains or pipes on these, no `sed`/Python heredocs for edits (use Edit/Write). Chime can also switch on auto mode (Shift+Tab).
 - **The phone is personal.** Installing over Wi-Fi is fine; **never launch the app on it or take a screenshot without a fresh go-ahead** (a capture once caught private messages; it was deleted). Use the simulator for checks.
 - **One simulator job at a time.** Run the gate in the foreground (`node "/Users/chimexd/.claude/plugins/cache/proof/proof/0.4.0/scripts/gate.mjs" --run`) and wait; parallel test runs (a background gate, a `/code-review` fork, another session) crash with "Mach error -308" or "Test crashed with signal kill". If that happens, rerun alone; it isn't the code. Tell agents not to run xcodebuild tests.
 - **Agents to fast-track (Chime asked for this).** Commit a contract first (fixed type and function signatures with placeholder bodies), give each agent a worktree and a lane that touches different files, forbid simulator runs (one `build-for-testing` compile allowed after checking memory), then merge and run their tests yourself, one at a time.
@@ -27,7 +27,7 @@ Written 1 Nov 2026 (early hours, Lagos) at the end of the third long session wit
 2. **Popularity from "reliable sources":** Netflix's official Top 10 has Nigeria rows, but its terms forbid copying, distributing or scraping it (O-13, quoted in DECISIONS). A link chip was built and then **dropped by Chime** ("it takes us to another link").
 3. **Service chips (D-44, D-45).** Exactly **12 major platforms, always shown, in subscriber order**: Netflix, Prime Video, HBO Max (also holds HBO), Disney+, Paramount+, Hulu, Peacock, Apple TV, then CBS, NBC, ABC, FOX. No YouTube or BBC iPlayer (Chime: "not relevant"). One with nothing coming says "Nothing on Paramount+ in the next few days." Each chip shows the service's **logo** on a white tile, from a hand-checked list of 57 freely licensed **Wikimedia Commons** files (`rules/network-logos.json`, URLs only, loaded at runtime; 3 need credit, shown on Credits).
 4. **Show page (D3-13).** Tapping any poster or title on the Search tab (results or the airing grid) opens the show's page; the poster's (+) still follows in one tap. The page is Night Sky like Upcoming: key art fading into night, the title, serif countdown and out line, year · network · status, Follow/Following. With nothing scheduled, only the title. Times match Upcoming's exactly.
-5. **Day 4 widgets (built by two agents).** `SnapshotStore` + `WidgetSnapshotWriter` write `snapshot.json` and small art to the App Group after every refresh (refresh now runs from `RootView`, so a follow in Search reaches the widgets). `WidgetTimeline` (5-minute spacing, Out now hour, hourly refresh entries up to 48 h, date-only drops leave at midnight after their day). Five families in Night Sky (`Shared/Widgets/`, `AirstampWidgets/NextDropWidget`), each with counting down, Out now, date only and nothing. `WidgetAccessibility.label` ("Silo, expected in 2 days 4 hours, Apple TV"; "out now" only for an exact time).
+5. **Day 4 widgets (built by two agents).** `SnapshotStore` + `WidgetSnapshotWriter` write `snapshot.json` and small art to the App Group after every refresh (refresh now runs from `RootView`, so a follow in Search reaches the widgets). `WidgetTimeline` (5-minute spacing, Out now hour, hourly refresh entries up to 48 h, date-only drops leave at midnight after their day). Five families in Night Sky (`Shared/Widgets/`, `MeridianWidgets/NextDropWidget`), each with counting down, Out now, date only and nothing. `WidgetAccessibility.label` ("Silo, expected in 2 days 4 hours, Apple TV"; "out now" only for an exact time).
 
 ## Where things stand (commit `ae49deb`, all pushed, tree clean)
 
@@ -55,8 +55,8 @@ Written 1 Nov 2026 (early hours, Lagos) at the end of the third long session wit
 
 ```bash
 # Build and install on Chime's iPhone over Wi-Fi (UDID 00008120-001044862EC0201E). Don't launch or screenshot without asking.
-xcodebuild -scheme Airstamp -destination 'id=00008120-001044862EC0201E' -allowProvisioningUpdates -derivedDataPath build/device -quiet build
-xcrun devicectl device install app --device 00008120-001044862EC0201E build/device/Build/Products/Debug-iphoneos/Airstamp.app
+xcodebuild -scheme Meridian -destination 'id=00008120-001044862EC0201E' -allowProvisioningUpdates -derivedDataPath build/device -quiet build
+xcrun devicectl device install app --device 00008120-001044862EC0201E build/device/Build/Products/Debug-iphoneos/Meridian.app
 # All checks (foreground, alone):
 node "/Users/chimexd/.claude/plugins/cache/proof/proof/0.4.0/scripts/gate.mjs" --run
 # One screen check:

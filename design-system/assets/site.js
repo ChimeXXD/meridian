@@ -800,20 +800,11 @@
     const b = $('#motion-play'); if (!b) return;
     b.addEventListener('click', () => { const a = $('#motion-art'); a.classList.remove('in'); void a.offsetWidth; requestAnimationFrame(() => a.classList.add('in')); });
   }
-  function bindChecklist() {
-    const KEY = 'meridian-ds-rename';
-    let saved = {};
-    try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { saved = {}; }
-    $$('#rename-list input[type="checkbox"]').forEach((cb) => {
-      cb.checked = !!saved[cb.id];
-      cb.addEventListener('change', () => { saved[cb.id] = cb.checked; try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) { /* private mode */ } });
-    });
-  }
 
   /* ================================================================ start */
   renderLogos(); renderTokens(); renderContrast(); renderZone();
   bindTabs(); bindCustomType(); decorate();
-  buildRail(); bindRail(); bindSearch(); bindHero(); bindMotion(); bindChecklist(); bindDemo();
+  buildRail(); bindRail(); bindSearch(); bindHero(); bindMotion(); bindDemo();
   buildIndex();
   route(location.hash.slice(1) || 'overview');
   document.documentElement.classList.add('routed');
