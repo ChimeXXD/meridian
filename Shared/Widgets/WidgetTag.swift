@@ -1,8 +1,9 @@
 import SwiftUI
 
-/// Where a show is on, as a small tag in the Home Screen widgets' top corner over the art (#Tripsy's badges): "HBO · US",
-/// "Apple TV". A dark capsule keeps it readable on any art and on the plain base.
-struct WidgetProviderTag: View {
+/// A small tag in the Home Screen widgets' top corners over the art (#Tripsy's badges): where the show is on ("HBO ·
+/// US") on the left, and "+3 more this week" on the right when shows don't fit. A dark capsule keeps it readable on any
+/// art and on the plain base.
+struct WidgetTag: View {
     let text: String
 
     @Environment(\.isLuminanceReduced) private var dimmed

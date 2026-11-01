@@ -2,17 +2,21 @@ import SwiftUI
 import WidgetKit
 
 /// systemLarge, after #Apple TV: the next show's art across the top fades into night (D-38), with the provider tagged
-/// in its corner; the show's name, a big serif countdown and when it's out (in words, D-40) sit over the fade; the next
-/// two follow as rows with small posters. With nothing to count down it says what to do. Each show is its own
-/// VoiceOver element with the full phrase.
+/// in its corner and "+3 more this week" in the other when shows don't fit; the show's name, a big serif countdown and
+/// when it's out (in words, D-40) sit over the fade; the next three follow as rows with their small posters. With
+/// nothing to count down it says what to do. Each show is its own VoiceOver element with the full phrase.
 struct LargeWidgetView: View {
     let moment: WidgetMoment
-    /// Small art by show ID. Missing entries are fine: the widget reads the same without it.
-    var art: [String: UIImage] = [:]
+    /// The hero's wide art. Missing art is fine: the widget reads the same without it.
+    var heroArt: UIImage?
+    /// The rows' small posters by show ID.
+    var posters: [String: UIImage] = [:]
     var formatter = DropFormatter()
 
     /// How much of the height the hero's art covers.
     static let artCoverage: CGFloat = 0.62
+    /// The hero and three rows.
+    static let shown = 4
 
     @Environment(\.isLuminanceReduced) private var dimmed
 
@@ -20,19 +24,18 @@ struct LargeWidgetView: View {
         Group {
             if let hero = moment.upNext.first {
                 VStack(alignment: .leading, spacing: 0) {
-                    if let provider = hero.provider?.display {
-                        WidgetProviderTag(text: provider).accessibilityHidden(true)
-                    }
+                    WidgetTagRow(provider: hero.provider?.display,
+                                 more: WidgetText.more(moment.moreThisWeek(showing: Self.shown)))
                     Spacer(minLength: Tokens.Space.xxs)
                     heroBlock(hero).accessibilityIdentifier("widget-large-row-1")
                     VStack(spacing: Tokens.Space.xs) {
-                        ForEach(Array(moment.upNext.dropFirst().enumerated()), id: \.element.id) { index, drop in
-                            MediumWidgetRow(drop: drop, now: moment.date, art: art[drop.showID],
-                                            showsThumbnail: showsThumbnails, formatter: formatter)
+                        ForEach(Array(rows.enumerated()), id: \.element.id) { index, drop in
+                            MediumWidgetRow(drop: drop, now: moment.date, art: posters[drop.showID],
+                                            showsThumbnail: showsPosters, formatter: formatter)
                                 .accessibilityIdentifier("widget-large-row-\(index + 2)")
                         }
                     }
-                    .padding(.top, Tokens.Space.m)
+                    .padding(.top, Tokens.Space.s)
                 }
             } else {
                 WidgetEmptyState(moment: moment, lineLimit: 3, formatter: formatter)
@@ -45,15 +48,14 @@ struct LargeWidgetView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .environment(\.colorScheme, .dark)
         .containerBackground(for: .widget) {
-            WidgetBackdrop(art: dimmed ? nil : moment.upNext.first.flatMap { art[$0.showID] },
-                           coverage: Self.artCoverage)
+            WidgetBackdrop(art: dimmed ? nil : heroArt, coverage: Self.artCoverage)
         }
         .accessibilityElement(children: .contain)
     }
 
-    private var showsThumbnails: Bool {
-        !dimmed && moment.upNext.dropFirst().contains { art[$0.showID] != nil }
-    }
+    private var rows: [Drop] { moment.rows(showing: Self.shown) }
+
+    private var showsPosters: Bool { !dimmed && rows.contains { posters[$0.showID] != nil } }
 
     private func heroBlock(_ drop: Drop) -> some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -62,7 +64,7 @@ struct LargeWidgetView: View {
                 .foregroundStyle(WidgetInk.dimmed(WidgetInk.primary, when: dimmed))
                 .lineLimit(1).minimumScaleFactor(0.75)
             CountdownText(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate, now: moment.date,
-                          size: 52, tint: WidgetInk.primary, formatter: formatter)
+                          size: 46, tint: WidgetInk.primary, formatter: formatter)
                 .environment(\.numeralStudy, .night)
             Text(WidgetText.outLine(drop, now: moment.date, formatter: formatter))
                 .font(.system(size: 13, weight: .medium))

@@ -2,6 +2,19 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Day 4: small posters on widget rows, "+N more this week" (Sun 1 Nov 2026)
+
+**Changed** (D-47)
+- Chime added VisionQuest and Silo and liked the hero; Silo's row needed a small poster. Rows on medium and large now show the poster in a 2:3 box (`WidgetPosterThumb`); the app saves a second image per show, `<id>.poster.jpg` (`ShowArtwork.widgetPoster`), fetching a shared link once.
+- `WidgetTimeline.rowCount` 3 → 4 (large shows the hero + 3 rows); `WidgetMoment.thisWeek` and `moreThisWeek(showing:)` count shows due within 7 days that don't fit; `WidgetTagRow` puts "+N more this week" opposite the provider tag. `WidgetProviderTag` became `WidgetTag`. New `busy` sample (6 shows).
+- From now on every change is installed on Chime's iPhone (Chime's request).
+
+**Red → green**
+- `ShowArtworkTests/widgetPoster()`, `WidgetTextTests/more()`, `TimelineProviderTests/moreThisWeek()` and the store's poster path failed to compile (missing members), then passed. `TimelineProviderTests/rows()` now expects 4 rows; the store's fetch lists include the posters. 33 tests in 5 suites pass.
+
+**Not verified**
+- Real posters and art on the phone until Chime looks; tapping "+N more" opens the app's default screen (Upcoming), not a filtered list.
+
 ## Day 4: widgets rebuilt on Chime's three picks (Sun 1 Nov 2026)
 
 **Changed** (D-46)

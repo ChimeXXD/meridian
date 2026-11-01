@@ -25,7 +25,7 @@ struct SmallWidgetView: View {
         if let drop = moment.current {
             VStack(alignment: .leading, spacing: 0) {
                 if let provider = drop.provider?.display {
-                    WidgetProviderTag(text: provider)
+                    WidgetTag(text: provider)
                         .accessibilityIdentifier("widget-small-provider")
                 }
                 Spacer(minLength: Tokens.Space.xxs)

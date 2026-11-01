@@ -18,7 +18,8 @@ import Foundation
 struct WidgetTimeline: Hashable, Sendable {
     static let minimumSpacing: TimeInterval = 5 * 60
     static let dropsAhead = 5
-    static let rowCount = 3
+    static let rowCount = 4
+    static let week: TimeInterval = 7 * 86_400
     static let refreshHorizon: TimeInterval = 48 * 3_600
     static let outNowWindow = CountdownFormatter.outNowWindow
 
@@ -46,12 +47,17 @@ struct WidgetTimeline: Hashable, Sendable {
     }
 
     /// The moment at `date`: timed drops not yet an hour past, soonest first, then the date-only ones whose day
-    /// hasn't ended.
+    /// hasn't ended. A drop is due this week when its time, or a date-only drop's listed day, starts within 7 days.
     static func moment(at date: Date, drops: [Drop], nextReturn: Drop?,
                        formatter: DropFormatter = DropFormatter()) -> WidgetMoment {
         let showing = live(drops, at: date, formatter: formatter)
+        let weekEnd = date.addingTimeInterval(week)
+        let thisWeek = showing.filter { drop in
+            guard drop.confidence == .dateOnly else { return drop.date < weekEnd }
+            return dayStart(of: drop, formatter: formatter).map { $0 < weekEnd } ?? false
+        }
         return WidgetMoment(date: date, current: showing.first, upNext: Array(showing.prefix(rowCount)),
-                            nextReturn: nextReturn)
+                            nextReturn: nextReturn, thisWeek: thisWeek.map(\.id))
     }
 
     /// Timed drops whose "Out now" hour hasn't ended at `date`, by time; then date-only drops, by airdate, until the
@@ -69,6 +75,13 @@ struct WidgetTimeline: Hashable, Sendable {
     private static func dayEnd(of drop: Drop, formatter: DropFormatter) -> Date? {
         guard drop.confidence == .dateOnly, let airdate = drop.airdate else { return nil }
         return WallClock.instant(airdate: airdate, time: "00:00", zone: formatter.timeZone.identifier, dayOffset: 1)
+    }
+
+    /// Midnight that starts a date-only drop's airdate where the viewer is (not `dayEnd` minus 24 hours, which is
+    /// wrong on a day the clocks change); nil for a timed drop or one with no airdate.
+    private static func dayStart(of drop: Drop, formatter: DropFormatter) -> Date? {
+        guard drop.confidence == .dateOnly, let airdate = drop.airdate else { return nil }
+        return WallClock.instant(airdate: airdate, time: "00:00", zone: formatter.timeZone.identifier, dayOffset: 0)
     }
 
     /// While each drop is the one counted down to (from when the drop before it leaves until its own time):

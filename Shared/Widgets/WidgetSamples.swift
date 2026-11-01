@@ -16,6 +16,8 @@ enum WidgetSamples {
         case nothing
         /// Nothing scheduled, but Silo returns on a known day.
         case returns
+        /// Six followed shows, five of them this week: more than any widget fits ("+2 more this week").
+        case busy
     }
 
     static func moment(_ sample: Case, now: Date) -> WidgetMoment {
@@ -37,12 +39,19 @@ enum WidgetSamples {
         let siloReturns = drop("silo", "Silo", season: 4, number: 1, at: now + 250 * 24 * hour,
                                confidence: .dateOnly, source: .dateOnly, airdate: "2027-07-09", provider: silo.provider)
 
+        let severance = drop("severance", "Severance", season: 3, number: 2, at: now + 4 * 24 * hour,
+                             confidence: .estimated, source: .platformRule("Apple TV rule"), provider: silo.provider)
+        let bear = drop("bear", "The Bear", season: 5, number: 1, at: now + 5 * 24 * hour + 3 * hour,
+                        confidence: .estimated, source: .platformRule("Hulu rule"),
+                        provider: ProviderLabel(name: "Hulu", countryCode: "US", noOfficialStream: true))
+
         let drops: [Drop] = switch sample {
         case .countdown: [silo, frieren, wonderMan]
         case .ticking: [hotd, silo]
         case .outNow: [hotdOut, silo, frieren]
         case .dateOnly: [wonderMan]
         case .nothing, .returns: []
+        case .busy: [hotd, silo, frieren, severance, bear, wonderMan]
         }
         return WidgetTimeline.moment(at: now, drops: drops, nextReturn: sample == .returns ? siloReturns : nil)
     }

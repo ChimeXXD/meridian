@@ -34,6 +34,13 @@ enum SnapshotStore {
             .appendingPathComponent(showID.replacingOccurrences(of: ":", with: "-") + ".v2.jpg")
     }
 
+    /// Where a show's small poster for the widgets' rows lives: `<container>/Artwork/<showID>.poster.jpg`. It may not
+    /// exist.
+    static func posterURL(showID: String, in container: URL) -> URL {
+        artworkDirectory(in: container)
+            .appendingPathComponent(showID.replacingOccurrences(of: ":", with: "-") + ".poster.jpg")
+    }
+
     static func artworkDirectory(in container: URL) -> URL {
         container.appendingPathComponent("Artwork", isDirectory: true)
     }

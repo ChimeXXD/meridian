@@ -40,15 +40,21 @@ struct WidgetRenderTests {
         case .circular: CircularWidgetView(moment: moment, formatter: formatter)
         case .rectangular: RectangularWidgetView(moment: moment, formatter: formatter)
         case .small: SmallWidgetView(moment: moment, art: art, formatter: formatter)
-        case .medium: MediumWidgetView(moment: moment, art: artByShow(moment, art), formatter: formatter)
-        case .large: LargeWidgetView(moment: moment, art: artByShow(moment, art), formatter: formatter)
+        case .medium: MediumWidgetView(moment: moment, heroArt: art, posters: posters(moment, art), formatter: formatter)
+        case .large: LargeWidgetView(moment: moment, heroArt: art, posters: posters(moment, art), formatter: formatter)
         }
     }
 
-    static func artByShow(_ moment: WidgetMoment, _ art: UIImage?) -> [String: UIImage] {
-        art.map { image in
-            Dictionary(moment.upNext.map { ($0.showID, image) }, uniquingKeysWith: { first, _ in first })
-        } ?? [:]
+    /// With art, every row gets a neutral portrait placeholder as its small poster.
+    static func posters(_ moment: WidgetMoment, _ art: UIImage?) -> [String: UIImage] {
+        guard art != nil else { return [:] }
+        let poster = UIGraphicsImageRenderer(size: CGSize(width: 20, height: 30)).image { context in
+            UIColor(white: 0.7, alpha: 1).setFill()
+            context.fill(CGRect(x: 0, y: 0, width: 20, height: 30))
+            UIColor(white: 0.4, alpha: 1).setFill()
+            context.fill(CGRect(x: 0, y: 18, width: 20, height: 12))
+        }
+        return Dictionary(moment.upNext.map { ($0.showID, poster) }, uniquingKeysWith: { first, _ in first })
     }
 
     /// What the system draws behind each family. `containerBackground` does nothing outside a widget.
@@ -108,7 +114,7 @@ struct WidgetRenderTests {
                 context.fill(CGRect(x: size.width / 6, y: size.height / 6, width: size.width * 2 / 3,
                                     height: size.height * 5 / 12))
             }
-            for sample in [WidgetSamples.Case.countdown, .ticking] {
+            for sample in [WidgetSamples.Case.countdown, .ticking, .busy] {
                 let name = "\(family.rawValue)-\(sample.rawValue)-\(suffix)"
                 let overflow = try Self.render(family, sample, art: art, name: name)
                 #expect(overflow <= 0.5, "\(name) needs \(overflow) pt more height")

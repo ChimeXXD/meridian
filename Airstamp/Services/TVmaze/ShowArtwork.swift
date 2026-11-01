@@ -20,6 +20,9 @@ struct ShowArtwork: Hashable, Sendable {
     /// widget art shrinks anyway; else the thumbnail.
     var widget: URL? { (backgroundIsStrip ? nil : background) ?? poster ?? posterThumbnail }
 
+    /// The small poster beside a show in a widget's rows: the thumbnail, else the full poster; never the wide art.
+    var widgetPoster: URL? { posterThumbnail ?? poster }
+
     static let idealBackgroundWidth = 1920
     static let minimumBackgroundWidth = 1200
 

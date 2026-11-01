@@ -10,35 +10,35 @@ private let all = WidgetSamples.Case.allCases.map { WidgetSamples.moment($0, now
 #Preview("Inline", as: .accessoryInline) {
     NextDropWidget()
 } timeline: {
-    all[0]; all[1]; all[2]; all[3]; all[4]; all[5]
+    all[0]; all[1]; all[2]; all[3]; all[4]; all[5]; all[6]
 }
 
 #Preview("Circular", as: .accessoryCircular) {
     NextDropWidget()
 } timeline: {
-    all[0]; all[1]; all[2]; all[3]; all[4]; all[5]
+    all[0]; all[1]; all[2]; all[3]; all[4]; all[5]; all[6]
 }
 
 #Preview("Rectangular", as: .accessoryRectangular) {
     NextDropWidget()
 } timeline: {
-    all[0]; all[1]; all[2]; all[3]; all[4]; all[5]
+    all[0]; all[1]; all[2]; all[3]; all[4]; all[5]; all[6]
 }
 
 #Preview("Small", as: .systemSmall) {
     NextDropWidget()
 } timeline: {
-    all[0]; all[1]; all[2]; all[3]; all[4]; all[5]
+    all[0]; all[1]; all[2]; all[3]; all[4]; all[5]; all[6]
 }
 
 #Preview("Medium", as: .systemMedium) {
     NextDropWidget()
 } timeline: {
-    all[0]; all[1]; all[2]; all[3]; all[4]; all[5]
+    all[0]; all[1]; all[2]; all[3]; all[4]; all[5]; all[6]
 }
 
 #Preview("Large", as: .systemLarge) {
     NextDropWidget()
 } timeline: {
-    all[0]; all[1]; all[2]; all[3]; all[4]; all[5]
+    all[0]; all[1]; all[2]; all[3]; all[4]; all[5]; all[6]
 }

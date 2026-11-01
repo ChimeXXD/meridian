@@ -28,6 +28,11 @@ enum WidgetText {
             : "\(ReleaseWording.verb(drop, past: drop.date <= now)) \(formatter.weekdayTime(drop.date))"
     }
 
+    /// The tag for shows a widget can't fit: "+3 more this week"; nil when everything fits.
+    static func more(_ count: Int) -> String? {
+        count > 0 ? "+\(count) more this week" : nil
+    }
+
     /// "S4E1 · Apple TV", or "S3E4 · HBO · US".
     static func episodeAndProvider(_ drop: Drop) -> String {
         [drop.episodeLabel, drop.provider?.display].compactMap(\.self).joined(separator: " · ")

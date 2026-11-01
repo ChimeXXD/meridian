@@ -50,27 +50,37 @@ struct WidgetSnapshotWriter {
         return snapshot
     }
 
-    /// Saves art for each show in the snapshot that has none yet (`ShowArtwork.widget`: the wide key art, or the
-    /// poster), and deletes art for shows no longer in it. Reloads the timelines once if anything changed.
+    /// Saves two images for each show in the snapshot, where missing: the hero art (`ShowArtwork.widget`, the wide key
+    /// art or the poster) and the rows' small poster (`ShowArtwork.widgetPoster`). Deletes any other file, so art for
+    /// shows no longer in the snapshot goes. Reloads the timelines once if anything changed.
     func saveArt(for snapshot: DropSnapshot, artwork: [String: ShowArtwork]) async {
         guard let container else { return }
         let files = FileManager.default
         let directory = SnapshotStore.artworkDirectory(in: container)
         try? files.createDirectory(at: directory, withIntermediateDirectories: true)
         let showIDs = Set(snapshot.drops.map(\.showID) + [snapshot.nextReturn?.showID].compactMap { $0 })
-        let keep = Set(showIDs.map { SnapshotStore.artworkURL(showID: $0, in: container).lastPathComponent })
+        let keep = Set(showIDs.flatMap { id in
+            [SnapshotStore.artworkURL(showID: id, in: container), SnapshotStore.posterURL(showID: id, in: container)]
+                .map(\.lastPathComponent)
+        })
         var changed = false
         for file in (try? files.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)) ?? []
         where !keep.contains(file.lastPathComponent) {
             if (try? files.removeItem(at: file)) != nil { changed = true }
         }
+        // A show with only a thumbnail uses the same link for both images; fetch it once.
+        var fetched: [URL: Data?] = [:]
         for id in showIDs.sorted() {
-            let destination = SnapshotStore.artworkURL(showID: id, in: container)
-            guard !files.fileExists(atPath: destination.path),
-                  let source = artwork[id]?.widget,
-                  let data = await fetchArt(source) else { continue }
-            if (try? data.write(to: destination, options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication]))
-                != nil { changed = true }
+            let images = [(SnapshotStore.artworkURL(showID: id, in: container), artwork[id]?.widget),
+                          (SnapshotStore.posterURL(showID: id, in: container), artwork[id]?.widgetPoster)]
+            for case let (destination, source?) in images where !files.fileExists(atPath: destination.path) {
+                if fetched[source] == nil { fetched[source] = .some(await fetchArt(source)) }
+                guard let data = fetched[source] ?? nil else { continue }
+                if (try? data.write(to: destination,
+                                    options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication])) != nil {
+                    changed = true
+                }
+            }
         }
         if changed { reload() }
     }

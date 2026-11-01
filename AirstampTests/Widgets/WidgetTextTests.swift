@@ -32,6 +32,13 @@ struct WidgetTextTests {
         #expect(WidgetText.when(wonderMan, now: Self.now, formatter: Self.formatter) == "Time not announced")
     }
 
+    @Test("the tag for shows that don't fit: '+3 more this week', none when all fit")
+    func more() {
+        #expect(WidgetText.more(3) == "+3 more this week")
+        #expect(WidgetText.more(1) == "+1 more this week")
+        #expect(WidgetText.more(0) == nil)
+    }
+
     @Test("the out line is ReleaseWording's, except a date-only drop, whose day is already in the countdown's place")
     func outLine() throws {
         let silo = try #require(Self.moment(.countdown).current)

@@ -1,7 +1,7 @@
 import SwiftUI
 import WidgetKit
 
-/// One of systemLarge's rows under the hero (systemMedium's are `WidgetCompactRow`): an optional small thumbnail, the
+/// One of systemLarge's rows under the hero (systemMedium's are `WidgetCompactRow`): the show's small poster, the
 /// show name in serif over when it's out (in words, D-40), and its countdown on the right.
 struct MediumWidgetRow: View {
     let drop: Drop
@@ -11,13 +11,14 @@ struct MediumWidgetRow: View {
     var showsThumbnail = false
     var formatter = DropFormatter()
 
-    static let thumbnail: CGFloat = 30
+    /// The poster's height; it is 2:3, as tall as the row.
+    static let thumbnail: CGFloat = 32
 
     @Environment(\.isLuminanceReduced) private var dimmed
 
     var body: some View {
         HStack(spacing: Tokens.Space.s) {
-            if showsThumbnail { thumbnail(art) }
+            if showsThumbnail { WidgetPosterThumb(image: art, height: Self.thumbnail) }
             VStack(alignment: .leading, spacing: 1) {
                 Text(drop.showName)
                     .font(.system(size: 15, design: .serif))
@@ -40,19 +41,4 @@ struct MediumWidgetRow: View {
         .accessibilityLabel(WidgetAccessibility.label(for: drop, now: now, formatter: formatter))
     }
 
-    private func thumbnail(_ image: UIImage?) -> some View {
-        RoundedRectangle(cornerRadius: 6)
-            .fill(WidgetInk.tile)
-            .overlay {
-                if let image, !dimmed {
-                    Image(uiImage: image)
-                        .resizable()
-                        .widgetAccentedRenderingMode(.desaturated)
-                        .scaledToFill()
-                }
-            }
-            .frame(width: Self.thumbnail, height: Self.thumbnail)
-            .clipShape(RoundedRectangle(cornerRadius: 6))
-            .accessibilityHidden(true)
-    }
 }

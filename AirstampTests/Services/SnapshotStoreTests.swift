@@ -94,6 +94,8 @@ struct SnapshotStoreTests {
             == container.appendingPathComponent("Artwork/38052.v2.jpg"))
         #expect(SnapshotStore.artworkURL(showID: "anilist:154587", in: container).lastPathComponent
             == "anilist-154587.v2.jpg")
+        #expect(SnapshotStore.posterURL(showID: "anilist:154587", in: container)
+            == container.appendingPathComponent("Artwork/anilist-154587.poster.jpg"))
     }
 
     // MARK: What goes in it
@@ -127,21 +129,25 @@ struct SnapshotStoreTests {
         let probe = Probe()
         let snapshot = WidgetSnapshotWriter.snapshot(of: [Self.drop("a", show: "1", at: Self.now.addingTimeInterval(60)),
                                                           Self.drop("b", show: "anilist:2", at: Self.now.addingTimeInterval(90)),
-                                                          Self.drop("c", show: "3", at: Self.now.addingTimeInterval(120))],
+                                                          Self.drop("c", show: "3", at: Self.now.addingTimeInterval(120)),
+                                                          Self.drop("d", show: "4", at: Self.now.addingTimeInterval(150))],
                                                      now: Self.now)
-        let poster = URL(string: "https://example.com/medium.jpg")!
-        let keyArt = URL(string: "https://example.com/background.jpg")!
+        let url = { (name: String) in URL(string: "https://example.com/\(name).jpg")! }
         await Self.writer(container, probe).saveArt(for: snapshot, artwork: [
-            "1": ShowArtwork(posterThumbnail: URL(string: "https://example.com/one.jpg")!),
-            "anilist:2": ShowArtwork(poster: URL(string: "https://example.com/big.jpg")!, posterThumbnail: poster),
-            "3": ShowArtwork(background: keyArt, posterThumbnail: URL(string: "https://example.com/three.jpg")!),
+            "1": ShowArtwork(posterThumbnail: url("one")),
+            "anilist:2": ShowArtwork(poster: url("big"), posterThumbnail: url("medium")),
+            "3": ShowArtwork(background: url("background"), posterThumbnail: url("three")),
+            "4": ShowArtwork(posterThumbnail: url("four")),
         ])
         #expect(!FileManager.default.fileExists(atPath: SnapshotStore.artworkURL(showID: "anilist:9", in: container).path))
         #expect(!FileManager.default.fileExists(atPath: legacy.path))
         #expect(try Data(contentsOf: SnapshotStore.artworkURL(showID: "1", in: container)) == Data("kept".utf8))
         #expect(try Data(contentsOf: SnapshotStore.artworkURL(showID: "anilist:2", in: container)) == Self.art)
-        #expect(probe.fetched == [keyArt, URL(string: "https://example.com/big.jpg")!],
-                "only missing shows are fetched: the wide key art when there is some, else the full poster")
+        #expect(try Data(contentsOf: SnapshotStore.posterURL(showID: "anilist:2", in: container)) == Self.art)
+        #expect(try Data(contentsOf: SnapshotStore.posterURL(showID: "4", in: container)) == Self.art)
+        // Per show, the wide art then the small poster, each only when missing; one link used for both is fetched once.
+        #expect(probe.fetched == [url("one"), url("background"), url("three"), url("four"), url("big"), url("medium")],
+                "the wide key art (else the full poster) and the poster thumbnail, only where missing")
         #expect(probe.reloads == 1, "new art reloads the timelines so it shows")
     }
 
@@ -213,7 +219,8 @@ struct SnapshotStoreTests {
         #expect(followed.nextReturn?.airdate == "2027-07-09")
         let art = SnapshotStore.artworkURL(showID: "38052", in: container)
         #expect(try Data(contentsOf: art) == Self.art)
-        #expect(probe.fetched.map(\.lastPathComponent) == ["1151687.jpg"], "Silo's TVmaze background, not its poster")
+        #expect(probe.fetched.map(\.lastPathComponent) == ["1151687.jpg", "1577677.jpg"],
+                "Silo's TVmaze background for the hero, then its poster thumbnail for a row")
         #expect(probe.reloads > afterEmpty)
 
         // A plain refresh rewrites it again.

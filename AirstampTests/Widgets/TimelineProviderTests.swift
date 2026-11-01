@@ -131,12 +131,28 @@ struct TimelineProviderTests {
         #expect(Self.timeline([], nextReturn: back).entries.first?.nextReturn == back)
     }
 
-    @Test("the rows are the next 3 drops, soonest first")
+    @Test("the rows are the next 4 drops, soonest first (the large widget's hero and 3 rows)")
     func rows() throws {
         let drops = (1...5).map { Self.drop("\($0)", at: Self.now.addingTimeInterval(Double($0) * 7 * Self.hour)) }
         let first = try #require(Self.timeline(drops.shuffled()).entries.first)
-        #expect(first.upNext.map(\.id) == drops.prefix(3).map(\.id))
+        #expect(first.upNext.map(\.id) == drops.prefix(4).map(\.id))
         #expect(first.current?.id == drops[0].id)
+    }
+
+    @Test("'+N more this week' counts the drops a widget can't fit that are due within 7 days, date-only ones too")
+    func moreThisWeek() throws {
+        let timed = (1...6).map { Self.drop("\($0)", at: Self.now.addingTimeInterval(Double($0) * 7 * Self.hour)) }
+        let nextWeek = Self.drop("late", at: Self.now.addingTimeInterval(8 * 24 * Self.hour))
+        // Date-only drops sort after every timed one, so this one is never in the rows, but it's still this week.
+        let tomorrow = Self.drop("undated", at: Self.now.addingTimeInterval(24 * Self.hour), confidence: .dateOnly,
+                                 airdate: "2026-11-03")
+        let undatedLater = Self.drop("undated-later", at: Self.now.addingTimeInterval(10 * 24 * Self.hour),
+                                     confidence: .dateOnly, airdate: "2026-11-12")
+        let first = try #require(Self.timeline(timed + [nextWeek, tomorrow, undatedLater]).entries.first)
+        #expect(first.moreThisWeek(showing: 3) == 4, "drops 4, 5, 6 and tomorrow's date-only one, not the later ones")
+        #expect(first.moreThisWeek(showing: 4) == 3)
+        #expect(first.moreThisWeek(showing: 1) == 6)
+        #expect(Self.timeline(Array(timed.prefix(3))).entries.first?.moreThisWeek(showing: 3) == 0)
     }
 }
 

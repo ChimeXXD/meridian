@@ -27,6 +27,14 @@ struct ShowArtworkTests {
         #expect(anime.widget == url("cover-xl"))
     }
 
+    @Test("a widget row's small poster is the poster thumbnail, else the full poster (never the wide art)")
+    func widgetPoster() {
+        let url = { (name: String) in URL(string: "https://example.com/\(name).jpg")! }
+        #expect(ShowArtwork(background: url("bg"), poster: url("p"), posterThumbnail: url("t")).widgetPoster == url("t"))
+        #expect(ShowArtwork(background: url("bg"), poster: url("p")).widgetPoster == url("p"))
+        #expect(ShowArtwork(background: url("bg")).widgetPoster == nil)
+    }
+
     @Test("picks a background near 1920 px wide (not the 3840 px original) and the main poster")
     func picksSensibleSizes() throws {
         let images = try JSONDecoder().decode([TVmazeImage].self, from: Fixture.data("tvmaze/images-silo.json"))

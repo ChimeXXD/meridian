@@ -23,6 +23,11 @@ struct NextDropWidgetView: View {
 
     @Environment(\.widgetFamily) private var family
 
+    /// The medium and large widgets' hero art, at full size.
+    private var heroArt: UIImage? {
+        moment.upNext.first.flatMap { WidgetArtwork.image(showID: $0.showID) }
+    }
+
     var body: some View {
         switch family {
         case .accessoryInline:
@@ -32,10 +37,13 @@ struct NextDropWidgetView: View {
         case .accessoryRectangular:
             RectangularWidgetView(moment: moment)
         case .systemMedium:
-            MediumWidgetView(moment: moment, art: WidgetArtwork.images(for: moment.upNext, rowPixel: nil))
+            MediumWidgetView(moment: moment, heroArt: heroArt, posters: WidgetArtwork.posters(
+                for: moment.rows(showing: MediumWidgetView.shown),
+                maxPixel: Int(WidgetCompactRow.posterHeight * 3)))
         case .systemLarge:
-            LargeWidgetView(moment: moment, art: WidgetArtwork.images(
-                for: moment.upNext, rowPixel: Int(MediumWidgetRow.thumbnail * 3)))
+            LargeWidgetView(moment: moment, heroArt: heroArt, posters: WidgetArtwork.posters(
+                for: moment.rows(showing: LargeWidgetView.shown),
+                maxPixel: Int(MediumWidgetRow.thumbnail * 3)))
         default:
             // The small widget is 158 pt square, about 480 px at 3x.
             SmallWidgetView(moment: moment, art: moment.current.flatMap {
