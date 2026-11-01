@@ -60,7 +60,9 @@ struct CountdownText: View {
     private var live: some View {
         let split = CountdownFormatter.daySplit(drop: drop, now: now)
         let digits = study.font(size: size * scale).monospacedDigit()
-        let timer = Text(timerInterval: now...split.edge, pauseTime: split.edge, countsDown: true).font(digits)
+        // No `pauseTime`: with one, WidgetKit draws the timer frozen at its first value (seen in the simulator's Dynamic
+        // Island, 1 Nov). The interval alone already stops at 0:00 at its end and never counts up (rule 4).
+        let timer = Text(timerInterval: now...split.edge, countsDown: true).font(digits)
         let text = split.days > 0
             ? Text("\(Text(verbatim: "\(split.days)").font(digits))\(Text(verbatim: "d ").font(study.font(size: size * 0.5 * scale)).foregroundStyle(.secondary))\(timer)")
             : timer

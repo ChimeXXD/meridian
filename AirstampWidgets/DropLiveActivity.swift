@@ -31,10 +31,12 @@ struct DropLiveActivity: Widget {
                         .padding(.trailing, Tokens.Space.xxs)
                 }
                 DynamicIslandExpandedRegion(.bottom) {
+                    // Clear of the island's rounded bottom corners, which clipped the bar's end and its time (Chime, 1 Nov).
                     LiveActivityExpandedView(region: .bottom, attributes: context.attributes, state: context.state,
                                              isStale: context.isStale)
-                        .padding(.horizontal, Tokens.Space.xxs)
+                        .padding(.horizontal, Tokens.Space.m)
                         .padding(.top, Tokens.Space.xxs)
+                        .padding(.bottom, Tokens.Space.xs)
                 }
             } compactLeading: {
                 LiveActivityCompactView(slot: .leading, attributes: context.attributes, state: context.state,

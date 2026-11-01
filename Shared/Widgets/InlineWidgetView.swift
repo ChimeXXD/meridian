@@ -24,7 +24,8 @@ struct InlineWidgetView: View {
         if let text = WidgetText.inline(moment, formatter: formatter) { return Text(text) }
         guard let drop = moment.current else { return Text(verbatim: "") }
         let split = CountdownFormatter.daySplit(drop: drop.date, now: moment.date)
-        let timer = Text(timerInterval: moment.date...split.edge, pauseTime: split.edge, countsDown: true)
+        // No `pauseTime`: it freezes the timer in widgets (see CountdownText).
+        let timer = Text(timerInterval: moment.date...split.edge, countsDown: true)
         return split.days > 0
             ? Text("\(drop.showName) · \(split.days)d \(timer)")
             : Text("\(drop.showName) · \(timer)")

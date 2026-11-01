@@ -14,7 +14,9 @@ struct LiveActivityCountdown: View {
 
     var body: some View {
         // A range can't run backwards, so a drop already past starts and ends at the drop: it reads 0:00.
-        Text(timerInterval: min(now, dropDate)...dropDate, pauseTime: dropDate, countsDown: true)
+        // No `pauseTime`: with one the system drew this timer frozen at its first value (simulator Dynamic Island,
+        // 1 Nov: 29:57 for 20 s; without it 19:56 → 19:51 in 5 s). The interval alone stops at 0:00 (rule 4).
+        Text(timerInterval: min(now, dropDate)...dropDate, countsDown: true)
             .font(NumeralStudy.night.font(size: size, weight: weight))
             .foregroundStyle(tint)
             .multilineTextAlignment(alignment)

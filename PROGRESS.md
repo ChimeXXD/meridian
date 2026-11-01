@@ -2,6 +2,13 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Widgets and the Dynamic Island didn't tick: `pauseTime` (Sun 1 Nov 2026)
+
+- Chime: real time in the app now, but not on the widgets or the Dynamic Island; and the expanded island's bottom row was cut off by its corners.
+- Added a Debug launch option `-fakeActivity <minutes>` that starts the fake drop's Live Activity at once, so the simulator's Dynamic Island can be watched. With `pauseTime` the compact timer stayed at 29:57 for 20 s; without it, 19:56 → 19:51 in 5 s. A drop 1 minute out showed 0:55 counting, then left the island at the drop (no counting up). `pauseTime` removed from `CountdownText`, `InlineWidgetView` and `LiveActivityCountdown` (D-52). Expanded bottom region: 16 pt side and 8 pt bottom padding.
+- Proposed CLAUDE.md rule 4 change for Chime: drop `pauseTime: drop`.
+- Not verified here: Home Screen widgets ticking (can't be added on the simulator by script) and the expanded island (can't long-press by script); both on the phone.
+
 ## The app's countdowns didn't tick (Sun 1 Nov 2026)
 
 - Chime: "The countdown is not real time. It's not ticking." Checked on the simulator with 8 screenshots over 3 s: byte-identical. Drawing the timer without the template still froze (template ruled out); changing Upcoming's `TimelineView(.everyMinute)` to `.periodic(from: .now, by: 1)` made it tick (2:09:55 → 2:09:52 and 2d 3:59:55 → 2d 3:59:52 in 3 s). Cause: inside a TimelineView a ticking `Text(timerInterval:)` only updates at the timeline's pace. Upcoming, Show detail and the show page now redraw every second; Search's grid (words only) stays per minute.
