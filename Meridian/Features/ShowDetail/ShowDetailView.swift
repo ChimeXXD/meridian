@@ -42,12 +42,13 @@ struct ShowDetailView: View {
                                 EpisodeRows(episodes: episodes, ink: .white, formatter: formatter)
                             }
                         }
-                        VStack(alignment: .leading, spacing: Tokens.Space.m) {
+                        // Each a 44 pt row, so the tap target is the HIG minimum, not the text's 20.
+                        VStack(alignment: .leading, spacing: 0) {
                             if let onReport {
-                                Button("Report a wrong time", action: onReport)
+                                Button(action: onReport) { tapRow("Report a wrong time") }
                                     .accessibilityIdentifier("detail-report")
                             }
-                            Button("Unfollow", role: .destructive) { confirmingUnfollow = true }
+                            Button(role: .destructive) { confirmingUnfollow = true } label: { tapRow("Unfollow") }
                                 .accessibilityIdentifier("detail-unfollow")
                         }
                         .font(.subheadline)
@@ -96,6 +97,13 @@ struct ShowDetailView: View {
         }
         .tint(.white.opacity(0.6))
         .accessibilityIdentifier("detail-live-activity")
+    }
+
+    /// A text button's label, 44 pt tall and tappable across that height.
+    private func tapRow(_ title: String) -> some View {
+        Text(title)
+            .frame(minHeight: 44, alignment: .leading)
+            .contentShape(.rect)
     }
 }
 

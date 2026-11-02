@@ -14,6 +14,7 @@ struct WelcomeView: View {
     let onLater: () -> Void
 
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var wall: WelcomeWall?
     /// The mark grows with the wordmark under Dynamic Type (36 at the default size, beside a 22 pt name).
     @ScaledMetric(relativeTo: .title2) private var markHeight: CGFloat = 36
@@ -69,7 +70,8 @@ struct WelcomeView: View {
         .task(id: scenePhase) {
             guard scenePhase == .active, wall == nil,
                   let loaded = await WelcomeWall.load(client: client, anilist: anilist, rules: rules) else { return }
-            withAnimation(.easeOut(duration: 0.35)) { wall = loaded }
+            // Reduce Motion: the wall appears at once, as the art does everywhere else (ArtworkLoaderView).
+            withAnimation(reduceMotion ? nil : .easeOut(duration: 0.35)) { wall = loaded }
         }
     }
 
