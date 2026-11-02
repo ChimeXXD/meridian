@@ -54,6 +54,54 @@
   --app-sys-separator: rgba(84, 84, 88, .6);
   --app-sys-blue: #0A84FF;
   --app-sys-red: #FF453A;
+
+  /* Token variables: every CSS name the colour tables offer to copy, with the app's value (tokens.json). */
+  --night-ink-primary: #FFFFFF;
+  --night-ink-secondary: rgba(255, 255, 255, .75);
+  --night-ink-muted: rgba(235, 235, 245, .6);
+  --widget-base: #1C1C1C;
+  --widget-primary: #FFFFFF;
+  --widget-secondary: rgba(255, 255, 255, .75);
+  --widget-muted: rgba(255, 255, 255, .55);
+  --widget-tile: rgba(255, 255, 255, .08);
+  --widget-always-on-factor: .7;
+  --la-base: #0D0D0E;
+  --la-primary: #FFFFFF;
+  --la-secondary: rgba(255, 255, 255, .75);
+  --la-muted: rgba(255, 255, 255, .55);
+  --la-out: #E9C46A;
+  --la-fill: #FFFFFF;
+  --la-track: rgba(255, 255, 255, .18);
+  --la-disc: rgba(255, 255, 255, .16);
+  --la-keyline: rgba(255, 255, 255, .35);
+  --la-monogram: rgba(255, 255, 255, .07);
+  --night-neutral: #1C1C1C;
+  --art-base-neutral: #525252;
+  --art-accent: #FFFFFF;
+  --night-sample-red: #1C1A1A;
+  --night-sample-orange: #1C1B1A;
+  --night-sample-yellow: #1C1C1A;
+  --night-sample-green: #182418;
+  --night-sample-teal: #182420;
+  --night-sample-blue: #181E24;
+  --night-sample-indigo: #181824;
+  --night-sample-purple: #201824;
+  --night-sample-wednesday: #181924;
+  --night-sample-severance: #1B241A;
+  --control-fill: rgba(0, 0, 0, .55);
+  --control-hairline: rgba(255, 255, 255, .35);
+  --control-picked: #FFFFFF;
+  --following-fill: rgba(255, 255, 255, .12);
+  --episode-ink: rgba(255, 255, 255, .6);
+  --widget-tag-fill: rgba(0, 0, 0, .45);
+  --art-scrim: rgba(0, 0, 0, .4);
+  --welcome-tile: rgba(255, 255, 255, .05);
+  --legacy-exact: #5BE38A;
+  --legacy-estimated: #8AB0FF;
+  --legacy-adjusted: #C9A6FF;
+  --legacy-date-only: #A8A8B0;
+  --legacy-delayed: #FDBA74;
+  --legacy-no-stream: #FF8A80;
 }
 
 * { box-sizing: border-box; }
@@ -426,16 +474,19 @@ dl.specs dd { margin: 0; color: var(--ink-2); overflow-wrap: anywhere; padding-l
 .pcell .poster.empty { background: var(--app-tile); display: grid; place-items: center; }
 .pcell .t { font: 500 13px/1.3 var(--sans); }
 .pcell .m { font: 12px/1.33 var(--sans); color: var(--app-ink-muted); }
-.plus { position: absolute; top: 4px; right: 4px; z-index: 1; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--app-control-fill); box-shadow: inset 0 0 0 1px var(--app-hairline); color: #fff; }
-.art-stage .plus { top: 8px; right: 8px; position: absolute; }
+/* A 32 circle centred in a 44 × 44 tap area that sits 4 in from the poster's corner: 10 from the corner. */
+.plus { position: absolute; top: 10px; right: 10px; z-index: 1; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--app-control-fill); box-shadow: inset 0 0 0 1px var(--app-hairline); color: #fff; }
+.art-stage .plus { top: 10px; right: 10px; position: absolute; }
 .plus.on { background: #fff; color: #000; box-shadow: none; }
 .plus svg { width: 13px; height: 13px; }
 .poster-demo { position: relative; width: 96px; aspect-ratio: 2 / 3; border-radius: 8px; overflow: hidden; }
-.chiprow { display: flex; gap: 8px; flex-wrap: wrap; }
+/* One row that scrolls sideways, edge to edge of the screen, with the first chip on the 16 pt page margin. */
+.chiprow { display: flex; gap: 8px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 -16px; padding: 4px 16px; }
+.chiprow::-webkit-scrollbar { display: none; }
 .fchip { display: inline-flex; align-items: center; min-height: 34px; padding: 0 12px; border-radius: 17px; font: 500 15px var(--sans); color: #fff; background: var(--app-control-fill); box-shadow: inset 0 0 0 1px var(--app-hairline); white-space: nowrap; }
 .fchip.on { background: #fff; color: #000; box-shadow: none; }
 .logo-tile { width: 30px; height: 22px; border-radius: 5px; background: #fff; color: #1C1C1C; display: grid; place-items: center; font: 700 12px var(--sans); margin-right: 8px; }
-.logo-tile.gap { background: transparent; outline: 1px dashed rgba(255, 255, 255, .25); outline-offset: -1px; }
+.logo-tile.gap { background: transparent; }
 .seg { display: flex; padding: 2px; border-radius: 9px; background: rgba(118, 118, 128, .24); width: 100%; }
 .seg span { flex: 1; text-align: center; padding: 6px 0; font: 500 13px var(--sans); border-radius: 7px; }
 .seg span.sel { background: #636366; }
@@ -479,13 +530,26 @@ dl.specs dd { margin: 0; color: var(--ink-2); overflow-wrap: anywhere; padding-l
 .list .cell .chev { margin-left: auto; color: rgba(235, 235, 245, .3); font-size: 15px; }
 .list .blue { color: var(--app-sys-blue); }
 .list .red { color: var(--app-sys-red); }
-.phone.welcome { height: 760px; padding: 24px; display: flex; flex-direction: column; }
+/* The full screen, 874 pt tall like the iPhone the app is built for, so the wall ends where it does on the phone. */
+.phone.welcome { height: 874px; padding: 24px; display: flex; flex-direction: column; }
 .welcome .grow { flex: 1; }
 .phone.welcome { position: relative; overflow: hidden; }
-.welcome .wall { position: absolute; inset: 0 0 auto; height: 60%; display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 120px; gap: 8px; margin-left: -40px; width: calc(100% + 80px);
-  -webkit-mask-image: linear-gradient(#000 35%, rgba(0,0,0,.35) 68%, transparent 90%); mask-image: linear-gradient(#000 35%, rgba(0,0,0,.35) 68%, transparent 90%); }
-.welcome .wall i { border-radius: 10px; background: linear-gradient(160deg, #3a3f47, #24272c); }
-.welcome .wall i.w { grid-column: span 2; background: linear-gradient(160deg, #474039, #2a2724); }
+/* Welcome's wall (WelcomeWallView): three rows, 128 / 172 / 128 tall and 8 apart, over the top 60% of the screen,
+   clipped. The rows are dimmed with night at 0.18 and masked to clear by 90% of their own height; night at 0.7 fades
+   to clear over the top 96 pt, under the status bar. Each row is its tiles several times over, sliding one run at
+   9 pt a second (site.js sets --run, --dur and the staggered --delay); the base transform is its starting place, so
+   with Reduce Motion, which drops the animation, it stays still there, as the app's does. */
+.welcome .wall { position: absolute; inset: 0 0 auto; height: 60%; padding: 0; border-radius: 0; background: none; overflow: hidden; pointer-events: none; }
+.welcome .wall-rows { position: relative; display: grid; gap: 8px;
+  -webkit-mask-image: linear-gradient(#000 0%, #000 35%, rgba(0, 0, 0, .35) 68%, transparent 90%); mask-image: linear-gradient(#000 0%, #000 35%, rgba(0, 0, 0, .35) 68%, transparent 90%); }
+.welcome .wall-rows::after { content: ""; position: absolute; inset: 0; background: rgba(28, 28, 28, .18); }
+.welcome .wall-row { height: var(--h); }
+.welcome .wall-strip { display: flex; gap: 8px; width: max-content; height: 100%; transform: translateX(var(--x0)); animation: var(--drift) var(--dur) linear var(--delay) infinite; }
+.welcome .wall .art { position: relative; inset: auto; flex: none; height: 100%; border-radius: 10px; background: var(--welcome-tile); }
+.welcome .wall .art::before, .welcome .wall .art::after { content: none; }
+.welcome .wall-top { position: absolute; inset: 0 0 auto; height: 96px; background: linear-gradient(180deg, rgba(28, 28, 28, .7), rgba(28, 28, 28, 0)); }
+@keyframes wall-left { from { transform: translateX(0); } to { transform: translateX(calc(-1 * var(--run))); } }
+@keyframes wall-right { from { transform: translateX(calc(-1 * var(--run))); } to { transform: translateX(0); } }
 .welcome .grow, .welcome .wm, .welcome .wh, .welcome .wz, .welcome .btn-primary, .welcome .later { position: relative; }
 .welcome .wm { display: flex; align-items: center; gap: 8px; font: 400 22px var(--serif); color: #F4EFE4; }
 .welcome .wm .mk { width: 23px; height: 36px; display: flex; justify-content: center; align-items: center; overflow: visible; }
@@ -743,5 +807,6 @@ dialog.search::backdrop { background: rgba(0, 0, 0, .64); }
   table.stack td:first-child::before { display: none; }
 }
 
-/* "Out now" in the replicas, in Meridian Gold as in the app. */
-.cd-word { color: var(--gold); }
+/* A word in the countdown's place ("Out now", "Released", a date) takes the countdown's ink; only "Out now" is
+   Meridian Gold, as in the app (CountdownText, D-53). */
+.cd-word.out { color: var(--gold); }

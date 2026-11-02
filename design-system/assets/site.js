@@ -1,5 +1,5 @@
 /* Meridian design system: data and behaviour. Plain JS, no dependencies.
-   Every app value below comes from the app's source at commit 7a4ec07. */
+   Every app value below comes from the app's source at commit a22854f. */
 (function () {
   'use strict';
   const $ = (s, r = document) => r.querySelector(s);
@@ -103,6 +103,8 @@
       ['night-bases', 'Cool: blue art', 'Blue art, 210°', '#181E24', '#181E24', '--night-sample-blue', '', 'Cool'],
       ['night-bases', 'Cool: indigo art', 'Indigo art, 240°', '#181824', '#181824', '--night-sample-indigo', '', 'Cool'],
       ['night-bases', 'Cool: purple art', 'Purple art, 280°', '#201824', '#201824', '--night-sample-purple', '', 'Cool'],
+      ['night-bases', 'Computed: Wednesday', 'Wednesday’s art', '#181924', '#181924', '--night-sample-wednesday', '', 'Cool. Computed sample from its key art, used in the mockups'],
+      ['night-bases', 'Computed: Severance', 'Severance’s art', '#1B241A', '#1B241A', '--night-sample-severance', '', 'Cool. Computed sample from its key art, used in the mockups'],
     ],
     controls: [
       ['control-colours', 'Control fill', 'Control fill', 'rgba(0,0,0,.55)', '#0000008C', '--control-fill', 'Color.black.opacity(0.55)', 'Unpicked filter chip, the Follow (+) button', '#1C1C1C'],
@@ -111,9 +113,12 @@
       ['control-colours', 'Episode ink', 'Episode ink', 'rgba(255,255,255,.6)', '#FFFFFF99', '--episode-ink', 'Color.white.opacity(0.6)', 'Episode label and date; the Live Activity toggle tint', '#1C1C1C'],
       ['control-colours', 'Tag fill', 'Widget tag fill', 'rgba(0,0,0,.45)', '#00000073', '--widget-tag-fill', 'Color.black.opacity(0.45)', 'The widget tag capsule over art', '#8C8C8C'],
       ['control-colours', 'Art scrim', 'Art scrim', 'rgba(0,0,0,.4)', '#00000066', '--art-scrim', 'Color.black.opacity(0.4)', 'Top of the art header, clear by 25%', '#8C8C8C'],
+      ['widget-ink', 'Tile', 'Widget tile', 'rgba(255,255,255,.08)', '#FFFFFF14', '--widget-tile', 'WidgetInk.tile', 'Where a widget thumbnail would be when a show has no art yet; the app’s poster surface is the same white at 0.08', '#1C1C1C'],
+      ['control-colours', 'Welcome tile', 'Welcome tile', 'rgba(255,255,255,.05)', '#FFFFFF0D', '--welcome-tile', 'Color.white.opacity(0.05)', 'A Welcome wall tile until its picture loads, or if it can’t', '#1C1C1C'],
       ['control-colours', 'Picked / primary', 'Picked and primary', '#FFFFFF', '#FFFFFF', '--control-picked', 'Color.white', 'Picked chip, Following (+), Follow and Find a show, the tab tint. Text on it is black'],
     ],
     la: [
+      ['la-ink', 'Out', 'Out now', '#E9C46A', '#E9C46A', '--la-out', 'LiveActivityInk.out', 'Meridian Gold (Tokens.gold): “Out now” wherever the Live Activity says it, from the drop', '#0D0D0E'],
       ['la-ink', 'Fill', 'Fill', '#FFFFFF', '#FFFFFF', '--la-fill', 'LiveActivityInk.fill', 'Ring and bar fill', '#0D0D0E'],
       ['la-ink', 'Track', 'Track', 'rgba(255,255,255,.18)', '#FFFFFF2E', '--la-track', 'LiveActivityInk.track', 'Ring and bar track', '#0D0D0E'],
       ['la-ink', 'Disc', 'Disc', 'rgba(255,255,255,.16)', '#FFFFFF29', '--la-disc', 'LiveActivityInk.disc', 'The disc behind the monogram', '#0D0D0E'],
@@ -252,6 +257,7 @@
   const TYPE = [
     ['Hero countdown', 'App', 'serif', 88, 300, true, 'Upcoming hero, Show detail, the show page'],
     ['Welcome headline', 'App', 'serif', 34, 400, false, 'Welcome'],
+    ['Welcome wordmark', 'App', 'serif', 22, 400, false, '“Meridian” in title 2, Starlight, beside the 36 pt mark; both grow with Dynamic Type'],
     ['Hero title', 'App', 'serif', 32, 400, false, 'Headline title, spotlight, the show page'],
     ['Empty headline', 'App', 'serif', 28, 400, false, '“Follow a show…”, “Nothing scheduled…”'],
     ['Row countdown', 'App', 'serif', 24, 300, true, 'Upcoming row'],
@@ -289,12 +295,12 @@
     ['Circular unit', 'Lock Screen', 'serif', 10, 400, true, '“d” in “2d”, secondary'],
     ['LA countdown (default)', 'Live Activity', 'serif', 44, 300, true, 'The countdown’s default size'],
     ['Lock banner countdown', 'Live Activity', 'serif', 36, 300, true, 'Lock Screen banner'],
-    ['Expanded countdown / Out now', 'Live Activity', 'serif', 34, 300, true, 'Expanded island, bottom'],
+    ['Expanded countdown / Out now', 'Live Activity', 'serif', 24, 300, true, 'Expanded island, bottom right'],
     ['Small LA countdown', 'Live Activity', 'serif', 24, 300, true, 'Small family'],
     ['Lock banner title', 'Live Activity', 'serif', 19, 500, false, 'Lock Screen banner'],
     ['Expanded title', 'Live Activity', 'serif', 18, 500, false, 'Expanded island, leading'],
     ['Compact island timer', 'Live Activity', 'serif', 15, 500, true, 'Compact, trailing'],
-    ['Expanded label', 'Live Activity', 'sans', 14, 600, false, '“Expected in”'],
+    ['Expanded time', 'Live Activity', 'sans', 15, 500, false, '“Expected Mon 21:00”; “Delayed from 21:00” 13 muted'],
     ['Lock label / details / time', 'Live Activity', 'sans', 13, 600, false, '“Expected in” semibold; details and time medium'],
     ['Small LA label / time', 'Live Activity', 'sans', 11, 600, false, 'Small family'],
   ];
@@ -307,6 +313,7 @@
     if (/when/.test(r)) return 'Expected Wed 23:00';
     if (/tag/i.test(r)) return 'HBO · US';
     if (/out line/i.test(r)) return 'Expected Wed at 23:00';
+    if (/wordmark/.test(r)) return 'Meridian';
     if (/Welcome/.test(r)) return 'How long until your next episode';
     if (/empty/i.test(r)) return 'Follow a show';
     if (/meta|footnote/i.test(r)) return 'S4E1 · Apple TV';
@@ -348,12 +355,20 @@
   const p2 = (n) => String(n).padStart(2, '0');
   const WD = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const MO = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  // ReleaseWording.verb: once the time has passed a sure time says "Released" and an anime "Aired in Japan"; an
+  // estimate keeps "Expected", so it never claims more than its source.
+  const PAST = { 'Out': 'Released', 'Airs in Japan': 'Aired in Japan' };
+  // ReleaseWording.outLine with DropFormatter.relativeDay: "today", "tomorrow", "yesterday", a weekday within the
+  // week, then "Wed 18 Nov", with the year when it isn't this year.
   function outLine(verb, target, naming) {
     const d = new Date(target), now = new Date();
     const day0 = (x) => new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime();
     const diff = Math.round((day0(d) - day0(now)) / 86400000);
-    const day = diff === 0 ? 'today' : diff === 1 ? 'tomorrow' : diff < 7 ? WD[d.getDay()] : `${WD[d.getDay()]} ${d.getDate()} ${MO[d.getMonth()]}`;
-    return `${verb} ${day} at ${p2(d.getHours())}:${p2(d.getMinutes())}${naming ? ` ${ZONE.city} time` : ''}`;
+    const dayMonth = `${WD[d.getDay()]} ${d.getDate()} ${MO[d.getMonth()]}`;
+    const day = diff === 0 ? 'today' : diff === 1 ? 'tomorrow' : diff === -1 ? 'yesterday' : diff >= 2 && diff <= 6 ? WD[d.getDay()]
+      : d.getFullYear() === now.getFullYear() ? dayMonth : `${dayMonth} ${d.getFullYear()}`;
+    const said = target <= now.getTime() ? PAST[verb] || verb : verb;
+    return `${said} ${day} at ${p2(d.getHours())}:${p2(d.getMinutes())}${naming ? ` ${ZONE.city} time` : ''}`;
   }
   function renderOutLines(scope = document) {
     $$('[data-out]', scope).forEach((el) => {
@@ -380,6 +395,16 @@
     const hours = Math.max(0, Math.floor(remaining / 3600));
     return [[Math.floor(hours / 24), 'd', 'day'], [hours % 24, 'h', 'hour']];
   }
+  // CountdownFormatter.state: dateOnly is drawn in the page; here, ticking or still before the drop, "Out now" from
+  // the drop until an hour after (outNowWindow), then "Released".
+  const OUT_NOW_WINDOW = 3600;
+  const stateOf = (remaining) => (remaining > TICKING_WINDOW ? 'coarse' : remaining > 0 ? 'ticking' : remaining > -OUT_NOW_WINDOW ? 'out' : 'released');
+  // CountdownText's words in the countdown's place: "Out now" at 0.7 times in Meridian Gold, "Released" at 0.6 times
+  // in the secondary ink.
+  const WORDS = {
+    out: ['<span class="cd-word out" style="font-size:.7em">Out now</span>', 'Out now'],
+    released: ['<span class="cd-word" style="font-size:.6em;color:rgba(255,255,255,.6)">Released</span>', 'Released'],
+  };
   function countdownHTML(remaining) {
     if (remaining <= 0) return null;
     if (remaining <= TICKING_WINDOW) return clock(remaining);
@@ -388,16 +413,17 @@
     return parts.map(([v, u], i) => `${v}<span class="d">${u}${i < parts.length - 1 ? ' ' : ''}</span>`).join('');
   }
   const plural = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
-  // Over a day: CountdownFormatter.spokenText, the same parts in words with a zero part left out ("2 days 4 hours",
-  // "4 days", never "3 days 24 hours"). Under a day the app lets VoiceOver read the timer.
+  // Over a day: CountdownFormatter.spokenText of the still parts, with a zero part left out ("2 days 4 hours", "4 days",
+  // never "3 days 24 hours"). Under a day, as the widgets' VoiceOver phrase says it: CountdownFormatter.parts with
+  // maxUnits 2, the largest unit that isn't zero and the next, rounded down, zeros left out ("23 hours 59 minutes",
+  // "1 hour", "1 day" at exactly 24 hours), and anything under a minute "1 minute".
   function spoken(remaining) {
     if (remaining <= 0) return 'Out now';
     if (remaining > TICKING_WINDOW) return coarse(remaining).filter(([v]) => v > 0).map(([v, , w]) => plural(v, w)).join(' ');
-    const s = Math.ceil(remaining);
-    const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
-    if (h > 0) return `${plural(h, 'hour')} ${plural(m, 'minute')}`;
-    if (m > 0) return `${plural(m, 'minute')} ${plural(sec, 'second')}`;
-    return plural(sec, 'second');
+    const minutes = Math.max(1, Math.floor(Math.floor(remaining) / 60));
+    const units = [[Math.floor(minutes / 1440), 'day'], [Math.floor((minutes % 1440) / 60), 'hour'], [minutes % 60, 'minute']];
+    const first = units.findIndex(([v]) => v > 0);
+    return units.slice(first, first + 2).filter(([v]) => v > 0).map(([v, w]) => plural(v, w)).join(' ');
   }
   function arm(el, now = Date.now()) { el.dataset.cdTarget = String(now + Number(el.dataset.cd) * 1000); el.dataset.state = ''; }
   function tick() {
@@ -405,15 +431,20 @@
     $$('[data-cd]', current || document).forEach((el) => {
       if (!el.dataset.cdTarget) return;
       const rem = (Number(el.dataset.cdTarget) - now) / 1000;
-      const html = countdownHTML(rem);
-      if (html === null) {
-        // Stops at zero and never counts up: the state becomes "Out now".
-        if (el.dataset.state !== 'out') { el.dataset.state = 'out'; el.innerHTML = '<span class="cd-word" style="font-size:.7em">Out now</span>'; el.setAttribute('aria-label', 'Out now'); }
-      } else {
-        if (el.innerHTML !== html) el.innerHTML = html;
-        const label = spoken(rem); if (el.getAttribute('aria-label') !== label) el.setAttribute('aria-label', label);
-        el.dataset.state = '';
+      const state = stateOf(rem), was = el.dataset.state;
+      el.dataset.state = state;
+      // The out line beside it turns to the past ("Released …", "Aired in Japan …") at the drop.
+      if (was && was !== state && (state === 'out' || was === 'out')) renderOutLines(el.closest('.phone-copy, .col, .stage, .cd-card') || el);
+      if (state === 'out' || state === 'released') {
+        // The Live Activity's timer (data-cd-hold) stops at 0:00 and stays there (LiveActivityCountdown); every other
+        // countdown stops at zero and never counts up: the words take its place.
+        const [html, label] = el.hasAttribute('data-cd-hold') ? ['0:00', '0:00'] : WORDS[state];
+        if (el.innerHTML !== html) { el.innerHTML = html; el.setAttribute('aria-label', label); }
+        return;
       }
+      const html = countdownHTML(rem);
+      if (el.innerHTML !== html) el.innerHTML = html;
+      const label = spoken(rem); if (el.getAttribute('aria-label') !== label) el.setAttribute('aria-label', label);
     });
   }
   function initCountdowns() {
@@ -463,11 +494,11 @@
   ];
   const LA_PRES = [
     ['lock', 'Lock Screen banner', '', 360, 157, 'r-home'], ['compact', 'Compact', '', 221, 36, 'r-capsule'],
-    ['minimal', 'Minimal', '', 36, 36, 'r-circle'], ['expanded', 'Expanded', '', 371, 156, 'r-expanded'],
+    ['minimal', 'Minimal', '', 36, 36, 'r-circle'], ['expanded', 'Expanded', '', 371, 118.67, 'r-expanded'],
     ['small', 'Small family', '', 170, 105, 'r-card'],
   ];
   const LSTATES = [
-    ['countingDown', 'Silo, expected in 2 hours'], ['delayed', 'Moved an hour later, the old time struck through'],
+    ['countingDown', 'Silo, expected in 2 hours'], ['delayed', 'Moved an hour later'],
     ['longName', 'Frieren, airs in Japan'], ['merged', 'Silo + 1 more'], ['outNow', 'Out 10 minutes ago'], ['stale', 'At the drop, with no app running'],
   ];
   function shot(src, cap, frame, w, h, corner, holes) {
@@ -541,6 +572,8 @@
     const f = LA_PRES.find((x) => x[0] === p);
     if (p === 'compact' && /^(outNow|stale)/.test(s)) return [224, 36];
     if (p === 'minimal' && /^limited/.test(s)) return [24, 24];
+    // A moved time adds a line under the words (D-57).
+    if (p === 'expanded' && /^delayed/.test(s)) return [371, 136.33];
     return [f[3], f[4]];
   }
   function renderLA(p) {
@@ -657,7 +690,7 @@
     // expanded covers the status bar, 371 pt wide, from the island's top.
     compact: () => statusBar('04:37', ['battery'], 14, 72) + row(0) + row(1) +
       placed('live-activity', 'compact-countingDown-art.png', (SCR.w - 220.67) / 2, 14.5, 220.67, 36, 'r-capsule', 'island'),
-    expanded: () => row(0) + row(1) + placed('live-activity', 'expanded-countingDown-art.png', (SCR.w - 371) / 2, 14, 371, 156.33, 'r-expanded', 'island'),
+    expanded: () => row(0) + row(1) + placed('live-activity', 'expanded-countingDown-art.png', (SCR.w - 371) / 2, 14, 371, 118.67, 'r-expanded', 'island'),
   };
   function phoneHTML(kind) {
     tileN = 0;
@@ -1008,6 +1041,37 @@
   }
   function renderArt() { $$('.art[data-show]').forEach((a) => setArt(a, a.dataset.show)); }
 
+  /* ================================================================ Welcome wall */
+  // WelcomeWall.arrange: TV posters, the first three (wideTV) swapped for wide key art; anime covers, every third
+  // (index 1, 4, …) as its wide banner when it has one; TV and anime alternate, then are dealt across the three rows in
+  // turn, at most 8 a row. WelcomeWallView: rows 128, 172 and 128 tall, 8 apart; posters 2:3 and wide art 16:9, rounded
+  // to the point; each row its tiles several times over (at least 3, enough to cover 1000 pt), sliding one run at 9 pt
+  // a second, alternate rows the other way, each starting part-way into its run. The art loads like every named show's.
+  const WALL = { tv: ['silo', 'dragon', 'severance', 'wonderman', 'andor', 'from', 'tracker', 'lastofus'], anime: ['frieren', 'sololeveling'] };
+  const WALL_HEIGHTS = [128, 172, 128], WALL_LEADS = [0, 0.42, 0.18], WALL_GAP = 8, WALL_SPEED = 9, WALL_PER_ROW = 8;
+  function renderWall() {
+    const host = $('#welcome-wall'); if (!host) return;
+    const tv = WALL.tv.map((key, i) => ({ key, wide: i < 3 && !!SHOWS[key].hero }));
+    const anime = WALL.anime.map((key, i) => ({ key, wide: i % 3 === 1 && !!SHOWS[key].hero }));
+    const merged = [];
+    for (let i = 0; i < Math.max(tv.length, anime.length); i++) [tv[i], anime[i]].forEach((t) => { if (t) merged.push(t); });
+    const rows = WALL_HEIGHTS.map(() => []);
+    merged.slice(0, rows.length * WALL_PER_ROW).forEach((t, i) => rows[i % rows.length].push(t));
+    host.innerHTML = '<div class="wall-rows">' + rows.map((tiles, r) => {
+      const h = WALL_HEIGHTS[r], lead = WALL_LEADS[r], leftward = r % 2 === 0;
+      const width = (t) => Math.round(t.wide ? (h * 16) / 9 : (h * 2) / 3);
+      const run = tiles.reduce((sum, t) => sum + width(t) + WALL_GAP, 0);
+      const copies = Math.max(3, Math.ceil(1000 / run) + 1);
+      const dur = run / WALL_SPEED;
+      // Leftward rows slide from 0 to -run, rightward ones from -run to 0; a negative delay starts each `lead` of a run
+      // in, and --x0 is that same starting place, where the row stays when Reduce Motion drops the animation.
+      const x0 = leftward ? -lead * run : lead * run - run;
+      const use = (t) => (t.wide ? 'hero' : SHOWS[t.key].cover ? 'cover' : 'poster');
+      const cells = tiles.map((t) => `<span class="art" data-show="${t.key}" data-use="${use(t)}" style="width:${width(t)}px"></span>`).join('');
+      return `<div class="wall-row" style="--h:${h}px"><div class="wall-strip" style="--run:${run}px;--x0:${x0.toFixed(1)}px;--dur:${dur.toFixed(2)}s;--delay:${(-lead * dur).toFixed(2)}s;--drift:wall-${leftward ? 'left' : 'right'}">${cells.repeat(copies)}</div></div>`;
+    }).join('') + '</div><div class="wall-top"></div>';
+  }
+
   /* ================================================================ hero, motion, checklist */
   // The hero's three buttons: Silo's art is warm (orange), Wednesday's cool (blue-violet), then no art at all.
   const HERO = {
@@ -1045,7 +1109,7 @@
   }
 
   /* ================================================================ start */
-  renderLogos(); renderTokens(); renderContrast(); renderZone(); renderArt(); renderMockups();
+  renderLogos(); renderTokens(); renderContrast(); renderZone(); renderWall(); renderArt(); renderMockups();
   bindTabs(); bindCustomType(); decorate();
   buildRail(); bindRail(); bindSearch(); bindHero(); bindMotion(); bindDemo();
   buildIndex();

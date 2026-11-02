@@ -2,6 +2,44 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## The design system matches the app, and stays that way; the expanded island redesigned (Mon 2 Nov 2026)
+
+- Chime: confirm the design system is the same as the app; any change to one goes to the other. Then: the expanded island's progress bar means nothing and its "Expected in 2:00:00" is too big; unslop it.
+- **Audit:**
+  - **Widget and Live Activity pictures:** re-rendered from HEAD and compared pixel by pixel with the site's copies. All 75 widgets were identical. 49 Live Activity renders differed only in a sample clock time: the tests used `Date.now`.
+  - **Hand-drawn parts:** three read-only agents compared the tokens, components, countdown, wording and surfaces with the Swift. They found 8 visible differences, about 20 text slips and 2 app problems.
+- **Site fixed to the app** (agent, 24 of 26 items; 2 left as is with reasons):
+  - date-only days no longer gold (D-53)
+  - the Welcome wall now drifts in 3 rows
+  - the (+) sits 10 pt from the corner
+  - the chips scroll in one row
+  - the impossible "Silo returns" Upcoming state is gone
+  - countdowns turn to "Released" and to past tense
+  - VoiceOver phrasing, the timeline rules, the payload, tint claims and Reduce Motion claims corrected
+  - missing tokens added; `tokens.json` sources moved to HEAD
+  - checks: `node --check`, the JSON parse, 0 console errors, no overflow at 320, all six views
+- **App:**
+  - **Welcome:** the wall and tile fades skip under Reduce Motion.
+  - **Show detail:** "Report a wrong time" and "Unfollow" are 44 pt tap rows. `fidelity/verify-screen.sh detail` printed ALL PASS.
+- **Expanded island (D-57, unslop):**
+  - The bar is gone; it filled from the activity's start, a picture with no words.
+  - Under the title and art, one line laid out like Upcoming's rows: "Expected Mon 21:00" with the countdown at 24 pt (was 34) on its baseline, "Delayed from 21:00" in words under it, and a gold "Out now" at the drop.
+  - Weekday, not "today": the verifier caught that "tomorrow" would go stale after midnight, because the island isn't redrawn.
+  - `LiveActivityBar` deleted; `ReleaseWording.pastVerb` added.
+- **Sync check (Chime OK'd):**
+  - The Live Activity renders use a fixed clock (2 Nov 18:00Z), like the widgets'.
+  - Every render must equal the site's copy (`MeridianTests/Support/DesignSystemCopy.swift`).
+  - `scripts/sync-design-system-renders.sh` re-renders in sync mode (skips only the copy check) and copies only this run's renders. It lists site pictures no render made.
+  - Red: 49 issues, exactly the changed Live Activity renders. Green twice in a row, so the renders are deterministic. A deliberately broken site PNG was restored by the script.
+  - CLAUDE.md now says the app is the source of truth and both change in one commit.
+- **Checks:** gate build, test and spec all pass. LiveActivityTextTests (outLine, movedLine) were red first, as a compile error.
+- **Reviews:**
+  - **proof:verifier:** 3 findings, all fixed (the stale "tomorrow", two leftover mentions of the bar, and the sync script copying stale or partial renders).
+  - **`/code-review` (high):** 7 findings, 2 fixed (`pastVerb` beside `verb`, temp files) plus sync mode for a third. Not fixed: `art-holes.json` isn't compared (it's built test by test); byte-exact matching means an Xcode update needs one re-sync; an estimate reads "Expected Mon 21:00" beside "Out now" (D-40 wording).
+- **Not verified:**
+  - the new island on the phone (installed; Chime to look)
+  - Safari rendering of the site
+
 ## Design system: iPhone mockups for the widgets and the Live Activity (Mon 2 Nov 2026)
 
 - Chime: make the Widgets and Live Activity sections more presentable with an iPhone mockup. Done by an agent (stageshow skill); checked here.
