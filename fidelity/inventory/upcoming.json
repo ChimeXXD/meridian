@@ -14,7 +14,8 @@
     },
     {
       "id": "upcoming-hero-out",
-      "prefix": "Expected today at "
+      "prefix": "Expected ",
+      "contains": " at "
     },
     {
       "id": "section-header-next-24",

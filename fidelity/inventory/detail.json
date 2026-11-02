@@ -12,7 +12,8 @@
     },
     {
       "id": "detail-out",
-      "prefix": "Expected today at "
+      "prefix": "Expected ",
+      "contains": " at "
     },
     {
       "id": "detail-why",
