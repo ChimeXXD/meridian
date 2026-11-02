@@ -502,6 +502,11 @@ dl.facts dd { margin: 6px 0 0; font-size: var(--t-small); color: var(--ink-2); l
 .shot .frame.lock { background: #232326; }
 .shot .frame.island { background: #2C2C2E; }
 .shot img { display: block; max-width: 100%; height: auto; }
+/* A render with its art cut out: the show's art (or the neutral placeholder) sits behind the PNG at each hole. */
+.shot .holes { position: relative; display: block; max-width: 100%; overflow: hidden; isolation: isolate; background: #575757; }
+.shot .holes > img { position: relative; z-index: 1; border-radius: 0; }
+.shot .holes > .hole { inset: auto; z-index: 0; }
+.shot .holes > .hole > img { height: 100%; max-width: none; }
 .shot figcaption { font-size: var(--t-label); color: var(--ink-3); line-height: 1.45; }
 .r-home { border-radius: 22px; }
 .r-card { border-radius: 16px; }

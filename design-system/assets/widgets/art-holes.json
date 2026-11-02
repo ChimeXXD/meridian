@@ -1,0 +1,552 @@
+{
+  "about" : "Art holes for the design system: in each PNG the show's art is cut out (alpha 0) and the fades over it are kept as translucent pixels. Rects are in the PNG's pixels; place the art behind at each rect, object-fit: cover with the given anchor.",
+  "scale" : 3,
+  "shots" : {
+    "large-allQuiet-art.png" : {
+      "height" : 1062,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 96,
+          "kind" : "poster",
+          "radius" : 16,
+          "show" : "From",
+          "w" : 64,
+          "x" : 48,
+          "y" : 558
+        },
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 96,
+          "kind" : "poster",
+          "radius" : 16,
+          "show" : "Solo Leveling",
+          "w" : 64,
+          "x" : 48,
+          "y" : 678
+        },
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 96,
+          "kind" : "poster",
+          "radius" : 16,
+          "show" : "The Last of Us",
+          "w" : 64,
+          "x" : 48,
+          "y" : 798
+        },
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 96,
+          "kind" : "poster",
+          "radius" : 16,
+          "show" : "Andor",
+          "w" : 64,
+          "x" : 48,
+          "y" : 918
+        }
+      ],
+      "width" : 1014
+    },
+    "large-busy-art.png" : {
+      "height" : 1062,
+      "holes" : [
+        {
+          "align" : "top",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 658.44,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "House of the Dragon",
+          "w" : 1014,
+          "x" : 0,
+          "y" : 0
+        },
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 96,
+          "kind" : "poster",
+          "radius" : 16,
+          "show" : "Silo",
+          "w" : 64,
+          "x" : 48,
+          "y" : 678
+        },
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 96,
+          "kind" : "poster",
+          "radius" : 16,
+          "show" : "Frieren: Beyond Journey's End",
+          "w" : 64,
+          "x" : 48,
+          "y" : 798
+        },
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 96,
+          "kind" : "poster",
+          "radius" : 16,
+          "show" : "Severance",
+          "w" : 64,
+          "x" : 48,
+          "y" : 918
+        }
+      ],
+      "width" : 1014
+    },
+    "large-countdown-art.png" : {
+      "height" : 1062,
+      "holes" : [
+        {
+          "align" : "top",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 658.44,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "Silo",
+          "w" : 1014,
+          "x" : 0,
+          "y" : 0
+        },
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 96,
+          "kind" : "poster",
+          "radius" : 16,
+          "show" : "Frieren: Beyond Journey's End",
+          "w" : 64,
+          "x" : 48,
+          "y" : 798
+        },
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 96,
+          "kind" : "poster",
+          "radius" : 16,
+          "show" : "Wonder Man",
+          "w" : 64,
+          "x" : 48,
+          "y" : 918
+        }
+      ],
+      "width" : 1014
+    },
+    "large-quiet-art.png" : {
+      "height" : 1062,
+      "holes" : [
+        {
+          "align" : "top",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 658.44,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "House of the Dragon",
+          "w" : 1014,
+          "x" : 0,
+          "y" : 0
+        },
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 96,
+          "kind" : "poster",
+          "radius" : 16,
+          "show" : "Silo",
+          "w" : 64,
+          "x" : 48,
+          "y" : 678
+        },
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 96,
+          "kind" : "poster",
+          "radius" : 16,
+          "show" : "From",
+          "w" : 64,
+          "x" : 48,
+          "y" : 798
+        },
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 96,
+          "kind" : "poster",
+          "radius" : 16,
+          "show" : "Solo Leveling",
+          "w" : 64,
+          "x" : 48,
+          "y" : 918
+        }
+      ],
+      "width" : 1014
+    },
+    "large-ticking-art.png" : {
+      "height" : 1062,
+      "holes" : [
+        {
+          "align" : "top",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 658.44,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "House of the Dragon",
+          "w" : 1014,
+          "x" : 0,
+          "y" : 0
+        },
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 96,
+          "kind" : "poster",
+          "radius" : 16,
+          "show" : "Silo",
+          "w" : 64,
+          "x" : 48,
+          "y" : 918
+        }
+      ],
+      "width" : 1014
+    },
+    "medium-allQuiet-art.png" : {
+      "height" : 474,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 63,
+          "kind" : "poster",
+          "radius" : 10.5,
+          "show" : "From",
+          "w" : 42,
+          "x" : 48,
+          "y" : 219
+        },
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 63,
+          "kind" : "poster",
+          "radius" : 10.5,
+          "show" : "Solo Leveling",
+          "w" : 42,
+          "x" : 48,
+          "y" : 291
+        },
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 63,
+          "kind" : "poster",
+          "radius" : 10.5,
+          "show" : "The Last of Us",
+          "w" : 42,
+          "x" : 48,
+          "y" : 363
+        }
+      ],
+      "width" : 1014
+    },
+    "medium-busy-art.png" : {
+      "height" : 474,
+      "holes" : [
+        {
+          "align" : "top",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 474,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "House of the Dragon",
+          "w" : 1014,
+          "x" : 0,
+          "y" : 0
+        },
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 63,
+          "kind" : "poster",
+          "radius" : 10.5,
+          "show" : "Silo",
+          "w" : 42,
+          "x" : 48,
+          "y" : 291
+        },
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 63,
+          "kind" : "poster",
+          "radius" : 10.5,
+          "show" : "Frieren: Beyond Journey's End",
+          "w" : 42,
+          "x" : 48,
+          "y" : 363
+        }
+      ],
+      "width" : 1014
+    },
+    "medium-countdown-art.png" : {
+      "height" : 474,
+      "holes" : [
+        {
+          "align" : "top",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 474,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "Silo",
+          "w" : 1014,
+          "x" : 0,
+          "y" : 0
+        },
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 63,
+          "kind" : "poster",
+          "radius" : 10.5,
+          "show" : "Frieren: Beyond Journey's End",
+          "w" : 42,
+          "x" : 48,
+          "y" : 291
+        },
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 63,
+          "kind" : "poster",
+          "radius" : 10.5,
+          "show" : "Wonder Man",
+          "w" : 42,
+          "x" : 48,
+          "y" : 363
+        }
+      ],
+      "width" : 1014
+    },
+    "medium-quiet-art.png" : {
+      "height" : 474,
+      "holes" : [
+        {
+          "align" : "top",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 474,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "House of the Dragon",
+          "w" : 1014,
+          "x" : 0,
+          "y" : 0
+        },
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 63,
+          "kind" : "poster",
+          "radius" : 10.5,
+          "show" : "Silo",
+          "w" : 42,
+          "x" : 48,
+          "y" : 291
+        },
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 63,
+          "kind" : "poster",
+          "radius" : 10.5,
+          "show" : "From",
+          "w" : 42,
+          "x" : 48,
+          "y" : 363
+        }
+      ],
+      "width" : 1014
+    },
+    "medium-ticking-art.png" : {
+      "height" : 474,
+      "holes" : [
+        {
+          "align" : "top",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 474,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "House of the Dragon",
+          "w" : 1014,
+          "x" : 0,
+          "y" : 0
+        },
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 63,
+          "kind" : "poster",
+          "radius" : 10.5,
+          "show" : "Silo",
+          "w" : 42,
+          "x" : 48,
+          "y" : 363
+        }
+      ],
+      "width" : 1014
+    },
+    "small-allQuiet-art.png" : {
+      "height" : 474,
+      "holes" : [
+
+      ],
+      "width" : 474
+    },
+    "small-busy-art.png" : {
+      "height" : 474,
+      "holes" : [
+        {
+          "align" : "top",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 474,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "House of the Dragon",
+          "w" : 474,
+          "x" : 0,
+          "y" : 0
+        }
+      ],
+      "width" : 474
+    },
+    "small-countdown-art.png" : {
+      "height" : 474,
+      "holes" : [
+        {
+          "align" : "top",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 474,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "Silo",
+          "w" : 474,
+          "x" : 0,
+          "y" : 0
+        }
+      ],
+      "width" : 474
+    },
+    "small-quiet-art.png" : {
+      "height" : 474,
+      "holes" : [
+        {
+          "align" : "top",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 474,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "House of the Dragon",
+          "w" : 474,
+          "x" : 0,
+          "y" : 0
+        }
+      ],
+      "width" : 474
+    },
+    "small-ticking-art.png" : {
+      "height" : 474,
+      "holes" : [
+        {
+          "align" : "top",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 474,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "House of the Dragon",
+          "w" : 474,
+          "x" : 0,
+          "y" : 0
+        }
+      ],
+      "width" : 474
+    }
+  }
+}

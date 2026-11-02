@@ -1,0 +1,728 @@
+{
+  "about" : "Art holes for the design system: in each PNG the show's art is cut out (alpha 0) and the fades over it are kept as translucent pixels. Rects are in the PNG's pixels; place the art behind at each rect, object-fit: cover with the given anchor.",
+  "scale" : 3,
+  "shots" : {
+    "compact-countingDown-art.png" : {
+      "height" : 108,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 72,
+          "kind" : "poster",
+          "radius" : 18,
+          "show" : "Silo",
+          "w" : 72,
+          "x" : 36,
+          "y" : 18
+        }
+      ],
+      "width" : 662
+    },
+    "compact-delayed-art.png" : {
+      "height" : 108,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 72,
+          "kind" : "poster",
+          "radius" : 18,
+          "show" : "House of the Dragon",
+          "w" : 72,
+          "x" : 36,
+          "y" : 18
+        }
+      ],
+      "width" : 662
+    },
+    "compact-longName-art.png" : {
+      "height" : 108,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 72,
+          "kind" : "poster",
+          "radius" : 18,
+          "show" : "Frieren: Beyond Journey's End",
+          "w" : 72,
+          "x" : 36,
+          "y" : 18
+        }
+      ],
+      "width" : 662
+    },
+    "compact-merged-art.png" : {
+      "height" : 108,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 72,
+          "kind" : "poster",
+          "radius" : 18,
+          "show" : "Silo",
+          "w" : 72,
+          "x" : 36,
+          "y" : 18
+        }
+      ],
+      "width" : 662
+    },
+    "compact-outNow-art.png" : {
+      "height" : 108,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 72,
+          "kind" : "poster",
+          "radius" : 18,
+          "show" : "Silo",
+          "w" : 72,
+          "x" : 36,
+          "y" : 18
+        }
+      ],
+      "width" : 672
+    },
+    "compact-stale-art.png" : {
+      "height" : 108,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 72,
+          "kind" : "poster",
+          "radius" : 18,
+          "show" : "Silo",
+          "w" : 72,
+          "x" : 36,
+          "y" : 18
+        }
+      ],
+      "width" : 672
+    },
+    "expanded-countingDown-art.png" : {
+      "height" : 469,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 150,
+          "kind" : "wide",
+          "radius" : 36,
+          "show" : "Silo",
+          "w" : 150,
+          "x" : 903,
+          "y" : 48
+        }
+      ],
+      "width" : 1113
+    },
+    "expanded-delayed-art.png" : {
+      "height" : 469,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 150,
+          "kind" : "wide",
+          "radius" : 36,
+          "show" : "House of the Dragon",
+          "w" : 150,
+          "x" : 903,
+          "y" : 48
+        }
+      ],
+      "width" : 1113
+    },
+    "expanded-longName-art.png" : {
+      "height" : 469,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 150,
+          "kind" : "wide",
+          "radius" : 36,
+          "show" : "Frieren: Beyond Journey's End",
+          "w" : 150,
+          "x" : 903,
+          "y" : 48
+        }
+      ],
+      "width" : 1113
+    },
+    "expanded-merged-art.png" : {
+      "height" : 469,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 150,
+          "kind" : "wide",
+          "radius" : 36,
+          "show" : "Silo",
+          "w" : 150,
+          "x" : 903,
+          "y" : 48
+        }
+      ],
+      "width" : 1113
+    },
+    "expanded-outNow-art.png" : {
+      "height" : 469,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 150,
+          "kind" : "wide",
+          "radius" : 36,
+          "show" : "Silo",
+          "w" : 150,
+          "x" : 903,
+          "y" : 48
+        }
+      ],
+      "width" : 1113
+    },
+    "expanded-stale-art.png" : {
+      "height" : 469,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 150,
+          "kind" : "wide",
+          "radius" : 36,
+          "show" : "Silo",
+          "w" : 150,
+          "x" : 903,
+          "y" : 48
+        }
+      ],
+      "width" : 1113
+    },
+    "lock-countingDown-art.png" : {
+      "height" : 471,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 471,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "Silo",
+          "w" : 475.2,
+          "x" : 604.8,
+          "y" : 0
+        }
+      ],
+      "width" : 1080
+    },
+    "lock-countingDown-longest-art.png" : {
+      "height" : 471,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 471,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "Silo",
+          "w" : 475.2,
+          "x" : 604.8,
+          "y" : 0
+        }
+      ],
+      "width" : 1080
+    },
+    "lock-delayed-art.png" : {
+      "height" : 471,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 471,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "House of the Dragon",
+          "w" : 475.2,
+          "x" : 604.8,
+          "y" : 0
+        }
+      ],
+      "width" : 1080
+    },
+    "lock-delayed-longest-art.png" : {
+      "height" : 471,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 471,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "House of the Dragon",
+          "w" : 475.2,
+          "x" : 604.8,
+          "y" : 0
+        }
+      ],
+      "width" : 1080
+    },
+    "lock-longName-art.png" : {
+      "height" : 471,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 471,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "Frieren: Beyond Journey's End",
+          "w" : 475.2,
+          "x" : 604.8,
+          "y" : 0
+        }
+      ],
+      "width" : 1080
+    },
+    "lock-longName-longest-art.png" : {
+      "height" : 471,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 471,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "Frieren: Beyond Journey's End",
+          "w" : 475.2,
+          "x" : 604.8,
+          "y" : 0
+        }
+      ],
+      "width" : 1080
+    },
+    "lock-merged-art.png" : {
+      "height" : 471,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 471,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "Silo",
+          "w" : 475.2,
+          "x" : 604.8,
+          "y" : 0
+        }
+      ],
+      "width" : 1080
+    },
+    "lock-merged-longest-art.png" : {
+      "height" : 471,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 471,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "Silo",
+          "w" : 475.2,
+          "x" : 604.8,
+          "y" : 0
+        }
+      ],
+      "width" : 1080
+    },
+    "lock-outNow-art.png" : {
+      "height" : 471,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 471,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "Silo",
+          "w" : 475.2,
+          "x" : 604.8,
+          "y" : 0
+        }
+      ],
+      "width" : 1080
+    },
+    "lock-outNow-longest-art.png" : {
+      "height" : 471,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 471,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "Silo",
+          "w" : 475.2,
+          "x" : 604.8,
+          "y" : 0
+        }
+      ],
+      "width" : 1080
+    },
+    "lock-stale-art.png" : {
+      "height" : 471,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 471,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "Silo",
+          "w" : 475.2,
+          "x" : 604.8,
+          "y" : 0
+        }
+      ],
+      "width" : 1080
+    },
+    "lock-stale-longest-art.png" : {
+      "height" : 471,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "none",
+          "fit" : "cover",
+          "h" : 471,
+          "kind" : "wide",
+          "radius" : 0,
+          "show" : "Silo",
+          "w" : 475.2,
+          "x" : 604.8,
+          "y" : 0
+        }
+      ],
+      "width" : 1080
+    },
+    "minimal-countingDown-art.png" : {
+      "height" : 108,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : true,
+          "corner" : "circular",
+          "fit" : "cover",
+          "h" : 45,
+          "kind" : "poster",
+          "radius" : 22.5,
+          "show" : "Silo",
+          "w" : 45,
+          "x" : 32,
+          "y" : 32
+        }
+      ],
+      "width" : 108
+    },
+    "minimal-delayed-art.png" : {
+      "height" : 108,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : true,
+          "corner" : "circular",
+          "fit" : "cover",
+          "h" : 45,
+          "kind" : "poster",
+          "radius" : 22.5,
+          "show" : "House of the Dragon",
+          "w" : 45,
+          "x" : 32,
+          "y" : 32
+        }
+      ],
+      "width" : 108
+    },
+    "minimal-limited-countingDown-art.png" : {
+      "height" : 72,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : true,
+          "corner" : "circular",
+          "fit" : "cover",
+          "h" : 45,
+          "kind" : "poster",
+          "radius" : 22.5,
+          "show" : "Silo",
+          "w" : 45,
+          "x" : 14,
+          "y" : 14
+        }
+      ],
+      "width" : 72
+    },
+    "minimal-limited-outNow-art.png" : {
+      "height" : 72,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : true,
+          "corner" : "circular",
+          "fit" : "cover",
+          "h" : 45,
+          "kind" : "poster",
+          "radius" : 22.5,
+          "show" : "Silo",
+          "w" : 45,
+          "x" : 14,
+          "y" : 14
+        }
+      ],
+      "width" : 72
+    },
+    "minimal-longName-art.png" : {
+      "height" : 108,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : true,
+          "corner" : "circular",
+          "fit" : "cover",
+          "h" : 45,
+          "kind" : "poster",
+          "radius" : 22.5,
+          "show" : "Frieren: Beyond Journey's End",
+          "w" : 45,
+          "x" : 32,
+          "y" : 32
+        }
+      ],
+      "width" : 108
+    },
+    "minimal-merged-art.png" : {
+      "height" : 108,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : true,
+          "corner" : "circular",
+          "fit" : "cover",
+          "h" : 45,
+          "kind" : "poster",
+          "radius" : 22.5,
+          "show" : "Silo",
+          "w" : 45,
+          "x" : 32,
+          "y" : 32
+        }
+      ],
+      "width" : 108
+    },
+    "minimal-outNow-art.png" : {
+      "height" : 108,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : true,
+          "corner" : "circular",
+          "fit" : "cover",
+          "h" : 45,
+          "kind" : "poster",
+          "radius" : 22.5,
+          "show" : "Silo",
+          "w" : 45,
+          "x" : 32,
+          "y" : 32
+        }
+      ],
+      "width" : 108
+    },
+    "minimal-stale-art.png" : {
+      "height" : 108,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : true,
+          "corner" : "circular",
+          "fit" : "cover",
+          "h" : 45,
+          "kind" : "poster",
+          "radius" : 22.5,
+          "show" : "Silo",
+          "w" : 45,
+          "x" : 32,
+          "y" : 32
+        }
+      ],
+      "width" : 108
+    },
+    "small-countingDown-art.png" : {
+      "height" : 316,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 54,
+          "kind" : "poster",
+          "radius" : 13.5,
+          "show" : "Silo",
+          "w" : 54,
+          "x" : 36,
+          "y" : 36
+        }
+      ],
+      "width" : 510
+    },
+    "small-delayed-art.png" : {
+      "height" : 316,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 54,
+          "kind" : "poster",
+          "radius" : 13.5,
+          "show" : "House of the Dragon",
+          "w" : 54,
+          "x" : 36,
+          "y" : 36
+        }
+      ],
+      "width" : 510
+    },
+    "small-longName-art.png" : {
+      "height" : 316,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 54,
+          "kind" : "poster",
+          "radius" : 13.5,
+          "show" : "Frieren: Beyond Journey's End",
+          "w" : 54,
+          "x" : 36,
+          "y" : 36
+        }
+      ],
+      "width" : 510
+    },
+    "small-merged-art.png" : {
+      "height" : 316,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 54,
+          "kind" : "poster",
+          "radius" : 13.5,
+          "show" : "Silo",
+          "w" : 54,
+          "x" : 36,
+          "y" : 36
+        }
+      ],
+      "width" : 510
+    },
+    "small-outNow-art.png" : {
+      "height" : 316,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 54,
+          "kind" : "poster",
+          "radius" : 13.5,
+          "show" : "Silo",
+          "w" : 54,
+          "x" : 36,
+          "y" : 36
+        }
+      ],
+      "width" : 510
+    },
+    "small-stale-art.png" : {
+      "height" : 316,
+      "holes" : [
+        {
+          "align" : "center",
+          "circle" : false,
+          "corner" : "continuous",
+          "fit" : "cover",
+          "h" : 54,
+          "kind" : "poster",
+          "radius" : 13.5,
+          "show" : "Silo",
+          "w" : 54,
+          "x" : 36,
+          "y" : 36
+        }
+      ],
+      "width" : 510
+    }
+  }
+}

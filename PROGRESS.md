@@ -2,10 +2,18 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Design system: real art in the widget and Live Activity renders (Mon 2 Nov 2026)
+
+- Chime: the Widgets section still showed placeholder art; show each show's poster. Done by an agent; checked here.
+- Art holes, test-only: `MeridianTests/Support/ArtMatte.swift` draws each art render with black, white and grey art and keeps only what sits over the art, with alpha where the art shows through (linear to within 3/255, enforced), so no artwork pixel can reach a PNG; `ArtHoleManifest.swift` writes `art-holes.json` (each hole's rect, corner, fit, show and kind) and checks every hole against the layout. 53 renders have holes (15 widgets, 38 Live Activity); the `-art-wide` variants are gone.
+- The site places TVmaze/AniList art (no referrer) behind each PNG at the manifest's rects, the placeholder showing if it fails. All renders redone, so they show D-56's still "2d 4h".
+- Checks: 252 tests passed; all 53 hole PNGs read back with no coloured pixel where clear and no clear pixel outside a hole; 23/23 images hide to the placeholder with the CDNs blocked; no console errors; no overflow at 390/320. Looked at: medium and large widgets with Silo and House of the Dragon key art and row posters; the Frieren Lock Screen.
+- `/code-review` (medium): 10 findings, 6 fixed (the matte ignored the render's own alpha; an unsettled render threw a cancellation; the grey size check; the Lock Screen share read from a throwaway view, now `LiveActivityArtEdge.defaultShare`; two duplications). Skipped: stale manifest entries are never pruned; Live Activity radii are copied literals; the matte can't see a colour transform on the art (none exists).
+
 ## Design system: real show art, and only the last day ticks (Mon 2 Nov 2026)
 
 - Chime: wherever the site names a show, show its real art instead of cool/warm placeholders; countdowns tick only in the last 24 h (D-56). Done by an agent; checked here.
-- Art loads at runtime from TVmaze and AniList (URLs in one `SHOWS` table in site.js, no image files committed, rule 9 / D-37), over the old gradient as the fallback, with no referrer. Hero buttons: "Silo, warm art" / "Wednesday, cool art" / "No art yet" (Silo's key art is warm). Real art in the overview hero, the Upcoming hero and rows, the poster grids, Spotlight and the show page. Widget and Live Activity renders keep placeholder art, with a note. Footer credit added.
+- Art loads at runtime from TVmaze and AniList (URLs in one `SHOWS` table in site.js, no image files committed, rule 9 / D-37), over the old gradient as the fallback, with no referrer. Hero buttons: "Silo, warm art" / "Wednesday, cool art" / "No art yet" (Silo's key art is warm). Real art in the overview hero, the Upcoming hero and rows, the poster grids, Spotlight and the show page. Widget and Live Activity renders kept placeholder art at first (see the next entry). Footer credit added.
 - Countdowns: under 24 h tick; beyond, a still "2d 4h" with both parts always shown ("1d 0h"), as the app.
 - Checks: 0 console errors; 14/14 art images load, 0 broken with both CDNs blocked; the hero switches Silo → Wednesday; Upcoming 7/7 images; multi-day countdowns "2d 4h | 1d 0h | 1d 3h | 3d 2h", spoken "1 day"; no overflow at 320; 51 deep links within 24 px.
 - `/code-review` (medium): 7 findings, 3 fixed (old art lingering on a hero switch, a static "1d" in the markup, rounding written as the Swift). Then no-referrer on art requests. Not fixed: Wednesday's and Severance's night bases aren't in the tokens table; an unused `data-art`; still countdowns rebuilt each 250 ms tick.

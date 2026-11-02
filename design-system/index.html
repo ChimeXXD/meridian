@@ -1141,7 +1141,7 @@ Section {
 <section class="view" id="surfaces" aria-labelledby="surfaces-h1" data-label="Widgets and Live Activity" data-search="widgets live activity home screen lock screen dynamic island">
   <header class="view-head">
     <h1 id="surfaces-h1">Widgets and Live Activity</h1>
-    <p class="lede">The countdown away from the app. These are the app’s own test renders, shown at their real point size with neutral placeholder art.</p>
+    <p class="lede">The countdown away from the app. These are the app’s own views, rendered by its tests at their real point size, with each show’s art loaded from TVmaze and AniList.</p>
   </header>
 
   <h2 id="widgets">Widgets</h2>
@@ -1163,8 +1163,8 @@ Section {
     <button role="tab" type="button" id="wt-large" data-tab="large" aria-controls="widget-gallery" aria-selected="false">Large</button>
   </div>
   <div id="widget-gallery" role="tabpanel" aria-labelledby="wt-medium" tabindex="0"></div>
-  <p class="small">These are the app’s test renders, which use placeholder art; on the phone each widget shows the show’s own art. They were drawn before the countdown stopped ticking more than a day out, so “2d 4:00:00” here is “2d 4h” in the app.</p>
-  <p class="small">In these renders the rectangular widget shortens a long service name to “A…” beside a days countdown, and the medium widget shortens a lower row’s title and time. The certainty word stays.</p>
+  <p class="small">The renders are the app’s own views. Each show’s key art and posters load from TVmaze and AniList behind them, cropped as the phone crops them; if an image can’t load, a neutral placeholder shows instead.</p>
+  <p class="small">In these renders the medium widget shortens a long title in a lower row. The certainty word stays.</p>
 
   <h2 id="live-activity">Live Activity</h2>
   <p>On release night, for the shows you choose, from the lead time (2 hours by default). Night base <code>#0D0D0E</code>, the show’s art on the right edge, and a plain-words label over a serif countdown. At the drop the content goes stale and every view says “Out now”, with no app running.</p>
@@ -1190,7 +1190,7 @@ Section {
     <button role="tab" type="button" id="lt-small" data-tab="small" aria-controls="la-gallery" aria-selected="false">Small</button>
   </div>
   <div id="la-gallery" role="tabpanel" aria-labelledby="lt-lock" tabindex="0"></div>
-  <p class="small">These are the app’s test renders, which use placeholder art; on the phone the Live Activity shows the show’s own art.</p>
+  <p class="small">The renders are the app’s own views. Each show’s art loads from TVmaze and AniList behind them, cropped as the phone crops it; if an image can’t load, a neutral placeholder shows instead.</p>
 </section>
 
 <!-- ================================================================ RESOURCES -->
@@ -1354,7 +1354,7 @@ NavigationLink("Debug") { DebugMenuView(model: model, scheduler: scheduler) }
 
 <footer class="foot">
   <span data-logo data-size="20" data-label=""></span>
-  <p>Meridian design system, published at <a href="https://meridian-designsystem.vercel.app">meridian-designsystem.vercel.app</a> from the repo’s <code>main</code> branch. Values are read from the app’s source at commit <code>7a4ec07</code>, 1 November 2026. Widget and Live Activity images are the app’s test renders with placeholder art. Show posters and key art come from <a href="https://www.tvmaze.com">TVmaze</a> and <a href="https://anilist.co">AniList</a>, loaded from their sites, not stored here.</p>
+  <p>Meridian design system, published at <a href="https://meridian-designsystem.vercel.app">meridian-designsystem.vercel.app</a> from the repo’s <code>main</code> branch. Values are read from the app’s source at commit <code>7a4ec07</code>, 1 November 2026. Widget and Live Activity images are the app’s own views, rendered by its tests with the art left out. Show posters and key art come from <a href="https://www.tvmaze.com">TVmaze</a> and <a href="https://anilist.co">AniList</a>, loaded from their sites, not stored here.</p>
 </footer>
 
 <dialog class="search" id="search" aria-label="Search the design system">

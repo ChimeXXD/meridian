@@ -470,22 +470,72 @@
     ['countingDown', 'Silo, expected in 2 hours'], ['delayed', 'Moved an hour later, the old time struck through'],
     ['longName', 'Frieren, airs in Japan'], ['merged', 'Silo + 1 more'], ['outNow', 'Out 10 minutes ago'], ['stale', 'At the drop, with no app running'],
   ];
-  function shot(src, cap, frame, w, h, corner) {
-    return `<figure class="shot" style="width:${w + 32}px"><div class="frame ${frame}"><img src="${src}" alt="${esc(cap)}" width="${w}" height="${h}" class="${corner}" loading="lazy" decoding="async"></div><figcaption>${esc(cap)}</figcaption></figure>`;
+  function shot(src, cap, frame, w, h, corner, holes) {
+    let img = `<img src="${src}" alt="${esc(cap)}" width="${w}" height="${h}" class="${corner}" loading="lazy" decoding="async">`;
+    // A render with art holes sits in a box the show's art fills from behind (see fillHoles). The render sizes the box
+    // (its width and height reserve the space), so it shrinks as the plain renders do and nothing moves as art arrives.
+    if (holes) img = `<span class="holes ${corner}" data-holes="${esc(src.split('/').pop())}">${img}</span>`;
+    return `<figure class="shot" style="width:${w + 32}px"><div class="frame ${frame}">${img}</div><figcaption>${esc(cap)}</figcaption></figure>`;
+  }
+  // Each render with art is the app's own view with the art cut out (alpha 0), the fades over it kept as see-through
+  // pixels; art-holes.json, written by the same tests, lists each hole in the PNG's pixels. The show's real art goes
+  // behind each hole as the app crops it (cover, anchored as the view anchors it), so the browser composites it as the
+  // phone does. Under each image is the site's neutral art placeholder, which shows if the image fails or is blocked.
+  const holeManifests = {};
+  function loadHoles(folder) {
+    if (!holeManifests[folder]) {
+      holeManifests[folder] = fetch(`assets/${folder}/art-holes.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    }
+    return holeManifests[folder];
+  }
+  function fillHoles(root, folder) {
+    loadHoles(folder).then((manifest) => {
+      if (!manifest) return;
+      $$('.holes[data-holes]', root).forEach((box) => {
+        const entry = manifest.shots[box.dataset.holes];
+        if (!entry || box.dataset.filled) return;
+        box.dataset.filled = 'true';
+        const render = box.querySelector(':scope > img');
+        const pct = (v, of) => `${(100 * v / of).toFixed(3)}%`;
+        entry.holes.forEach((hole) => {
+          const art = document.createElement('span');
+          art.className = 'art neutral hole';
+          art.setAttribute('aria-hidden', 'true');
+          art.style.left = pct(hole.x, entry.width); art.style.top = pct(hole.y, entry.height);
+          art.style.width = pct(hole.w, entry.width); art.style.height = pct(hole.h, entry.height);
+          if (hole.circle) art.style.borderRadius = '50%';
+          else if (hole.radius) art.style.borderRadius = `${pct(hole.radius, hole.w)} / ${pct(hole.radius, hole.h)}`;
+          const src = widgetImage(SHOW_BY_NAME[hole.show], hole.kind);
+          if (src) {
+            const img = document.createElement('img');
+            img.alt = ''; img.decoding = 'async'; img.loading = 'lazy'; img.referrerPolicy = 'no-referrer';
+            img.width = src[1]; img.height = src[2];
+            img.style.objectPosition = hole.align === 'top' ? '50% 0' : '50% 50%';
+            // A failed or blocked image is hidden, so the placeholder shows, never a broken-image icon.
+            img.addEventListener('error', () => { img.hidden = true; });
+            img.src = src[0];
+            art.append(img);
+          }
+          // In the manifest's order, before the render: a row's poster paints over the hero's art behind it.
+          box.insertBefore(art, render);
+        });
+      });
+    });
   }
   function renderWidgets(fam) {
     const f = WIDGET_FAMILIES.find((x) => x[0] === fam);
     let h = `<p class="gallery-h">${f[1]}, ${f[2]} × ${f[3]} pt, the smallest current iPhone Pro size. Corners are clipped as iOS clips them.</p><div class="gallery">`;
     h += WSTATES.map(([s, d]) => shot(`assets/widgets/${fam}-${s}.png`, d, f[4], f[2], f[3], f[5])).join('') + '</div>';
     if (['small', 'medium', 'large'].includes(fam)) {
-      h += '<p class="gallery-h">With placeholder art: square art, then wide key art</p><div class="gallery">';
+      h += '<p class="gallery-h">With each show’s art: the key art behind the top, a poster beside each row</p><div class="gallery">';
       ['countdown', 'ticking', 'busy', 'quiet', 'allQuiet'].forEach((s) => {
         const d = WSTATES.find((x) => x[0] === s)[1];
-        h += shot(`assets/widgets/${fam}-${s}-art.png`, `${d}, square art`, '', f[2], f[3], f[5]) + shot(`assets/widgets/${fam}-${s}-art-wide.png`, `${d}, wide art`, '', f[2], f[3], f[5]);
+        h += shot(`assets/widgets/${fam}-${s}-art.png`, `${d}, with art`, '', f[2], f[3], f[5], true);
       });
       h += '</div>';
     }
     $('#widget-gallery').innerHTML = h;
+    fillHoles($('#widget-gallery'), 'widgets');
   }
   function laSize(p, s) {
     const f = LA_PRES.find((x) => x[0] === p);
@@ -495,8 +545,8 @@
   }
   function renderLA(p) {
     const f = LA_PRES.find((x) => x[0] === p);
-    const one = (s, cap) => { const [w, h] = laSize(p, s); return shot(`assets/live-activity/${p}-${s}.png`, cap, f[2], w, h, f[5]); };
-    let h = `<p class="gallery-h">${f[1]}, without art and then with placeholder art</p><div class="gallery">`;
+    const one = (s, cap) => { const [w, h] = laSize(p, s); return shot(`assets/live-activity/${p}-${s}.png`, cap, f[2], w, h, f[5], /-art$/.test(s)); };
+    let h = `<p class="gallery-h">${f[1]}, without art and then with the show’s art</p><div class="gallery">`;
     LSTATES.forEach(([s, d]) => { h += one(s, d) + one(`${s}-art`, `${d}, with art`); });
     h += '</div>';
     if (p === 'lock') {
@@ -510,6 +560,7 @@
       h += '</div>';
     }
     $('#la-gallery').innerHTML = h;
+    fillHoles($('#la-gallery'), 'live-activity');
   }
 
   /* ================================================================ tabs (WAI-ARIA tabs, automatic activation) */
@@ -788,21 +839,33 @@
   // Where a show is named, it shows its own art, loaded at runtime from TVmaze's and AniList's image servers as the
   // app loads it, and never stored in this repo (rule 9, D-37). These are the images the app's ShowArtwork picks:
   // `hero` is the wide background (TVmaze: sharp first, then main, then nearest 1920 px wide; for an anime, its
-  // AniList banner), which the app also crops into an Upcoming row's square; `poster` is TVmaze's 210 × 295 poster.
-  // `night` is the base the app's ArtworkPalette works out from the hero art, for the hero's buttons; the phones in
-  // index.html carry the same computed bases. Each image is [url, width, height], looked up 2 Nov 2026.
+  // AniList banner, a strip), which the app also crops into an Upcoming row's square; `poster` is TVmaze's 210 × 295
+  // poster or AniList's large cover (`widgetPoster`); `cover` is an anime's extra-large cover, which the widgets use
+  // instead of the strip. `night` is the base the app's ArtworkPalette works out from the hero art, for the hero's
+  // buttons; the phones in index.html carry the same computed bases. `name` is the show as the app's samples name it.
+  // Each image is [url, width, height], looked up 2 Nov 2026.
   const TVMAZE = 'https://static.tvmaze.com/uploads/images/';
+  const ANILIST = 'https://s4.anilist.co/file/anilistcdn/media/anime/';
   const SHOWS = {
-    silo: { hero: [TVMAZE + 'original_untouched/460/1151687.jpg', 1920, 1080], night: '#1C1B1A' },
-    wednesday: { hero: [TVMAZE + 'original_untouched/423/1059627.jpg', 1280, 720], night: '#181924' },
-    dragon: { hero: [TVMAZE + 'original_untouched/218/547436.jpg', 1920, 1080] },
-    severance: { hero: [TVMAZE + 'original_untouched/384/960581.jpg', 3840, 2160] },
-    andor: { hero: [TVMAZE + 'original_untouched/418/1046464.jpg', 1920, 1080], poster: [TVMAZE + 'medium_portrait/564/1411766.jpg', 210, 295] },
-    from: { poster: [TVMAZE + 'medium_portrait/621/1554646.jpg', 210, 295] },
+    silo: { name: 'Silo', hero: [TVMAZE + 'original_untouched/460/1151687.jpg', 1920, 1080], poster: [TVMAZE + 'medium_portrait/631/1577677.jpg', 210, 295], night: '#1C1B1A' },
+    wednesday: { name: 'Wednesday', hero: [TVMAZE + 'original_untouched/423/1059627.jpg', 1280, 720], night: '#181924' },
+    dragon: { name: 'House of the Dragon', hero: [TVMAZE + 'original_untouched/218/547436.jpg', 1920, 1080], poster: [TVMAZE + 'medium_portrait/627/1568449.jpg', 210, 295] },
+    severance: { name: 'Severance', hero: [TVMAZE + 'original_untouched/384/960581.jpg', 3840, 2160], poster: [TVMAZE + 'medium_portrait/548/1371406.jpg', 210, 295] },
+    wonderman: { name: 'Wonder Man', hero: [TVMAZE + 'original_untouched/551/1377680.jpg', 2048, 1152], poster: [TVMAZE + 'medium_portrait/613/1532943.jpg', 210, 295] },
+    andor: { name: 'Andor', hero: [TVMAZE + 'original_untouched/418/1046464.jpg', 1920, 1080], poster: [TVMAZE + 'medium_portrait/564/1411766.jpg', 210, 295] },
+    from: { name: 'From', poster: [TVMAZE + 'medium_portrait/621/1554646.jpg', 210, 295] },
     tracker: { poster: [TVMAZE + 'medium_portrait/644/1610559.jpg', 210, 295] },
-    lastofus: { poster: [TVMAZE + 'medium_portrait/563/1409008.jpg', 210, 295] },
-    frieren: { hero: ['https://s4.anilist.co/file/anilistcdn/media/anime/banner/182255-wyHvp6zJbWsO.jpg', 1900, 400] },
+    lastofus: { name: 'The Last of Us', poster: [TVMAZE + 'medium_portrait/563/1409008.jpg', 210, 295] },
+    frieren: { name: "Frieren: Beyond Journey's End", strip: true, hero: [ANILIST + 'banner/182255-wyHvp6zJbWsO.jpg', 1900, 400], cover: [ANILIST + 'cover/large/bx154587-qQTzQnEJJ3oB.jpg', 460, 649], poster: [ANILIST + 'cover/medium/bx154587-qQTzQnEJJ3oB.jpg', 230, 325] },
+    sololeveling: { name: 'Solo Leveling', strip: true, cover: [ANILIST + 'cover/large/bx151807-it355ZgzquUd.png', 460, 609], poster: [ANILIST + 'cover/medium/bx151807-it355ZgzquUd.png', 230, 305] },
   };
+  const SHOW_BY_NAME = Object.fromEntries(Object.values(SHOWS).filter((x) => x.name).map((x) => [x.name, x]));
+  // The image a widget or Live Activity saves for a show (ShowArtwork.widget and .widgetPoster, D-46/D-47): `wide` is
+  // the key art unless it's a banner strip, then the cover; `poster` is the 2:3 poster.
+  function widgetImage(show, kind) {
+    if (!show) return null;
+    return kind === 'wide' ? (show.strip ? null : show.hero) || show.cover || show.poster : show.poster || show.cover;
+  }
   function setArt(art, key, use = art.dataset.use || 'hero') {
     const src = SHOWS[key] && SHOWS[key][use];
     let img = $('img', art);

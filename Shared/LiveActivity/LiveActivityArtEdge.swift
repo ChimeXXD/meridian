@@ -8,8 +8,10 @@ import UIKit
 struct LiveActivityArtEdge: View {
     let attributes: DropActivityAttributes
     var art: UIImage?
+    /// How much of the width the art covers, from the right, by default.
+    static let defaultShare: CGFloat = 0.44
     /// How much of the width the art covers, from the right.
-    var share: CGFloat = 0.44
+    var share: CGFloat = Self.defaultShare
 
     @Environment(\.isLuminanceReduced) private var dimmed
 
