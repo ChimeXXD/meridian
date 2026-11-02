@@ -152,6 +152,20 @@ struct LiveActivityLayoutTests {
         #expect(size.height <= Self.maxHeight)
     }
 
+    /// The renders draw each timer at its sample's length (2 or 3 hours), so they never show whether the widest value
+    /// of a 6-hour lead fits the expanded island's set width.
+    @Test("the expanded timer's set width holds its widest 6-hour value at 24 pt")
+    func expandedTimerWidth() throws {
+        for digit in 0...9 {
+            let value = "5:\(digit)\(digit):\(digit)\(digit)"
+            let renderer = ImageRenderer(content: Text(verbatim: value)
+                .font(NumeralStudy.night.font(size: 24, weight: NumeralStudy.night.weight))
+                .fixedSize())
+            let image = try #require(renderer.uiImage)
+            #expect(image.size.width <= LiveActivityExpandedView.timerWidth, "\(value) is \(image.size.width) pt wide")
+        }
+    }
+
     @Test("the minimal view fits 28 pt when the island is limited, counting down and out now, with and without art",
           arguments: [LiveActivitySamples.Case.countingDown, .outNow])
     func minimalLimited(sample: LiveActivitySamples.Case) throws {

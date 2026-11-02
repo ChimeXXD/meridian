@@ -112,6 +112,8 @@ struct LiveActivityExpandedView: View {
                     // A set width, never `fixedSize`: on the phone a timer asks for the width of its widest value,
                     // which pushed the whole line out of the island and left it blank (Chime's iPhone, 2 Nov).
                     LiveActivityCountdown(dropDate: state.dropDate, now: now, size: 24, alignment: .trailing)
+                        // A delay can push the drop past the 6-hour lead ("10:59:59"): shrink, don't cut the digits.
+                        .minimumScaleFactor(0.75)
                         .frame(width: Self.timerWidth, alignment: .trailing)
                 }
             }

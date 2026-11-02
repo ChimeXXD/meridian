@@ -36,9 +36,10 @@ Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 - **Reviews:**
   - **proof:verifier:** 3 findings, all fixed (the stale "tomorrow", two leftover mentions of the bar, and the sync script copying stale or partial renders).
   - **`/code-review` (high):** 7 findings, 2 fixed (`pastVerb` beside `verb`, temp files) plus sync mode for a third. Not fixed: `art-holes.json` isn't compared (it's built test by test); byte-exact matching means an Xcode update needs one re-sync; an estimate reads "Expected Mon 21:00" beside "Out now" (D-40 wording).
+- **On the phone (Chime's screenshots):** the first build's bottom line was blank (`.fixedSize()` on the timer), then it sat 12 pt inside the title (region insets of 16 against 4). Both were fixed, and Chime confirmed it aligned. The renders' fixed clock passed during the session, so it moved to 2071 (D-57). The second `/code-review` (medium) gave 5 findings: the timer now shrinks past 6 h (`minimumScaleFactor`), and a test proves "5:59:59" fits 96 pt. Not fixed: the widgets' ticking timers still use `.fixedSize(horizontal:)` (check on the phone in a drop's last day); the site's "returns" sample reads 2072; the corners at a 4 pt inset are fine on Chime's phone.
 - **Not verified:**
-  - the new island on the phone (installed; Chime to look)
   - Safari rendering of the site
+  - a delay past 6 h shrinking the expanded timer on the phone
 
 ## Design system: iPhone mockups for the widgets and the Live Activity (Mon 2 Nov 2026)
 
