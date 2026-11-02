@@ -10,10 +10,10 @@ struct WidgetTextTests {
 
     static func moment(_ sample: WidgetSamples.Case) -> WidgetMoment { WidgetSamples.moment(sample, now: now) }
 
-    @Test("inline: Out now, the listed day, the follow prompt; any count, days away too, is left to the live timer")
+    @Test("inline: 'Silo · 2d 4h' days away, Out now, the listed day, the follow prompt; the last day is left to the timer")
     func inline() {
-        // Counting down, the line ticks live (the view adds the timer), days away too.
-        #expect(WidgetText.inline(Self.moment(.countdown), formatter: Self.formatter) == nil)
+        // More than a day away the count stands still (Chime, 2 Nov); within a day the view adds the live timer.
+        #expect(WidgetText.inline(Self.moment(.countdown), formatter: Self.formatter) == "Silo · 2d 4h")
         #expect(WidgetText.inline(Self.moment(.outNow), formatter: Self.formatter) == "House of the Dragon · Out now")
         #expect(WidgetText.inline(Self.moment(.dateOnly), formatter: Self.formatter) == "Wonder Man · Wed 11 Nov")
         #expect(WidgetText.inline(Self.moment(.nothing), formatter: Self.formatter) == "Follow a show")

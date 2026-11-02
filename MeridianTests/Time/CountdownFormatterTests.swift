@@ -25,28 +25,35 @@ struct CountdownFormatterTests {
         #expect(CountdownFormatter.state(drop: Self.drop, confidence: .exact, now: Self.now(minus: secondsBefore)) == expected)
     }
 
-    @Test("more than 24 hours away is counted in days (the views tick the rest live, see daySplit)")
-    func coarseBeyondADay() {
-        let state = CountdownFormatter.state(drop: Self.drop, confidence: .estimated, now: Self.now(minus: 86_401))
-        #expect(state == .coarse([CountdownPart(value: 1, unit: .day)]))
-    }
-
     static let day: TimeInterval = 86_400, hour: TimeInterval = 3_600, minute: TimeInterval = 60
 
-    @Test("the live countdown splits off whole days; the clock part ticks down to the next day edge")
-    func daySplit() {
-        let split = CountdownFormatter.daySplit(drop: Self.drop, now: Self.now(minus: 2 * Self.day + 4 * Self.hour + 600))
-        #expect(split.days == 2)
-        #expect(split.edge == Self.drop.addingTimeInterval(-2 * Self.day))
-        let underADay = CountdownFormatter.daySplit(drop: Self.drop, now: Self.now(minus: 5 * Self.hour))
-        #expect(underADay.days == 0)
-        #expect(underADay.edge == Self.drop)
-        // Exactly on a day edge (widget entries land on whole hours) it reads "3d 24:00:00" and ticks, never a
-        // frozen "4d 0:00".
-        let onEdge = CountdownFormatter.daySplit(drop: Self.drop, now: Self.now(minus: 4 * Self.day))
-        #expect(onEdge.days == 3)
-        #expect(onEdge.edge == Self.drop.addingTimeInterval(-3 * Self.day))
-        #expect(CountdownFormatter.daySplit(drop: Self.drop, now: Self.now(minus: Self.day)).days == 0)
+    /// Seconds before the drop, and the still count shown then.
+    static let stillCases: [(TimeInterval, String)] = [
+        (day + 1, "1d 0h"),  // just over a day: whole hours, rounded down, so "1d 0h", not "1d" or "24:00:01"
+        (25 * hour - 1, "1d 0h"),
+        (25 * hour, "1d 1h"),
+        (4 * day + 4 * hour, "4d 4h"),
+        (4 * day + 4 * hour - 1, "4d 3h"),
+        (2 * day + 59 * minute, "2d 0h"),
+        (13 * day + 23 * hour + 59 * minute, "13d 23h"),
+    ]
+
+    @Test("more than 24 hours away it stands still in whole days and hours, rounded down (Chime, 2 Nov)",
+          arguments: stillCases)
+    func stillBeyondADay(secondsBefore: TimeInterval, text: String) {
+        let state = CountdownFormatter.state(drop: Self.drop, confidence: .estimated, now: Self.now(minus: secondsBefore))
+        guard case .coarse(let parts) = state else {
+            Issue.record("\(secondsBefore) s before should stand still, got \(state)")
+            return
+        }
+        #expect(CountdownFormatter.text(parts) == text)
+    }
+
+    @Test("a day away exactly it already ticks, so a widget entry on that edge starts the clock")
+    func ticksFromADay() {
+        #expect(CountdownFormatter.state(drop: Self.drop, confidence: .exact, now: Self.now(minus: Self.day)) == .ticking)
+        #expect(CountdownFormatter.state(drop: Self.drop, confidence: .exact, now: Self.now(minus: Self.day + 1))
+            == .coarse([CountdownPart(value: 1, unit: .day), CountdownPart(value: 0, unit: .hour)]))
     }
 
     @Test("a ticking countdown is sized from a template as wide as its widest value, so widgets can't stretch it")
@@ -54,9 +61,9 @@ struct CountdownFormatterTests {
         #expect(CountdownFormatter.clockTemplate(drop: Self.drop, now: Self.now(minus: 5 * Self.hour)) == "0:00:00")
         #expect(CountdownFormatter.clockTemplate(drop: Self.drop, now: Self.now(minus: 15 * Self.hour)) == "00:00:00")
         #expect(CountdownFormatter.clockTemplate(drop: Self.drop, now: Self.now(minus: 40 * Self.minute)) == "00:00")
-        #expect(CountdownFormatter.clockTemplate(drop: Self.drop, now: Self.now(minus: 2 * Self.day + Self.hour))
-            == "2d 00:00:00")
+        #expect(CountdownFormatter.clockTemplate(drop: Self.drop, now: Self.now(minus: Self.day)) == "00:00:00")
     }
+
     static let partCases: [(TimeInterval, Int, String)] = [
         (2 * day + 4 * hour + 30 * minute, 2, "2d 4h"),
         (2 * day, 2, "2d"),
@@ -83,5 +90,7 @@ struct CountdownFormatterTests {
     func spoken() {
         #expect(CountdownFormatter.spokenText([CountdownPart(value: 2, unit: .day), CountdownPart(value: 1, unit: .hour)]) == "2 days 1 hour")
         #expect(CountdownFormatter.spokenText([CountdownPart(value: 1, unit: .minute)]) == "1 minute")
+        // The still "1d 0h" is said "1 day", never "1 day 0 hours".
+        #expect(CountdownFormatter.spokenText([CountdownPart(value: 1, unit: .day), CountdownPart(value: 0, unit: .hour)]) == "1 day")
     }
 }

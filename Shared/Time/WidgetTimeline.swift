@@ -7,12 +7,14 @@ import Foundation
 ///   ends and the widget moves to the next drop).
 /// - Refresh entries keep the static counts honest while the current drop counts down: every hour ("2d 4h", the
 ///   circular "4h") and every 5 minutes in its last hour (the circular "38m"). They stop at `refreshHorizon`; the
-///   reload is due by then.
-/// - Every day edge of the drops ahead within 7 days is a change too: the live "2d 4:10:22" timer pauses at 0:00 there
-///   and needs a redraw to step its day count down (`CountdownFormatter.daySplit`, D-51).
+///   reload is due by then. Those that step the still "2d 4h" land `edgeLag` after the hour (see `refreshTimes`).
+/// - 24 hours before each drop ahead is a change: the still "1d 0h" turns into the ticking timer there (Chime, 2 Nov:
+///   only the last day ticks). Its other day edges within 7 days are changes too, so the rows' days step down and a
+///   late reload never leaves the hero a day out.
 /// - No two entries are closer than 5 minutes. A change that falls inside that gap moves to 5 minutes after the
-///   entry before it (never earlier, so "Out now" is never shown before the drop), and a refresh entry within 5
-///   minutes of a drop change is dropped, so drops win.
+///   entry before it (never earlier, so "Out now" is never shown before the drop). A refresh entry within 5 minutes
+///   before a drop change is dropped, so drops win; one just after a change moves to 5 minutes after it, so the
+///   still count never stays an hour out.
 /// - A date-only drop shows its airdate until that day ends in the viewer's zone, then leaves: an entry at that
 ///   midnight, so a widget never keeps a day that has passed when the app isn't opened.
 /// - Reload `.after(nextDrop)`: the next timed drop still ahead (or a date-only day's end), or the refresh horizon if
@@ -24,6 +26,8 @@ struct WidgetTimeline: Hashable, Sendable {
     static let week: TimeInterval = 7 * 86_400
     static let refreshHorizon: TimeInterval = 48 * 3_600
     static let outNowWindow = CountdownFormatter.outNowWindow
+    /// How far past an hour or day edge the entries that step the still count land (see `refreshTimes`).
+    static let edgeLag: TimeInterval = 1
 
     var entries: [WidgetMoment]
     var reloadDate: Date?
@@ -36,17 +40,28 @@ struct WidgetTimeline: Hashable, Sendable {
         let horizon = now.addingTimeInterval(refreshHorizon)
         let dayEnds = showing.compactMap { dayEnd(of: $0, formatter: formatter) }.filter { $0 > now }
 
-        // Each day edge of the drops ahead within a week: the live "Nd" + timer pauses at 0:00 there (D-51), so it is a
-        // change like a drop, never dropped for a nearby one, and kept past the refresh horizon in case the reload is
-        // late.
+        // Each day edge of the drops ahead within a week is a change like a drop, never dropped for a nearby one, and
+        // kept past the refresh horizon in case the reload is late. The last day's is exact: 24 hours left already
+        // ticks. The others step the still count, so they land a second after the edge, like the hourly refreshes.
         let dayEdges = ahead.flatMap { drop in
-            (1...7).map { drop.date.addingTimeInterval(-Double($0) * 86_400) }
+            (1...7).map { days in
+                drop.date.addingTimeInterval(-Double(days) * 86_400 + (days > 1 ? edgeLag : 0))
+            }
         }.filter { $0 > now && $0 <= now.addingTimeInterval(week) }
         let changes = Set(ahead.flatMap { [$0.date, $0.date.addingTimeInterval(outNowWindow)] } + dayEnds + dayEdges)
             .filter { $0 > now }
         let anchors = changes.union([now])
-        let refreshes = refreshTimes(ahead, now: now, horizon: horizon).filter { time in
-            time > now && !anchors.contains { abs($0.timeIntervalSince(time)) < minimumSpacing }
+        let planned = refreshTimes(ahead, now: now, horizon: horizon)
+        let refreshes = planned.compactMap { time -> Date? in
+            guard time > now else { return nil }
+            // A change just before a refresh still draws the hour that is ending, so dropping the refresh would leave
+            // the still count an hour out: it lands 5 minutes after that change instead, unless that crowds the next
+            // refresh. A change at or just after it redraws in time, so drops win.
+            let at = anchors.filter { $0 < time && time.timeIntervalSince($0) < minimumSpacing }.max()
+                .map { $0.addingTimeInterval(minimumSpacing) } ?? time
+            let crowded = anchors.contains { $0 >= time && $0 < at.addingTimeInterval(minimumSpacing) }
+                || (at > time && planned.contains { $0 > time && $0 < at.addingTimeInterval(minimumSpacing) })
+            return crowded ? nil : at
         }
         let dates = spaced([now] + changes.union(refreshes).sorted())
         let entries = dates.map {
@@ -100,7 +115,9 @@ struct WidgetTimeline: Hashable, Sendable {
     }
 
     /// While each drop is the one counted down to (from when the drop before it leaves until its own time):
-    /// a refresh on every whole hour before it, and every 5 minutes in its last hour.
+    /// a refresh on every whole hour before it, and every 5 minutes in its last hour. More than a day out the count
+    /// stands still, rounded down, and drops an hour just after each whole hour: drawn on the hour itself it would
+    /// still read the hour that is ending ("2d 4h" for all of 2d 3h…), so those refreshes land `edgeLag` later.
     private static func refreshTimes(_ ahead: [Drop], now: Date, horizon: Date) -> [Date] {
         var times: [Date] = []
         var start = now
@@ -112,7 +129,9 @@ struct WidgetTimeline: Hashable, Sendable {
                 let farthest = Int(drop.date.timeIntervalSince(start) / 3_600)
                 let hourly = nearest <= farthest ? (nearest...farthest).map { Double($0) * 3_600 } : []
                 let lastHour = (1..<12).map { Double($0) * minimumSpacing }
-                times += (hourly + lastHour).map { drop.date.addingTimeInterval(-$0) }.filter { $0 >= start && $0 < end }
+                times += (hourly + lastHour).map { before in
+                    drop.date.addingTimeInterval(-before + (before > CountdownFormatter.tickingWindow ? edgeLag : 0))
+                }.filter { $0 >= start && $0 < end }
             }
             start = max(start, drop.date.addingTimeInterval(outNowWindow))
         }

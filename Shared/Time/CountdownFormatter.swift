@@ -4,8 +4,8 @@ import Foundation
 enum CountdownFormatter {
     /// "Out now" lasts this long after the drop (SPEC: drop ≤ now < drop + 1 h).
     static let outNowWindow: TimeInterval = 3_600
-    /// Within this window the countdown is a plain timer; beyond it, whole days and then a timer (`daySplit`). Both
-    /// tick live.
+    /// Within this window, 24 hours left included, the countdown is a live timer; beyond it, it stands still in whole
+    /// days and hours (`stillParts`). Only the last day ticks (Chime, 2 Nov).
     static let tickingWindow: TimeInterval = 86_400
 
     static func state(drop: Date, confidence: Confidence, now: Date) -> CountdownState {
@@ -14,33 +14,27 @@ enum CountdownFormatter {
         if remaining <= -outNowWindow { return .released }
         if remaining <= 0 { return .outNow }
         if remaining <= tickingWindow { return .ticking }
-        return .coarse(parts(from: now, to: drop, maxUnits: 2))
+        return .coarse(stillParts(from: now, to: drop))
     }
 
-    /// How a live countdown more than a day away is drawn: whole days, then a timer ticking down to the next day edge
-    /// ("2d" + "4:10:22"). Under a day, 0 days and the edge is the drop. Each edge needs a redraw (widgets have an
-    /// hourly entry on it, `WidgetTimeline`), so the day count steps down.
-    static func daySplit(drop: Date, now: Date) -> (days: Int, edge: Date) {
-        // Rounded up, less one: exactly on an edge (widget entries land on whole hours) the clock starts at 24:00:00
-        // and ticks, instead of sitting paused at 0:00 until the next entry.
-        let days = max(0, Int((drop.timeIntervalSince(now) / 86_400).rounded(.up)) - 1)
-        return (days, drop.addingTimeInterval(-Double(days) * 86_400))
+    /// The still count more than a day away: whole days, then whole hours, both rounded down and both always there,
+    /// so "4d 4h", "2d 0h", and "1d 0h" from 25 hours down to just over 24 (at 24 it ticks). Widgets step it with
+    /// an entry just after each hour (`WidgetTimeline.edgeLag`).
+    static func stillParts(from now: Date, to drop: Date) -> [CountdownPart] {
+        let hours = max(0, Int((drop.timeIntervalSince(now) / 3_600).rounded(.down)))
+        return [CountdownPart(value: hours / 24, unit: .day), CountdownPart(value: hours % 24, unit: .hour)]
     }
 
-    /// The widest the live countdown can be from now on, with zeros for digits: "0:00:00", "00:00", "2d 00:00:00".
+    /// The widest the ticking countdown can be from now on, with zeros for digits: "00:00:00", "0:00:00", "00:00".
     /// Views size the timer from it, because a ticking `Text(timerInterval:)` otherwise takes all the width a widget
     /// offers and pushes everything else out.
     static func clockTemplate(drop: Date, now: Date) -> String {
-        let split = daySplit(drop: drop, now: now)
-        // With days left the clock runs back up to 23:59:59 at each edge, so it keeps two hour digits.
-        let seconds = split.days > 0 ? 86_399 : max(0, Int(split.edge.timeIntervalSince(now)))
-        let clock = switch seconds {
+        switch max(0, Int(drop.timeIntervalSince(now))) {
         case 36_000...: "00:00:00"
         case 3_600...: "0:00:00"
         case 600...: "00:00"
         default: "0:00"
         }
-        return split.days > 0 ? "\(split.days)d \(clock)" : clock
     }
 
     /// The largest non-zero unit and up to `maxUnits - 1` after it, rounded down.
@@ -56,13 +50,14 @@ enum CountdownFormatter {
             .map { CountdownPart(value: $0.0, unit: $0.1) }
     }
 
-    /// "2d 4h", plain text for `parts` (tests and accessibility fallbacks); the views draw the live timer instead.
+    /// "2d 4h", "1d 0h": plain text for parts (the inline widget, tests); `CountdownText` styles the units instead.
     static func text(_ parts: [CountdownPart]) -> String {
         parts.map { "\($0.value)\($0.unit.rawValue)" }.joined(separator: " ")
     }
 
-    /// "2 days 4 hours", the spoken form of `text(_:)` for accessibility labels.
+    /// "2 days 4 hours", the spoken form of `text(_:)` for accessibility labels. A zero is left out, so the still
+    /// "1d 0h" is said "1 day".
     static func spokenText(_ parts: [CountdownPart]) -> String {
-        parts.map { $0.unit.spoken($0.value) }.joined(separator: " ")
+        parts.filter { $0.value > 0 }.map { $0.unit.spoken($0.value) }.joined(separator: " ")
     }
 }

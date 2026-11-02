@@ -4,13 +4,14 @@ import Foundation
 /// verb, through `ReleaseWording` (D-40); a date-only drop's countdown slot already shows its day, so its line only
 /// says the time isn't announced.
 enum WidgetText {
-    /// "Silo · Out now", "Silo · Wed 11 Nov", or nil while it counts down (the view adds the live timer).
+    /// "Silo · 2d 4h", "Silo · Out now", "Silo · Wed 11 Nov", or nil in the last day (the view adds the live timer).
     static func inline(_ moment: WidgetMoment, formatter: DropFormatter) -> String? {
         guard let drop = moment.current else { return emptyHeadline(moment, formatter: formatter) }
         switch CountdownFormatter.state(drop: drop.date, confidence: drop.confidence, now: moment.date) {
         case .dateOnly: return "\(drop.showName) · \(day(drop, now: moment.date, formatter: formatter))"
         case .outNow, .released: return "\(drop.showName) · Out now"
-        case .coarse, .ticking: return nil  // live, days too: the view adds the timer
+        case .coarse(let parts): return "\(drop.showName) · \(CountdownFormatter.text(parts))"
+        case .ticking: return nil  // the view adds the timer
         }
     }
 

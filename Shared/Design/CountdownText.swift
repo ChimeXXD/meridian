@@ -1,11 +1,12 @@
 import SwiftUI
 import WidgetKit
 
-/// The countdown for one drop, live to the second everywhere (Chime, 1 Nov): `Text(timerInterval:countsDown:)`
-/// with no `pauseTime` (D-52), so it stops at zero and never counts up (CLAUDE.md rule 4). More than a day away it is
-/// the whole days, dim unit, then the timer to the next day edge: "2d 4:10:22" (`CountdownFormatter.daySplit`). A `dateOnly` drop shows its
-/// airdate, never a timer. The timer is sized from `CountdownFormatter.clockTemplate`, because in a widget a ticking
-/// text otherwise takes all the width it's offered and pushes the rest out (the medium widget went blank, 1 Nov).
+/// The countdown for one drop. Only the last day ticks (Chime, 2 Nov): from 24 hours out it is a live
+/// `Text(timerInterval:countsDown:)` with no `pauseTime` (D-52), so it stops at zero and never counts up (CLAUDE.md
+/// rule 4). Further out it stands still at whole days and hours, units smaller and dim: "4d 4h"
+/// (`CountdownFormatter.stillParts`). A `dateOnly` drop shows its airdate, never a timer. The timer is sized from
+/// `CountdownFormatter.clockTemplate`, because in a widget a ticking text otherwise takes all the width it's offered
+/// and pushes the rest out (the medium widget went blank, 1 Nov).
 /// The caller owns `now` and must refresh it: widgets pass their timeline entry's date (with an entry at the drop and
 /// on every hour, SPEC §5); app screens wrap it in `TimelineView(.countdown)`, or "Out now" never appears. The
 /// timeline also paces the ticking text, so a slower one (`.everyMinute`) freezes the count between its entries.
@@ -47,7 +48,7 @@ struct CountdownText: View {
         case .ticking:
             live
         case .coarse(let parts):
-            live.accessibilityLabel(CountdownFormatter.spokenText(parts))
+            still(parts).accessibilityLabel(CountdownFormatter.spokenText(parts))
         }
     }
 
@@ -59,22 +60,32 @@ struct CountdownText: View {
         }
     }
 
-    /// The live count, inside a hidden template as wide as its widest value.
+    private var digits: Font { study.font(size: size * scale).monospacedDigit() }
+
+    /// The last day's live count, inside a hidden template as wide as its widest value.
     private var live: some View {
-        let split = CountdownFormatter.daySplit(drop: drop, now: now)
-        let digits = study.font(size: size * scale).monospacedDigit()
-        // No `pauseTime`: with one, WidgetKit draws the timer frozen at its first value (seen in the simulator's Dynamic
-        // Island, 1 Nov). The interval alone already stops at 0:00 at its end and never counts up (rule 4).
-        let timer = Text(timerInterval: now...split.edge, countsDown: true).font(digits)
-        let text = split.days > 0
-            ? Text("\(Text(verbatim: "\(split.days)").font(digits))\(Text(verbatim: "d ").font(study.font(size: size * 0.5 * scale)).foregroundStyle(.secondary))\(timer)")
-            : timer
-        return Text(verbatim: CountdownFormatter.clockTemplate(drop: drop, now: now))
+        Text(verbatim: CountdownFormatter.clockTemplate(drop: drop, now: now))
             .font(digits)
             .hidden()
             .overlay(alignment: alignment) {
-                text.multilineTextAlignment(textAlignment)
+                // No `pauseTime`: with one, WidgetKit draws the timer frozen at its first value (seen in the
+                // simulator's Dynamic Island, 1 Nov). The interval alone stops at 0:00 and never counts up (rule 4).
+                Text(timerInterval: now...drop, countsDown: true)
+                    .font(digits)
+                    .multilineTextAlignment(textAlignment)
             }
+    }
+
+    /// "4d 4h" more than a day away: bright digits, the unit letters smaller and dim. Static text, so it needs no
+    /// template; the caller's `now` steps it (hourly widget entries, the app's per-second redraw).
+    private func still(_ parts: [CountdownPart]) -> Text {
+        let unit = study.font(size: size * 0.5 * scale)
+        return parts.enumerated().reduce(Text(verbatim: "")) { text, item in
+            let gap = Text(verbatim: item.offset == 0 ? "" : " ").font(unit)
+            let value = Text(verbatim: "\(item.element.value)").font(digits)
+            let letter = Text(verbatim: item.element.unit.rawValue).font(unit).foregroundStyle(.secondary)
+            return Text("\(text)\(gap)\(value)\(letter)")
+        }
     }
 }
 

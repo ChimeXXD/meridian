@@ -2,6 +2,15 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Only the last day ticks (Mon 2 Nov 2026)
+
+- Chime: countdowns should tick only under 24 hours; further out, a still "4d 4h" (D-56, supersedes D-51's ticking beyond a day). Done by an agent; checked here.
+- `CountdownFormatter.stillParts` replaces `daySplit`; `CountdownText` draws the still count with small dim units; the inline widget reads "Silo · 2d 4h"; `WidgetTimeline` adds the 24 h switch entry for the next 5 drops and moves refreshes beyond the last day 1 s past the hour.
+- Red → green: the countdown suite failed 5 cases ("1d" not "1d 0h", the 24 h switch, "1 day" spoken); `stillCountSteps` failed with 3 452 issues (the widget lagged an hour); then 40 tests in 4 suites passed. Full suite: 251 tests in 42 suites passed.
+- Looked at: simulator Upcoming, two shots ~5 s apart (Silo 2:09:51 → 2:09:46, Frieren 5:24:51 → 5:24:46, House of the Dragon "2d 3h" in both); `fidelity/shots/widgets/large-busy.png` ("3:10:00", then "2d 4h", "3d 6h", "4d 0h").
+- `/code-review` (medium): 4 findings, 1 fixed with a test (`stepAfterNearbyChange`): an hourly refresh within 5 minutes after another change was dropped, leaving the still count an hour out; it now moves to 5 minutes after the change. Not fixed: non-hero rows step on the hero's hours (fixing it means ~4x the entries); the circular widget's "4h"/"38m" rounds down within the last day (predates this); `stillParts` and `parts` both split time. Full suite after: 252 passed.
+- Not verified: a real widget over hours on the phone; non-hero widget rows can read an hour high for up to an hour (as before D-51).
+
 ## Welcome: the logo, and two clear groups (Mon 2 Nov 2026)
 
 - Chime asked for the unslop skill on Welcome and for the logo on it. Audit: light slop (a muted grey "Meridian" label, no logo, every block 24 apart). Chime approved the logo lockup and the regrouped spacing; the headline stays.

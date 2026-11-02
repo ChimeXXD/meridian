@@ -84,8 +84,11 @@ struct TimelineProviderTests {
         #expect(timeline.reloadDate == Self.now.addingTimeInterval(WidgetTimeline.refreshHorizon))
         let horizon = Self.now.addingTimeInterval(WidgetTimeline.refreshHorizon)
         #expect(timeline.entries.filter { $0.date > Self.now && $0.date <= horizon }.count <= 49)
-        // Past the horizon, only the drop's day edges within a week (D-51), so a late reload never freezes "Nd 0:00".
-        let edges = (1...7).map { drop.date.addingTimeInterval(-Double($0) * 24 * Self.hour) }
+        // Past the horizon, only the drop's day edges within a week, so a late reload still steps the days down.
+        // The last day's edge is exact (ticking starts there); the others land a second after theirs.
+        let edges = (1...7).map { days in
+            drop.date.addingTimeInterval(-Double(days) * 24 * Self.hour + (days > 1 ? WidgetTimeline.edgeLag : 0))
+        }
         let beyond = timeline.entries.filter { $0.date > horizon && $0.date < drop.date }
         #expect(!beyond.isEmpty && beyond.allSatisfy { entry in edges.contains(entry.date) })
     }
@@ -138,7 +141,8 @@ struct TimelineProviderTests {
 
     @Test("every day edge of each drop in the next 7 days gets an entry, past the 48 h horizon and next to other changes")
     func dayEdges() {
-        // Days away, its count reads "Nd" + a timer to the next edge (D-51); a missing entry freezes it at "Nd 0:00".
+        // Days away, its count stands still at "Nd Yh"; a missing edge leaves a row a day out, and the last one starts
+        // the ticking clock.
         let far = Self.drop("far", at: Self.now + 5 * 24 * Self.hour + 2 * Self.minute)
         // A date-only drop whose day ends at Lagos midnight, 2 minutes before one of far's edges.
         let undated = Self.drop("undated", at: Self.now + 24 * Self.hour, confidence: .dateOnly, airdate: "2026-11-02")
@@ -147,6 +151,68 @@ struct TimelineProviderTests {
             let edge = far.date.addingTimeInterval(-Double(days) * 24 * Self.hour)
             #expect(timeline.entries.contains { $0.date >= edge && $0.date < edge + WidgetTimeline.minimumSpacing },
                     "no entry within 5 minutes of the \(days)-day edge \(edge)")
+        }
+        #expect(Self.gaps(timeline).allSatisfy { $0 >= WidgetTimeline.minimumSpacing })
+    }
+
+    /// What the countdown of the drop a widget leads with would read: the still "4d 4h" parts, or just the state.
+    static func shown(_ moment: WidgetMoment) -> CountdownState? {
+        moment.current.map { CountdownFormatter.state(drop: $0.date, confidence: $0.confidence, now: moment.date) }
+    }
+
+    @Test("days away the still count steps down each hour on time, and ticks from exactly 24 hours (Chime, 2 Nov)")
+    func stillCountSteps() throws {
+        // "2d 5h" away, off the hour and the minute so no edge lines up with `now`: within the 48 h horizon it steps
+        // through a day edge ("2d 0h" to "1d 23h"), then "1d 0h", then ticks.
+        let drop = Self.drop("1", at: Self.now + 2 * 24 * Self.hour + 5 * Self.hour + 17 * Self.minute + 30)
+        let timeline = Self.timeline([drop])
+        let horizon = Self.now.addingTimeInterval(WidgetTimeline.refreshHorizon)
+
+        // Every 30 s up to the horizon, the entry on screen reads what the count really is then ("2d 4h" turns
+        // "2d 3h" as the hour passes, not an hour later).
+        let wrong = stride(from: Self.now, to: horizon, by: 30).filter { time in
+            let entry = timeline.entries.last { $0.date <= time }
+            return entry.flatMap(Self.shown) != CountdownFormatter.state(drop: drop.date, confidence: drop.confidence, now: time)
+        }
+        #expect(wrong.isEmpty, "\(wrong.count) moments read wrong, first at \(String(describing: wrong.first))")
+
+        // The switch to the live clock is an entry exactly 24 hours before the drop.
+        let lastDay = try #require(timeline.entries.first { $0.date == drop.date.addingTimeInterval(-24 * Self.hour) })
+        #expect(Self.shown(lastDay) == .ticking)
+        let before = try #require(timeline.entries.last { $0.date < lastDay.date })
+        #expect(Self.shown(before) == .coarse([CountdownPart(value: 1, unit: .day), CountdownPart(value: 0, unit: .hour)]))
+        #expect(Self.gaps(timeline).allSatisfy { $0 >= WidgetTimeline.minimumSpacing })
+    }
+
+    @Test("a change 2 minutes before an hour step never leaves the still count an hour out")
+    func stepAfterNearbyChange() {
+        // Show 1's "Out now" ends at now + 11 h, 2 minutes before one of show 2's whole hours (30 h before it).
+        let first = Self.drop("1", at: Self.now + 10 * Self.hour)
+        let second = Self.drop("2", at: Self.now + 41 * Self.hour + 2 * Self.minute)
+        let timeline = Self.timeline([first, second])
+        let horizon = Self.now.addingTimeInterval(WidgetTimeline.refreshHorizon)
+        let wrong = stride(from: Self.now, to: horizon, by: 30).filter { time in
+            let entry = timeline.entries.last { $0.date <= time }
+            let truth = WidgetTimeline.moment(at: time, drops: [first, second], nextReturn: nil)
+            return entry.flatMap(Self.shown) != Self.shown(truth)
+        }
+        // A wrong moment is put right within 5 minutes, never an hour later.
+        #expect(wrong.allSatisfy { time in
+            timeline.entries.contains { $0.date > time && $0.date <= time + WidgetTimeline.minimumSpacing }
+        }, "wrong at \(wrong)")
+        #expect(Self.gaps(timeline).allSatisfy { $0 >= WidgetTimeline.minimumSpacing })
+    }
+
+    @Test("each timed drop ahead gets an entry 24 hours before it, where its row starts ticking")
+    func lastDayEdges() {
+        let drops = [26.5, 30.25, 49.0, 50.0, 70.75].enumerated().map { index, hours in
+            Self.drop("\(index)", at: Self.now + hours * Self.hour)
+        }
+        let timeline = Self.timeline(drops)
+        for drop in drops {
+            let edge = drop.date.addingTimeInterval(-24 * Self.hour)
+            #expect(timeline.entries.contains { $0.date >= edge && $0.date < edge + WidgetTimeline.minimumSpacing },
+                    "no entry within 5 minutes of 24 hours before \(drop.id)")
         }
         #expect(Self.gaps(timeline).allSatisfy { $0 >= WidgetTimeline.minimumSpacing })
     }
