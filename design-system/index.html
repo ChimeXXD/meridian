@@ -298,7 +298,7 @@
       <tr><td>Content overlaps the art</td><td>−64</td><td>Upcoming hero, Show detail, the show page</td></tr>
       <tr><td>Upcoming: page, sections, rows</td><td>40 · <code>xl</code> 32 · <code>l</code> 24</td><td>Upcoming</td></tr>
       <tr><td>Poster grid</td><td>3 columns, column gap <code>s</code> 12, row gap <code>m</code> 16</td><td>Search, Nothing scheduled</td></tr>
-      <tr><td>Back button inset</td><td>leading 16, top 58</td><td>Show detail, the show page</td></tr>
+      <tr><td>Back button</td><td>placed by the system’s navigation bar</td><td>Show detail, the show page</td></tr>
       <tr><td>Values outside the scale</td><td>1, 2, 3, 6, 7, 10, 14, 40, 58, 64, 110, 120, 240</td><td>Used directly in views</td></tr>
     </tbody></table></div>
 
@@ -443,7 +443,7 @@
     <li><p class="q"><b>A countdown anywhere:</b> app, widget or row.</p><p class="a"><a href="#c-countdown-text">CountdownText</a>, or <a href="#c-la-countdown">LiveActivityCountdown</a> in the Live Activity</p></li>
     <li><p class="q"><b>A time in a sentence,</b> such as “Expected Wed at 23:00”.</p><p class="a"><a href="#word-expected">ReleaseWording.outLine</a>. Never a chip or a dot.</p></li>
     <li><p class="q"><b>The episode and where it’s on,</b> under a title.</p><p class="a"><a href="#c-release-meta">ReleaseMeta</a></p></li>
-    <li><p class="q"><b>The show’s art at the top of a page.</b></p><p class="a"><a href="#c-night-art-header">NightArtHeader</a>, plus <a href="#c-glass-button">GlassCircleButton</a> if the page can go back</p></li>
+    <li><p class="q"><b>The show’s art at the top of a page.</b></p><p class="a"><a href="#c-night-art-header">NightArtHeader</a>, plus the system <a href="#c-glass-button">back button</a> if the page can go back</p></li>
     <li><p class="q"><b>A list of followed episodes.</b></p><p class="a"><a href="#c-upcoming-row">Upcoming row</a> under a <a href="#c-section-header">section header</a></p></li>
     <li><p class="q"><b>Shows with nothing scheduled.</b></p><p class="a"><a href="#c-quiet-grid">Quiet grid cell</a>; in widgets, a quiet row</p></li>
     <li><p class="q"><b>Browsing, or search results.</b></p><p class="a"><a href="#c-poster-cell">Poster grid cell</a> with the <a href="#c-follow-plus">Follow (+) button</a></p></li>
@@ -501,24 +501,21 @@
 .environment(\.colorScheme, .dark)</code></pre></div></div>
   </article>
 
-  <article class="comp" id="c-glass-button" data-search="GlassCircleButton glass back button liquid glass chevron" data-title="GlassCircleButton" data-kind="Component">
-    <div class="hrow"><h3>GlassCircleButton</h3></div>
-    <p class="purpose">A round Liquid Glass button: the only control that sits on the art. It is the back button on Show detail and the show page.</p>
+  <article class="comp" id="c-glass-button" data-search="back button system navigation bar liquid glass chevron swipe back" data-title="Back button" data-kind="Component">
+    <div class="hrow"><h3>Back button</h3></div>
+    <p class="purpose">The system’s own back button, the only control over the art on Show detail and the show page. The navigation bar stays, invisible, so the edge swipe goes back as in every iOS app (2 Nov: a drawn button with the bar hidden switched the swipe off).</p>
     <div class="states">
-      <figure class="state"><div class="stage art-stage" style="width:120px;height:110px;padding:14px 16px"><div class="art neutral"></div><button class="glass" type="button" aria-label="Back (example)"><svg aria-hidden="true"><use href="#i-chevron"/></svg></button></div><figcaption>On art</figcaption></figure>
-      <figure class="state"><div class="stage art-stage" style="width:120px;height:110px;padding:14px 16px"><div class="art neutral"></div><span class="glass pressed" aria-hidden="true"><svg><use href="#i-chevron"/></svg></span></div><figcaption>Pressed: the glass swells</figcaption></figure>
-      <figure class="state"><div class="stage" style="width:120px;height:110px;padding:14px 16px"><span class="glass" aria-hidden="true"><svg><use href="#i-chevron"/></svg></span></div><figcaption>Art still loading</figcaption></figure>
+      <figure class="state"><div class="stage art-stage" style="width:120px;height:110px;padding:14px 16px"><div class="art neutral"></div><button class="glass" type="button" aria-label="Back (example)"><svg aria-hidden="true"><use href="#i-chevron"/></svg></button></div><figcaption>On art: iOS 26 Liquid Glass, tinted by what’s under it</figcaption></figure>
     </div>
     <div class="spec"><dl class="specs">
-      <dt>Size</dt><dd>44 × 44 circle; the glyph is 0.38 of that, 16.7 pt semibold</dd>
-      <dt>Material</dt><dd><code>.glassEffect(.regular.interactive(), in: .circle)</code></dd>
-      <dt>Placement</dt><dd>Top leading over the art: leading 16, top 58</dd>
+      <dt>What</dt><dd>The navigation bar’s back button, placed and drawn by the system; long-press lists the way back</dd>
+      <dt>Bar</dt><dd>Inline title mode, background hidden, no scroll-edge effect at the top, so the art runs under it</dd>
+      <dt>Gesture</dt><dd>Swipe from the left edge goes back (<code>NavigationTests</code>)</dd>
       <dt>VoiceOver</dt><dd>“Back, button”</dd>
-      <dt>Hit target</dt><dd>44 × 44</dd>
-      <dt>Source</dt><dd class="path">Features/Common/NightStyle.swift:31-47</dd>
-    </dl><div class="codebox"><pre><code>GlassCircleButton(systemImage: "chevron.left", label: "Back") { dismiss() }
-    .padding(.leading, Tokens.Space.m)
-    .padding(.top, 58)</code></pre></div></div>
+      <dt>Source</dt><dd class="path">Features/ShowDetail/ShowDetailView.swift; Features/Search/ShowPreviewView.swift</dd>
+    </dl><div class="codebox"><pre><code>.navigationBarTitleDisplayMode(.inline)
+.toolbarBackgroundVisibility(.hidden, for: .navigationBar)
+.scrollEdgeEffectHidden(true, for: .top)</code></pre></div></div>
   </article>
   </div>
 

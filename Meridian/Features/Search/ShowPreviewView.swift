@@ -37,11 +37,6 @@ struct ShowPreviewView: View {
                         .accessibilityLabel("\(result.title) artwork")
                         .accessibilityAddTraits(.isImage)
                         .accessibilityIdentifier("show-preview-art")
-                        .overlay(alignment: .topLeading) {
-                            GlassCircleButton(systemImage: "chevron.left", label: "Back") { dismiss() }
-                                .padding(.leading, Tokens.Space.m)
-                                .padding(.top, 58)
-                        }
                     VStack(alignment: .leading, spacing: Tokens.Space.xl) {
                         VStack(alignment: .leading, spacing: Tokens.Space.s) {
                             if let drop {
@@ -74,7 +69,11 @@ struct ShowPreviewView: View {
             .background(base)
             .ignoresSafeArea(edges: .top)
         }
-        .toolbarVisibility(.hidden, for: .navigationBar)
+        // The system bar stays, invisible, so its back button brings the edge swipe back (Chime, 2 Nov: hiding it
+        // and drawing our own button switched the gesture off). On iOS 26 that button is a glass circle over the art.
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackgroundVisibility(.hidden, for: .navigationBar)
+        .scrollEdgeEffectHidden(true, for: .top)
         .environment(\.colorScheme, .dark)
         .task {
             guard !loaded else { return }

@@ -27,24 +27,6 @@ extension Drop {
     }
 }
 
-/// A round Liquid Glass button, the only control that sits on the art (the back button).
-struct GlassCircleButton: View {
-    let systemImage: String
-    let label: String
-    var size: CGFloat = 44
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            Image(systemName: systemImage)
-                .font(.system(size: size * 0.38, weight: .semibold))
-                .frame(width: size, height: size)
-        }
-        .buttonStyle(.plain)
-        .glassEffect(.regular.interactive(), in: .circle)
-        .accessibilityLabel(label)
-    }
-}
 
 /// The key art at the top of Upcoming and Show detail, fading into the night base.
 struct NightArtHeader: View {

@@ -2,6 +2,20 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Polish: swipe back, and a full UX audit (Mon 2 Nov 2026)
+
+- **Chime's walkthrough:**
+  - "Report a wrong time" and "Unfollow" are too bland.
+  - Every countdown is too big: Upcoming, Show detail and the Search show page.
+  - Swiping from the left edge doesn't go back.
+  - Run a full UX audit.
+- **Audit:** three read-only specialists (typography and hierarchy, flows and interaction, accessibility and AX5) worked on 14 default-size screens, 7 AX5 screens and the code. Findings are in `docs/design/UX-AUDIT.md`.
+- **Swipe back:** Show detail and the show page hid the system bar and drew a `GlassCircleButton`, which switched off the edge swipe. They now keep the system bar, inline and with a hidden background, and its iOS 26 glass back button. `GlassCircleButton` is deleted, and the design system's article now describes the system button.
+- **Checks:**
+  - `NavigationTests` (2 UI tests: Show detail and the show page) push, swipe from the edge and pass. They were written after the fix and not seen red.
+  - The show-preview screen check: ALL PASS.
+  - The detail screen check fails between about 21:50 and midnight Lagos: its sample drop is now + 2 h 10 min, and the inventory expects "Expected today at …". That's a check-definition flaw, raised with Chime rather than edited.
+
 ## Day 6: Report a wrong time (Mon 2 Nov 2026)
 
 - **D6-3:** Show detail's "Report a wrong time" opens a prefilled email (`ReportURLBuilder`).

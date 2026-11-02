@@ -24,11 +24,6 @@ struct ShowDetailView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     NightArtHeader(image: hero?.image, base: base, height: 500)
-                        .overlay(alignment: .topLeading) {
-                            GlassCircleButton(systemImage: "chevron.left", label: "Back") { dismiss() }
-                                .padding(.leading, Tokens.Space.m)
-                                .padding(.top, 58)
-                        }
                     VStack(alignment: .leading, spacing: Tokens.Space.xl) {
                         // Only the countdown follows the clock, so only it redraws every second.
                         TimelineView(.countdown) { context in next(now: context.date) }
@@ -64,7 +59,11 @@ struct ShowDetailView: View {
             .background(base)
             .ignoresSafeArea(edges: .top)
         }
-        .toolbarVisibility(.hidden, for: .navigationBar)
+        // The system bar stays, invisible, so its back button brings the edge swipe back (Chime, 2 Nov: hiding it
+        // and drawing our own button switched the gesture off). On iOS 26 that button is a glass circle over the art.
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackgroundVisibility(.hidden, for: .navigationBar)
+        .scrollEdgeEffectHidden(true, for: .top)
         .environment(\.colorScheme, .dark)
         .confirmationDialog("Stop following \(drop.showName)?", isPresented: $confirmingUnfollow, titleVisibility: .visible) {
             Button("Unfollow", role: .destructive) { onUnfollow(); dismiss() }
