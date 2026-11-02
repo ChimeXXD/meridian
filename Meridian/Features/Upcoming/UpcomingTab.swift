@@ -1,5 +1,6 @@
 import SwiftData
 import SwiftUI
+import UIKit
 
 /// The Upcoming tab: the followed shows from SwiftData, loaded through `UpcomingModel`, with Show detail pushed on
 /// tap. `RootView` reloads it when the followed list changes and each time the app becomes active (D-27); here it
@@ -33,6 +34,8 @@ struct ShowDetailScreen: View {
     @Environment(\.modelContext) private var context
     @Query private var shows: [FollowedShow]
     @State private var episodes: [PastEpisode] = []
+    @State private var reportCopied = false
+    @Environment(\.openURL) private var openURL
 
     init(drop: Drop, model: UpcomingModel, artwork: ShowArtwork?) {
         self.drop = drop
@@ -44,8 +47,29 @@ struct ShowDetailScreen: View {
 
     var body: some View {
         ShowDetailView(drop: drop, artwork: artwork, episodes: episodes, liveActivity: liveActivity,
-                       onUnfollow: unfollow)
+                       onReport: report, onUnfollow: unfollow)
             .task { episodes = await model.pastEpisodes(showID: drop.showID) }
+            .alert("Couldn't open the report", isPresented: $reportCopied) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text("The report is copied, so you can paste it into an email or a message.")
+            }
+    }
+
+    /// "Report a wrong time" (D6-3, D-34): a prefilled email while the repo is private, a GitHub issue once public.
+    /// Without a mail app the email can't open, so the report goes to the clipboard instead of nowhere.
+    private func report() {
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "unknown"
+        let formatter = DropFormatter()
+        let now = Date.now  // one instant, so the copied text matches the email it stands in for
+        guard let url = ReportURLBuilder.url(for: drop, route: .current, now: now, formatter: formatter,
+                                             appVersion: version) else { return }
+        openURL(url) { opened in
+            guard !opened else { return }
+            UIPasteboard.general.string = ReportURLBuilder.body(for: drop, now: now, formatter: formatter,
+                                                                appVersion: version)
+            reportCopied = true
+        }
     }
 
     private var liveActivity: Binding<Bool> {

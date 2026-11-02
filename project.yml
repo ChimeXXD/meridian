@@ -43,6 +43,7 @@ targets:
         UILaunchScreen: {}
         NSSupportsLiveActivities: true
         MeridianAppGroup: $(APP_GROUP_ID)
+        MeridianReportEmail: $(REPORT_EMAIL)
     entitlements:
       path: Meridian/Meridian.entitlements
       properties:

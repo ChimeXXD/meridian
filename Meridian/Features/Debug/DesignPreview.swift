@@ -38,7 +38,8 @@ struct DesignPreview: View {
                 .navigationDestination(for: Drop.self) { drop in
                     ShowDetailView(drop: drop, artwork: artwork[drop.showID],
                                    episodes: drop.showID == "38052" ? Self.siloEpisodes : [], liveActivity: $liveActivity,
-                                   formatter: formatter, scrollAnchor: anchor)
+                                   formatter: formatter, scrollAnchor: anchor,
+                                   onReport: {})  // shows the row as a followed show's detail does (D6-3)
                 }
         }
         .task { await loadArtwork() }

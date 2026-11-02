@@ -13,7 +13,8 @@ enum DesignSystemCopy {
     /// reaches the site.
     static func expectMatches(_ png: Data, name: String, folder: String,
                               sourceLocation: SourceLocation = #_sourceLocation) {
-        // The sync script renders with this set, so every other check must still pass before it copies anything.
+        // Set by the sync script, so every other check must still pass before it copies anything, and by CI, whose
+        // older iOS draws text a little differently (the local gate checks the copies on iOS 27).
         if ProcessInfo.processInfo.environment["MERIDIAN_SYNC_RENDERS"] == "1" { return }
         let path = "design-system/assets/\(folder)/\(name)"
         let copy = try? Data(contentsOf: root.appendingPathComponent(path))

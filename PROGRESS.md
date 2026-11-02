@@ -2,6 +2,19 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Day 6: Report a wrong time (Mon 2 Nov 2026)
+
+- **D6-3:** Show detail's "Report a wrong time" opens a prefilled email (`ReportURLBuilder`).
+  - Subject: "Wrong time: House of the Dragon S3E4".
+  - Body: the show, the episode, the time as shown and in UTC, where it came from, the zone, the episode ID and the app version, then "What's the right time, and where did you see it?".
+  - With no mail app, the report is copied to the clipboard and an alert says so.
+  - On Day 7, `ReportRoute.repoIsPublic = true` switches it to a prefilled GitHub issue (D-34).
+- **The address:** `REPORT_EMAIL` lives only in the git-ignored `Config/Signing.local.xcconfig`. It's empty in `Base.xcconfig` and reaches the app through Info.plist `MeridianReportEmail`, so it's never committed (checked with `git grep`).
+- **Checks:**
+  - ReportURLBuilderTests 4 pass. They were written with the code and never seen red.
+  - Screen check detail: ALL PASS. The Debug preview now shows the row, as the real screen does.
+- **Not verified:** tapping it on the phone (it opens Mail with the fields), and the no-mail fallback (needs a device without Mail).
+
 ## Day 6: offline label, fresher times, PRIVACY.md (Mon 2 Nov 2026)
 
 - **D6-2:** when a refresh can't reach every show, Upcoming ends with "Updated 14:05. Couldn't refresh Silo and Frieren; pull down to try again." (`UpcomingStatus`). The old line named TVmaze even for anime.

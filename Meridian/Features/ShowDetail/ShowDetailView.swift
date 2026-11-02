@@ -10,7 +10,7 @@ struct ShowDetailView: View {
     @Binding var liveActivity: Bool
     var formatter = DropFormatter()
     var scrollAnchor: UnitPoint? = nil
-    /// Nil hides "Report a wrong time" until the email route exists (Day 6, D-34).
+    /// "Report a wrong time" (D6-3): `ShowDetailScreen` opens the prefilled report. Nil hides the row (the previews).
     var onReport: (() -> Void)? = nil
     var onUnfollow: () -> Void = {}
 

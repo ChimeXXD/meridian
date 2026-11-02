@@ -5,6 +5,9 @@
 DISPLAY_NAME = Meridian
 BUNDLE_PREFIX = dev.chime
 APP_GROUP_ID = group.$(BUNDLE_PREFIX).meridian
+// "Report a wrong time" recipient while the repo is private (D-34). Set it in the git-ignored Signing.local.xcconfig;
+// empty here, so the address is never committed and the email opens with no recipient.
+REPORT_EMAIL =
 DEVELOPMENT_TEAM =
 
 #include? "Signing.local.xcconfig"

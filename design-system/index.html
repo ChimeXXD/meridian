@@ -1035,15 +1035,16 @@ AiringFilter.options(for: .tv)   // [.popular, .today, .newSeasons, .exactTime] 
     <div class="hrow"><h3>Report and Unfollow</h3></div>
     <p class="purpose">The quiet actions at the foot of Show detail. Unfollow is the only destructive action, and it always asks first.</p>
     <div class="states">
-      <figure class="state"><div class="stage" style="width:342px;display:grid;gap:16px"><span class="quiet-link">Report a wrong time</span><span class="quiet-link">Unfollow</span></div><figcaption>Links. Report stays hidden until reporting is available</figcaption></figure>
+      <figure class="state"><div class="stage" style="width:342px;display:grid;gap:16px"><span class="quiet-link">Report a wrong time</span><span class="quiet-link">Unfollow</span></div><figcaption>Each a 44 pt row</figcaption></figure>
       <figure class="state"><div class="stage" style="width:342px;background:#0a0a0a"><div class="sheet"><div class="sheet-title">Stop following Silo?</div><div class="sheet-act destructive">Unfollow</div></div><div class="sheet cancel">Cancel</div></div><figcaption>The system confirmation dialog</figcaption></figure>
     </div>
     <div class="spec"><dl class="specs">
-      <dt>Type</dt><dd>Subheadline, <code>NightInk.muted</code>, 16 apart</dd>
+      <dt>Type</dt><dd>Subheadline, <code>NightInk.muted</code>, each a 44 pt row, tappable across its height</dd>
+      <dt>Report</dt><dd>Opens an email in the viewer’s mail app, prefilled with show, episode, the time as shown and in UTC, where it came from, the zone, the episode ID and the app version (<code>ReportURLBuilder</code>). Once the repo is public it opens a prefilled GitHub issue (D-34). With no mail app, the report is copied and an alert says so</dd>
       <dt>Copy</dt><dd>“Report a wrong time” · “Unfollow” · the dialog asks “Stop following Silo?”</dd>
       <dt>IDs</dt><dd><code>detail-report</code>, <code>detail-unfollow</code></dd>
       <dt>Hit target</dt><dd>System button, a row at least 44 tall</dd>
-      <dt>Source</dt><dd class="path">Features/ShowDetail/ShowDetailView.swift:45-55, 68-70</dd>
+      <dt>Source</dt><dd class="path">Features/ShowDetail/ShowDetailView.swift:45-52; Features/ShowDetail/ReportURLBuilder.swift</dd>
     </dl><div class="codebox"><pre><code>Button("Unfollow", role: .destructive) { confirmingUnfollow = true }
 .confirmationDialog("Stop following \(drop.showName)?", isPresented: $confirmingUnfollow,
                     titleVisibility: .visible) {

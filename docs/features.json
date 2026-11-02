@@ -581,8 +581,8 @@
         "fields present in both modes"
       ],
       "verify": "ReportURLBuilderTests",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "ReportURLBuilderTests (4: email, no address, GitHub issue, a name with & = + # ?) decode each URL and check show, episode, time shown, source, zone in both modes; fidelity/verify-screen.sh detail ALL PASS with the row shown (2 Nov). The address lives only in the git-ignored Signing.local.xcconfig (REPORT_EMAIL); ReportRoute.repoIsPublic flips to GitHub issues on Day 7."
     },
     {
       "id": "D6-4",

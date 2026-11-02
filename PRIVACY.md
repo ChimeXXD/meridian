@@ -17,6 +17,11 @@ the time, and what was asked for. None of them gets an identifier for you.
 
 Artwork requests carry a `User-Agent` naming the app and its GitHub page, as Wikimedia asks of apps.
 
+**Report a wrong time** (on a show's page) opens an email in your own mail app (addressed to the developer, in the developer's builds) with the
+show, episode, the time Meridian showed, where that time came from and your time zone filled in. Nothing is sent
+unless you send it yourself. Without a mail app, the same text is copied for you to paste. Once the code is public,
+it opens a prefilled GitHub issue instead.
+
 ## What stays on your phone
 
 - **The shows you follow** and their settings (the Live Activity switch, an anime's time offset), in the app's own
