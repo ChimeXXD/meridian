@@ -10,6 +10,7 @@ struct DesignPreview: View {
     @State private var artwork: [String: ShowArtwork] = [:]
     @State private var path: [Drop] = []
     @State private var liveActivity = true
+    @State private var offset = 30
     /// Built once: `body`, `onAppear` and `loadArtwork` all read it.
     private let drops: [Drop]
     private let formatter = DropFormatter(zoneIdentifier: "Africa/Lagos")
@@ -38,6 +39,7 @@ struct DesignPreview: View {
                 .navigationDestination(for: Drop.self) { drop in
                     ShowDetailView(drop: drop, artwork: artwork[drop.showID],
                                    episodes: drop.showID == "38052" ? Self.siloEpisodes : [], liveActivity: $liveActivity,
+                                   offset: AnimeOffset.applies(to: drop, catalog: .tvmaze) ? $offset : nil,
                                    formatter: formatter, scrollAnchor: anchor,
                                    onReport: {})  // shows the row as a followed show's detail does (D6-3)
                 }

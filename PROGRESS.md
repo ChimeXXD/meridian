@@ -2,6 +2,20 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## The anime stream delay, and Show detail stays current (Mon 2 Nov 2026)
+
+- **UX audit #5, a Must (D3-3) never built:** Show detail has a "Stream delay" stepper for anime only (`AnimeOffset.applies`), from 0 to 180 minutes in 15s, said as "30 min after Japan".
+  - It saves to `FollowedShow.animeOffsetMinutes`.
+  - RootView's reload trigger now includes each show's offset, so the times, their "Expected" wording (`.adjusted`, D-40) and the Live Activity follow.
+- **UX audit #14:** `ShowDetailScreen` shows the show's latest drop from `model.result`, so a refresh while the page is open (a delay, a new offset) appears there, and "Report a wrong time" reports what's on screen.
+- **Also:** the late-evening flaw in the upcoming and detail screen checks is fixed with Chime's OK; they accept "Expected … at" on any day.
+- **Checks:**
+  - AnimeOffsetTests 3 pass (written with the code, not seen red).
+  - TimeResolverTests.animeOffsetIsAdjusted and ReleaseWordingTests already prove the shift and the word.
+  - Screen checks upcoming and detail: ALL PASS.
+  - A simulator screenshot of Frieren's detail shows the stepper.
+- **Not verified:** stepping a real followed anime on the phone (the preview's time is static). D3-3 stays unticked until Chime approves it.
+
 ## Polish: smaller countdowns, an action card (Mon 2 Nov 2026)
 
 - **D-60, from Chime's walkthrough and the audit:**

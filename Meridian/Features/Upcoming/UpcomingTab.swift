@@ -46,8 +46,8 @@ struct ShowDetailScreen: View {
     }
 
     var body: some View {
-        ShowDetailView(drop: drop, artwork: artwork, episodes: episodes, liveActivity: liveActivity,
-                       onReport: report, onUnfollow: unfollow)
+        ShowDetailView(drop: current, artwork: artwork, episodes: episodes, liveActivity: liveActivity,
+                       offset: offset, onReport: report, onUnfollow: unfollow)
             .task { episodes = await model.pastEpisodes(showID: drop.showID) }
             .alert("Couldn't open the report", isPresented: $reportCopied) {
                 Button("OK", role: .cancel) {}
@@ -62,6 +62,7 @@ struct ShowDetailScreen: View {
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "unknown"
         let formatter = DropFormatter()
         let now = Date.now  // one instant, so the copied text matches the email it stands in for
+        let drop = current  // the time on screen, not the one the page opened with
         guard let url = ReportURLBuilder.url(for: drop, route: .current, now: now, formatter: formatter,
                                              appVersion: version) else { return }
         openURL(url) { opened in
@@ -70,6 +71,22 @@ struct ShowDetailScreen: View {
                                                                 appVersion: version)
             reportCopied = true
         }
+    }
+
+    /// The show's latest drop, so a refresh while this page is open (a delay, a new stream delay) shows here too
+    /// (UX audit #14); the drop it was opened with until then.
+    private var current: Drop {
+        model.result?.drops.first { $0.showID == drop.showID } ?? drop
+    }
+
+    /// The anime stream delay, stored on the show; RootView refreshes when it changes.
+    private var offset: Binding<Int>? {
+        guard let show = shows.first, AnimeOffset.applies(to: current, catalog: show.catalog) else { return nil }
+        return Binding(get: { show.animeOffsetMinutes },
+                       set: { value in
+                           show.animeOffsetMinutes = value
+                           try? context.save()
+                       })
     }
 
     private var liveActivity: Binding<Bool> {

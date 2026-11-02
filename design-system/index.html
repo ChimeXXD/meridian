@@ -989,6 +989,22 @@ AiringFilter.options(for: .tv)   // [.popular, .today, .newSeasons, .exactTime] 
     .accessibilityIdentifier("detail-why")</code></pre></div></div>
   </article>
 
+  <article class="comp" id="c-anime-offset" data-search="anime offset stream delay stepper japan crunchyroll detail-offset" data-title="Stream delay" data-kind="Component">
+    <div class="hrow"><h3>Stream delay</h3></div>
+    <p class="purpose">For an anime only: how long after its Japanese TV time it streams for you. Changing it moves the time, turns its word to “Expected” (an adjusted time is an estimate, D-40), and moves the Live Activity.</p>
+    <div class="states">
+      <figure class="state"><div class="stage" style="width:390px;padding:16px 24px"><div class="toggle-row"><div><div class="tg-title">Stream delay</div><div class="meta" style="margin-top:2px">Same time as Japan</div></div><span class="meta" style="border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:6px 14px;color:#fff">−&nbsp;&nbsp;|&nbsp;&nbsp;+</span></div></div><figcaption>The default: the Japanese TV time</figcaption></figure>
+      <figure class="state"><div class="stage" style="width:390px;padding:16px 24px"><div class="toggle-row"><div><div class="tg-title">Stream delay</div><div class="meta" style="margin-top:2px">1 h 30 min after Japan</div></div><span class="meta" style="border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:6px 14px;color:#fff">−&nbsp;&nbsp;|&nbsp;&nbsp;+</span></div></div><figcaption>Set: the time moves and reads “Expected”</figcaption></figure>
+    </div>
+    <div class="spec"><dl class="specs">
+      <dt>Control</dt><dd>The system <code>Stepper</code>, 0 to 180 minutes in steps of 15</dd>
+      <dt>Copy</dt><dd>“Stream delay” · “Same time as Japan” · “15 min after Japan” · “1 h 30 min after Japan” (<code>AnimeOffset.phrase</code>)</dd>
+      <dt>Shown</dt><dd>Anime only: an AniList show, or a time already adjusted from Japan’s</dd>
+      <dt>ID</dt><dd><code>detail-offset</code></dd>
+      <dt>Source</dt><dd class="path">Features/ShowDetail/ShowDetailView.swift; Features/ShowDetail/AnimeOffset.swift</dd>
+    </dl></div>
+  </article>
+
   <article class="comp" id="c-la-toggle" data-search="live activity toggle switch release night detail" data-title="Live Activity toggle" data-kind="Component">
     <div class="hrow"><h3>Live Activity toggle</h3></div>
     <p class="purpose">For one show, turns the release-night Live Activity on or off. Flipping it schedules or cancels at once.</p>

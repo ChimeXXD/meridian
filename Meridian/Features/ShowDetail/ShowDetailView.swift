@@ -8,6 +8,8 @@ struct ShowDetailView: View {
     let artwork: ShowArtwork?
     var episodes: [PastEpisode] = []
     @Binding var liveActivity: Bool
+    /// An anime's stream delay after its Japanese TV time (`detail-offset`); nil hides it for other shows.
+    var offset: Binding<Int>? = nil
     var formatter = DropFormatter()
     var scrollAnchor: UnitPoint? = nil
     /// "Report a wrong time" (D6-3): `ShowDetailScreen` opens the prefilled report. Nil hides the row (the previews).
@@ -28,6 +30,7 @@ struct ShowDetailView: View {
                         // Only the countdown follows the clock, so only it redraws every second.
                         TimelineView(.countdown) { context in next(now: context.date) }
                         liveActivityRow
+                        if let offset { offsetRow(offset) }
                         if !episodes.isEmpty {
                             VStack(alignment: .leading, spacing: Tokens.Space.xs) {
                                 Text("Episodes")
@@ -86,6 +89,20 @@ struct ShowDetailView: View {
         }
         .tint(.white.opacity(0.6))
         .accessibilityIdentifier("detail-live-activity")
+    }
+
+    /// An anime streams a set time after its Japanese broadcast: the delay in steps of 15 minutes, said in words.
+    /// Changing it refreshes the times, so the countdown, its "Expected" and the Live Activity follow (UX audit #5).
+    private func offsetRow(_ minutes: Binding<Int>) -> some View {
+        Stepper(value: minutes, in: AnimeOffset.range, step: AnimeOffset.step) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Stream delay").font(.body)
+                Text(AnimeOffset.phrase(minutes.wrappedValue))
+                    .font(.footnote).foregroundStyle(NightInk.muted)
+                    .contentTransition(.numericText())
+            }
+        }
+        .accessibilityIdentifier("detail-offset")
     }
 
     /// Report and Unfollow as a grouped card, like Settings' rows (Chime and the UX audit #4, 2 Nov: as grey text they

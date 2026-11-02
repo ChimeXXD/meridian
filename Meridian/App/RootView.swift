@@ -22,7 +22,8 @@ struct RootView: View {
 
     var body: some View {
         content
-            .task(id: followed.map(\.key)) { await refresh() }
+            // A follow, an unfollow or an anime's new stream delay reloads the times.
+            .task(id: followed.map { "\($0.key):\($0.animeOffsetMinutes)" }) { await refresh() }
             .onChange(of: scenePhase) { _, phase in
                 if phase == .active { Task { await refresh() } }
             }
