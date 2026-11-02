@@ -20,6 +20,8 @@ struct LiveActivityExpandedView: View {
     var formatter = DropFormatter()
 
     static let artSize: CGFloat = 50
+    /// Wide enough for "5:59:59" (the longest lead time is 6 hours) in 24 pt serif digits, as the compact timer's is.
+    static let timerWidth: CGFloat = 96
 
     private var out: Bool { LiveActivityText.isOut(state, isStale: isStale, now: now) }
 
@@ -99,11 +101,14 @@ struct LiveActivityExpandedView: View {
                         .font(.system(size: 24, weight: NumeralStudy.night.weight, design: .serif))
                         .foregroundStyle(LiveActivityInk.out)
                         .lineLimit(1)
+                        .fixedSize()
                 } else {
+                    // A set width, never `fixedSize`: on the phone a timer asks for the width of its widest value,
+                    // which pushed the whole line out of the island and left it blank (Chime's iPhone, 2 Nov).
                     LiveActivityCountdown(dropDate: state.dropDate, now: now, size: 24, alignment: .trailing)
+                        .frame(width: Self.timerWidth, alignment: .trailing)
                 }
             }
-            .fixedSize()
             .accessibilityIdentifier("la-expanded-countdown")
         }
     }
