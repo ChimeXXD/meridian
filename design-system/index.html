@@ -264,7 +264,7 @@
   </div>
 
   <h3 id="type-scale-h">Every size in the app</h3>
-  <p class="small">From the 88 pt hero countdown down to the 10 pt unit in the circular widget, at 1 pt to 1 px. Type your own text to try it at every size.</p>
+  <p class="small">From the 64 pt hero countdown down to the 10 pt unit in the circular widget, at 1 pt to 1 px. Type your own text to try it at every size.</p>
   <div class="custom-type" id="specimens">
     <label for="custom-text">Sample text</label>
     <input id="custom-text" type="text" placeholder="A show name, or 2:10:07" autocomplete="off">
@@ -559,10 +559,10 @@
       <figure class="state"><div class="stage" style="width:390px;padding:20px 24px"><div class="hl-title">Silo</div><div class="cd hl-cd" data-cd="189622">2<span class="d">d </span>4<span class="d">h</span></div><div class="hl-out" data-out="Expected" data-naming>Expected Wed at 23:00 Lagos time</div></div><figcaption>Estimate, more than a day: still</figcaption></figure>
       <figure class="state"><div class="stage" style="width:390px;padding:20px 24px"><div class="hl-title">Frieren: Beyond Journey’s End</div><div class="cd hl-cd" data-cd="19524">5:25:24</div><div class="hl-out" data-out="Airs in Japan" data-naming>Airs in Japan tomorrow at 01:24 Lagos time</div></div><figcaption>Anime: the Japanese TV time</figcaption></figure>
       <figure class="state"><div class="stage" style="width:390px;padding:20px 24px"><div class="hl-title">House of the Dragon</div><div class="cd hl-cd"><span class="cd-word out" style="font-size:.7em">Out now</span></div><div class="hl-out">Released today at 21:00 <span data-zone>Lagos</span> time</div></div><figcaption>Out now, for the first hour</figcaption></figure>
-      <figure class="state"><div class="stage" style="width:390px;padding:20px 24px"><div class="hl-title">Severance</div><div class="cd hl-cd"><span class="cd-word" style="font-size:.6em">Thu 19 Nov</span></div><div class="hl-out">Out Thu 19 Nov, time not announced</div></div><figcaption>Date only: no timer</figcaption></figure>
+      <figure class="state"><div class="stage" style="width:390px;padding:20px 24px"><div class="hl-title">Severance</div><div class="hl-out">Out Thu 19 Nov, time not announced</div></div><figcaption>Date only: no countdown line, so the day isn’t said twice</figcaption></figure>
     </div>
     <div class="spec"><dl class="specs">
-      <dt>Type</dt><dd>Title New York 32, up to 2 lines, scaling down to 0.7. Countdown New York Light 88. Out line SF Pro body medium, 4 pt below</dd>
+      <dt>Type</dt><dd>Title New York 32, up to 2 lines, scaling down to 0.7. Countdown New York Light 64 on Upcoming and Show detail, 48 on the show page (it was 88, 2.75 times the title: UX audit #2). Out line SF Pro body medium, 4 pt below. Title and countdown grow with the text size like a large title (1.76 times at the largest size)</dd>
       <dt>Ink</dt><dd>All <code>NightInk.primary</code>; the stack is 4 pt apart</dd>
       <dt>Copy</dt><dd><code>ReleaseWording.outLine(naming: true)</code> adds “… Lagos time”, except for a date only</dd>
       <dt>VoiceOver</dt><dd>“House of the Dragon, heading”, then the timer, then “Out today at 22:10 Lagos time”. Days read “2 days 4 hours”</dd>
@@ -613,7 +613,7 @@
       <figure class="state"><div class="stage" style="text-align:right"><div class="cd" style="font-size:24px" data-cd="99022">1<span class="d">d </span>3<span class="d">h</span></div></div><figcaption>In a row: 24, trailing</figcaption></figure>
     </div>
     <div class="spec"><dl class="specs">
-      <dt>Sizes in use</dt><dd>88 hero · 46, 36 and 32 in widget heroes · 26 rectangular · 24 row · 22 large-widget row · 15 compact row</dd>
+      <dt>Sizes in use</dt><dd>64 hero and Show detail · 48 show page · 46, 36 and 32 in widget heroes · 26 rectangular · 24 row · 22 large-widget row · 15 compact row. Units half the numerals, never under 11; app countdowns grow like a large title</dd>
       <dt>Type</dt><dd>New York Light, tabular; the “d” and “h” are 0.5 times, secondary; “Out now” 0.7 times; “Released”, a date and “Date not set” 0.6 times; it scales with Dynamic Type</dd>
       <dt>Ink</dt><dd>The <code>tint</code> it is given (white in the app and widgets), “Released” in secondary. Only “Out now” is Meridian Gold, and only in full colour; tinted widgets keep the system’s tint</dd>
       <dt>Width</dt><dd>Under a day, a hidden template of the widest value, such as “00:00:00”; scales down to 0.5, one line</dd>
@@ -950,7 +950,7 @@ AiringFilter.options(for: .tv)   // [.popular, .today, .newSeasons, .exactTime] 
       <button role="tab" type="button" id="spg-t2" aria-controls="spg-p2" aria-selected="false">Nothing scheduled</button>
     </div>
     <div class="states">
-      <figure class="state" role="tabpanel" id="spg-p1" aria-labelledby="spg-t1"><div class="phone" style="--night:#1C1B1A"><div class="nah tall"><div class="art warm" data-show="silo"></div><div class="fade"></div><div class="scrim-top"></div><span class="glass" style="position:absolute;left:16px;top:58px" aria-hidden="true"><svg><use href="#i-chevron"/></svg></span></div><div class="phone-copy" style="display:grid;gap:32px"><div style="display:grid;gap:12px"><div><div class="hl-title">Silo</div><div class="cd hl-cd"><span class="cd-word" style="font-size:.6em">Fri 9 Jul 2027</span></div><div class="hl-out">Out Fri 9 Jul 2027, time not announced</div></div><div class="meta">2023 · Apple TV · Running</div></div><span class="btn-follow"><svg width="15" height="15" aria-hidden="true"><use href="#i-plus"/></svg>Follow</span></div></div><figcaption>With an episode, date only</figcaption></figure>
+      <figure class="state" role="tabpanel" id="spg-p1" aria-labelledby="spg-t1"><div class="phone" style="--night:#1C1B1A"><div class="nah tall"><div class="art warm" data-show="silo"></div><div class="fade"></div><div class="scrim-top"></div><span class="glass" style="position:absolute;left:16px;top:58px" aria-hidden="true"><svg><use href="#i-chevron"/></svg></span></div><div class="phone-copy" style="display:grid;gap:32px"><div style="display:grid;gap:12px"><div><div class="hl-title">Silo</div><div class="hl-out">Out Fri 9 Jul 2027, time not announced</div></div><div class="meta">2023 · Apple TV · Running</div></div><span class="btn-follow"><svg width="15" height="15" aria-hidden="true"><use href="#i-plus"/></svg>Follow</span></div></div><figcaption>With an episode, date only</figcaption></figure>
       <figure class="state" role="tabpanel" id="spg-p2" aria-labelledby="spg-t2" hidden><div class="phone" style="--night:#1C1B1A"><div class="nah tall"><div class="art warm" data-show="andor"></div><div class="fade"></div><div class="scrim-top"></div><span class="glass" style="position:absolute;left:16px;top:58px" aria-hidden="true"><svg><use href="#i-chevron"/></svg></span></div><div class="phone-copy" style="display:grid;gap:32px"><div style="display:grid;gap:12px"><div class="hl-title">Andor</div><div class="meta">2022 · Disney+ · Ended</div></div><span class="btn-follow on"><svg width="15" height="15" aria-hidden="true"><use href="#i-check"/></svg>Following</span></div></div><figcaption>Nothing scheduled, following</figcaption></figure>
     </div>
     <div class="spec"><dl class="specs">
@@ -1030,13 +1030,14 @@ AiringFilter.options(for: .tv)   // [.popular, .today, .newSeasons, .exactTime] 
 
   <article class="comp" id="c-detail-actions" data-search="unfollow report a wrong time confirmation dialog destructive" data-title="Report and Unfollow" data-kind="Component">
     <div class="hrow"><h3>Report and Unfollow</h3></div>
-    <p class="purpose">The quiet actions at the foot of Show detail. Unfollow is the only destructive action, and it always asks first.</p>
+    <p class="purpose">The actions at the foot of Show detail, grouped in one card like Settings’ rows (Chime and UX audit #4: as grey text they looked disabled). Unfollow is the only destructive action: red, and it always asks first.</p>
     <div class="states">
-      <figure class="state"><div class="stage" style="width:342px;display:grid;gap:16px"><span class="quiet-link">Report a wrong time</span><span class="quiet-link">Unfollow</span></div><figcaption>Each a 44 pt row</figcaption></figure>
+      <figure class="state"><div class="stage" style="width:342px"><div style="background:rgba(255,255,255,.08);border-radius:14px"><div style="display:flex;align-items:center;gap:12px;min-height:52px;padding:0 16px;color:#fff;font-size:17px"><span aria-hidden="true" style="width:24px;display:grid;place-items:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 4.5h16v11.5H10l-6 4.5z"/><path d="M12 7.5v4.5M12 14.2v.3" stroke-linecap="round"/></svg></span><span style="flex:1">Report a wrong time</span><span aria-hidden="true" style="color:rgba(235,235,245,.6);font-size:13px;font-weight:600">↗</span></div><div style="height:.5px;background:rgba(255,255,255,.12);margin-left:52px"></div><div style="display:flex;align-items:center;gap:12px;min-height:52px;padding:0 16px;color:#FF453A;font-size:17px"><span aria-hidden="true" style="width:24px;display:grid;place-items:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12h8" stroke-linecap="round"/></svg></span><span>Unfollow</span></div></div></div><figcaption>One card: symbol, label, and ↗ where it opens Mail</figcaption></figure>
       <figure class="state"><div class="stage" style="width:342px;background:#0a0a0a"><div class="sheet"><div class="sheet-title">Stop following Silo?</div><div class="sheet-act destructive">Unfollow</div></div><div class="sheet cancel">Cancel</div></div><figcaption>The system confirmation dialog</figcaption></figure>
     </div>
     <div class="spec"><dl class="specs">
-      <dt>Type</dt><dd>Subheadline, <code>NightInk.muted</code>, each a 44 pt row, tappable across its height</dd>
+      <dt>Card</dt><dd>White 8% fill, radius 14 (<code>Tokens.Radius.card</code>); rows at least 52 tall, sides 16, a 0.5 pt divider at white 12% inset 52</dd>
+      <dt>Rows</dt><dd>SF Symbols in a 24 pt column (<code>exclamationmark.bubble</code>, <code>minus.circle</code>), body text; Report white with a muted <code>arrow.up.right</code> and the hint “Opens an email”; Unfollow system red</dd>
       <dt>Report</dt><dd>Opens an email in the viewer’s mail app, prefilled with show, episode, the time as shown and in UTC, where it came from, the zone, the episode ID and the app version (<code>ReportURLBuilder</code>). Once the repo is public it opens a prefilled GitHub issue (D-34). With no mail app, the report is copied and an alert says so</dd>
       <dt>Copy</dt><dd>“Report a wrong time” · “Unfollow” · the dialog asks “Stop following Silo?”</dd>
       <dt>IDs</dt><dd><code>detail-report</code>, <code>detail-unfollow</code></dd>

@@ -30,20 +30,27 @@ struct ReleaseHeadline: View {
     let now: Date
     var formatter = DropFormatter()
     var titleSize: CGFloat = 32
-    var countdownSize: CGFloat = 88
+    /// 64 on Upcoming and Show detail, 48 on the show page: 2 and 1.5 times the title. It was 88, 2.75 times, and
+    /// took 15% of the screen (Chime and the UX audit, 2 Nov).
+    var countdownSize: CGFloat = 64
+    /// The title grows with the text size like a large title, so it never ends up smaller than the lines under it.
+    @ScaledMetric(relativeTo: .largeTitle) private var titleScale: CGFloat = 1
     /// Prefix for the test IDs: `upcoming-hero` or `detail` (UI-BRIEF).
     var testID = "headline"
 
     var body: some View {
         VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
             Text(drop.showName)
-                .font(.system(size: titleSize, design: .serif))
+                .font(.system(size: titleSize * titleScale, design: .serif))
                 .lineLimit(2).minimumScaleFactor(0.7)
                 .accessibilityAddTraits(.isHeader)
                 .accessibilityIdentifier("\(testID)-title")
-            CountdownText(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate, now: now,
-                          size: countdownSize, tint: .white, formatter: formatter)
-                .environment(\.numeralStudy, .night)
+            // A date-only drop has no countdown: its day is in the out line, so it isn't said twice in big type.
+            if drop.confidence != .dateOnly {
+                CountdownText(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate, now: now,
+                              size: countdownSize, tint: .white, formatter: formatter)
+                    .environment(\.numeralStudy, .night)
+            }
             Text(ReleaseWording.outLine(drop, now: now, formatter: formatter, naming: true))
                 .font(.body.weight(.medium))
                 .foregroundStyle(NightInk.primary)

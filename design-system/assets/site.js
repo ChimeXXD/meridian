@@ -255,7 +255,7 @@
   /* ================================================================ type */
   // [role, surface, family, size, weight, numerals, where]
   const TYPE = [
-    ['Hero countdown', 'App', 'serif', 88, 300, true, 'Upcoming hero, Show detail, the show page'],
+    ['Hero countdown', 'App', 'serif', 64, 300, true, 'Upcoming hero and Show detail; 48 on the show page'],
     ['Welcome headline', 'App', 'serif', 34, 400, false, 'Welcome'],
     ['Welcome wordmark', 'App', 'serif', 22, 400, false, '“Meridian” in title 2, Starlight, beside the 36 pt mark; both grow with Dynamic Type'],
     ['Hero title', 'App', 'serif', 32, 400, false, 'Headline title, spotlight, the show page'],

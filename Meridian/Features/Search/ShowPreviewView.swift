@@ -42,7 +42,8 @@ struct ShowPreviewView: View {
                             if let drop {
                                 // Only the countdown follows the clock, so only it redraws every second.
                                 TimelineView(.countdown) { timeline in
-                                    ReleaseHeadline(drop: drop, now: timeline.date, testID: "show-preview")
+                                    ReleaseHeadline(drop: drop, now: timeline.date, countdownSize: 48,
+                                                    testID: "show-preview")
                                 }
                             } else {
                                 Text(result.title)

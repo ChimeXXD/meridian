@@ -2,6 +2,21 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Polish: smaller countdowns, an action card (Mon 2 Nov 2026)
+
+- **D-60, from Chime's walkthrough and the audit:**
+  - **Countdowns:** 64 pt on Upcoming and Show detail and 48 on the show page (were 88). They grow with the text size like `.largeTitle`, and so do show titles.
+  - **Date-only shows:** no big date line.
+  - **Units:** never under 11 pt.
+  - **Show detail's actions:** Report and Unfollow are now a card. Report has a symbol and ↗; Unfollow is red.
+- **The design system:** follows all of it (ReleaseHeadline, countdown sizes, show page, the action card, tokens), and the renders are re-synced. 10 medium-widget pictures changed with the unit floor.
+- **Checks:**
+  - Gate build, test and spec pass.
+  - Screen checks show-preview and settings: ALL PASS.
+  - upcoming and detail fail only on the late-evening "today" expectation; every layout and copy item is present.
+  - Simulator screenshots show the 64 pt hero, the detail card and the show page without the repeated date.
+- **Not changed:** row countdowns stay 24 pt, the size the audit kept for rows and the expanded island.
+
 ## Polish: swipe back, and a full UX audit (Mon 2 Nov 2026)
 
 - **Chime's walkthrough:**

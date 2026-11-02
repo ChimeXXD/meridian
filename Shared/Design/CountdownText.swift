@@ -22,7 +22,9 @@ struct CountdownText: View {
     var alignment: Alignment = .leading
 
     @Environment(\.numeralStudy) private var study
-    @ScaledMetric private var scale: CGFloat = 1
+    /// Grows like a large title (1.76 times at the largest size), not like body text (3.1 times), so at large text
+    /// sizes the countdown stays in step with the title above it (UX audit #3, 2 Nov).
+    @ScaledMetric(relativeTo: .largeTitle) private var scale: CGFloat = 1
     /// Gold only in full colour: tinted, clear and Lock Screen renderings keep the system's tint (D-53).
     @Environment(\.widgetRenderingMode) private var renderingMode
 
@@ -39,12 +41,12 @@ struct CountdownText: View {
         switch CountdownFormatter.state(drop: drop, confidence: confidence, now: now) {
         case .dateOnly:
             Text(airdate.flatMap { formatter.airdate($0, now: now) } ?? "Date not set")
-                .font(study.font(size: size * 0.6 * scale))
+                .font(minor(0.6))
         case .outNow:
-            Text("Out now").font(study.font(size: size * 0.7 * scale))
+            Text("Out now").font(minor(0.7))
                 .foregroundStyle(renderingMode == .fullColor ? Color(uiColor: Tokens.gold) : tint)
         case .released:
-            Text("Released").font(study.font(size: size * 0.6 * scale)).foregroundStyle(.secondary)
+            Text("Released").font(minor(0.6)).foregroundStyle(.secondary)
         case .ticking:
             live
         case .coarse(let parts):
@@ -61,6 +63,10 @@ struct CountdownText: View {
     }
 
     private var digits: Font { study.font(size: size * scale).monospacedDigit() }
+
+    /// Words and unit letters at a fraction of the numerals, but never under 11 pt (UX audit #19: 7.5 pt in the
+    /// widgets' compact rows).
+    private func minor(_ factor: CGFloat) -> Font { study.font(size: max(size * factor * scale, 11)) }
 
     /// The last day's live count, inside a hidden template as wide as its widest value.
     private var live: some View {
@@ -79,7 +85,7 @@ struct CountdownText: View {
     /// "4d 4h" more than a day away: bright digits, the unit letters smaller and dim. Static text, so it needs no
     /// template; the caller's `now` steps it (hourly widget entries, the app's per-second redraw).
     private func still(_ parts: [CountdownPart]) -> Text {
-        let unit = study.font(size: size * 0.5 * scale)
+        let unit = minor(0.5)
         return parts.enumerated().reduce(Text(verbatim: "")) { text, item in
             let gap = Text(verbatim: item.offset == 0 ? "" : " ").font(unit)
             let value = Text(verbatim: "\(item.element.value)").font(digits)
