@@ -14,6 +14,7 @@ struct UpcomingTab: View {
     var body: some View {
         NavigationStack(path: $path) {
             UpcomingView(result: model.result, artwork: model.artwork, hasShows: !followed.isEmpty,
+                         lastUpdated: model.lastUpdated,
                          onSelect: { path.append($0) }, onFind: onFind, onRefresh: { await model.refresh(followed) })
                 .toolbarVisibility(.hidden, for: .navigationBar)
                 .navigationDestination(for: Drop.self) { drop in

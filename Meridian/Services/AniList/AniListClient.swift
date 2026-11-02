@@ -41,9 +41,10 @@ actor AniListClient {
         return (page.data.Page.media ?? []).filter { !$0.isAdult }
     }
 
-    func media(id: Int) async throws -> AniListMedia? {
+    /// `maxAge` shortens the cache for this call, as `TVmazeClient.show(id:maxAge:)` does for Upcoming (D-59).
+    func media(id: Int, maxAge: TimeInterval? = nil) async throws -> AniListMedia? {
         let query = "query ($id: Int) { Media(id: $id, type: ANIME) { \(Self.fields) } }"
-        let single: AniListSingle = try await post(query, ["id": .int(id)])
+        let single: AniListSingle = try await post(query, ["id": .int(id)], maxAge: maxAge)
         return single.data.Media.flatMap { $0.isAdult ? nil : $0 }
     }
 
@@ -101,13 +102,14 @@ actor AniListClient {
         let variables: [String: Variable]
     }
 
-    private func post<T: Decodable>(_ query: String, _ variables: [String: Variable]) async throws -> T {
+    private func post<T: Decodable>(_ query: String, _ variables: [String: Variable],
+                                    maxAge: TimeInterval? = nil) async throws -> T {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .sortedKeys
         let body = try encoder.encode(Request(query: query, variables: variables))
         // POSTs have no URL to key on, so the cache keys on the request body itself.
         let cacheKey = URL(string: "anilist:\(body.base64EncodedString())") ?? Self.endpoint
-        if let cached = await cache.body(for: cacheKey), let decoded = try? JSONDecoder().decode(T.self, from: cached) {
+        if let cached = await cache.body(for: cacheKey, maxAge: maxAge), let decoded = try? JSONDecoder().decode(T.self, from: cached) {
             return decoded
         }
         let data = try await send(body)

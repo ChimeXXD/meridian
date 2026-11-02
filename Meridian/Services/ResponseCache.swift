@@ -26,10 +26,11 @@ actor ResponseCache {
         return ResponseCache(directory: caches.appendingPathComponent(name), ttl: 6 * 60 * 60)
     }
 
-    func body(for url: URL) -> Data? {
+    /// The cached body if it's younger than `ttl`, or than `maxAge` when that's shorter (Upcoming's 15 minutes, D-59).
+    func body(for url: URL, maxAge: TimeInterval? = nil) -> Data? {
         guard let data = try? Data(contentsOf: file(for: url)),
               let entry = try? JSONDecoder().decode(Entry.self, from: data),
-              now().timeIntervalSince(entry.fetchedAt) < ttl else { return nil }
+              now().timeIntervalSince(entry.fetchedAt) < min(ttl, maxAge ?? ttl) else { return nil }
         return entry.body
     }
 

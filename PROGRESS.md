@@ -2,6 +2,19 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Day 6: offline label, fresher times, PRIVACY.md (Mon 2 Nov 2026)
+
+- **D6-2:** when a refresh can't reach every show, Upcoming ends with "Updated 14:05. Couldn't refresh Silo and Frieren; pull down to try again." (`UpcomingStatus`). The old line named TVmaze even for anime.
+  - "14:05" is the last refresh that reached every show, kept in UserDefaults across launches.
+  - Debug `-designPreview offline` shows it.
+- **D-59 (Chime chose 15 minutes):** Upcoming asks again for a followed show's next episode once the cached answer is 15 minutes old. It was 6 hours (D-12), which could hide a delay and make "Updated" untrue. Search and art keep 6 hours.
+- **`PRIVACY.md`:** every host contacted (from the code), what stays on the phone, and no tracking. Linked from Credits ("How Meridian handles your privacy"); readable by anyone once the repo is public.
+- **Checks:**
+  - UpcomingStatusTests 3 were red first, as a compile error. TVmazeClientTests.upcomingFreshness passes, and the client, loader and status suites are green (32).
+  - Screen checks upcoming and settings: ALL PASS.
+  - The simulator shows the offline line at the end of Upcoming.
+- **Not verified:** SPEC's manual flight-mode steps on the phone (follow 3 shows, flight mode, relaunch, see the times and "Updated"). That's for Chime, so D6-2 stays unticked until then.
+
 ## Day 6: refresh with delay detection (Mon 2 Nov 2026)
 
 - **D6-1 (D-58):** each refresh (on open, `RootView` scenePhase `.active`) compares episodes with the last known result, which comes from the in-memory result or, after a cold launch, the widgets' snapshot.

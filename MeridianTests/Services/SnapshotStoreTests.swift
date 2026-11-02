@@ -224,7 +224,9 @@ struct SnapshotStoreTests {
         return UpcomingModel(client: TVmazeClientTests.client(network),
                              anilist: AniListClientTests.client(TVmazeClientTests.FakeNetwork([(500, [:], Data())])),
                              rules: try RulesStore.loadBundled(), viewerCountry: "NG",
-                             snapshots: writer(container, probe))
+                             snapshots: writer(container, probe),
+                             // Its own defaults, so a test refresh doesn't stamp the app's "Updated" time (D6-2).
+                             defaults: UserDefaults(suiteName: "snapshot-tests-\(UUID().uuidString)")!)
     }
 
     @Test("follow, refresh and unfollow each rewrite the snapshot and reload the widgets")

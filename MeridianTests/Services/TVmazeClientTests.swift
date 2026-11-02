@@ -150,4 +150,24 @@ struct TVmazeClientTests {
         _ = try await Self.client(network, clock: clock, cacheDirectory: directory).search("Silo")
         #expect(await network.requests.count == 2)
     }
+
+    @Test("a followed show's next episode is asked again once its cached answer is 15 minutes old (D-59)")
+    func upcomingFreshness() async throws {
+        let network = FakeNetwork([try Self.ok("show-silo-embed")])
+        let clock = TestClock(now: Date(iso: "2026-10-30T09:00:00Z"))
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent("tvmaze-fresh-\(UUID().uuidString)")
+        let client = Self.client(network, clock: clock, cacheDirectory: directory)
+
+        _ = try await client.show(id: 44933, maxAge: UpcomingLoader.freshness)
+        clock.now = Date(iso: "2026-10-30T09:14:00Z")
+        _ = try await client.show(id: 44933, maxAge: UpcomingLoader.freshness)
+        #expect(await network.requests.count == 1)
+
+        clock.now = Date(iso: "2026-10-30T09:16:00Z")
+        // Search's show preview keeps the 6-hour cache; Upcoming asks again.
+        _ = try await client.show(id: 44933)
+        #expect(await network.requests.count == 1)
+        _ = try await client.show(id: 44933, maxAge: UpcomingLoader.freshness)
+        #expect(await network.requests.count == 2)
+    }
 }

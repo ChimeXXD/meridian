@@ -772,13 +772,14 @@ Text(ReleaseWording.quietNote(status: show.status, lastAired: show.lastAired, fo
     <div class="states">
       <figure class="state"><div class="stage" style="width:342px;padding:24px"><div class="empty-h">Follow a show to see its countdown here</div><div style="margin-top:16px"><span class="btn-primary small">Find a show</span></div></div><figcaption>No shows: <code>upcoming-empty-follow</code></figcaption></figure>
       <figure class="state"><div class="stage" style="width:342px;padding:24px"><div class="empty-h">Nothing scheduled for your shows yet. Meridian checks again each time you open it.</div></div><figcaption>Nothing to feature, not even a quiet show: <code>upcoming-empty</code></figcaption></figure>
-      <figure class="state"><div class="stage" style="width:342px;padding:24px"><div class="meta">Couldn’t reach TVmaze for Silo and Andor. Pull down to try again.</div></div><figcaption>Some shows failed: <code>upcoming-failed</code></figcaption></figure>
+      <figure class="state"><div class="stage" style="width:342px;padding:24px"><div class="meta">Updated 14:05. Couldn’t refresh Silo and Frieren; pull down to try again.</div></div><figcaption>Some shows didn’t refresh: how old the times are, then which (D6-2, D-59): <code>upcoming-failed</code></figcaption></figure>
       <figure class="state"><div class="stage" style="width:160px;height:110px;display:grid;place-items:center"><span class="spinner" role="img" aria-label="Loading"></span></div><figcaption>Loading, 240 from the top</figcaption></figure>
     </div>
     <div class="spec"><dl class="specs">
       <dt>Type</dt><dd>Headline New York 28 · error footnote, muted</dd>
       <dt>Button</dt><dd><code>.borderedProminent</code>, white tint, black text, default height</dd>
       <dt>Layout</dt><dd>Sides 24, top 120</dd>
+      <dt>Offline</dt><dd>When a refresh can’t reach every show, the last line says how old the times are and which shows didn’t refresh. “14:05” is the last refresh that reached every show, with the weekday when it was another day; no source is named (<code>UpcomingStatus</code>). A followed show’s next episode is asked again once its cached answer is 15 minutes old (D-59)</dd>
       <dt>IDs</dt><dd><code>upcoming-empty-follow</code>, <code>upcoming-empty-find</code>, <code>upcoming-empty</code>, <code>upcoming-failed</code></dd>
       <dt>Source</dt><dd class="path">Features/Upcoming/UpcomingView.swift:29-77, 120-133</dd>
     </dl><div class="codebox"><pre><code>Button("Find a show", action: onFind)

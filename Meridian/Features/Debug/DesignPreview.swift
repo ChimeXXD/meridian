@@ -14,6 +14,14 @@ struct DesignPreview: View {
     private let drops: [Drop]
     private let formatter = DropFormatter(zoneIdentifier: "Africa/Lagos")
     private let anchor: UnitPoint? = ProcessInfo.processInfo.arguments.contains("bottom") ? .bottom : nil
+    private static let offline = ProcessInfo.processInfo.arguments.contains("offline")
+
+    /// Today at `hour:minute` in Lagos, the zone the preview formats in, so the "Updated" time reads the same on any Mac.
+    private static func lagosToday(hour: Int, minute: Int) -> Date? {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "Africa/Lagos") ?? .gmt
+        return calendar.date(bySettingHour: hour, minute: minute, second: 0, of: .now)
+    }
 
     init() {
         drops = Self.sampleDrops(now: .now, featuredID: ProcessInfo.processInfo.arguments.first { Int($0) != nil })
@@ -21,7 +29,10 @@ struct DesignPreview: View {
 
     var body: some View {
         NavigationStack(path: $path) {
-            UpcomingView(result: UpcomingLoader.Result(drops: drops), artwork: artwork, hasShows: true,
+            // `offline`: two shows didn't refresh and the times are from 14:05, for Upcoming's "Updated" line (D6-2).
+            UpcomingView(result: UpcomingLoader.Result(drops: drops, failed: Self.offline ? ["Silo", "Frieren"] : []),
+                         artwork: artwork, hasShows: true,
+                         lastUpdated: Self.offline ? Self.lagosToday(hour: 14, minute: 5) : nil,
                          formatter: formatter, scrollAnchor: anchor) { path.append($0) }
                 .toolbarVisibility(.hidden, for: .navigationBar)
                 .navigationDestination(for: Drop.self) { drop in

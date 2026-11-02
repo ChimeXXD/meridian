@@ -9,6 +9,8 @@ import Observation
 final class UpcomingModel {
     private(set) var result: UpcomingLoader.Result?
     private(set) var artwork: [String: ShowArtwork] = [:]
+    /// The last refresh that reached every followed show, kept across launches for Upcoming's "Updated 14:05" (D6-2).
+    private(set) var lastUpdated: Date?
 
     private let client: TVmazeClient
     private let anilist: AniListClient
@@ -17,11 +19,15 @@ final class UpcomingModel {
     /// Bumped by each refresh, so a slower, older refresh (a launch and a foreground at once, or a follow change
     /// mid-load) can't overwrite a newer result.
     private var generation = 0
+    private let defaults: UserDefaults
+    static let lastUpdatedKey = "lastUpdated"
 
     /// The rules Upcoming resolves times with, shared with Search so both say the same time for an episode.
     var rules: RulesFile { loader.rules }
     init(client: TVmazeClient, anilist: AniListClient, rules: RulesFile, viewerCountry: String?,
-         snapshots: WidgetSnapshotWriter = .appGroup) {
+         snapshots: WidgetSnapshotWriter = .appGroup, defaults: UserDefaults = .standard) {
+        self.defaults = defaults
+        lastUpdated = defaults.object(forKey: Self.lastUpdatedKey) as? Date
         self.client = client
         self.anilist = anilist
         self.snapshots = snapshots
@@ -36,6 +42,11 @@ final class UpcomingModel {
         let current = generation
         var loaded = await loader.load(requests, now: now)
         guard current == generation else { return }
+        // An empty follow list reached nothing, so it doesn't count as an update.
+        if loaded.failed.isEmpty, !requests.isEmpty {
+            lastUpdated = now
+            defaults.set(now, forKey: Self.lastUpdatedKey)
+        }
         // On a cold launch the last snapshot is the last known result, so an offline start doesn't empty the widgets
         // (and delete their art) for shows that merely failed to load.
         let previous = result ?? snapshots.lastWritten().map {

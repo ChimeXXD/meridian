@@ -44,6 +44,10 @@ struct UpcomingLoader: Sendable {
         case drop(Drop), nothing(Quiet), failed(String)
     }
 
+    /// How old a cached next episode may be when Upcoming refreshes: 15 minutes, so a delay shows soon after it's
+    /// announced and "Updated 14:05" is true to within it (D-59). Search and artwork keep the 6-hour cache.
+    static let freshness: TimeInterval = 15 * 60
+
     let client: TVmazeClient
     /// Anime come from AniList (D-19); nil leaves followed anime out.
     var anilist: AniListClient? = nil
@@ -74,7 +78,8 @@ struct UpcomingLoader: Sendable {
 
     private func load(_ request: Request, now: Date) async -> Outcome {
         if request.catalog == .anilist { return await loadAnime(request, now: now) }
-        guard let show = try? await client.show(id: request.id) else { return .failed(request.name) }
+        guard let show = try? await client.show(id: request.id, maxAge: Self.freshness)
+        else { return .failed(request.name) }
         guard let next = show.embedded?.nextepisode else {
             return .nothing(Quiet(showID: String(show.id), name: show.name, status: show.status,
                                   lastAired: show.embedded?.previousepisode?.airdate))
@@ -93,7 +98,8 @@ struct UpcomingLoader: Sendable {
 
     /// An anime's next episode is its Japanese broadcast (AniList `airingAt`), shifted by the show's offset.
     private func loadAnime(_ request: Request, now: Date) async -> Outcome {
-        guard let anilist, let media = try? await anilist.media(id: request.id) else { return .failed(request.name) }
+        guard let anilist, let media = try? await anilist.media(id: request.id, maxAge: Self.freshness)
+        else { return .failed(request.name) }
         guard let next = media.nextAiringEpisode else {
             return .nothing(Quiet(showID: "anilist:\(media.id)", name: media.displayTitle, status: media.status,
                                   lastAired: nil))

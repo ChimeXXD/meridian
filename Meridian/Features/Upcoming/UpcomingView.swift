@@ -8,6 +8,8 @@ struct UpcomingView: View {
     let result: UpcomingLoader.Result?
     let artwork: [String: ShowArtwork]
     let hasShows: Bool
+    /// The last refresh that reached every show, for "Updated 14:05" when one fails (D6-2).
+    var lastUpdated: Date? = nil
     var formatter = DropFormatter()
     var scrollAnchor: UnitPoint? = nil
     var onSelect: (Drop) -> Void = { _ in }
@@ -26,8 +28,9 @@ struct UpcomingView: View {
                     VStack(alignment: .leading, spacing: 40) {
                         top(sections, image: hero?.image, base: base, now: context.date)
                         list(sections, now: context.date)
-                        if let failed = result?.failed, !failed.isEmpty {
-                            Text("Couldn't reach TVmaze for \(ListFormatter.localizedString(byJoining: failed)). Pull down to try again.")
+                        if let status = UpcomingStatus.line(failed: result?.failed ?? [], lastUpdated: lastUpdated,
+                                                            now: context.date, formatter: formatter) {
+                            Text(status)
                                 .font(.footnote)
                                 .foregroundStyle(NightInk.muted)
                                 .padding(.horizontal, Tokens.Space.l)

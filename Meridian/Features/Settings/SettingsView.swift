@@ -96,6 +96,10 @@ struct CreditsView: View {
                     .accessibilityIdentifier("credits-licence")
                 Text("Meridian collects no data. Nothing leaves your phone except requests to TVmaze, AniList and Wikimedia.")
                     .accessibilityIdentifier("credits-no-data")
+                // Readable by Chime while the repo is private; by anyone once it's public (Day 7).
+                Link("How Meridian handles your privacy",
+                     destination: URL(string: "https://github.com/ChimeXXD/meridian/blob/main/PRIVACY.md")!)
+                    .accessibilityIdentifier("credits-privacy")
             }
         }
         .navigationTitle("Credits & licences")

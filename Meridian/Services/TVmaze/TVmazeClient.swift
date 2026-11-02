@@ -30,9 +30,10 @@ actor TVmazeClient {
     }
 
     /// The show with its next and previous episodes embedded. `nextepisode` is absent when none is scheduled.
-    func show(id: Int) async throws -> TVmazeShow {
+    /// `maxAge` shortens the cache for this call: Upcoming asks again after 15 minutes so a delay shows (D-59).
+    func show(id: Int, maxAge: TimeInterval? = nil) async throws -> TVmazeShow {
         try await get("/shows/\(id)", [URLQueryItem(name: "embed[]", value: "nextepisode"),
-                                       URLQueryItem(name: "embed[]", value: "previousepisode")])
+                                       URLQueryItem(name: "embed[]", value: "previousepisode")], maxAge: maxAge)
     }
 
     /// Posters, backgrounds and banners for a show, as URLs (D-37).
@@ -54,7 +55,8 @@ actor TVmazeClient {
         try await get("/shows/\(showID)/episodes", [])
     }
 
-    private func get<T: Decodable>(_ path: String, _ query: [URLQueryItem]) async throws -> T {
+    private func get<T: Decodable>(_ path: String, _ query: [URLQueryItem],
+                                   maxAge: TimeInterval? = nil) async throws -> T {
         var components = URLComponents(url: Self.baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: false)!
         // Encoded by hand: URLComponents leaves "&", "+" and "[]" unencoded inside values.
         if !query.isEmpty {
@@ -65,7 +67,7 @@ actor TVmazeClient {
         guard let url = components.url else { throw TVmazeError.invalidResponse }
 
         // A cached body that no longer decodes (e.g. after a model change) falls through to the network.
-        if let cached = await cache.body(for: url), let decoded = try? JSONDecoder().decode(T.self, from: cached) {
+        if let cached = await cache.body(for: url, maxAge: maxAge), let decoded = try? JSONDecoder().decode(T.self, from: cached) {
             return decoded
         }
         let body = try await fetch(url)
