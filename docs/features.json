@@ -594,8 +594,8 @@
         "no PR or branch triggers while private"
       ],
       "verify": "gh run list --branch main --limit 1 shows success; the workflow file's 'on:' block lists only push to main and workflow_dispatch until Day 7",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "GitHub Actions run 41519035518 (workflow_dispatch, macos-26, Xcode 26.6, iPhone 17 Pro iOS 26.5): 273 tests in 46 suites passed, conclusion success (2 Nov). The first run failed on a type-check timeout in WidgetTimeline (fixed). Push and PR triggers are added on Day 7."
     },
     {
       "id": "D6-5",
