@@ -1,0 +1,59 @@
+# Build and test Meridian on GitHub's macOS runners (D6-4, D-35).
+#
+# While the repo is private, Actions minutes come out of the free plan's $12 a month (macOS at $0.062 a minute, about
+# 190 minutes), and we push after every commit, so this runs only when started by hand: Actions › CI › Run workflow,
+# or `gh workflow run ci.yml`. On Day 7, when the repo is public and standard runners are free, add:
+#   push:
+#     branches: [main]
+#   pull_request:
+name: CI
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    # macOS 26 (arm64): Xcode 26.6 and iOS 26.5 simulators. The app targets iOS 26.0 and uses no iOS 27 API, so it
+    # builds here even though it's developed on the iOS 27 toolchain.
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate the project
+        # Signing.local.xcconfig is git-ignored and optional (`#include?`); simulator builds need no Team ID.
+        run: xcodegen generate
+
+      - name: Show the toolchain
+        run: |
+          xcodebuild -version
+          xcrun simctl list devices available | grep -E "iPhone 17 Pro \(" | head -3
+
+      - name: Build and test
+        # TEST_RUNNER_MERIDIAN_SYNC_RENDERS skips only the byte-for-byte check of the design system's widget and Live
+        # Activity pictures (DesignSystemCopy): text renders a little differently on another iOS version, so those
+        # are checked on the iOS 27 simulator by the local proof gate. Every other assertion in the render tests runs.
+        env:
+          TEST_RUNNER_MERIDIAN_SYNC_RENDERS: "1"
+        run: |
+          set -o pipefail
+          xcodebuild -scheme Meridian \
+            -destination 'platform=iOS Simulator,name=iPhone 17 Pro,OS=latest' \
+            CODE_SIGNING_ALLOWED=NO \
+            test 2>&1 | tee xcodebuild.log | grep -E "✘|error:|Test run with|\*\* TEST" || true
+          grep -q "\*\* TEST SUCCEEDED \*\*" xcodebuild.log
+
+      - name: Keep the log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xcodebuild-log
+          path: xcodebuild.log
+          retention-days: 7
