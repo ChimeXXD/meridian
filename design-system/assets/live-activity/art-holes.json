@@ -117,7 +117,7 @@
       "width" : 672
     },
     "expanded-countingDown-art.png" : {
-      "height" : 469,
+      "height" : 356,
       "holes" : [
         {
           "align" : "center",
@@ -136,7 +136,7 @@
       "width" : 1113
     },
     "expanded-delayed-art.png" : {
-      "height" : 469,
+      "height" : 409,
       "holes" : [
         {
           "align" : "center",
@@ -155,7 +155,7 @@
       "width" : 1113
     },
     "expanded-longName-art.png" : {
-      "height" : 469,
+      "height" : 356,
       "holes" : [
         {
           "align" : "center",
@@ -174,7 +174,7 @@
       "width" : 1113
     },
     "expanded-merged-art.png" : {
-      "height" : 469,
+      "height" : 356,
       "holes" : [
         {
           "align" : "center",
@@ -193,7 +193,7 @@
       "width" : 1113
     },
     "expanded-outNow-art.png" : {
-      "height" : 469,
+      "height" : 356,
       "holes" : [
         {
           "align" : "center",
@@ -212,7 +212,7 @@
       "width" : 1113
     },
     "expanded-stale-art.png" : {
-      "height" : 469,
+      "height" : 356,
       "holes" : [
         {
           "align" : "center",

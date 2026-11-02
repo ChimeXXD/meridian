@@ -33,14 +33,14 @@ struct DropActivityAttributes: ActivityAttributes {
     var noOfficialStream = false
     /// The first drop's show (`Drop.showID`), to find its art in the App Group; "" when there's none to find.
     var showID = ""
-    /// When the activity starts, so the ring and the bar fill from here to the drop. Nil falls back to
+    /// When the activity starts, so the minimal island's ring fills from here to the drop. Nil falls back to
     /// `defaultWindow` before the drop.
     var windowStart: Date?
 
-    /// How long the ring and bar take to fill when the start isn't known: the default lead time.
+    /// How long the ring takes to fill when the start isn't known: the default lead time.
     static let defaultWindow = TimeInterval(LeadTime.defaultMinutes * 60)
 
-    /// The span the ring and the bar fill over, ending at the drop. Never empty or reversed, because
+    /// The span the ring fills over, ending at the drop. Never empty or reversed, because
     /// `ProgressView(timerInterval:)` needs a forward range; a start at or after the drop (it was moved earlier)
     /// becomes a minute before it.
     func window(until dropDate: Date) -> ClosedRange<Date> {

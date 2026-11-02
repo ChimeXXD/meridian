@@ -1,10 +1,11 @@
 import SwiftUI
 import UIKit
 
-/// The expanded Dynamic Island's regions (SPEC §6, UI-BRIEF §6.2, #Tinder): the show's name in serif over
-/// "S2E5 · Apple TV" on the leading side; the show's art, rounded, top-right; and along the bottom the plain-words
-/// label with the big countdown ("Expected in 1:59:59", becoming a big "Out now" at the drop), over a thin bar that fills from when
-/// the activity started to the drop, with the local time at its end and the old one struck through after a delay.
+/// The expanded Dynamic Island's regions (SPEC §6, UI-BRIEF §6.2): the show's name in serif over "S2E5 · Apple TV" on
+/// the leading side; the show's art, rounded, top-right; and along the bottom one line laid out like Upcoming's rows:
+/// the time in words ("Expected Wed 23:00") with the countdown beside it at the rows' size, "Delayed from 22:00"
+/// under the words when the time moved, and a gold "Out now" in the numbers' place at the drop. No progress bar: its
+/// fill counted from when the activity happened to start, which told Chime nothing (2 Nov).
 struct LiveActivityExpandedView: View {
     enum Region: Sendable, CaseIterable { case leading, trailing, bottom }
 
@@ -74,39 +75,36 @@ struct LiveActivityExpandedView: View {
     }
 
     private var countdown: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(alignment: .firstTextBaseline, spacing: 8) {
-                if out {
-                    // "Out now 0:00" would read as one odd sentence: at the drop the words take the numbers' place.
-                    Text(LiveActivityText.band(attributes, out: true))
-                        .font(.system(size: 34, weight: NumeralStudy.night.weight, design: .serif))
-                        .foregroundStyle(LiveActivityInk.out)
+        HStack(alignment: .firstTextBaseline, spacing: Tokens.Space.s) {
+            VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
+                Text(LiveActivityText.outLine(attributes, dropDate: state.dropDate, out: out, formatter: formatter))
+                    .font(.system(size: 15, weight: .medium))
+                    .foregroundStyle(LiveActivityInk.secondary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    .accessibilityIdentifier("la-expanded-time")
+                if !out, let moved = LiveActivityText.movedLine(state, formatter: formatter) {
+                    Text(moved)
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundStyle(LiveActivityInk.muted)
                         .lineLimit(1)
-                } else {
-                    Text(LiveActivityText.band(attributes, out: false))
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundStyle(LiveActivityInk.secondary)
-                        .lineLimit(1)
-                        .fixedSize()
-                    LiveActivityCountdown(dropDate: state.dropDate, now: now, size: 34)
+                        .accessibilityIdentifier("la-expanded-moved")
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .accessibilityIdentifier("la-expanded-countdown")
-            HStack(spacing: 8) {
-                LiveActivityBar(window: attributes.window(until: state.dropDate), out: out, now: now)
-                if let previous = LiveActivityText.previousTime(state, formatter: formatter) {
-                    Text(previous)
-                        .strikethrough()
-                        .foregroundStyle(LiveActivityInk.muted)
-                        .fixedSize()
+            Group {
+                if out {
+                    // "Out now 0:00" would read as one odd sentence: at the drop the words take the numbers' place.
+                    Text(LiveActivityText.band(attributes, out: true))
+                        .font(.system(size: 24, weight: NumeralStudy.night.weight, design: .serif))
+                        .foregroundStyle(LiveActivityInk.out)
+                        .lineLimit(1)
+                } else {
+                    LiveActivityCountdown(dropDate: state.dropDate, now: now, size: 24, alignment: .trailing)
                 }
-                Text(formatter.localTime(state.dropDate))
-                    .foregroundStyle(LiveActivityInk.secondary)
-                    .fixedSize()
             }
-            .font(.system(size: 13, weight: .medium).monospacedDigit())
-            .accessibilityIdentifier("la-expanded-bar")
+            .fixedSize()
+            .accessibilityIdentifier("la-expanded-countdown")
         }
     }
 }

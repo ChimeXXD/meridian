@@ -87,6 +87,7 @@ Prefer the MobileBuildMCP tools (formerly XcodeBuildMCP: `build_run_sim`, `test_
 - Write tests first for anything in `Shared/Time/`. Fixtures are recorded JSON in `MeridianTests/Fixtures/`.
 - Commit after each green step with a conventional message (`feat:`, `fix:`, `test:`, `chore:`, `docs:`). **Push to GitHub after every commit** (`ChimeXXD/meridian`, private until Day 7). Chime wants every change on GitHub.
 - After UI work, build, take a simulator screenshot, and run the screen's fidelity check before calling the step done.
+- **The design system (`design-system/`) mirrors the app; the app is the source of truth (D-57).** A design change goes into the SwiftUI first and into the site in the same commit, whichever side Chime asked about. The render tests fail while a widget or Live Activity picture on the site differs from the app's render: after Chime approves the new render, run `scripts/sync-design-system-renders.sh`. Hand-drawn parts of the site (tokens, components, copy) are updated by hand from the Swift, never from memory.
 - Update the checkbox in `docs/PLAN.md` and the matching item in `docs/features.json` (with evidence) when a task is complete. Log each session in `PROGRESS.md`.
 - Keep files under about 300 lines. Use one type per file in `Shared/`.
 - Accessibility: every widget and Live Activity view gets an `accessibilityLabel` written as a full phrase built from the provider label ("Silo, in 2 days 4 hours, Apple TV"; "House of the Dragon, in 3 hours, HBO US, no official stream in your country").

@@ -150,4 +150,30 @@ struct LiveActivityTextTests {
         #expect(LiveActivityText.monogram(Self.attributes("“Ghosts”")) == "G")
         #expect(LiveActivityText.more(Self.attributes()) == nil)
     }
+
+    @Test("out line: the expanded island's time in words, by weekday so it can't go stale; past tense only when sure")
+    func outLine() {
+        let line = { (verb: String, out: Bool) in
+            LiveActivityText.outLine(Self.attributes(verb: verb), dropDate: Self.drop, out: out, formatter: Self.lagos)
+        }
+        #expect(line("Out", false) == "Out Fri 02:00")
+        #expect(line("Expected", false) == "Expected Fri 02:00")
+        #expect(line("Airs in Japan", false) == "Airs in Japan Fri 02:00")
+        #expect(line("Out", true) == "Released Fri 02:00")
+        #expect(line("Expected", true) == "Expected Fri 02:00")
+        #expect(line("Airs in Japan", true) == "Aired in Japan Fri 02:00")
+        #expect(line(" ", false) == "Out Fri 02:00")
+    }
+
+    @Test("moved line: a delay or an earlier time in words, instead of a struck-through time")
+    func movedLine() {
+        #expect(LiveActivityText.movedLine(Self.state(delayedFrom: Self.drop - 3_600), formatter: Self.lagos)
+            == "Delayed from 01:00")
+        #expect(LiveActivityText.movedLine(Self.state(delayedFrom: Self.drop - 3 * 3_600), formatter: Self.lagos)
+            == "Delayed from Thu 23:00")
+        #expect(LiveActivityText.movedLine(Self.state(delayedFrom: Self.drop + 3_600), formatter: Self.lagos)
+            == "Moved from 03:00")
+        #expect(LiveActivityText.movedLine(Self.state(), formatter: Self.lagos) == nil)
+        #expect(LiveActivityText.movedLine(Self.state(delayedFrom: Self.drop), formatter: Self.lagos) == nil)
+    }
 }

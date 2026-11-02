@@ -7,10 +7,14 @@ import UIKit
 /// in every state, with and without art, and the minimal view fits 28 pt when the island is limited in width. Every presentation is
 /// rendered into `fidelity/shots/live-activity/` (git-ignored) for Chime to look at, as `WidgetRenderTests` does for
 /// the widgets; the renders with art are cut by `ArtMatte` and listed in `art-holes.json`, so the design system fills
-/// them with the show's real art. Timers read against the real clock, so the samples are built around `Date.now`.
+/// them with the show's real art. The samples are built around a fixed `now`, as the widgets' are: `ImageRenderer` draws
+/// a timer as its interval's length, so the renders come out the same on every run and the design system's copies can
+/// be checked against them.
 @MainActor
 @Suite("Live Activity layout")
 struct LiveActivityLayoutTests {
+    /// The same moment as `WidgetRenderTests.now`: Mon 2 Nov 2026, 19:00 in Lagos.
+    static let now = Date(iso: "2026-11-02T18:00:00Z")
     static let width: CGFloat = 360
     static let maxHeight: CGFloat = 160
     static let longestName = "The Lord of the Rings: The Rings of Power, Season Two Finale"
@@ -35,7 +39,7 @@ struct LiveActivityLayoutTests {
 
     /// The sample with the longest name and a long provider, so nothing has more to fit.
     static func longest(_ sample: LiveActivitySamples.Case) -> DropActivityAttributes {
-        var attributes = LiveActivitySamples.attributes(sample)
+        var attributes = LiveActivitySamples.attributes(sample, now: now)
         attributes.showName = longestName
         attributes.episodeLabel = "S12E104"
         attributes.provider = "Paramount+ · US"
@@ -76,9 +80,9 @@ struct LiveActivityLayoutTests {
     }
 
     /// Renders at 3x into the shots folder and returns the size in points. The island is pure black; the Lock Screen
-    /// banner draws its own background. The ring and bar are drawn as shapes, since `ImageRenderer` can't draw the
-    /// system's live progress views. With `holes`, the view is drawn with solid art and cut by `ArtMatte`, and its
-    /// holes go into `art-holes.json`; without, it gets no art.
+    /// banner draws its own background. The ring is drawn as a shape, since `ImageRenderer` can't draw the system's
+    /// live progress views. With `holes`, the view is drawn with solid art and cut by `ArtMatte`, and its holes go into
+    /// `art-holes.json`; without, it gets no art. Either way the design system's copy must be this render.
     @discardableResult
     static func shoot<V: View>(name: String, background: Color = .black, holes: [ArtHoleExpectation]? = nil,
                                _ view: (UIImage?) -> V) throws -> CGSize {
@@ -94,19 +98,23 @@ struct LiveActivityLayoutTests {
         let url = folder.appendingPathComponent("\(name).png")
         guard let holes else {
             let image = try render(nil)
-            try #require(image.pngData()).write(to: url)
+            let png = try #require(image.pngData())
+            try png.write(to: url)
+            DesignSystemCopy.expectMatches(png, name: "\(name).png", folder: "live-activity")
             return image.size
         }
         let matte = try ArtMatte.cut(render)
         try ArtHoleManifest.record(matte.shot(holes, scale: 3, name: name), name: "\(name).png", in: folder)
-        try matte.png.write(to: url)
+        let png = try matte.png
+        try png.write(to: url)
+        DesignSystemCopy.expectMatches(png, name: "\(name).png", folder: "live-activity")
         return CGSize(width: CGFloat(matte.width) / 3, height: CGFloat(matte.height) / 3)
     }
 
     @Test("the Lock Screen view is at most 160 pt tall with the longest name, in every state, with and without art",
           arguments: Shot.allCases)
     func lockScreenHeight(shot: Shot) throws {
-        let now = Date.now
+        let now = Self.now
         let samples = [("", LiveActivitySamples.attributes(shot.sample, now: now)),
                        ("-longest", Self.longest(shot.sample))]
         // The key art on the right edge, full height, centred in its frame (`LiveActivityArtEdge`, which the Lock
@@ -132,7 +140,7 @@ struct LiveActivityLayoutTests {
 
     @Test("the Lock Screen view still fits when Always-On dims it")
     func lockScreenDimmed() throws {
-        let now = Date.now
+        let now = Self.now
         let size = try Self.shoot(name: "lock-delayed-always-on") { _ in
             LiveActivityLockScreenView(attributes: Self.longest(.delayed),
                                        state: LiveActivitySamples.state(.delayed, now: now), art: Self.heroArt,
@@ -147,7 +155,7 @@ struct LiveActivityLayoutTests {
     @Test("the minimal view fits 28 pt when the island is limited, counting down and out now, with and without art",
           arguments: [LiveActivitySamples.Case.countingDown, .outNow])
     func minimalLimited(sample: LiveActivitySamples.Case) throws {
-        let now = Date.now
+        let now = Self.now
         let mark = Self.ringMark(show: Self.show(sample))
         for option in Self.artOptions {
             let name = "minimal-limited-\(sample.rawValue)\(option.suffix)"
@@ -165,7 +173,7 @@ struct LiveActivityLayoutTests {
     @Test("the Dynamic Island and small-family views render in every state, with and without art",
           arguments: Shot.allCases)
     func islandRenders(shot: Shot) throws {
-        let now = Date.now
+        let now = Self.now
         let attributes = LiveActivitySamples.attributes(shot.sample, now: now)
         let state = LiveActivitySamples.state(shot.sample, now: now)
         let stale = shot == .stale
@@ -227,7 +235,7 @@ struct LiveActivityLayoutTests {
         }
     }
 
-    @Test("the ring and bar fill from the activity's start to the drop, 2 hours without one, never backwards")
+    @Test("the ring fills from the activity's start to the drop, 2 hours without one, never backwards")
     func fillWindow() {
         let drop = Date(timeIntervalSince1970: 1_800_000_000)
         var attributes = LiveActivitySamples.attributes(.countingDown)

@@ -79,6 +79,23 @@ enum LiveActivityText {
             ? formatter.localTime(previous) : formatter.weekdayTime(previous)
     }
 
+    /// The expanded island's time in words: "Expected Wed 23:00", as the Lock Screen's time line says it. At the drop
+    /// a sure time turns to "Released" and an anime to "Aired in Japan"; an estimate keeps "Expected"
+    /// (`ReleaseWording.verb`). A weekday, never "today": the view isn't redrawn at midnight, so "tomorrow" would go
+    /// stale while the timer kept ticking.
+    static func outLine(_ attributes: DropActivityAttributes, dropDate: Date, out: Bool,
+                        formatter: DropFormatter) -> String {
+        guard out else { return timeLine(attributes, dropDate: dropDate, formatter: formatter) }
+        return "\(ReleaseWording.pastVerb(verb(attributes))) \(formatter.weekdayTime(dropDate))"
+    }
+
+    /// "Delayed from 01:00", or "Moved from 03:00" when it came earlier: a changed time in words. Nil when it hasn't
+    /// moved.
+    static func movedLine(_ state: DropActivityAttributes.ContentState, formatter: DropFormatter) -> String? {
+        guard let previous = state.delayedFrom, let time = previousTime(state, formatter: formatter) else { return nil }
+        return "\(previous < state.dropDate ? "Delayed" : "Moved") from \(time)"
+    }
+
     /// The show's initial, where there's no poster: its first letter or digit, "S" for Silo.
     static func monogram(_ attributes: DropActivityAttributes) -> String {
         attributes.showName.first(where: { $0.isLetter || $0.isNumber }).map { String($0).uppercased() } ?? "•"

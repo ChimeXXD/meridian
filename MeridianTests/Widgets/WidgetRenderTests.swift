@@ -113,6 +113,7 @@ struct WidgetRenderTests {
             png = try #require(plain.pngData())
         }
         try png.write(to: folder.appendingPathComponent("\(name).png"))
+        DesignSystemCopy.expectMatches(png, name: "\(name).png", folder: "widgets")
 
         // The height the content needs at the family's width, with nothing squeezed (the rows' posters take width).
         let natural = ImageRenderer(content: view(family, moment, posters: posters(moment, withArt ? poster : nil))

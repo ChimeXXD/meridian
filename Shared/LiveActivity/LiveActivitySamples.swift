@@ -2,7 +2,7 @@ import Foundation
 
 /// Sample Live Activities for the previews and `LiveActivityLayoutTests`: every state UI-BRIEF §6.2 lists. No artwork
 /// is committed (CLAUDE.md rule 9): the tests pass neutral placeholders. Each
-/// activity started 40 minutes before `now`, so its ring and bar are partly filled.
+/// activity started 40 minutes before `now`, so its ring is partly filled.
 enum LiveActivitySamples {
     enum Case: String, CaseIterable, Sendable {
         /// Silo S2E5 by Apple TV's usual time, in 2 hours: an estimate, so "Expected".

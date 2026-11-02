@@ -86,6 +86,17 @@ enum ReleaseWording {
         return past ? "Released" : "Out"
     }
 
+    /// `verb(_:past: false)`'s word turned to the past, for a Live Activity that carries only the word: "Out" →
+    /// "Released", "Airs in Japan" → "Aired in Japan"; "Expected" stays, as an estimate is never sure. Kept beside
+    /// `verb` so the two can't drift apart.
+    static func pastVerb(_ present: String) -> String {
+        switch present {
+        case "Out": "Released"
+        case "Airs in Japan": "Aired in Japan"
+        default: present
+        }
+    }
+
     /// "Netflix rule" → "Netflix".
     private static func platform(_ rule: String) -> String {
         rule.hasSuffix(" rule") ? String(rule.dropLast(" rule".count)) : rule

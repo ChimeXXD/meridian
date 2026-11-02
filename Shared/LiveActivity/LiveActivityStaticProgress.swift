@@ -1,9 +1,9 @@
 import SwiftUI
 
 extension EnvironmentValues {
-    /// Draws the ring and the bar as plain shapes, at their fill for the view's `now`, instead of the system's live
+    /// Draws the ring as a plain shape, at its fill for the view's `now`, instead of the system's live
     /// `ProgressView(timerInterval:)`. `ImageRenderer` can't draw the system's progress views, so
-    /// `LiveActivityLayoutTests` turns this on to see them; the Live Activity never does, because shapes would freeze
+    /// `LiveActivityLayoutTests` turns this on to see it; the Live Activity never does, because a shape would freeze
     /// at the moment the view was drawn.
     @Entry var liveActivityStaticProgress = false
 }
