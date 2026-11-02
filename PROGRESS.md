@@ -2,6 +2,14 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Design system: real show art, and only the last day ticks (Mon 2 Nov 2026)
+
+- Chime: wherever the site names a show, show its real art instead of cool/warm placeholders; countdowns tick only in the last 24 h (D-56). Done by an agent; checked here.
+- Art loads at runtime from TVmaze and AniList (URLs in one `SHOWS` table in site.js, no image files committed, rule 9 / D-37), over the old gradient as the fallback, with no referrer. Hero buttons: "Silo, warm art" / "Wednesday, cool art" / "No art yet" (Silo's key art is warm). Real art in the overview hero, the Upcoming hero and rows, the poster grids, Spotlight and the show page. Widget and Live Activity renders keep placeholder art, with a note. Footer credit added.
+- Countdowns: under 24 h tick; beyond, a still "2d 4h" with both parts always shown ("1d 0h"), as the app.
+- Checks: 0 console errors; 14/14 art images load, 0 broken with both CDNs blocked; the hero switches Silo → Wednesday; Upcoming 7/7 images; multi-day countdowns "2d 4h | 1d 0h | 1d 3h | 3d 2h", spoken "1 day"; no overflow at 320; 51 deep links within 24 px.
+- `/code-review` (medium): 7 findings, 3 fixed (old art lingering on a hero switch, a static "1d" in the markup, rounding written as the Swift). Then no-referrer on art requests. Not fixed: Wednesday's and Severance's night bases aren't in the tokens table; an unused `data-art`; still countdowns rebuilt each 250 ms tick.
+
 ## Only the last day ticks (Mon 2 Nov 2026)
 
 - Chime: countdowns should tick only under 24 hours; further out, a still "4d 4h" (D-56, supersedes D-51's ticking beyond a day). Done by an agent; checked here.

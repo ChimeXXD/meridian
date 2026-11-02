@@ -57,7 +57,7 @@
 <!-- ================================================================ OVERVIEW -->
 <section class="view" id="overview" aria-labelledby="overview-h1" data-label="Overview and brand" data-search="overview meridian airstamp what it is principles brand">
 
-  <div class="hero" id="hero" data-art="cool">
+  <div class="hero" id="hero" data-art="warm">
     <div class="hero-copy">
       <h1 id="overview-h1">Meridian</h1>
       <p class="lede">How long until your next episode, in your time zone, and where it’s on. Meridian answers that at a glance, on the Lock Screen, in widgets and in the Dynamic Island.</p>
@@ -65,15 +65,15 @@
       <div class="pick-block">
         <p class="label" id="art-pick-label">The night takes its hue from the show’s art</p>
         <div class="pick" role="group" aria-labelledby="art-pick-label">
-          <button type="button" data-art="cool" aria-pressed="true">Cool art</button>
-          <button type="button" data-art="warm" aria-pressed="false">Warm art</button>
+          <button type="button" data-art="warm" aria-pressed="true">Silo, warm art</button>
+          <button type="button" data-art="cool" aria-pressed="false">Wednesday, cool art</button>
           <button type="button" data-art="none" aria-pressed="false">No art yet</button>
         </div>
-        <p class="label">Night base <code id="hero-night">#181E24</code>. The phone is the app’s Upcoming hero at real size, counting down in your time zone.</p>
+        <p class="label">Night base <code id="hero-night">#1C1B1A</code>. The phone is the app’s Upcoming hero at real size, counting down in your time zone.</p>
       </div>
     </div>
     <figure class="phone hero-phone">
-      <div class="nah"><div class="art cool" id="hero-art"></div><div class="fade"></div><div class="scrim-top"></div></div>
+      <div class="nah"><div class="art warm" id="hero-art" data-show="silo"></div><div class="fade"></div><div class="scrim-top"></div></div>
       <div class="phone-copy">
         <div class="hl-title">Silo</div>
         <div class="cd hl-cd" data-cd="7807">2:10:07</div>
@@ -361,20 +361,20 @@
 <section class="view" id="countdown" aria-labelledby="countdown-h1" data-label="Countdown and voice" data-search="countdown wording voice certainty words out expected released airs in japan">
   <header class="view-head">
     <h1 id="countdown-h1">Countdown and voice</h1>
-    <p class="lede">The countdown is the product. It is live to the second, stops at 0:00 and never counts up. More than a day away, it reads whole days, a dim “d”, then a timer to the next day edge.</p>
+    <p class="lede">The countdown is the product. Only the last day ticks: under 24 hours it is live to the second, stops at 0:00 and never counts up. Further out it reads 2d 4h, whole days and hours, and holds still.</p>
   </header>
 
   <h2 id="countdown-states">Every state</h2>
   <p class="small">Live in this page. The ticking times are worked out in your own time zone, as the app does.</p>
   <div class="cd-grid">
     <div class="cd-card" id="cd-ticking" data-search="countdown ticking timer under 24 hours" data-title="Ticking" data-kind="Countdown state"><p class="label">Under 24 hours <code>ticking</code></p><div class="cd" data-cd="7807">2:10:07</div><p class="line" data-out="Out">Out today at 22:10</p></div>
-    <div class="cd-card" id="cd-coarse" data-search="countdown days coarse 2d" data-title="Days and a timer" data-kind="Countdown state"><p class="label">More than a day <code>coarse</code></p><div class="cd" data-cd="187822">2<span class="d">d </span>4:10:22</div><p class="line" data-out="Expected">Expected Wed at 23:00</p></div>
-    <div class="cd-card" id="cd-edge" data-search="countdown day edge 24:00:00" data-title="On a day edge" data-kind="Countdown state"><p class="label">On a day edge, it starts at 24:00:00</p><div class="cd" data-cd="345600">3<span class="d">d </span>24:00:00</div><p class="line" data-out="Airs in Japan">Airs in Japan Thu at 01:24</p></div>
+    <div class="cd-card" id="cd-coarse" data-search="countdown days hours coarse 2d 4h still" data-title="Days and hours" data-kind="Countdown state"><p class="label">More than a day, still <code>coarse</code></p><div class="cd" data-cd="189622">2<span class="d">d </span>4<span class="d">h</span></div><p class="line" data-out="Expected">Expected Wed at 23:00</p></div>
+    <div class="cd-card" id="cd-edge" data-search="countdown last day 24 hours starts ticking 24:00:00 1d" data-title="Into the last day" data-kind="Countdown state"><p class="label">At 24 hours it starts to tick, from 24:00:00</p><div class="cd" data-cd="86410">1<span class="d">d </span>0<span class="d">h</span></div><p class="line" data-out="Airs in Japan">Airs in Japan Thu at 01:24</p></div>
     <div class="cd-card" id="cd-outnow" data-search="countdown out now" data-title="Out now" data-kind="Countdown state"><p class="label">From the drop to an hour after <code>outNow</code></p><div class="cd"><span class="cd-word" style="font-size:.7em">Out now</span></div><p class="line">Released today at 21:00</p></div>
     <div class="cd-card" id="cd-released" data-search="countdown released" data-title="Released" data-kind="Countdown state"><p class="label">More than an hour after <code>released</code></p><div class="cd"><span class="cd-word" style="font-size:.6em;color:rgba(255,255,255,.6)">Released</span></div><p class="line">Released today at 19:00</p></div>
     <div class="cd-card" id="cd-dateonly" data-search="countdown date only time not announced" data-title="Date only" data-kind="Countdown state"><p class="label">No time announced <code>dateOnly</code></p><div class="cd"><span class="cd-word" style="font-size:.6em">Thu 19 Nov</span></div><p class="line">Out Thu 19 Nov, time not announced</p></div>
   </div>
-  <p class="small">Sizes: the word “Out now” is 0.7 times the countdown’s size, “Released” and a date are 0.6 times, and “d” is 0.5 times in the secondary ink.</p>
+  <p class="small">Sizes: the word “Out now” is 0.7 times the countdown’s size, “Released” and a date are 0.6 times, and the unit letters “d” and “h” are 0.5 times in the secondary ink.</p>
 
   <h2 id="countdown-demo">Try it</h2>
   <div class="demo-cd">
@@ -383,13 +383,13 @@
       <div class="demo-controls">
         <button class="btn" type="button" data-demo="10">10 seconds to the drop</button>
         <button class="btn" type="button" data-demo="3725">1:02:05</button>
-        <button class="btn" type="button" data-demo="days">2d 4:10:22</button>
-        <button class="btn" type="button" data-demo="edge">Day edge</button>
+        <button class="btn" type="button" data-demo="days">2d 4h</button>
+        <button class="btn" type="button" data-demo="edge">Into the last day</button>
       </div>
       <p class="small" id="demo-status" aria-live="polite">Ten seconds to the drop. Watch it reach zero and turn into “Out now”, without counting up.</p>
     </div>
   </div>
-  <p class="small">The countdown keeps room for its widest value from now on (“0:00”, “00:00”, “0:00:00”, “00:00:00”, then “2d 00:00:00”), so a ticking text never takes all the width a widget offers. VoiceOver reads “2 days 4 hours”, never “2 d”.</p>
+  <p class="small">Only the last day ticks. Further out it reads 2d 4h, and the hour steps down without a timer. A ticking countdown keeps room for its widest value from now on (“0:00”, “00:00”, “0:00:00”, then “00:00:00”), so it never takes all the width a widget offers. VoiceOver reads “2 days 4 hours”, never “2 d 4 h”.</p>
 
   <h2 id="certainty-words">Certainty words</h2>
   <p>How sure a time is, said in the time itself. The verb is the whole system.</p>
@@ -548,7 +548,7 @@
     <p class="purpose">The three lines that answer the question: the title, a large light serif countdown, and when it’s out, in the app’s words, naming whose clock it is.</p>
     <div class="states">
       <figure class="state"><div class="stage" style="width:390px;padding:20px 24px"><div class="hl-title">House of the Dragon</div><div class="cd hl-cd" data-cd="11410">3:10:10</div><div class="hl-out" data-out="Out" data-naming>Out today at 22:10 Lagos time</div></div><figcaption>Exact time, ticking</figcaption></figure>
-      <figure class="state"><div class="stage" style="width:390px;padding:20px 24px"><div class="hl-title">Silo</div><div class="cd hl-cd" data-cd="187822">2<span class="d">d </span>4:10:22</div><div class="hl-out" data-out="Expected" data-naming>Expected Wed at 23:00 Lagos time</div></div><figcaption>Estimate, days and a timer</figcaption></figure>
+      <figure class="state"><div class="stage" style="width:390px;padding:20px 24px"><div class="hl-title">Silo</div><div class="cd hl-cd" data-cd="189622">2<span class="d">d </span>4<span class="d">h</span></div><div class="hl-out" data-out="Expected" data-naming>Expected Wed at 23:00 Lagos time</div></div><figcaption>Estimate, more than a day: still</figcaption></figure>
       <figure class="state"><div class="stage" style="width:390px;padding:20px 24px"><div class="hl-title">Frieren: Beyond Journey’s End</div><div class="cd hl-cd" data-cd="19524">5:25:24</div><div class="hl-out" data-out="Airs in Japan" data-naming>Airs in Japan tomorrow at 01:24 Lagos time</div></div><figcaption>Anime: the Japanese TV time</figcaption></figure>
       <figure class="state"><div class="stage" style="width:390px;padding:20px 24px"><div class="hl-title">House of the Dragon</div><div class="cd hl-cd"><span class="cd-word" style="font-size:.7em">Out now</span></div><div class="hl-out">Released today at 21:00 <span data-zone>Lagos</span> time</div></div><figcaption>Out now, for the first hour</figcaption></figure>
       <figure class="state"><div class="stage" style="width:390px;padding:20px 24px"><div class="hl-title">Severance</div><div class="cd hl-cd"><span class="cd-word" style="font-size:.6em">Thu 19 Nov</span></div><div class="hl-out">Out Thu 19 Nov, time not announced</div></div><figcaption>Date only: no timer</figcaption></figure>
@@ -592,19 +592,19 @@
 
   <article class="comp" id="c-countdown-text" data-search="CountdownText countdown timer ticking coarse out now released date only" data-title="CountdownText" data-kind="Component">
     <div class="hrow"><h3>CountdownText</h3></div>
-    <p class="purpose">The countdown for one episode, in the app and every widget. Live to the second; it stops at zero; a date-only episode shows its day.</p>
+    <p class="purpose">The countdown for one episode, in the app and every widget. Only the last day ticks: live to the second, it stops at zero. Further out it reads “2d 4h” and holds still. A date-only episode shows its day.</p>
     <div class="states">
       <figure class="state"><div class="stage"><div class="cd" style="font-size:34px" data-cd="2412">40:12</div></div><figcaption>Ticking, 34 (the default)</figcaption></figure>
-      <figure class="state"><div class="stage"><div class="cd" style="font-size:34px" data-cd="187822">2<span class="d">d </span>4:10:22</div></div><figcaption>Days and a timer</figcaption></figure>
+      <figure class="state"><div class="stage"><div class="cd" style="font-size:34px" data-cd="189622">2<span class="d">d </span>4<span class="d">h</span></div></div><figcaption>Days and hours, still</figcaption></figure>
       <figure class="state"><div class="stage"><div class="cd" style="font-size:34px"><span class="cd-word" style="font-size:.7em">Out now</span></div></div><figcaption>Out now, 0.7 times</figcaption></figure>
       <figure class="state"><div class="stage"><div class="cd" style="font-size:34px"><span class="cd-word" style="font-size:.6em;color:rgba(255,255,255,.6)">Released</span></div></div><figcaption>Released, 0.6 times, secondary</figcaption></figure>
       <figure class="state"><div class="stage"><div class="cd" style="font-size:34px"><span class="cd-word" style="font-size:.6em">Wed 11 Nov</span></div></div><figcaption>Date only, 0.6 times</figcaption></figure>
-      <figure class="state"><div class="stage" style="text-align:right"><div class="cd" style="font-size:24px" data-cd="99022">1<span class="d">d </span>3:30:22</div></div><figcaption>In a row: 24, trailing</figcaption></figure>
+      <figure class="state"><div class="stage" style="text-align:right"><div class="cd" style="font-size:24px" data-cd="99022">1<span class="d">d </span>3<span class="d">h</span></div></div><figcaption>In a row: 24, trailing</figcaption></figure>
     </div>
     <div class="spec"><dl class="specs">
       <dt>Sizes in use</dt><dd>88 hero · 46, 36 and 32 in widget heroes · 26 rectangular · 24 row · 22 large-widget row · 15 compact row</dd>
-      <dt>Type</dt><dd>New York Light, tabular; the “d” is 0.5 times, secondary; it scales with Dynamic Type</dd>
-      <dt>Width</dt><dd>A hidden template of the widest value, “2d 00:00:00”; scales down to 0.5, one line</dd>
+      <dt>Type</dt><dd>New York Light, tabular; the “d” and “h” are 0.5 times, secondary; it scales with Dynamic Type</dd>
+      <dt>Width</dt><dd>Under a day, a hidden template of the widest value, such as “00:00:00”; scales down to 0.5, one line</dd>
       <dt>Widgets</dt><dd><code>.widgetAccentable()</code>: the one element that takes the tint</dd>
       <dt>VoiceOver</dt><dd>With days: “2 days 4 hours”. Under a day: the timer’s own reading</dd>
       <dt>ID</dt><dd><code>countdown</code></dd>
@@ -643,11 +643,11 @@
     <p class="purpose">The soonest episode that is out now or still to come, at the top of Upcoming: its art fading into night, then the headline and meta, overlapping the art by 64 pt.</p>
     <div class="tabs" role="tablist" aria-label="Upcoming hero state">
       <button role="tab" type="button" id="uh-t1" aria-controls="uh-p1" aria-selected="true">Counting down</button>
-      <button role="tab" type="button" id="uh-t2" aria-controls="uh-p2" aria-selected="false">Out now, cool art</button>
+      <button role="tab" type="button" id="uh-t2" aria-controls="uh-p2" aria-selected="false">Out now</button>
     </div>
     <div class="states">
-      <figure class="state" role="tabpanel" id="uh-p1" aria-labelledby="uh-t1"><div class="phone" style="--night:#1C1C1C"><div class="nah"><div class="art neutral"></div><div class="fade"></div><div class="scrim-top"></div></div><div class="phone-copy"><div class="hl-title">Silo</div><div class="cd hl-cd" data-cd="7807">2:10:07</div><div class="hl-out" data-out="Expected" data-naming>Expected today at 23:00 Lagos time</div><div class="meta" style="margin-top:12px">S4E1 · Apple TV</div></div></div><figcaption>Counting down</figcaption></figure>
-      <figure class="state" role="tabpanel" id="uh-p2" aria-labelledby="uh-t2" hidden><div class="phone" style="--night:#181E24"><div class="nah"><div class="art cool"></div><div class="fade"></div><div class="scrim-top"></div></div><div class="phone-copy"><div class="hl-title">House of the Dragon</div><div class="cd hl-cd"><span class="cd-word" style="font-size:.7em">Out now</span></div><div class="hl-out">Released today at 21:00 <span data-zone>Lagos</span> time</div><div class="meta" style="margin-top:12px">S3E4 · HBO · US</div><div class="meta">No official stream in your country</div></div></div><figcaption>Out now, no official stream, cool art</figcaption></figure>
+      <figure class="state" role="tabpanel" id="uh-p1" aria-labelledby="uh-t1"><div class="phone" style="--night:#1C1B1A"><div class="nah"><div class="art warm" data-show="silo"></div><div class="fade"></div><div class="scrim-top"></div></div><div class="phone-copy"><div class="hl-title">Silo</div><div class="cd hl-cd" data-cd="7807">2:10:07</div><div class="hl-out" data-out="Expected" data-naming>Expected today at 23:00 Lagos time</div><div class="meta" style="margin-top:12px">S4E1 · Apple TV</div></div></div><figcaption>Counting down</figcaption></figure>
+      <figure class="state" role="tabpanel" id="uh-p2" aria-labelledby="uh-t2" hidden><div class="phone" style="--night:#1C1A1A"><div class="nah"><div class="art warm" data-show="dragon"></div><div class="fade"></div><div class="scrim-top"></div></div><div class="phone-copy"><div class="hl-title">House of the Dragon</div><div class="cd hl-cd"><span class="cd-word" style="font-size:.7em">Out now</span></div><div class="hl-out">Released today at 21:00 <span data-zone>Lagos</span> time</div><div class="meta" style="margin-top:12px">S3E4 · HBO · US</div><div class="meta">No official stream in your country</div></div></div><figcaption>Out now, no official stream</figcaption></figure>
     </div>
     <div class="spec"><dl class="specs">
       <dt>Layout</dt><dd>NightArtHeader 472, then ReleaseHeadline and ReleaseMeta 12 apart, sides 24, overlapping the art by 64</dd>
@@ -685,9 +685,9 @@
     <div class="hrow"><h3>Upcoming row</h3></div>
     <p class="purpose">One followed episode: art, then the hero’s facts, smaller. The countdown sits beside the title only, so the lines below get the full width.</p>
     <div class="states">
-      <figure class="state"><div class="stage" style="width:390px;padding:16px 24px"><div class="urow"><div class="art-thumb"><div class="art neutral"></div></div><div class="col"><div class="top"><span class="t">Frieren: Beyond Journey’s End</span><span class="cd c" data-cd="19524">5:25:24</span></div><div class="out" data-out="Airs in Japan">Airs in Japan tomorrow at 01:24</div><div class="meta">S2E8 · Crunchyroll</div></div></div></div><figcaption>Anime, ticking, a two-line title</figcaption></figure>
-      <figure class="state"><div class="stage" style="width:390px;padding:16px 24px"><div class="urow"><div class="art-thumb"><div class="art warm"></div></div><div class="col"><div class="top"><span class="t">Wednesday</span><span class="cd c" data-cd="266422">3<span class="d">d </span>2:00:22</span></div><div class="out" data-out="Expected">Expected Sat at 09:00</div><div class="meta">S3E1 · Netflix</div></div></div></div><figcaption>Estimate, days away</figcaption></figure>
-      <figure class="state"><div class="stage" style="width:390px;padding:16px 24px"><div class="urow"><div class="art-thumb"><div class="art cool"></div></div><div class="col"><div class="top"><span class="t">House of the Dragon</span><span class="cd c" data-cd="187822">2<span class="d">d </span>4:10:22</span></div><div class="out" data-out="Out">Out Wed at 02:00</div><div class="meta">S3E4 · HBO · US</div><div class="meta">No official stream in your country</div></div></div></div><figcaption>Exact, with no official stream</figcaption></figure>
+      <figure class="state"><div class="stage" style="width:390px;padding:16px 24px"><div class="urow"><div class="art-thumb"><div class="art cool" data-show="frieren"></div></div><div class="col"><div class="top"><span class="t">Frieren: Beyond Journey’s End</span><span class="cd c" data-cd="19524">5:25:24</span></div><div class="out" data-out="Airs in Japan">Airs in Japan tomorrow at 01:24</div><div class="meta">S2E8 · Crunchyroll</div></div></div></div><figcaption>Anime, ticking, a two-line title</figcaption></figure>
+      <figure class="state"><div class="stage" style="width:390px;padding:16px 24px"><div class="urow"><div class="art-thumb"><div class="art cool" data-show="wednesday"></div></div><div class="col"><div class="top"><span class="t">Wednesday</span><span class="cd c" data-cd="268222">3<span class="d">d </span>2<span class="d">h</span></span></div><div class="out" data-out="Expected">Expected Sat at 09:00</div><div class="meta">S3E1 · Netflix</div></div></div></div><figcaption>Estimate, days away</figcaption></figure>
+      <figure class="state"><div class="stage" style="width:390px;padding:16px 24px"><div class="urow"><div class="art-thumb"><div class="art warm" data-show="dragon"></div></div><div class="col"><div class="top"><span class="t">House of the Dragon</span><span class="cd c" data-cd="189622">2<span class="d">d </span>4<span class="d">h</span></span></div><div class="out" data-out="Out">Out Wed at 02:00</div><div class="meta">S3E4 · HBO · US</div><div class="meta">No official stream in your country</div></div></div></div><figcaption>Exact, with no official stream</figcaption></figure>
       <figure class="state"><div class="stage" style="width:390px;padding:16px 24px"><div class="urow"><div class="art-thumb" style="background:#525252"></div><div class="col"><div class="top"><span class="t">Severance</span></div><div class="out">Out Thu 19 Nov, time not announced</div><div class="meta">S3E1 · Apple TV</div></div></div></div><figcaption>Date only, no countdown; art loading <code>#525252</code></figcaption></figure>
     </div>
     <div class="spec"><dl class="specs">
@@ -709,8 +709,8 @@
     <div class="hrow"><h3>Quiet grid cell</h3></div>
     <p class="purpose">Followed shows with nothing scheduled, in the same three-across poster grid as Search: poster, title, and why there’s no time.</p>
     <div class="states">
-      <figure class="state"><div class="stage"><div class="pcell"><div class="poster"><div class="art cool"></div></div><div class="t">From</div><div class="m">Between seasons · last episode Sun 22 Jun 2025</div></div></div><figcaption>Between seasons</figcaption></figure>
-      <figure class="state"><div class="stage"><div class="pcell"><div class="poster"><div class="art warm"></div></div><div class="t">Andor</div><div class="m">Ended · last episode Tue 13 May 2025</div></div></div><figcaption>Ended</figcaption></figure>
+      <figure class="state"><div class="stage"><div class="pcell"><div class="poster"><div class="art warm" data-show="from" data-use="poster"></div></div><div class="t">From</div><div class="m">Between seasons · last episode Sun 22 Jun 2025</div></div></div><figcaption>Between seasons</figcaption></figure>
+      <figure class="state"><div class="stage"><div class="pcell"><div class="poster"><div class="art warm" data-show="andor" data-use="poster"></div></div><div class="t">Andor</div><div class="m">Ended · last episode Tue 13 May 2025</div></div></div><figcaption>Ended</figcaption></figure>
       <figure class="state"><div class="stage"><div class="pcell"><div class="poster empty"><svg width="22" height="22" style="color:var(--app-ink-muted)" aria-hidden="true"><use href="#i-tv"/></svg></div><div class="t">Solo Leveling</div><div class="m">Ended</div></div></div><figcaption>No poster: the <code>tv</code> glyph</figcaption></figure>
     </div>
     <div class="spec"><dl class="specs">
@@ -736,8 +736,8 @@ Text(ReleaseWording.quietNote(status: show.status, lastAired: show.lastAired,
       <button role="tab" type="button" id="sp-t2" aria-controls="sp-p2" aria-selected="false">Quiet show</button>
     </div>
     <div class="states">
-      <figure class="state" role="tabpanel" id="sp-p1" aria-labelledby="sp-t1"><div class="phone" style="--night:#1C1C1C"><div class="nah"><div class="art neutral"></div><div class="fade"></div><div class="scrim-top"></div></div><div class="phone-copy" style="display:grid;gap:8px"><div class="hl-title">Severance</div><div class="hl-out" style="margin:0">Out Thu 19 Nov, time not announced</div><div class="meta">S3E1 · Apple TV</div></div></div><figcaption>Date only: tappable</figcaption></figure>
-      <figure class="state" role="tabpanel" id="sp-p2" aria-labelledby="sp-t2" hidden><div class="phone" style="--night:#1C1C1C"><div class="nah"><div class="art neutral"></div><div class="fade"></div><div class="scrim-top"></div></div><div class="phone-copy" style="display:grid;gap:8px"><div class="hl-title">Silo</div><div class="hl-out" style="margin:0">Between seasons · last episode Fri 4 Sep</div><div class="meta" style="margin-top:8px">Nothing scheduled for your shows yet. Meridian checks again each time you open it.</div></div></div><figcaption>A quiet show: not tappable</figcaption></figure>
+      <figure class="state" role="tabpanel" id="sp-p1" aria-labelledby="sp-t1"><div class="phone" style="--night:#1B241A"><div class="nah"><div class="art cool" data-show="severance"></div><div class="fade"></div><div class="scrim-top"></div></div><div class="phone-copy" style="display:grid;gap:8px"><div class="hl-title">Severance</div><div class="hl-out" style="margin:0">Out Thu 19 Nov, time not announced</div><div class="meta">S3E1 · Apple TV</div></div></div><figcaption>Date only: tappable</figcaption></figure>
+      <figure class="state" role="tabpanel" id="sp-p2" aria-labelledby="sp-t2" hidden><div class="phone" style="--night:#1C1B1A"><div class="nah"><div class="art warm" data-show="silo"></div><div class="fade"></div><div class="scrim-top"></div></div><div class="phone-copy" style="display:grid;gap:8px"><div class="hl-title">Silo</div><div class="hl-out" style="margin:0">Between seasons · last episode Fri 4 Sep</div><div class="meta" style="margin-top:8px">Nothing scheduled for your shows yet. Meridian checks again each time you open it.</div></div></div><figcaption>A quiet show: not tappable</figcaption></figure>
     </div>
     <div class="spec"><dl class="specs">
       <dt>Type</dt><dd>Title New York 32 · note body medium · footnote, muted</dd>
@@ -857,8 +857,8 @@ AiringFilter.options(for: .tv)   // [.popular, .today, .newSeasons, .exactTime] 
     <div class="hrow"><h3>Poster grid cell</h3></div>
     <p class="purpose">One show in Search’s three-across grid. Before you type it says where and when. After you type, it gives the year, network, country and status that tell shows with the same name apart.</p>
     <div class="states">
-      <figure class="state"><div class="stage"><div class="pcell"><div class="poster"><div class="art cool"></div><span class="plus"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></div><div class="t">Tracker</div><div class="m">CBS<br>Out tomorrow at 03:30</div></div></div><figcaption>Airing: network and out line</figcaption></figure>
-      <figure class="state"><div class="stage"><div class="pcell"><div class="poster"><div class="art warm"></div><span class="plus on"><svg aria-hidden="true"><use href="#i-check"/></svg></span></div><div class="t">The Last of Us</div><div class="m">2023 · HBO · US<br>Running</div></div></div><figcaption>A result, followed</figcaption></figure>
+      <figure class="state"><div class="stage"><div class="pcell"><div class="poster"><div class="art warm" data-show="tracker" data-use="poster"></div><span class="plus"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></div><div class="t">Tracker</div><div class="m">CBS<br>Out tomorrow at 03:30</div></div></div><figcaption>Airing: network and out line</figcaption></figure>
+      <figure class="state"><div class="stage"><div class="pcell"><div class="poster"><div class="art warm" data-show="lastofus" data-use="poster"></div><span class="plus on"><svg aria-hidden="true"><use href="#i-check"/></svg></span></div><div class="t">The Last of Us</div><div class="m">2023 · HBO · US<br>Running</div></div></div><figcaption>A result, followed</figcaption></figure>
       <figure class="state"><div class="stage"><div class="pcell"><div class="poster empty"><svg width="22" height="22" style="color:var(--app-ink-muted)" aria-hidden="true"><use href="#i-tv"/></svg><span class="plus"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></div><div class="t">Frieren: Beyond Journey’s End</div><div class="m">Crunchyroll<br>Airs in Japan Fri at 17:00</div></div></div><figcaption>No poster, anime</figcaption></figure>
     </div>
     <div class="spec"><dl class="specs">
@@ -930,8 +930,8 @@ AiringFilter.options(for: .tv)   // [.popular, .today, .newSeasons, .exactTime] 
       <button role="tab" type="button" id="spg-t2" aria-controls="spg-p2" aria-selected="false">Nothing scheduled</button>
     </div>
     <div class="states">
-      <figure class="state" role="tabpanel" id="spg-p1" aria-labelledby="spg-t1"><div class="phone" style="--night:#1C1C1C"><div class="nah tall"><div class="art neutral"></div><div class="fade"></div><div class="scrim-top"></div><span class="glass" style="position:absolute;left:16px;top:58px" aria-hidden="true"><svg><use href="#i-chevron"/></svg></span></div><div class="phone-copy" style="display:grid;gap:32px"><div style="display:grid;gap:12px"><div><div class="hl-title">Silo</div><div class="cd hl-cd"><span class="cd-word" style="font-size:.6em">Fri 9 Jul 2027</span></div><div class="hl-out">Out Fri 9 Jul 2027, time not announced</div></div><div class="meta">2023 · Apple TV · Running</div></div><span class="btn-follow"><svg width="15" height="15" aria-hidden="true"><use href="#i-plus"/></svg>Follow</span></div></div><figcaption>With an episode, date only</figcaption></figure>
-      <figure class="state" role="tabpanel" id="spg-p2" aria-labelledby="spg-t2" hidden><div class="phone" style="--night:#1C1B1A"><div class="nah tall"><div class="art warm"></div><div class="fade"></div><div class="scrim-top"></div><span class="glass" style="position:absolute;left:16px;top:58px" aria-hidden="true"><svg><use href="#i-chevron"/></svg></span></div><div class="phone-copy" style="display:grid;gap:32px"><div style="display:grid;gap:12px"><div class="hl-title">Andor</div><div class="meta">2022 · Disney+ · Ended</div></div><span class="btn-follow on"><svg width="15" height="15" aria-hidden="true"><use href="#i-check"/></svg>Following</span></div></div><figcaption>Nothing scheduled, following</figcaption></figure>
+      <figure class="state" role="tabpanel" id="spg-p1" aria-labelledby="spg-t1"><div class="phone" style="--night:#1C1B1A"><div class="nah tall"><div class="art warm" data-show="silo"></div><div class="fade"></div><div class="scrim-top"></div><span class="glass" style="position:absolute;left:16px;top:58px" aria-hidden="true"><svg><use href="#i-chevron"/></svg></span></div><div class="phone-copy" style="display:grid;gap:32px"><div style="display:grid;gap:12px"><div><div class="hl-title">Silo</div><div class="cd hl-cd"><span class="cd-word" style="font-size:.6em">Fri 9 Jul 2027</span></div><div class="hl-out">Out Fri 9 Jul 2027, time not announced</div></div><div class="meta">2023 · Apple TV · Running</div></div><span class="btn-follow"><svg width="15" height="15" aria-hidden="true"><use href="#i-plus"/></svg>Follow</span></div></div><figcaption>With an episode, date only</figcaption></figure>
+      <figure class="state" role="tabpanel" id="spg-p2" aria-labelledby="spg-t2" hidden><div class="phone" style="--night:#1C1B1A"><div class="nah tall"><div class="art warm" data-show="andor"></div><div class="fade"></div><div class="scrim-top"></div><span class="glass" style="position:absolute;left:16px;top:58px" aria-hidden="true"><svg><use href="#i-chevron"/></svg></span></div><div class="phone-copy" style="display:grid;gap:32px"><div style="display:grid;gap:12px"><div class="hl-title">Andor</div><div class="meta">2022 · Disney+ · Ended</div></div><span class="btn-follow on"><svg width="15" height="15" aria-hidden="true"><use href="#i-check"/></svg>Following</span></div></div><figcaption>Nothing scheduled, following</figcaption></figure>
     </div>
     <div class="spec"><dl class="specs">
       <dt>Layout</dt><dd>NightArtHeader 500 with the glass back button · sides 24, overlapping the art by 64 · blocks 32 apart</dd>
@@ -1148,7 +1148,7 @@ Section {
   <p>One widget, “Next episode”: <em>how long until your next episode, in your time zone, and where it’s on.</em> It comes in six families.</p>
   <dl class="facts">
     <div id="w-home" data-search="home screen widget backdrop art fade small medium large" data-title="Home Screen widgets" data-kind="Widget"><dt>Home Screen</dt><dd>Night base <code>#1C1C1C</code> with the show’s art across the top (all of it on small and medium, 62% on large), fading clear, then to 0.7, then to the base. The service is tagged top left (“HBO · US”), and “+N more this week” top right when shows don’t fit. Small shows one show, medium three, large four.</dd></div>
-    <div id="w-lock" data-search="lock screen widget inline circular rectangular tinted" data-title="Lock Screen widgets" data-kind="Widget"><dt>Lock Screen</dt><dd>System inks, because iOS tints them. Inline: “Silo · 2d 4:10:22”. Circular: an open ring that fills over the last 7 days, a <code>tv</code> glyph, and “2d”, “4h” or “38m” in the gap. Rectangular: “Expected Wed 23:00”, then the name, then the countdown and service.</dd></div>
+    <div id="w-lock" data-search="lock screen widget inline circular rectangular tinted" data-title="Lock Screen widgets" data-kind="Widget"><dt>Lock Screen</dt><dd>System inks, because iOS tints them. Inline: “Silo · 2d 4h”. Circular: an open ring that fills over the last 7 days, a <code>tv</code> glyph, and “2d”, “4h” or “38m” in the gap. Rectangular: “Expected Wed 23:00”, then the name, then the countdown and service.</dd></div>
     <div id="w-quiet" data-search="quiet rows nothing scheduled empty state follow a show returns widget" data-title="Quiet rows and empty states" data-kind="Widget"><dt>Quiet rows</dt><dd>Followed shows with nothing scheduled fill spare rows: poster, name, “Nothing scheduled”; the large widget adds why. Empty: “Follow a show” with “Its countdown shows up here.”, “Nothing scheduled” with “Meridian checks again each time you open it.”, or “Silo returns Fri 9 Jul 2027” with “Nothing else is scheduled.”</dd></div>
     <div id="w-modes" data-search="always on tinted accented rendering modes widget dimmed" data-title="Rendering modes" data-kind="Widget"><dt>Tinted and Always-On</dt><dd>When tinted, only the countdown takes the tint (on the Lock Screen, also the title, ring and value), and posters lose their colour. Always-On hides the art and dims every ink to 0.7 except the countdown.</dd></div>
     <div id="w-a11y" data-search="widget voiceover accessibility label phrase" data-title="Widget VoiceOver" data-kind="Widget"><dt>VoiceOver</dt><dd>One full phrase a show: “House of the Dragon, in 3 hours, HBO US, no official stream in your country”; “Silo, expected in 2 days 4 hours, Apple TV”; “Nothing scheduled for your shows”. The episode title is left out, so nothing is spoiled.</dd></div>
@@ -1163,6 +1163,7 @@ Section {
     <button role="tab" type="button" id="wt-large" data-tab="large" aria-controls="widget-gallery" aria-selected="false">Large</button>
   </div>
   <div id="widget-gallery" role="tabpanel" aria-labelledby="wt-medium" tabindex="0"></div>
+  <p class="small">These are the app’s test renders, which use placeholder art; on the phone each widget shows the show’s own art. They were drawn before the countdown stopped ticking more than a day out, so “2d 4:00:00” here is “2d 4h” in the app.</p>
   <p class="small">In these renders the rectangular widget shortens a long service name to “A…” beside a days countdown, and the medium widget shortens a lower row’s title and time. The certainty word stays.</p>
 
   <h2 id="live-activity">Live Activity</h2>
@@ -1189,6 +1190,7 @@ Section {
     <button role="tab" type="button" id="lt-small" data-tab="small" aria-controls="la-gallery" aria-selected="false">Small</button>
   </div>
   <div id="la-gallery" role="tabpanel" aria-labelledby="lt-lock" tabindex="0"></div>
+  <p class="small">These are the app’s test renders, which use placeholder art; on the phone the Live Activity shows the show’s own art.</p>
 </section>
 
 <!-- ================================================================ RESOURCES -->
@@ -1288,10 +1290,10 @@ Section {
     <summary>Numeral study</summary>
     <p>Four directions were tried for countdown numerals. Night won. The others are still in the code, drawn only by an old preview. The environment default is still the system style, so each live countdown sets Night itself.</p>
     <div class="numerals">
-      <div class="num-study night"><p class="digits" style="font-family:var(--serif);font-weight:300">2d 4:10:22</p><p><b>Night, in use.</b> New York Light, tabular, white.</p></div>
-      <div class="num-study"><p class="digits" style="font-family:var(--sans);font-weight:800">2d 4:10:22</p><p><b>A · System.</b> SF Pro Heavy, tabular.</p></div>
-      <div class="num-study"><p class="digits" style="font-family:var(--mono);font-weight:500;color:#C6F432">2d 4:10:22</p><p><b>B · Mono.</b> SF Mono Medium, lime <code>#C6F432</code>.</p></div>
-      <div class="num-study"><p class="digits" style="font-family:var(--serif);font-weight:500;color:#FFC940">2d 4:10:22</p><p><b>C · Serif.</b> New York Semibold, warm yellow <code>#FFC940</code>.</p></div>
+      <div class="num-study night"><p class="digits" style="font-family:var(--serif);font-weight:300">2:10:07</p><p><b>Night, in use.</b> New York Light, tabular, white.</p></div>
+      <div class="num-study"><p class="digits" style="font-family:var(--sans);font-weight:800">2:10:07</p><p><b>A · System.</b> SF Pro Heavy, tabular.</p></div>
+      <div class="num-study"><p class="digits" style="font-family:var(--mono);font-weight:500;color:#C6F432">2:10:07</p><p><b>B · Mono.</b> SF Mono Medium, lime <code>#C6F432</code>.</p></div>
+      <div class="num-study"><p class="digits" style="font-family:var(--serif);font-weight:500;color:#FFC940">2:10:07</p><p><b>C · Serif.</b> New York Semibold, warm yellow <code>#FFC940</code>.</p></div>
     </div>
   </details>
 
@@ -1352,7 +1354,7 @@ NavigationLink("Debug") { DebugMenuView(model: model, scheduler: scheduler) }
 
 <footer class="foot">
   <span data-logo data-size="20" data-label=""></span>
-  <p>Meridian design system, published at <a href="https://meridian-designsystem.vercel.app">meridian-designsystem.vercel.app</a> from the repo’s <code>main</code> branch. Values are read from the app’s source at commit <code>7a4ec07</code>, 1 November 2026. Widget and Live Activity images are the app’s test renders with placeholder art; no show artwork is published here.</p>
+  <p>Meridian design system, published at <a href="https://meridian-designsystem.vercel.app">meridian-designsystem.vercel.app</a> from the repo’s <code>main</code> branch. Values are read from the app’s source at commit <code>7a4ec07</code>, 1 November 2026. Widget and Live Activity images are the app’s test renders with placeholder art. Show posters and key art come from <a href="https://www.tvmaze.com">TVmaze</a> and <a href="https://anilist.co">AniList</a>, loaded from their sites, not stored here.</p>
 </footer>
 
 <dialog class="search" id="search" aria-label="Search the design system">

@@ -372,25 +372,27 @@
     const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
     return h > 0 ? `${h}:${p2(m)}:${p2(sec)}` : `${m}:${p2(sec)}`;
   }
-  // CountdownFormatter.daySplit: whole days, then a timer to the next day edge.
-  function split(remaining) { const s = Math.ceil(remaining); const days = Math.max(0, Math.ceil(s / 86400) - 1); return { days, edge: s - days * 86400 }; }
+  // Only the last day ticks (CountdownFormatter.tickingWindow, 24 hours). Further out the countdown holds still:
+  // CountdownFormatter.stillParts, whole days and hours rounded down, both always shown ("2d 4h", "4d 0h"), so the
+  // width holds steady (D-56).
+  const TICKING_WINDOW = 86400;
+  function coarse(remaining) {
+    const hours = Math.max(0, Math.floor(remaining / 3600));
+    return [[Math.floor(hours / 24), 'd', 'day'], [hours % 24, 'h', 'hour']];
+  }
   function countdownHTML(remaining) {
     if (remaining <= 0) return null;
-    const { days, edge } = split(remaining);
-    return days > 0 ? `${days}<span class="d">d </span>${clock(edge)}` : clock(edge);
+    if (remaining <= TICKING_WINDOW) return clock(remaining);
+    // The unit letters are half size in the secondary ink, as the app draws them.
+    const parts = coarse(remaining);
+    return parts.map(([v, u], i) => `${v}<span class="d">${u}${i < parts.length - 1 ? ' ' : ''}</span>`).join('');
   }
   const plural = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
-  // Over a day: CountdownFormatter.spokenText(parts(maxUnits: 2)), the largest unit and the next, rounded down,
-  // zero units dropped ("4 days", never "3 days 24 hours"). Under a day the app lets VoiceOver read the timer.
+  // Over a day: CountdownFormatter.spokenText, the same parts in words with a zero part left out ("2 days 4 hours",
+  // "4 days", never "3 days 24 hours"). Under a day the app lets VoiceOver read the timer.
   function spoken(remaining) {
     if (remaining <= 0) return 'Out now';
-    const total = Math.floor(remaining);
-    if (total > 86400) {
-      const mins = Math.max(1, Math.floor(total / 60));
-      const units = [[Math.floor(mins / 1440), 'day'], [Math.floor((mins % 1440) / 60), 'hour'], [mins % 60, 'minute']];
-      const first = units.findIndex(([v]) => v > 0);
-      return units.slice(first, first + 2).filter(([v]) => v > 0).map(([v, w]) => plural(v, w)).join(' ');
-    }
+    if (remaining > TICKING_WINDOW) return coarse(remaining).filter(([v]) => v > 0).map(([v, , w]) => plural(v, w)).join(' ');
     const s = Math.ceil(remaining);
     const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
     if (h > 0) return `${plural(h, 'hour')} ${plural(m, 'minute')}`;
@@ -441,8 +443,8 @@
       const v = b.dataset.demo;
       if (v === '10') startTen();
       if (v === '3725') set(3725, 'Under 24 hours: a plain timer.');
-      if (v === 'days') set(2 * 86400 + 4 * 3600 + 10 * 60 + 22, 'More than a day: whole days, a dim “d”, then the timer to the next day edge.');
-      if (v === 'edge') set(4 * 86400, 'Exactly on a day edge the timer starts at 24:00:00 and ticks down, instead of sitting at 0:00.');
+      if (v === 'days') set(2 * 86400 + 4 * 3600 + 40 * 60 + 22, 'More than a day: whole days and hours, and it holds still. Only the last day ticks.');
+      if (v === 'edge') set(86400 + 5, 'Five seconds before the last day: it reads 1d 0h, then starts ticking from 24:00:00.');
     }));
   }
 
@@ -782,19 +784,76 @@
     });
   }
 
+  /* ================================================================ show art */
+  // Where a show is named, it shows its own art, loaded at runtime from TVmaze's and AniList's image servers as the
+  // app loads it, and never stored in this repo (rule 9, D-37). These are the images the app's ShowArtwork picks:
+  // `hero` is the wide background (TVmaze: sharp first, then main, then nearest 1920 px wide; for an anime, its
+  // AniList banner), which the app also crops into an Upcoming row's square; `poster` is TVmaze's 210 × 295 poster.
+  // `night` is the base the app's ArtworkPalette works out from the hero art, for the hero's buttons; the phones in
+  // index.html carry the same computed bases. Each image is [url, width, height], looked up 2 Nov 2026.
+  const TVMAZE = 'https://static.tvmaze.com/uploads/images/';
+  const SHOWS = {
+    silo: { hero: [TVMAZE + 'original_untouched/460/1151687.jpg', 1920, 1080], night: '#1C1B1A' },
+    wednesday: { hero: [TVMAZE + 'original_untouched/423/1059627.jpg', 1280, 720], night: '#181924' },
+    dragon: { hero: [TVMAZE + 'original_untouched/218/547436.jpg', 1920, 1080] },
+    severance: { hero: [TVMAZE + 'original_untouched/384/960581.jpg', 3840, 2160] },
+    andor: { hero: [TVMAZE + 'original_untouched/418/1046464.jpg', 1920, 1080], poster: [TVMAZE + 'medium_portrait/564/1411766.jpg', 210, 295] },
+    from: { poster: [TVMAZE + 'medium_portrait/621/1554646.jpg', 210, 295] },
+    tracker: { poster: [TVMAZE + 'medium_portrait/644/1610559.jpg', 210, 295] },
+    lastofus: { poster: [TVMAZE + 'medium_portrait/563/1409008.jpg', 210, 295] },
+    frieren: { hero: ['https://s4.anilist.co/file/anilistcdn/media/anime/banner/182255-wyHvp6zJbWsO.jpg', 1900, 400] },
+  };
+  function setArt(art, key, use = art.dataset.use || 'hero') {
+    const src = SHOWS[key] && SHOWS[key][use];
+    let img = $('img', art);
+    // A different show gets a fresh image, so the last show's art never sits under the new title while it loads.
+    if (img && (!src || img.getAttribute('src') !== src[0])) { img.remove(); img = null; }
+    if (!src) return;
+    if (!img) {
+      img = document.createElement('img');
+      // No referrer: TVmaze and AniList get the image request, not which page made it.
+      img.alt = ''; img.decoding = 'async'; img.referrerPolicy = 'no-referrer';
+      // A failed or blocked image is hidden, so the placeholder underneath shows, never a broken-image icon.
+      img.addEventListener('error', () => { img.hidden = true; });
+      art.prepend(img);
+    }
+    const hero = !!art.closest('.hero');
+    img.loading = hero ? 'eager' : 'lazy';
+    if (hero) img.fetchPriority = 'high';
+    img.width = src[1]; img.height = src[2]; img.hidden = false; img.src = src[0];
+  }
+  function renderArt() { $$('.art[data-show]').forEach((a) => setArt(a, a.dataset.show)); }
+
   /* ================================================================ hero, motion, checklist */
-  const ART = { cool: '#181E24', warm: '#1C1B1A', none: '#1C1C1C' };
+  // The hero's three buttons: Silo's art is warm (orange), Wednesday's cool (blue-violet), then no art at all.
+  const HERO = {
+    warm: { show: 'silo', title: 'Silo', cd: 7807, meta: 'S4E1 · Apple TV' },
+    cool: { show: 'wednesday', title: 'Wednesday', cd: 15022, meta: 'S3E1 · Netflix' },
+  };
+  const NO_ART = '#1C1C1C';
   function bindHero() {
     const hero = $('#hero'); if (!hero) return;
-    const art = $('#hero-art'), code = $('#hero-night');
+    const art = $('#hero-art'), code = $('#hero-night'), phone = $('.hero-phone', hero);
     $$('.pick button', hero).forEach((b) => b.addEventListener('click', () => {
-      const k = b.dataset.art;
+      const k = b.dataset.art, h = HERO[k];
       $$('.pick button', hero).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-      hero.style.setProperty('--night', ART[k]); $('.hero-phone', hero).style.setProperty('--night', ART[k]);
-      code.textContent = ART[k];
-      art.hidden = k === 'none';
-      if (k !== 'none') { art.className = 'art ' + k; if (!reduceMotion.matches) { art.classList.remove('arrive'); void art.offsetWidth; art.classList.add('arrive'); } }
+      const night = h ? SHOWS[h.show].night : NO_ART;
+      hero.dataset.art = k;
+      hero.style.setProperty('--night', night); phone.style.setProperty('--night', night);
+      code.textContent = night;
+      art.hidden = !h;
+      if (!h) return; // No art yet: the same show on the plain base, as before its art loads.
+      if (art.dataset.show !== h.show) {
+        art.dataset.show = h.show; setArt(art, h.show);
+        $('.hl-title', phone).textContent = h.title; $('.meta', phone).textContent = h.meta;
+        const cd = $('[data-cd]', phone); cd.dataset.cd = String(h.cd); arm(cd); renderOutLines(phone); tick();
+      }
+      art.className = 'art ' + k;
+      if (!reduceMotion.matches) { art.classList.remove('arrive'); void art.offsetWidth; art.classList.add('arrive'); }
     }));
+    // Fetch the other show's art once the page is idle, so the first switch doesn't wait for it.
+    const preload = () => { const i = new Image(); i.referrerPolicy = 'no-referrer'; i.src = SHOWS[HERO.cool.show].hero[0]; };
+    if ('requestIdleCallback' in window) requestIdleCallback(preload, { timeout: 4000 }); else setTimeout(preload, 2000);
   }
   function bindMotion() {
     const b = $('#motion-play'); if (!b) return;
@@ -802,7 +861,7 @@
   }
 
   /* ================================================================ start */
-  renderLogos(); renderTokens(); renderContrast(); renderZone();
+  renderLogos(); renderTokens(); renderContrast(); renderZone(); renderArt();
   bindTabs(); bindCustomType(); decorate();
   buildRail(); bindRail(); bindSearch(); bindHero(); bindMotion(); bindDemo();
   buildIndex();
