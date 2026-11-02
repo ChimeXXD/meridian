@@ -614,7 +614,7 @@
     </div>
     <div class="spec"><dl class="specs">
       <dt>Sizes in use</dt><dd>64 hero and Show detail · 48 show page · 46, 36 and 32 in widget heroes · 26 rectangular · 24 row · 22 large-widget row · 15 compact row. Units half the numerals, never under 11; app countdowns grow like a large title</dd>
-      <dt>Type</dt><dd>New York Light, tabular; the “d” and “h” are 0.5 times, secondary; “Out now” 0.7 times; “Released”, a date and “Date not set” 0.6 times; it scales with Dynamic Type</dd>
+      <dt>Type</dt><dd>New York Light, tabular; the “d” and “h” are 0.5 times, secondary; “Out now” 0.7 times; “Released”, a date and “Date not set” 0.6 times, none under 11 pt; it grows with the text size like a large title</dd>
       <dt>Ink</dt><dd>The <code>tint</code> it is given (white in the app and widgets), “Released” in secondary. Only “Out now” is Meridian Gold, and only in full colour; tinted widgets keep the system’s tint</dd>
       <dt>Width</dt><dd>Under a day, a hidden template of the widest value, such as “00:00:00”; scales down to 0.5, one line</dd>
       <dt>Widgets</dt><dd><code>.widgetAccentable()</code>: the one element that takes the tint</dd>
@@ -1291,7 +1291,7 @@ Section {
       <tr><td>Headings</td><td>Show titles and section headers are marked as headings.</td><td>Done</td></tr>
       <tr><td>Hit targets</td><td>Filter chips are 34 tall with a 44 tall tap area. The Follow (+) is 32 inside 44 × 44. The back button is 44, Follow 50 tall, “Not now” 44.</td><td>At least 44</td></tr>
       <tr><td>Contrast</td><td id="a11y-contrast">See the <a href="#contrast">contrast matrix</a>.</td><td id="a11y-contrast-status">See matrix</td></tr>
-      <tr><td>Dynamic Type</td><td>Countdowns and body text scale. Serif titles and headers use fixed sizes (32, 34, 28, 22, 20) and don’t grow yet.</td><td>Open</td></tr>
+      <tr><td>Dynamic Type</td><td>Everything in the app grows with the text size. Serif titles keep their designed size (32, 34, 28, 22, 20) and grow like large titles (<code>.serif(_:relativeTo:)</code>); countdowns grow like a large title too, 1.76 times at the largest size. At the accessibility sizes: a row’s countdown goes under its title, the service line and titles are never cut, Show detail’s episodes stack, the art header is 280 tall, Search shows one poster a row, Welcome scrolls and drops the poster wall. Widgets and the Live Activity keep fixed sizes on their fixed canvas. Checked at AX5 on every main screen (2 Nov).</td><td>Done</td></tr>
       <tr><td>Reduce Motion</td><td>The three animations stop: the 0.35 s art fade and Welcome’s two fades (the wall, and each picture on it) are skipped, and the wall’s drifting rows stay still.</td><td>Done</td></tr>
       <tr><td>Tinted and Always-On</td><td>The countdown and the empty headline take a widget’s tint; on the Lock Screen so do the inline line, the rectangular title and the circular ring, value and day number. Always-On hides the art and dims every other ink to 0.7.</td><td>Done</td></tr>
       <tr><td>Decorative images</td><td>Art, posters, logos, the Welcome wall and the poster mark are hidden from VoiceOver. Only one picture is labelled: the key art on the show page that Search opens (<code>ShowPreviewView</code>), read “Silo artwork, image”. Show detail’s and Upcoming’s art stay hidden.</td><td>Done</td></tr>

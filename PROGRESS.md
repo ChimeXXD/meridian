@@ -2,6 +2,21 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Day 6: the large-text (AX5) pass (Mon 2 Nov 2026)
+
+- **D6-8 closed, from the accessibility audit:**
+  - **Titles:** serif titles grow with the text size (`ScaledSerif`, `.serif(_:relativeTo:)`), keeping their designed size at the default size.
+  - **Rows:** at accessibility sizes a row's countdown goes under its title, and titles and the service line are never cut ("HBO · US" kept its country).
+  - **Show detail's episodes:** they stack, with a scaled label column.
+  - **The art header:** 280 pt.
+  - **Search:** one poster a row.
+  - **Welcome:** it scrolls, its buttons grow, and it drops the poster wall (the logo had landed on the art).
+  - **The action card:** its symbol column scales.
+- **Checks:**
+  - AX5 screenshots of 8 screens, before and after, looked at. Two follow-ups were found and fixed: symbols overlapping "Unfollow", and the logo still on the wall.
+  - `fidelity/verify-screen.sh` ALL PASS (all screens) at the default size.
+- **Not done:** the service line's size and order (UX audit #6, the size-and-order half) is still planned.
+
 ## The anime stream delay, and Show detail stays current (Mon 2 Nov 2026)
 
 - **UX audit #5, a Must (D3-3) never built:** Show detail has a "Stream delay" stepper for anime only (`AnimeOffset.applies`), from 0 to 180 minutes in 15s, said as "30 min after Japan".

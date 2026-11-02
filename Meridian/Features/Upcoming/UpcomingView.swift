@@ -16,6 +16,8 @@ struct UpcomingView: View {
     var onFind: () -> Void = {}
     var onRefresh: () async -> Void = {}
 
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     var body: some View {
         // Every second (`.countdown`): the sections and the hero's art both follow the clock, so the whole page rides it.
         TimelineView(.countdown) { context in
@@ -73,7 +75,7 @@ struct UpcomingView: View {
         } else {
             // Nothing to feature (every drop has gone, or every show failed to load): SPEC's sentence on its own.
             Text(sections.emptyHeadline(formatter: formatter, now: now))
-                .font(.system(size: 28, design: .serif))
+                .serif(28, relativeTo: .title)
                 .padding(.horizontal, Tokens.Space.l)
                 .padding(.top, 120)
                 .accessibilityIdentifier("upcoming-empty")
@@ -89,7 +91,7 @@ struct UpcomingView: View {
                 switch sections.spotlight {
                 case .dateOnly(let drop):
                     Text(drop.showName)
-                        .font(.system(size: 32, design: .serif))
+                        .serif(32, relativeTo: .largeTitle)
                         .accessibilityIdentifier("upcoming-spotlight-title")
                     // The title already names the show, so the line is the usual wording (D-40), not "Silo returns …".
                     Text(ReleaseWording.outLine(drop, now: now, formatter: formatter))
@@ -98,7 +100,7 @@ struct UpcomingView: View {
                     ReleaseMeta(drop: drop, formatter: formatter)
                 case .quiet(let show):
                     Text(show.name)
-                        .font(.system(size: 32, design: .serif))
+                        .serif(32, relativeTo: .largeTitle)
                         .accessibilityIdentifier("upcoming-spotlight-title")
                     Text(ReleaseWording.quietNote(status: show.status, lastAired: show.lastAired, formatter: formatter,
                                                   now: now))
@@ -123,7 +125,7 @@ struct UpcomingView: View {
     private var emptyFollow: some View {
         VStack(alignment: .leading, spacing: Tokens.Space.m) {
             Text("Follow a show to see its countdown here")
-                .font(.system(size: 28, design: .serif))
+                .serif(28, relativeTo: .title)
                 .accessibilityIdentifier("upcoming-empty-follow")
             Button("Find a show", action: onFind)
                 .buttonStyle(.borderedProminent)
@@ -163,7 +165,8 @@ struct UpcomingView: View {
     /// Followed shows with nothing scheduled, as the poster grid Chime picked for Search: poster, title, and why
     /// there's no time.
     private func quietGrid(_ shows: [UpcomingLoader.Quiet], now: Date) -> some View {
-        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: Tokens.Space.s, alignment: .top), count: 3),
+        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: Tokens.Space.s, alignment: .top),
+                                   count: dynamicTypeSize.isAccessibilitySize ? 2 : 3),
                   spacing: Tokens.Space.m) {
             ForEach(Array(shows.enumerated()), id: \.element.showID) { index, show in
                 VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
@@ -171,13 +174,13 @@ struct UpcomingView: View {
                         .aspectRatio(2 / 3, contentMode: .fit)
                     Text(show.name)
                         .font(.footnote.weight(.medium))
-                        .lineLimit(2)
+                        .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
                         .accessibilityIdentifier("nothing-\(index + 1)-title")
                     Text(ReleaseWording.quietNote(status: show.status, lastAired: show.lastAired, formatter: formatter,
                                                   now: now))
                         .font(.caption)
                         .foregroundStyle(NightInk.muted)
-                        .lineLimit(3)
+                        .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 3)
                         .accessibilityIdentifier("nothing-\(index + 1)-note")
                 }
                 .accessibilityElement(children: .contain)
@@ -196,18 +199,24 @@ struct UpcomingView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
                 VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
-                    // The countdown sits beside the title only, so the lines below get the full width.
-                    HStack(alignment: .firstTextBaseline) {
+                    // The countdown sits beside the title only, so the lines below get the full width. At the
+                    // accessibility sizes it goes under the title instead of squeezing it (UX audit #8).
+                    let largeText = dynamicTypeSize.isAccessibilitySize
+                    let titleLine = largeText ? AnyLayout(VStackLayout(alignment: .leading, spacing: Tokens.Space.xxs))
+                        : AnyLayout(HStackLayout(alignment: .firstTextBaseline))
+                    titleLine {
                         Text(drop.showName)
-                            .font(.system(size: 20, design: .serif))
-                            .lineLimit(2)
+                            .serif(20, relativeTo: .title3)
+                            .lineLimit(largeText ? nil : 2)
                             .accessibilityIdentifier("drop-row-\(index)-title")
-                        Spacer(minLength: Tokens.Space.xs)
+                        if !largeText { Spacer(minLength: Tokens.Space.xs) }
                         if drop.confidence != .dateOnly {  // a date-only drop's day is already in the out line
                             CountdownText(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate, now: now,
-                                          size: 24, tint: .white, formatter: formatter, alignment: .trailing)
+                                          size: 24, tint: .white, formatter: formatter,
+                                          alignment: largeText ? .leading : .trailing)
                                 .environment(\.numeralStudy, .night)
-                                .fixedSize()
+                                // Stacked, it may shrink to the row's width (minimumScaleFactor) instead of overflowing.
+                                .fixedSize(horizontal: !largeText, vertical: true)
                         }
                     }
                     Text(ReleaseWording.outLine(drop, now: now, formatter: formatter))

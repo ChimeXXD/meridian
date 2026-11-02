@@ -16,6 +16,7 @@ struct SearchView: View {
 
     enum Kind: String, CaseIterable { case tv = "TV", anime = "Anime" }
 
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.modelContext) private var context
     @Query(sort: \FollowedShow.followedAt) private var followed: [FollowedShow]
     @State private var query = ""
@@ -180,10 +181,12 @@ struct SearchView: View {
                                         @ViewBuilder meta: @escaping (SearchResult) -> Meta) -> some View {
         VStack(alignment: .leading, spacing: Tokens.Space.s) {
             Text(header)
-                .font(.system(size: 22, design: .serif))
+                .serif(22, relativeTo: .title2)
                 .accessibilityAddTraits(.isHeader)
                 .accessibilityIdentifier(headerID)
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: Tokens.Space.s, alignment: .top), count: 3),
+            // One poster a row at the accessibility sizes, so titles and their certainty words aren't cut (audit #24).
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: Tokens.Space.s, alignment: .top),
+                                     count: dynamicTypeSize.isAccessibilitySize ? 1 : 3),
                       spacing: Tokens.Space.m) {
                 ForEach(Array(shows.enumerated()), id: \.element.id) { index, result in
                     posterCell(result, id: "\(idPrefix)-\(index + 1)", meta: meta(result),
@@ -206,7 +209,7 @@ struct SearchView: View {
                 }
             Text(result.title)
                 .font(.footnote.weight(.medium))
-                .lineLimit(2)
+                .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
                 .accessibilityAddTraits(.isButton)
                 .accessibilityHint("Opens the show")
                 .accessibilityAction { path.append(route) }
@@ -215,7 +218,7 @@ struct SearchView: View {
             meta
                 .font(.caption)
                 .foregroundStyle(NightInk.muted)
-                .lineLimit(2)
+                .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
                 .accessibilityIdentifier("\(id)-meta")
         }
         .contentShape(Rectangle())

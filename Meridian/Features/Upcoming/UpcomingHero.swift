@@ -33,15 +33,14 @@ struct ReleaseHeadline: View {
     /// 64 on Upcoming and Show detail, 48 on the show page: 2 and 1.5 times the title. It was 88, 2.75 times, and
     /// took 15% of the screen (Chime and the UX audit, 2 Nov).
     var countdownSize: CGFloat = 64
-    /// The title grows with the text size like a large title, so it never ends up smaller than the lines under it.
-    @ScaledMetric(relativeTo: .largeTitle) private var titleScale: CGFloat = 1
     /// Prefix for the test IDs: `upcoming-hero` or `detail` (UI-BRIEF).
     var testID = "headline"
 
     var body: some View {
         VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
             Text(drop.showName)
-                .font(.system(size: titleSize * titleScale, design: .serif))
+                // Grows like a large title, so it never ends up smaller than the lines under it.
+                .serif(titleSize, relativeTo: .largeTitle)
                 .lineLimit(2).minimumScaleFactor(0.7)
                 .accessibilityAddTraits(.isHeader)
                 .accessibilityIdentifier("\(testID)-title")
@@ -67,6 +66,8 @@ struct ReleaseMeta: View {
     /// The screen's formatter, so a delay's old time follows the Settings zone like the out line above it.
     let formatter: DropFormatter
 
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             if let delay = ReleaseWording.delayLine(drop, formatter: formatter) {
@@ -75,10 +76,11 @@ struct ReleaseMeta: View {
                     .foregroundStyle(NightInk.muted)
                     .accessibilityIdentifier("release-delayed")
             }
+            // One line normally; never cut at the accessibility sizes, where "HBO · US" lost its country (audit #6).
             Text(drop.episodeAndProvider)
                 .font(.footnote)
                 .foregroundStyle(NightInk.muted)
-                .lineLimit(1)
+                .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 1)
             if drop.provider?.noOfficialStream == true {
                 Text("No official stream in your country")
                     .font(.footnote)

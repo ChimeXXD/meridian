@@ -17,6 +17,8 @@ struct ShowDetailView: View {
     var onUnfollow: () -> Void = {}
 
     @Environment(\.dismiss) private var dismiss
+    /// The action rows' symbol column grows with the text, so a large symbol never overlaps its label.
+    @ScaledMetric(relativeTo: .body) private var iconColumn: CGFloat = 24
     @State private var confirmingUnfollow = false
     @AppStorage(LeadTime.storageKey) private var leadMinutes = LeadTime.defaultMinutes
 
@@ -115,7 +117,8 @@ struct ShowDetailView: View {
                 }
                 .accessibilityIdentifier("detail-report")
                 .accessibilityHint(ReportRoute.current == .githubIssue ? "Opens a GitHub issue" : "Opens an email")
-                Rectangle().fill(.white.opacity(0.12)).frame(height: 0.5).padding(.leading, 52)
+                Rectangle().fill(.white.opacity(0.12)).frame(height: 0.5)
+                    .padding(.leading, Tokens.Space.m + iconColumn + Tokens.Space.s)
             }
             Button(role: .destructive) { confirmingUnfollow = true } label: {
                 actionRow("Unfollow", systemImage: "minus.circle", ink: Color(uiColor: .systemRed), leavesApp: false)
@@ -132,7 +135,7 @@ struct ShowDetailView: View {
         HStack(spacing: Tokens.Space.s) {
             Image(systemName: systemImage)
                 .font(.body)
-                .frame(width: 24)
+                .frame(width: iconColumn)
                 .accessibilityHidden(true)
             Text(title)
                 .font(.body)
@@ -166,18 +169,27 @@ struct EpisodeRows: View {
     let ink: Color
     var formatter = DropFormatter()
 
+    /// The episode label's column grows with the text, so "S3E9" never stacks a letter a line (UX audit #7).
+    @ScaledMetric(relativeTo: .footnote) private var labelWidth: CGFloat = 52
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     var body: some View {
         VStack(spacing: 0) {
             ForEach(Array(episodes.enumerated()), id: \.element) { index, episode in
-                HStack(alignment: .firstTextBaseline, spacing: Tokens.Space.s) {
+                // At the accessibility sizes the label, title and date stack instead of sharing one line.
+                let stacked = dynamicTypeSize.isAccessibilitySize
+                let line = stacked ? AnyLayout(VStackLayout(alignment: .leading, spacing: Tokens.Space.xxs))
+                    : AnyLayout(HStackLayout(alignment: .firstTextBaseline, spacing: Tokens.Space.s))
+                line {
                     Text(episode.label)
                         .font(.footnote.monospacedDigit().weight(.semibold))
                         .foregroundStyle(ink.opacity(0.6))
-                        .frame(width: 52, alignment: .leading)
+                        .frame(width: stacked ? nil : labelWidth, alignment: .leading)
                     Text(episode.title).font(.body.weight(.medium))
-                    Spacer()
+                    if !stacked { Spacer() }
                     Text(formatter.airdate(episode.airdate, now: .now) ?? "").font(.footnote).foregroundStyle(ink.opacity(0.6))
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.vertical, Tokens.Space.s)
                 .overlay(alignment: .bottom) {
                     if index < episodes.count - 1 { Rectangle().fill(ink.opacity(0.12)).frame(height: 1) }

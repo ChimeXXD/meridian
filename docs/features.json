@@ -642,8 +642,8 @@
         "no truncated countdowns"
       ],
       "verify": "AX5LayoutTests; AX5 screenshots pass verify-screen.sh",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "AX5 (accessibility-extra-extra-extra-large) simulator screenshots of Upcoming (top and bottom), Show detail (top and bottom), the show page, Search, Settings and Welcome after the fixes (2 Nov): titles grow (ScaledSerif), rows stack the countdown, the service line is never cut, episodes stack, the art header is 280, Search is one column, Welcome scrolls without the wall, and the action card symbols scale. fidelity/verify-screen.sh ALL PASS (all screens) at the default size. UX audit #3, #7, #8, #9, #24, #25."
     },
     {
       "id": "D6-9",

@@ -47,7 +47,7 @@ struct ShowPreviewView: View {
                                 }
                             } else {
                                 Text(result.title)
-                                    .font(.system(size: 32, design: .serif))
+                                    .serif(32, relativeTo: .largeTitle)
                                     .lineLimit(2).minimumScaleFactor(0.7)
                                     .accessibilityAddTraits(.isHeader)
                                     .accessibilityIdentifier("show-preview-title")

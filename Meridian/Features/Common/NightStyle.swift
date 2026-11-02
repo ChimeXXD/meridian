@@ -34,14 +34,20 @@ struct NightArtHeader: View {
     let base: Color
     var height: CGFloat = 472
 
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    /// More than half the screen at the default size; 280 at the accessibility sizes, so the facts under it stay on
+    /// the first screen (UX audit #25).
+    private var shown: CGFloat { dynamicTypeSize.isAccessibilitySize ? min(height, 280) : height }
+
     var body: some View {
         ZStack {
             // While the art downloads the header is the night base itself, never a grey block (Chime saw one).
-            ArtworkFill(image: image, base: base).frame(height: height)
+            ArtworkFill(image: image, base: base).frame(height: shown)
             LinearGradient(stops: [.init(color: base.opacity(0), location: 0.4), .init(color: base, location: 1)],
                            startPoint: .top, endPoint: .bottom)
             LinearGradient(colors: [.black.opacity(0.4), .clear], startPoint: .top, endPoint: .init(x: 0.5, y: 0.25))
         }
-        .frame(height: height)
+        .frame(height: shown)
     }
 }

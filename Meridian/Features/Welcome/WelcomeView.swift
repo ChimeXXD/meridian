@@ -21,42 +21,24 @@ struct WelcomeView: View {
 
     private let night = ArtworkPalette.neutral.night.color
 
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     var body: some View {
-        // Two groups (unslop, 2 Nov): the brand and its promise (logo, 16, headline, 12, zone), then 32 to the actions.
-        VStack(alignment: .leading, spacing: 0) {
-            Spacer(minLength: 0)
-            lockup
-            Text("How long until your next episode, in your time zone, and where it's on")
-                .font(.system(size: 34, design: .serif))
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.top, Tokens.Space.m)
-            Text("Times shown for \(ReleaseWording.zoneSummary(formatter, at: .now))")
-                .font(.body.weight(.medium))
-                .foregroundStyle(NightInk.secondary)
-                .accessibilityIdentifier("welcome-zone")
-                .padding(.top, Tokens.Space.s)
-            VStack(spacing: Tokens.Space.s) {
-                Button(action: onFind) {
-                    Text("Find a show").frame(maxWidth: .infinity).frame(height: 48)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.white)
-                .foregroundStyle(.black)
-                .accessibilityIdentifier("welcome-find")
-                Button("Not now", action: onLater)
-                    .foregroundStyle(NightInk.secondary)
-                    .frame(height: 44)
-                    .accessibilityIdentifier("welcome-later")
+        // Scrolls only when it doesn't fit (the accessibility sizes, small phones: UX audit #9); otherwise the text sits
+        // at the bottom as before.
+        GeometryReader { outer in
+            ScrollView {
+                content.frame(maxWidth: .infinity, minHeight: outer.size.height, alignment: .bottomLeading)
             }
-            .padding(.top, Tokens.Space.xl)
+            .scrollBounceBehavior(.basedOnSize)
+            .scrollIndicators(.hidden)
         }
-        .padding(.horizontal, Tokens.Space.l)
-        .padding(.bottom, Tokens.Space.l)
-        .frame(maxWidth: .infinity, alignment: .leading)
         .background(alignment: .top) {
             GeometryReader { proxy in
-                if let wall {
-                    // Under the status bar, over the top 60% of the screen; the headline sits on its fade.
+                // Under the status bar, over the top 60% of the screen; the headline sits on its fade. At the
+                // accessibility sizes the text fills the screen and the logo would sit on the art, so Welcome is the
+                // plain night it is offline (UX audit #9).
+                if let wall, !dynamicTypeSize.isAccessibilitySize {
                     WelcomeWallView(wall: wall, night: night)
                         .frame(height: (proxy.size.height + proxy.safeAreaInsets.top) * 0.6)
                         .transition(.opacity)
@@ -68,11 +50,43 @@ struct WelcomeView: View {
         .environment(\.colorScheme, .dark)
         // Tried again each time the app comes back, so a first launch offline gets its art once the network does.
         .task(id: scenePhase) {
-            guard scenePhase == .active, wall == nil,
+            guard scenePhase == .active, wall == nil, !dynamicTypeSize.isAccessibilitySize,
                   let loaded = await WelcomeWall.load(client: client, anilist: anilist, rules: rules) else { return }
             // Reduce Motion: the wall appears at once, as the art does everywhere else (ArtworkLoaderView).
             withAnimation(reduceMotion ? nil : .easeOut(duration: 0.35)) { wall = loaded }
         }
+    }
+
+    /// Two groups (unslop, 2 Nov): the brand and its promise (logo, 16, headline, 12, zone), then 32 to the actions.
+    private var content: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            lockup
+            Text("How long until your next episode, in your time zone, and where it's on")
+                .serif(34, relativeTo: .largeTitle)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, Tokens.Space.m)
+            Text("Times shown for \(ReleaseWording.zoneSummary(formatter, at: .now))")
+                .font(.body.weight(.medium))
+                .foregroundStyle(NightInk.secondary)
+                .accessibilityIdentifier("welcome-zone")
+                .padding(.top, Tokens.Space.s)
+            VStack(spacing: Tokens.Space.s) {
+                Button(action: onFind) {
+                    Text("Find a show").frame(maxWidth: .infinity).frame(minHeight: 48)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.white)
+                .foregroundStyle(.black)
+                .accessibilityIdentifier("welcome-find")
+                Button("Not now", action: onLater)
+                    .foregroundStyle(NightInk.secondary)
+                    .frame(minHeight: 44)
+                    .accessibilityIdentifier("welcome-later")
+            }
+            .padding(.top, Tokens.Space.xl)
+        }
+        .padding(.horizontal, Tokens.Space.l)
+        .padding(.bottom, Tokens.Space.l)
     }
 
     /// The logo on the night, never over the art (the design system's "Using the mark"): the Longitudes mark and the
