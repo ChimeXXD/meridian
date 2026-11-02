@@ -6,6 +6,9 @@ struct RunningActivity: Equatable, Sendable {
     /// The drops it covers (`DropActivityAttributes.dropIDs`), soonest first.
     var dropIDs: [String]
     var state: DropActivityAttributes.ContentState
+    /// When it was booked to start (`DropActivityAttributes.windowStart`); nil when unknown. One that hasn't
+    /// started yet is booked again when its drop moves, since its start and alert were fixed at request time.
+    var windowStart: Date? = nil
 
     var dropDate: Date { state.dropDate }
 }

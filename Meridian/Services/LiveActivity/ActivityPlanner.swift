@@ -92,7 +92,7 @@ enum ActivityPlanner {
         let minutes = max(1, Int((first.date.timeIntervalSince(start) / 60).rounded()))
         return Planned(attributes: attributes(for: group, start: start),
                        state: DropActivityAttributes.ContentState(phase: .upcoming, dropDate: first.date,
-                                                                  delayedFrom: nil),
+                                                                  delayedFrom: first.previousDate),
                        start: start, leadMinutes: minutes)
     }
 }

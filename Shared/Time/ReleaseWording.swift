@@ -19,6 +19,13 @@ enum ReleaseWording {
         return naming ? "\(line) \(place(formatter)) time" : line
     }
 
+    /// "Delayed from 21:00" under a time that moved later, or "Delayed from Thu 23:00" when it was another day; nil
+    /// when it hasn't (D-58). Said in words, as the expanded Live Activity says it, never with a badge to decode.
+    static func delayLine(_ drop: Drop, formatter: DropFormatter) -> String? {
+        guard drop.confidence == .exact, let previous = drop.previousDate, previous < drop.date else { return nil }
+        return "Delayed from \(formatter.time(previous, besides: drop.date))"
+    }
+
     /// Show detail's one sentence on where the time came from.
     static func explanation(_ drop: Drop, broadcastZone: String?, formatter: DropFormatter) -> String {
         switch drop.source {

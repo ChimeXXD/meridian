@@ -65,10 +65,11 @@ struct DesignPreview: View {
              ProviderLabel(name: "Apple TV", countryCode: nil, noOfficialStream: false), false),
             (69956, "Frieren: Beyond Journey's End", 2, 8, .exact, .anilist,
              ProviderLabel(name: "Crunchyroll", countryCode: nil, noOfficialStream: false), false),
+            // A published time that moved later, so it says "Delayed from" (D-58); an estimate never does.
             (44778, "House of the Dragon", 3, 4, .exact, .broadcast(network: "HBO"),
-             ProviderLabel(name: "HBO", countryCode: "US", noOfficialStream: false), false),
+             ProviderLabel(name: "HBO", countryCode: "US", noOfficialStream: false), true),
             (53647, "Wednesday", 3, 1, .estimated, .platformRule("Netflix rule"),
-             ProviderLabel(name: "Netflix", countryCode: nil, noOfficialStream: false), true),
+             ProviderLabel(name: "Netflix", countryCode: nil, noOfficialStream: false), false),
             (46562, "The Last of Us", 3, 1, .exact, .broadcast(network: "HBO"),
              ProviderLabel(name: "HBO", countryCode: "US", noOfficialStream: false), false),
         ]

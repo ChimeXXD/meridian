@@ -74,7 +74,7 @@ struct ShowDetailView: View {
     private func next(now: Date) -> some View {
         VStack(alignment: .leading, spacing: Tokens.Space.s) {
             ReleaseHeadline(drop: drop, now: now, formatter: formatter, testID: "detail")
-            ReleaseMeta(drop: drop)
+            ReleaseMeta(drop: drop, formatter: formatter)
             // Where the time came from, as one plain sentence instead of a code to learn (D-40).
             Text(ReleaseWording.explanation(drop, broadcastZone: drop.broadcastZone, formatter: formatter))
                 .font(.subheadline)

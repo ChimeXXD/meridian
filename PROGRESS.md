@@ -2,6 +2,27 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Day 6: refresh with delay detection (Mon 2 Nov 2026)
+
+- **D6-1 (D-58):** each refresh (on open, `RootView` scenePhase `.active`) compares episodes with the last known result, which comes from the in-memory result or, after a cold launch, the widgets' snapshot.
+  - A published time that moved later keeps its first listed time as `previousDate` (`DelayDetection`).
+  - Estimates never count as delayed.
+  - `ReleaseMeta` says "Delayed from 20:55" in the hero, rows and Show detail.
+- **Live Activity:** `delayedFrom` comes from `previousDate`, on new bookings too.
+  - A booked activity that hasn't started is ended and rebooked for the new time (new start and alert).
+  - One on screen moves in place.
+  - An old time a week or more earlier carries its date.
+- **Checks:**
+  - RefreshServiceTests 4 and ActivityRescheduleTests 2 were red first, as a compile error and as `ended` being empty.
+  - ActivitySchedulerTests, ReleaseWordingTests and LiveActivityTextTests are green.
+  - `-designPreview 44778` shows "Out today at 21:55 Lagos time / Delayed from 20:55 / S3E4 · HBO · US".
+  - Screen checks upcoming and detail: ALL PASS.
+- **Reviews:**
+  - **proof:verifier:** 1 failure, a pending activity not rebooked; fixed.
+  - **`/code-review` (medium):** 8 findings, 4 fixed: delayed bookings, delay reconciliation, a phase reset, and the shared old-time format. The 7-day case was fixed here.
+  - Not fixed: an earlier time shows nothing (D-58 by design); "Delayed from" stays after release; the legacy `DropRow`.
+- **Not verified:** a real delay on the phone (needs TVmaze to move a time).
+
 ## The design system matches the app, and stays that way; the expanded island redesigned (Mon 2 Nov 2026)
 
 - Chime: confirm the design system is the same as the app; any change to one goes to the other. Then: the expanded island's progress bar means nothing and its "Expected in 2:00:00" is too big; unslop it.

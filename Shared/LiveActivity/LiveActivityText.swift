@@ -75,8 +75,7 @@ enum LiveActivityText {
     /// was another day. Nil when it hasn't moved.
     static func previousTime(_ state: DropActivityAttributes.ContentState, formatter: DropFormatter) -> String? {
         guard let previous = state.delayedFrom, previous != state.dropDate else { return nil }
-        return formatter.localDay(previous) == formatter.localDay(state.dropDate)
-            ? formatter.localTime(previous) : formatter.weekdayTime(previous)
+        return formatter.time(previous, besides: state.dropDate)
     }
 
     /// The expanded island's time in words: "Expected Wed 23:00", as the Lock Screen's time line says it. At the drop

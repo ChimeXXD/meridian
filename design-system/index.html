@@ -579,21 +579,23 @@
 
   <article class="comp" id="c-release-meta" data-search="ReleaseMeta meta episode provider no official stream" data-title="ReleaseMeta" data-kind="Component">
     <div class="hrow"><h3>ReleaseMeta</h3></div>
-    <p class="purpose">The episode and where it’s on, as “HBO · US”, never “On HBO”. A second line says when there’s no official stream, if the rules file says so.</p>
+    <p class="purpose">The episode and where it’s on, as “HBO · US”, never “On HBO”. Above it, “Delayed from 20:55” when a published time moved later (D-58); below it, a line when there’s no official stream, if the rules file says so.</p>
     <div class="states">
       <figure class="state"><div class="stage" style="width:342px"><div class="meta">S4E1 · Apple TV</div></div><figcaption>Default</figcaption></figure>
       <figure class="state"><div class="stage" style="width:342px"><div class="meta">S3E4 · HBO · US</div><div class="meta" style="margin-top:2px">No official stream in your country</div></div><figcaption>No official stream</figcaption></figure>
+      <figure class="state"><div class="stage" style="width:342px"><div class="meta">Delayed from 20:55</div><div class="meta" style="margin-top:2px">S3E4 · HBO · US</div></div><figcaption>Delayed: a published time moved later</figcaption></figure>
     </div>
     <div class="spec"><dl class="specs">
       <dt>Type</dt><dd>SF Pro footnote (13), <code>NightInk.muted</code>, one line; lines 2 apart</dd>
-      <dt>Copy</dt><dd>“S4E1 · Apple TV” · “S3E4 · HBO · US” · “No official stream in your country”</dd>
+      <dt>Copy</dt><dd>“Delayed from 20:55” (“Delayed from Thu 23:00” when it was another day, “Delayed from Fri 23 Oct 21:00” a week or more before) · “S4E1 · Apple TV” · “S3E4 · HBO · US” · “No official stream in your country”</dd>
+      <dt>Delays</dt><dd>Only a sure time is delayed: a refresh that finds a later published time keeps the first listed one (<code>DelayDetection</code>); an estimate that changes was our guess being refined, so it says nothing. The Live Activity moves with it and says the same words</dd>
       <dt>VoiceOver</dt><dd>Reads the line as written: “S3E4, HBO, US”</dd>
-      <dt>ID</dt><dd><code>provider-no-stream</code></dd>
-      <dt>Note</dt><dd>Plain words, with no glyph and no red</dd>
-      <dt>Source</dt><dd class="path">Features/Upcoming/UpcomingHero.swift:57-74</dd>
+      <dt>IDs</dt><dd><code>release-delayed</code>, <code>provider-no-stream</code></dd>
+      <dt>Note</dt><dd>Plain words, with no glyph, badge or strike-through</dd>
+      <dt>Source</dt><dd class="path">Features/Upcoming/UpcomingHero.swift:58-83</dd>
     </dl><div class="codebox"><pre><code>VStack(alignment: .leading, spacing: Tokens.Space.s) {
-    ReleaseHeadline(drop: drop, now: now)
-    ReleaseMeta(drop: drop)
+    ReleaseHeadline(drop: drop, now: now, formatter: formatter, testID: "upcoming-hero")
+    ReleaseMeta(drop: drop, formatter: formatter)
 }</code></pre></div></div>
   </article>
   </div>
@@ -1329,7 +1331,7 @@ Section {
     </article>
     <article class="comp" id="c-legacy-drop-row" data-search="DropRow legacy card delayed provider label section header count" data-title="DropRow, ProviderLabelView, SectionHeader (archived)" data-kind="Archive">
       <div class="hrow"><h3>DropRow, ProviderLabelView and SectionHeader</h3></div>
-      <p class="purpose">The card row from before Night Sky. It is the only view that shows a delay (“Delayed”, with the old time struck through), which is worth bringing to the live row.</p>
+      <p class="purpose">The card row from before Night Sky. It showed a delay as a badge with the old time struck through; the live screens now say “Delayed from 01:00” in words (D-58).</p>
       <div class="states">
         <figure class="state"><div class="stage" style="background:#000;width:390px"><div style="font:600 20px var(--sans)">This week</div><div style="font-size:13px;color:rgba(235,235,245,.6);margin-bottom:10px">3 shows</div>
           <div class="legacy-card"><div style="flex:1;display:grid;gap:6px"><div style="font:600 17px var(--sans)">Stranger Things</div><div style="font-size:15px;color:rgba(235,235,245,.6)">S5E5 · Sat 02:00</div><div style="font:600 12px var(--sans);color:#FDBA74">↻ Delayed <span style="font-weight:400;color:rgba(235,235,245,.6);text-decoration:line-through">01:00</span></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="lchip" style="color:#8AB0FF;background:rgba(138,176,255,.14)">◷ Netflix rule</span><span style="font-size:13px;color:rgba(235,235,245,.6)">Netflix</span></div></div><div style="font:800 28px var(--sans);font-variant-numeric:tabular-nums;white-space:nowrap">3d 2:00:00</div></div>

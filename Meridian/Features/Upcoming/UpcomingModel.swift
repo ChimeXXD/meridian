@@ -34,13 +34,15 @@ final class UpcomingModel {
         }
         generation += 1
         let current = generation
-        let loaded = await loader.load(requests, now: now)
+        var loaded = await loader.load(requests, now: now)
         guard current == generation else { return }
         // On a cold launch the last snapshot is the last known result, so an offline start doesn't empty the widgets
         // (and delete their art) for shows that merely failed to load.
         let previous = result ?? snapshots.lastWritten().map {
             UpcomingLoader.Result(drops: $0.drops, nothingScheduled: $0.nothingScheduled)
         }
+        // A published time that moved later keeps its first listed time, for "Delayed from 21:00" (D-58).
+        loaded.drops = DelayDetection.carry(from: previous?.drops ?? [], into: loaded.drops)
         result = loaded.keepingLastKnown(from: previous, followOrder: requests.map(\.showID))
         #if DEBUG
         // Debug → "Fake drop in N minutes" (SPEC §7): the fake show goes to Upcoming and the widgets like a real one.

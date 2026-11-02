@@ -92,7 +92,7 @@ struct UpcomingView: View {
                     Text(ReleaseWording.outLine(drop, now: now, formatter: formatter))
                         .font(.body.weight(.medium))
                         .accessibilityIdentifier("upcoming-spotlight-note")
-                    ReleaseMeta(drop: drop)
+                    ReleaseMeta(drop: drop, formatter: formatter)
                 case .quiet(let show):
                     Text(show.name)
                         .font(.system(size: 32, design: .serif))
@@ -211,7 +211,7 @@ struct UpcomingView: View {
                         .font(.subheadline)
                         .foregroundStyle(NightInk.secondary)
                         .accessibilityIdentifier("drop-row-\(index)-time")
-                    ReleaseMeta(drop: drop)
+                    ReleaseMeta(drop: drop, formatter: formatter)
                 }
             }
             .contentShape(Rectangle())

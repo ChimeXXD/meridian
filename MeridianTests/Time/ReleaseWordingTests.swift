@@ -113,4 +113,23 @@ struct ReleaseWordingTests {
         #expect(ReleaseWording.explanation(drop, broadcastZone: "America/New_York", formatter: newYork)
                 == "That's when HBO airs it.")
     }
+
+    @Test("a delayed time says where it moved from, in words; the day too when it was another day (D-58)")
+    func delayLine() {
+        var drop = Self.drop(.broadcast(network: "HBO"), .exact)
+        #expect(ReleaseWording.delayLine(drop, formatter: Self.lagos) == nil)
+        drop.previousDate = Self.tonight - 3_600
+        #expect(ReleaseWording.delayLine(drop, formatter: Self.lagos) == "Delayed from 20:00")
+        drop.previousDate = Self.tonight - 24 * 3_600
+        #expect(ReleaseWording.delayLine(drop, formatter: Self.lagos) == "Delayed from Thu 21:00")
+        // A week (or more) earlier would repeat the same weekday and read as no change: the date says which.
+        drop.previousDate = Self.tonight - 7 * 24 * 3_600
+        #expect(ReleaseWording.delayLine(drop, formatter: Self.lagos) == "Delayed from Fri 23 Oct 21:00")
+        // Not later, or no longer a sure time: nothing to say.
+        drop.previousDate = Self.tonight
+        #expect(ReleaseWording.delayLine(drop, formatter: Self.lagos) == nil)
+        var estimate = Self.drop(.platformRule("Netflix rule"), .estimated)
+        estimate.previousDate = Self.tonight - 3_600
+        #expect(ReleaseWording.delayLine(estimate, formatter: Self.lagos) == nil)
+    }
 }

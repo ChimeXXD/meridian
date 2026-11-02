@@ -14,7 +14,7 @@ struct UpcomingHero: View {
             NightArtHeader(image: image, base: base)
             VStack(alignment: .leading, spacing: Tokens.Space.s) {
                 ReleaseHeadline(drop: drop, now: now, formatter: formatter, testID: "upcoming-hero")
-                ReleaseMeta(drop: drop)
+                ReleaseMeta(drop: drop, formatter: formatter)
             }
             .padding(.horizontal, Tokens.Space.l)
             .padding(.top, -64)
@@ -53,12 +53,21 @@ struct ReleaseHeadline: View {
     }
 }
 
-/// "S4E1 · Apple TV" in muted text, and "No official stream in your country" when the rules file says so.
+/// "Delayed from 21:00" when a sure time moved later (D-58), "S4E1 · Apple TV" in muted text, and "No official
+/// stream in your country" when the rules file says so.
 struct ReleaseMeta: View {
     let drop: Drop
+    /// The screen's formatter, so a delay's old time follows the Settings zone like the out line above it.
+    let formatter: DropFormatter
 
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
+            if let delay = ReleaseWording.delayLine(drop, formatter: formatter) {
+                Text(delay)
+                    .font(.footnote)
+                    .foregroundStyle(NightInk.muted)
+                    .accessibilityIdentifier("release-delayed")
+            }
             Text(drop.episodeAndProvider)
                 .font(.footnote)
                 .foregroundStyle(NightInk.muted)

@@ -189,7 +189,7 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
 ## Day 6: Harden and private beta (Wed 4 Nov)
 
 ### Claude CLI does
-- [ ] Refresh when the app opens, with delay detection (`previousDate` and a "Delayed" badge) and rescheduling.
+- [x] Refresh when the app opens, with delay detection (`previousDate` and "Delayed from 20:55" in words, D-58) and rescheduling.
 - [ ] An offline "Updated <time>" label, "Report a wrong time" (email while the repo is private), and `PRIVACY.md`.
 - [ ] GitHub Actions: build and test on pushes to `main` and by hand (`workflow_dispatch`) while private, using SPM/DerivedData caching to save minutes. On Day 7, widen it to every push and PR.
 - [ ] **Accuracy audit:** 20 real drops from this week, including Chime's Day 3 clock-change logs, comparing the app's time with each platform's confirmed time. Log them in `docs/research/accuracy-audit.md`.

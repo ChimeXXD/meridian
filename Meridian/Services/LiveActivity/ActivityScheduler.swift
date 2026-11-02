@@ -61,11 +61,20 @@ final class ActivityScheduler {
         let byID = Dictionary(drops.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         for activity in requester.current() {
             var state = activity.state
-            // The planner skips a drop an activity already covers, so a moved time only reaches it here.
+            // The planner skips a drop an activity already covers, so a moved time only reaches it here. Only a
+            // detected delay shows its old time (D-58); a refined estimate just moves.
             if let drop = activity.dropIDs.first.flatMap({ byID[$0] }), drop.confidence != .dateOnly,
-               drop.date != state.dropDate {
-                state = DropActivityAttributes.ContentState(phase: .upcoming, dropDate: drop.date,
-                                                            delayedFrom: state.delayedFrom ?? state.dropDate)
+               drop.date != state.dropDate || drop.previousDate != state.delayedFrom {
+                // Not started yet: its start and alert were fixed when it was booked, so end it and let the planner
+                // below book it again for the new time (SPEC §6). One already on screen is moved in place.
+                if drop.date != state.dropDate, let start = activity.windowStart, start > now {
+                    await requester.end(id: activity.id)
+                    outcome.ended.append(activity.id)
+                    continue
+                }
+                let phase = drop.date == state.dropDate ? state.phase : .upcoming
+                state = DropActivityAttributes.ContentState(phase: phase, dropDate: drop.date,
+                                                            delayedFrom: drop.previousDate)
             }
             let switchedOff = state.dropDate > now && !activity.dropIDs.isEmpty
                 && activity.dropIDs.allSatisfy { byID[$0].map { optedOut.contains($0.showID) } ?? false }

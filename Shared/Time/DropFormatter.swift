@@ -76,6 +76,15 @@ struct DropFormatter: Sendable {
         return timeZone.localizedName(for: style, locale: Locale(identifier: "en_US")) ?? timeZone.identifier
     }
 
+    /// An old time beside its new one: "21:00" the same local day, "Thu 21:00" within the week, and "Fri 23 Oct 21:00"
+    /// six or more days away, where the weekday alone could be the new time's own and read as no change.
+    func time(_ date: Date, besides other: Date) -> String {
+        if localDay(date) == localDay(other) { return localTime(date) }
+        guard abs(date.timeIntervalSince(other)) >= 6 * 86_400 else { return weekdayTime(date) }
+        let dayMonth = date.formatted(verbatim("\(weekday: .abbreviated) \(day: .defaultDigits) \(month: .abbreviated)"))
+        return "\(dayMonth) \(localTime(date))"
+    }
+
     /// "Wed 02:00", for the rectangular widget and rows.
     func weekdayTime(_ date: Date) -> String {
         "\(weekday(date)) \(localTime(date))"

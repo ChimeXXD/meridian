@@ -202,6 +202,44 @@ struct ActivitySchedulerTests {
         #expect(requester.requests.isEmpty)
     }
 
+    @Test("a moved time that isn't a delay (an estimate refined) moves the activity with no old time (D-58)")
+    func refinedEstimateMoved() async throws {
+        let guessed = Self.now + Self.day
+        let refined = Self.drop("1", at: guessed + Self.hour, confidence: .estimated)
+        let requester = FakeActivityRequester()
+        requester.activities = [RunningActivity(id: "a", dropIDs: [refined.id], state: Self.state(guessed))]
+        await Self.scheduler(requester).sync(drops: [refined], optedIn: Self.everyShow, leadMinutes: 120, now: Self.now)
+
+        let update = try #require(requester.updates.first)
+        #expect(update.state == DropActivityAttributes.ContentState(phase: .upcoming, dropDate: refined.date,
+                                                                   delayedFrom: nil))
+    }
+
+    @Test("an activity requested for an already delayed drop says where it moved from (D-58)")
+    func delayedDropRequested() async throws {
+        let listed = Self.now + 2 * Self.hour
+        var delayed = Self.drop("1", at: listed + Self.hour)
+        delayed.previousDate = listed
+        let requester = FakeActivityRequester()
+        await Self.scheduler(requester).sync(drops: [delayed], optedIn: Self.everyShow, leadMinutes: 120, now: Self.now)
+
+        let request = try #require(requester.requests.first)
+        #expect(request.state.delayedFrom == listed)
+    }
+
+    @Test("a delay found at the activity's own time still reaches it (D-58)")
+    func delayReconciled() async throws {
+        let listed = Self.now + Self.day
+        var delayed = Self.drop("1", at: listed + Self.hour)
+        delayed.previousDate = listed
+        let requester = FakeActivityRequester()
+        requester.activities = [RunningActivity(id: "a", dropIDs: [delayed.id], state: Self.state(delayed.date))]
+        await Self.scheduler(requester).sync(drops: [delayed], optedIn: Self.everyShow, leadMinutes: 120, now: Self.now)
+
+        let update = try #require(requester.updates.first)
+        #expect(update.state.delayedFrom == listed)
+    }
+
     @Test("switching a show's Live Activity off ends its pending activity, not one already out")
     func optedOutEnded() async {
         let ahead = Self.drop("1", at: Self.now + Self.day)
@@ -245,7 +283,7 @@ final class FakeActivityRequester: ActivityRequester {
         if let error { throw error }
         requests.append(Request(attributes: attributes, state: state, alert: alert, start: start))
         let id = "fake-\(requests.count)"
-        activities.append(RunningActivity(id: id, dropIDs: attributes.dropIDs, state: state))
+        activities.append(RunningActivity(id: id, dropIDs: attributes.dropIDs, state: state, windowStart: start))
         return id
     }
 

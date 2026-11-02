@@ -14,7 +14,8 @@ struct SystemActivityRequester: ActivityRequester {
     func current() -> [RunningActivity] {
         Activity<DropActivityAttributes>.activities
             .filter { [.pending, .active, .stale].contains($0.activityState) }
-            .map { RunningActivity(id: $0.id, dropIDs: $0.attributes.dropIDs, state: $0.content.state) }
+            .map { RunningActivity(id: $0.id, dropIDs: $0.attributes.dropIDs, state: $0.content.state,
+                                   windowStart: $0.attributes.windowStart) }
     }
 
     @discardableResult
