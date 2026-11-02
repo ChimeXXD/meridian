@@ -7,6 +7,7 @@ import UIKit
 /// reloads on pull-to-refresh.
 struct UpcomingTab: View {
     let model: UpcomingModel
+    let scheduler: ActivityScheduler
     var onFind: () -> Void = {}
 
     @Query(sort: \FollowedShow.followedAt) private var followed: [FollowedShow]
@@ -19,7 +20,7 @@ struct UpcomingTab: View {
                          onSelect: { path.append($0) }, onFind: onFind, onRefresh: { await model.refresh(followed) })
                 .toolbarVisibility(.hidden, for: .navigationBar)
                 .navigationDestination(for: Drop.self) { drop in
-                    ShowDetailScreen(drop: drop, model: model, artwork: model.artwork[drop.showID])
+                    ShowDetailScreen(drop: drop, model: model, scheduler: scheduler, artwork: model.artwork[drop.showID])
                 }
         }
     }
@@ -29,6 +30,7 @@ struct UpcomingTab: View {
 struct ShowDetailScreen: View {
     let drop: Drop
     let model: UpcomingModel
+    let scheduler: ActivityScheduler
     let artwork: ShowArtwork?
 
     @Environment(\.modelContext) private var context
@@ -37,9 +39,10 @@ struct ShowDetailScreen: View {
     @State private var reportCopied = false
     @Environment(\.openURL) private var openURL
 
-    init(drop: Drop, model: UpcomingModel, artwork: ShowArtwork?) {
+    init(drop: Drop, model: UpcomingModel, scheduler: ActivityScheduler, artwork: ShowArtwork?) {
         self.drop = drop
         self.model = model
+        self.scheduler = scheduler
         self.artwork = artwork
         let key = FollowedShow.key(catalog: drop.showKey.catalog, id: drop.showKey.id)
         _shows = Query(filter: #Predicate<FollowedShow> { $0.key == key })
@@ -47,7 +50,7 @@ struct ShowDetailScreen: View {
 
     var body: some View {
         ShowDetailView(drop: current, artwork: artwork, episodes: episodes, liveActivity: liveActivity,
-                       offset: offset, onReport: report, onUnfollow: unfollow)
+                       offset: offset, activityStatus: activityStatus, onReport: report, onUnfollow: unfollow)
             .task { episodes = await model.pastEpisodes(showID: drop.showID) }
             .alert("Couldn't open the report", isPresented: $reportCopied) {
                 Button("OK", role: .cancel) {}
@@ -77,6 +80,13 @@ struct ShowDetailScreen: View {
     /// (UX audit #14); the drop it was opened with until then.
     private var current: Drop {
         model.result?.drops.first { $0.showID == drop.showID } ?? drop
+    }
+
+    /// What the Live Activity switch will really do for this episode (UX audit #11).
+    private var activityStatus: LiveActivityStatus.Line {
+        let waiting = (scheduler.lastOutcome?.skippedOverLimit ?? []).joined().contains(current.id)
+        return LiveActivityStatus.line(isOn: liveActivity.wrappedValue, systemEnabled: scheduler.activitiesEnabled,
+                                       drop: current, waiting: waiting, now: .now)
     }
 
     /// The anime stream delay, stored on the show; RootView refreshes when it changes.

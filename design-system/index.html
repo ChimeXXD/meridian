@@ -1007,15 +1007,15 @@ AiringFilter.options(for: .tv)   // [.popular, .today, .newSeasons, .exactTime] 
 
   <article class="comp" id="c-la-toggle" data-search="live activity toggle switch release night detail" data-title="Live Activity toggle" data-kind="Component">
     <div class="hrow"><h3>Live Activity toggle</h3></div>
-    <p class="purpose">For one show, turns the release-night Live Activity on or off. Flipping it schedules or cancels at once.</p>
+    <p class="purpose">For one show, turns the release-night Live Activity on or off; flipping it schedules or cancels at once. Its line says what will really happen, never a promise it can’t keep (UX audit #11).</p>
     <div class="states">
       <figure class="state"><div class="stage" style="width:390px;padding:16px 24px"><div class="toggle-row"><div><div class="tg-title">Release-night Live Activity</div><div class="meta" style="margin-top:2px">Starts 2 hours before, on your Lock Screen</div></div><span class="toggle on" role="img" aria-label="On"></span></div></div><figcaption>On, the default for a followed show</figcaption></figure>
-      <figure class="state"><div class="stage" style="width:390px;padding:16px 24px"><div class="toggle-row"><div><div class="tg-title">Release-night Live Activity</div><div class="meta" style="margin-top:2px">Starts 30 minutes before, on your Lock Screen</div></div><span class="toggle" role="img" aria-label="Off"></span></div></div><figcaption>Off, with a 30-minute lead time</figcaption></figure>
+      <figure class="state"><div class="stage" style="width:390px;padding:16px 24px"><div class="toggle-row"><div><div class="tg-title">Release-night Live Activity</div><div class="meta" style="margin-top:2px">Off for this show</div></div><span class="toggle" role="img" aria-label="Off"></span></div></div><figcaption>Off: “Off for this show”</figcaption></figure>
     </div>
     <div class="spec"><dl class="specs">
-      <dt>Control</dt><dd>The system <code>Toggle</code>, tinted white at 0.6</dd>
+      <dt>Control</dt><dd>The system <code>Toggle</code>, tinted grey (white 0.45), so the thumb stands out at 4.8:1 (it was 2.5:1 at 0.6)</dd>
       <dt>Type</dt><dd>Title body · subtitle footnote, muted; 2 apart</dd>
-      <dt>Copy</dt><dd>“Starts {lead} before, on your Lock Screen”, with the lead from Settings: 30 minutes · 1 hour · 2 hours · 3 hours · 4 hours · 6 hours</dd>
+      <dt>Copy</dt><dd>In order (<code>LiveActivityStatus</code>): “Live Activities are off in Settings” with an “Open Settings” link · “Off for this show” · “Starts once a time is announced” (date only) · “Booked once it’s within a week” · “Waiting: 3 sooner ones are booked” · “Starts {lead} before, on your Lock Screen”, the lead from Settings (30 minutes to 6 hours). A new lead books again every activity that hasn’t started</dd>
       <dt>VoiceOver</dt><dd>“Release-night Live Activity, Starts 2 hours before, on your Lock Screen, switch, on”</dd>
       <dt>ID</dt><dd><code>detail-live-activity</code></dd>
       <dt>Hit target</dt><dd>The full row</dd>

@@ -40,6 +40,8 @@ struct DesignPreview: View {
                     ShowDetailView(drop: drop, artwork: artwork[drop.showID],
                                    episodes: drop.showID == "38052" ? Self.siloEpisodes : [], liveActivity: $liveActivity,
                                    offset: AnimeOffset.applies(to: drop, catalog: .tvmaze) ? $offset : nil,
+                                   activityStatus: LiveActivityStatus.line(isOn: liveActivity, systemEnabled: true,
+                                                                           drop: drop, waiting: false, now: .now),
                                    formatter: formatter, scrollAnchor: anchor,
                                    onReport: {})  // shows the row as a followed show's detail does (D6-3)
                 }

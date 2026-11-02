@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 /// Show detail (SPEC §1, UI-BRIEF §5.4) in Night Sky: the show's art fades into night, then the same three lines as
 /// Upcoming, one sentence on where the time came from (D-40), the Live Activity switch, recent episodes, "Report a
@@ -10,6 +11,8 @@ struct ShowDetailView: View {
     @Binding var liveActivity: Bool
     /// An anime's stream delay after its Japanese TV time (`detail-offset`); nil hides it for other shows.
     var offset: Binding<Int>? = nil
+    /// What the Live Activity switch will really do (UX audit #11); the usual lead line by default.
+    var activityStatus: LiveActivityStatus.Line = .starts
     var formatter = DropFormatter()
     var scrollAnchor: UnitPoint? = nil
     /// "Report a wrong time" (D6-3): `ShowDetailScreen` opens the prefilled report. Nil hides the row (the previews).
@@ -81,16 +84,28 @@ struct ShowDetailView: View {
         .accessibilityIdentifier("detail-next")
     }
 
+    /// The switch and one honest line on what it will do (UX audit #11), with a way to iOS Settings when Live
+    /// Activities are off there. A grey track at 45% white: the thumb stands out at 4.8:1, where 60% gave 2.5:1 (#20).
     private var liveActivityRow: some View {
-        Toggle(isOn: $liveActivity) {
-            VStack(alignment: .leading, spacing: 2) {
-                Text("Release-night Live Activity").font(.body)
-                Text("Starts \(LeadTime.phrase(minutes: leadMinutes)) before, on your Lock Screen")
-                    .font(.footnote).foregroundStyle(NightInk.muted)
+        // The link sits beside the switch, not in its label: a Toggle merges its label into one VoiceOver element,
+        // which would leave the link unreachable.
+        VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
+            Toggle(isOn: $liveActivity) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Release-night Live Activity").font(.body)
+                    Text(LiveActivityStatus.text(activityStatus, leadMinutes: leadMinutes))
+                        .font(.footnote).foregroundStyle(NightInk.muted)
+                        .accessibilityIdentifier("detail-live-activity-status")
+                }
+            }
+            .tint(Color(white: 0.45))
+            .accessibilityIdentifier("detail-live-activity")
+            if activityStatus == .systemOff, let settings = URL(string: UIApplication.openSettingsURLString) {
+                Link("Open Settings", destination: settings)
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(.white)
             }
         }
-        .tint(.white.opacity(0.6))
-        .accessibilityIdentifier("detail-live-activity")
     }
 
     /// An anime streams a set time after its Japanese broadcast: the delay in steps of 15 minutes, said in words.

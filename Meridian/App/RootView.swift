@@ -29,6 +29,8 @@ struct RootView: View {
             }
             // A show's Live Activity switch flipped in Show detail schedules or cancels it at once, without a reload.
             .onChange(of: optedIn) { Task { await syncActivities() } }
+            // A new lead time books again the activities that haven't started, so they start at it (UX audit #13).
+            .onChange(of: leadMinutes) { Task { await syncActivities(rebookPending: true) } }
             #if DEBUG
             // On the root, not the tab bar, so `-follow` also works on a fresh install that opens on Welcome.
             .task { await DebugLaunch.apply(context: context, client: client, anilist: anilist, tab: $tab) }
@@ -47,11 +49,11 @@ struct RootView: View {
 
     /// ActivityKit only accepts requests while the app is in the foreground (CLAUDE.md rule 6). The initial task can
     /// run before the scene is active; the activation that follows syncs then.
-    private func syncActivities() async {
+    private func syncActivities(rebookPending: Bool = false) async {
         guard UIApplication.shared.applicationState == .active else { return }
         let optedOut = Set(followed.filter { !$0.liveActivity }.map(\.showID))
         await scheduler.sync(drops: model.result?.drops ?? [], optedIn: optedIn, optedOut: optedOut,
-                             leadMinutes: leadMinutes)
+                             leadMinutes: leadMinutes, rebookPending: rebookPending)
     }
 
     @ViewBuilder private var content: some View {
@@ -61,7 +63,7 @@ struct RootView: View {
         } else {
             TabView(selection: $tab) {
                 Tab("Upcoming", systemImage: "clock", value: .upcoming) {
-                    UpcomingTab(model: model, onFind: { tab = .search })
+                    UpcomingTab(model: model, scheduler: scheduler, onFind: { tab = .search })
                 }
                 // Search sits in the middle (Chime). A `.search` role tab always floats on the trailing edge on iOS 26,
                 // so this is a plain tab.

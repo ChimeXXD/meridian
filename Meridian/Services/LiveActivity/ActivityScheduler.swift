@@ -54,12 +54,21 @@ final class ActivityScheduler {
     /// ones out, and requests new ones for `drops` of the `optedIn` shows (`Drop.showID`: "38052", "anilist:154587").
     /// An activity not yet at its drop whose shows are all in `optedOut` (the switch turned off after it was
     /// scheduled) is ended. Call only while the app is in the foreground.
+    /// `rebookPending` (a new lead time in Settings) ends every activity that hasn't started and whose drop is still
+    /// in `drops`, so the planner books it again with the new lead; one already on screen stays (UX audit #13).
     @discardableResult
     func sync(drops: [Drop], optedIn: Set<String>, optedOut: Set<String> = [], leadMinutes: Int,
-              now: Date = .now) async -> Outcome {
+              now: Date = .now, rebookPending: Bool = false) async -> Outcome {
         var outcome = Outcome(enabled: requester.areActivitiesEnabled)
         let byID = Dictionary(drops.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         for activity in requester.current() {
+            // Only a drop still in `drops` can be booked again; with no fresh drops (none loaded yet) it stays.
+            if rebookPending, let start = activity.windowStart, start > now,
+               activity.dropIDs.contains(where: { byID[$0] != nil }) {
+                await requester.end(id: activity.id)
+                outcome.ended.append(activity.id)
+                continue
+            }
             var state = activity.state
             // The planner skips a drop an activity already covers, so a moved time only reaches it here. Only a
             // detected delay shows its old time (D-58); a refined estimate just moves.

@@ -46,4 +46,36 @@ struct ActivityRescheduleTests {
         let update = try #require(requester.updates.first)
         #expect(update.state.dropDate == moved.date && update.state.delayedFrom == listed)
     }
+
+    @Test("a new lead time (Settings) books again the activities that haven't started; one on screen stays (audit #13)")
+    func newLeadRebooks() async throws {
+        let later = Base.drop("1", at: Base.now + Base.day)
+        let soon = Base.drop("2", at: Base.now + Base.hour)
+        let requester = FakeActivityRequester()
+        requester.activities = [
+            RunningActivity(id: "pending", dropIDs: [later.id], state: Base.state(later.date),
+                            windowStart: later.date - 2 * Base.hour),
+            RunningActivity(id: "showing", dropIDs: [soon.id], state: Base.state(soon.date),
+                            windowStart: Base.now - Base.hour),
+        ]
+        await Base.scheduler(requester).sync(drops: [later, soon], optedIn: Base.everyShow, leadMinutes: 360,
+                                             now: Base.now, rebookPending: true)
+
+        #expect(requester.ended == ["pending"])
+        let request = try #require(requester.requests.first)
+        #expect(requester.requests.count == 1)
+        #expect(request.start == later.date - 6 * Base.hour)
+    }
+
+    @Test("a new lead time with no drops loaded keeps the booked activities rather than ending them for good")
+    func newLeadWithoutDropsKeeps() async {
+        let later = Base.drop("1", at: Base.now + Base.day)
+        let requester = FakeActivityRequester()
+        requester.activities = [RunningActivity(id: "pending", dropIDs: [later.id], state: Base.state(later.date),
+                                                windowStart: later.date - 2 * Base.hour)]
+        await Base.scheduler(requester).sync(drops: [], optedIn: Base.everyShow, leadMinutes: 360,
+                                             now: Base.now, rebookPending: true)
+
+        #expect(requester.ended.isEmpty)
+    }
 }

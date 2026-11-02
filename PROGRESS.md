@@ -2,6 +2,27 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## The Live Activity switch tells the truth (Mon 2 Nov 2026)
+
+- **UX audit #11 (`LiveActivityStatus`):** Show detail's line now says what will really happen. In order: "Live Activities are off in Settings" with an Open Settings link, "Off for this show", "Starts once a time is announced", "Booked once it's within a week" (the planner's 7 days), "Waiting: 3 sooner ones are booked" (the scheduler's last `skippedOverLimit`), or "Starts 2 hours before, on your Lock Screen".
+- **#20:** the switch track is white 0.45, so the thumb contrast is 4.8:1 (it was 2.5:1).
+- **#13:** a new lead time in Settings syncs with `rebookPending`, which ends every activity that hasn't started so it's booked again with the new lead. One on screen stays.
+- **Checks:**
+  - LiveActivityStatusTests 4 and ActivityRescheduleTests.newLeadRebooks were red first (a compile error), then green; with ActivitySchedulerTests, 22 tests pass.
+  - The simulator detail shows the darker switch.
+- **`/code-review` (medium):** 9 findings, 4 fixed:
+  - Open Settings moved out of the switch's label, so VoiceOver reaches it.
+  - A lead change with no drops loaded no longer ends bookings (`newLeadWithoutDropsKeeps`).
+  - A doc comment.
+  - `maxPending` in the copy.
+- **Not fixed, logged:**
+  - Two quick lead changes can leave activities at the middle lead.
+  - A rebook refused by iOS loses the ended booking.
+  - An aired drop before a refresh still says "Starts …".
+  - A failed booking still says "Starts …".
+  - The status isn't redrawn as a drop crosses into the week.
+- **Not verified:** the Settings-off and waiting states on the phone.
+
 ## Day 6: the large-text (AX5) pass (Mon 2 Nov 2026)
 
 - **D6-8 closed, from the accessibility audit:**
