@@ -27,7 +27,7 @@ Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
   - Weekday, not "today": the verifier caught that "tomorrow" would go stale after midnight, because the island isn't redrawn.
   - `LiveActivityBar` deleted; `ReleaseWording.pastVerb` added.
 - **Sync check (Chime OK'd):**
-  - The Live Activity renders use a fixed clock (2 Nov 18:00Z), like the widgets'.
+  - The Live Activity renders share the widgets' fixed clock, moved to Mon 2 Nov 2071 18:00Z: `ImageRenderer` draws a timer at its full length only while the real clock is before it, and the old 2026-11-02T18:00Z passed during the session (the copy check caught every timer render changing).
   - Every render must equal the site's copy (`MeridianTests/Support/DesignSystemCopy.swift`).
   - `scripts/sync-design-system-renders.sh` re-renders in sync mode (skips only the copy check) and copies only this run's renders. It lists site pictures no render made.
   - Red: 49 issues, exactly the changed Live Activity renders. Green twice in a row, so the renders are deterministic. A deliberately broken site PNG was restored by the script.

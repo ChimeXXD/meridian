@@ -20,23 +20,18 @@ struct DropLiveActivity: Widget {
             let hero = ActivityArt.hero(context.attributes)
             return DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
+                    // Each region's insets live in the view, so the renders in LiveActivityLayoutTests use them too.
                     LiveActivityExpandedView(region: .leading, attributes: context.attributes, state: context.state,
                                              isStale: context.isStale)
                         .dynamicIsland(verticalPlacement: .belowIfTooWide)
-                        .padding(.leading, Tokens.Space.xxs)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
                     LiveActivityExpandedView(region: .trailing, attributes: context.attributes, state: context.state,
                                              art: hero, poster: poster, isStale: context.isStale)
-                        .padding(.trailing, Tokens.Space.xxs)
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    // Clear of the island's rounded bottom corners, which clipped the line's ends (Chime, 1 Nov).
                     LiveActivityExpandedView(region: .bottom, attributes: context.attributes, state: context.state,
                                              isStale: context.isStale)
-                        .padding(.horizontal, Tokens.Space.m)
-                        .padding(.top, Tokens.Space.xxs)
-                        .padding(.bottom, Tokens.Space.xs)
                 }
             } compactLeading: {
                 LiveActivityCompactView(slot: .leading, attributes: context.attributes, state: context.state,

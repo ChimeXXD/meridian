@@ -33,11 +33,17 @@ struct LiveActivityExpandedView: View {
                                                                     now: now, formatter: formatter))
     }
 
+    /// The island starts every region at the same edge, so equal side insets line the bottom line's words up under
+    /// the title and its countdown under the art (Chime, 2 Nov: the bottom's 16 against the top's 4 left them 12 pt in).
     @ViewBuilder private var content: some View {
         switch region {
-        case .leading: title
-        case .trailing: artwork
-        case .bottom: countdown
+        case .leading: title.padding(.leading, Tokens.Space.xxs)
+        case .trailing: artwork.padding(.trailing, Tokens.Space.xxs)
+        case .bottom:
+            countdown
+                .padding(.horizontal, Tokens.Space.xxs)
+                .padding(.top, Tokens.Space.xxs)
+                .padding(.bottom, Tokens.Space.xs)
         }
     }
 

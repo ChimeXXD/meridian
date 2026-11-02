@@ -117,7 +117,7 @@
       "width" : 672
     },
     "expanded-countingDown-art.png" : {
-      "height" : 356,
+      "height" : 392,
       "holes" : [
         {
           "align" : "center",
@@ -129,14 +129,14 @@
           "radius" : 36,
           "show" : "Silo",
           "w" : 150,
-          "x" : 903,
+          "x" : 891,
           "y" : 48
         }
       ],
       "width" : 1113
     },
     "expanded-delayed-art.png" : {
-      "height" : 409,
+      "height" : 445,
       "holes" : [
         {
           "align" : "center",
@@ -148,14 +148,14 @@
           "radius" : 36,
           "show" : "House of the Dragon",
           "w" : 150,
-          "x" : 903,
+          "x" : 891,
           "y" : 48
         }
       ],
       "width" : 1113
     },
     "expanded-longName-art.png" : {
-      "height" : 356,
+      "height" : 392,
       "holes" : [
         {
           "align" : "center",
@@ -167,14 +167,14 @@
           "radius" : 36,
           "show" : "Frieren: Beyond Journey's End",
           "w" : 150,
-          "x" : 903,
+          "x" : 891,
           "y" : 48
         }
       ],
       "width" : 1113
     },
     "expanded-merged-art.png" : {
-      "height" : 356,
+      "height" : 392,
       "holes" : [
         {
           "align" : "center",
@@ -186,14 +186,14 @@
           "radius" : 36,
           "show" : "Silo",
           "w" : 150,
-          "x" : 903,
+          "x" : 891,
           "y" : 48
         }
       ],
       "width" : 1113
     },
     "expanded-outNow-art.png" : {
-      "height" : 356,
+      "height" : 392,
       "holes" : [
         {
           "align" : "center",
@@ -205,14 +205,14 @@
           "radius" : 36,
           "show" : "Silo",
           "w" : 150,
-          "x" : 903,
+          "x" : 891,
           "y" : 48
         }
       ],
       "width" : 1113
     },
     "expanded-stale-art.png" : {
-      "height" : 356,
+      "height" : 392,
       "holes" : [
         {
           "align" : "center",
@@ -224,7 +224,7 @@
           "radius" : 36,
           "show" : "Silo",
           "w" : 150,
-          "x" : 903,
+          "x" : 891,
           "y" : 48
         }
       ],

@@ -13,8 +13,8 @@ import UIKit
 @MainActor
 @Suite("Live Activity layout")
 struct LiveActivityLayoutTests {
-    /// The same moment as `WidgetRenderTests.now`: Mon 2 Nov 2026, 19:00 in Lagos.
-    static let now = Date(iso: "2026-11-02T18:00:00Z")
+    /// `WidgetRenderTests.now`, far in the future so `ImageRenderer` draws each timer at its full length (see there).
+    static let now = WidgetRenderTests.now
     static let width: CGFloat = 360
     static let maxHeight: CGFloat = 160
     static let longestName = "The Lord of the Rings: The Rings of Power, Season Two Finale"

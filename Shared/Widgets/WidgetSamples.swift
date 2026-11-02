@@ -49,7 +49,8 @@ enum WidgetSamples {
                              confidence: .dateOnly, source: .dateOnly, airdate: airdate(now + 9 * 24 * hour),
                              provider: ProviderLabel(name: "Disney+", countryCode: nil, noOfficialStream: false))
         let siloReturns = drop("silo", "Silo", season: 4, number: 1, at: now + 250 * 24 * hour,
-                               confidence: .dateOnly, source: .dateOnly, airdate: "2027-07-09", provider: silo.provider)
+                               confidence: .dateOnly, source: .dateOnly, airdate: airdate(now + 249 * 24 * hour),
+                               provider: silo.provider)
 
         let severance = drop("severance", "Severance", season: 3, number: 2, at: now + 4 * 24 * hour,
                              confidence: .estimated, source: .platformRule("Apple TV rule"), provider: silo.provider)

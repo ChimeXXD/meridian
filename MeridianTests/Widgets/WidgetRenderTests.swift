@@ -32,7 +32,11 @@ struct WidgetRenderTests {
         var inner: CGSize { CGSize(width: size.width - 2 * margin, height: size.height - 2 * margin) }
     }
 
-    static let now = Date(iso: "2026-11-02T18:00:00Z")
+    /// Mon 2 Nov 2071, 19:00 in Lagos: a Monday evening, as the samples were drawn for, and far in the future on
+    /// purpose. `ImageRenderer` draws a timer as its interval's length only while the real clock is before the
+    /// interval; once it passed 2026-11-02T18:00Z (the old `now`), every timer drew the real time left and no two runs
+    /// matched (2 Nov, found by `DesignSystemCopy`).
+    static let now = Date(iso: "2071-11-02T18:00:00Z")
     static let formatter = DropFormatter(zoneIdentifier: "Africa/Lagos", locale: Locale(identifier: "en_GB"))
     static let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
         .deletingLastPathComponent()
