@@ -43,13 +43,18 @@ struct WidgetTimeline: Hashable, Sendable {
         // Each day edge of the drops ahead within a week is a change like a drop, never dropped for a nearby one, and
         // kept past the refresh horizon in case the reload is late. The last day's is exact: 24 hours left already
         // ticks. The others step the still count, so they land a second after the edge, like the hourly refreshes.
-        let dayEdges = ahead.flatMap { drop in
-            (1...7).map { days in
-                drop.date.addingTimeInterval(-Double(days) * 86_400 + (days > 1 ? edgeLag : 0))
+        // Spelled out step by step with explicit types: Xcode 26.6 (CI) gave up type-checking it as one expression.
+        let weekEnd = now.addingTimeInterval(week)
+        var dayEdges: [Date] = []
+        for drop in ahead {
+            for days in 1...7 {
+                let lag: TimeInterval = days > 1 ? edgeLag : 0
+                let edge = drop.date.addingTimeInterval(-Double(days) * 86_400 + lag)
+                if edge > now && edge <= weekEnd { dayEdges.append(edge) }
             }
-        }.filter { $0 > now && $0 <= now.addingTimeInterval(week) }
-        let changes = Set(ahead.flatMap { [$0.date, $0.date.addingTimeInterval(outNowWindow)] } + dayEnds + dayEdges)
-            .filter { $0 > now }
+        }
+        let dropMoments: [Date] = ahead.flatMap { [$0.date, $0.date.addingTimeInterval(outNowWindow)] }
+        let changes = Set(dropMoments + dayEnds + dayEdges).filter { $0 > now }
         let anchors = changes.union([now])
         let planned = refreshTimes(ahead, now: now, horizon: horizon)
         let refreshes = planned.compactMap { time -> Date? in
