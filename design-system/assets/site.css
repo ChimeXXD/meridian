@@ -33,6 +33,11 @@
   --gutter: 56px;
   --ease: cubic-bezier(0, 0, .58, 1); /* the app's .easeOut */
 
+  /* The mockups' wallpaper: a neutral night lifting to ink at the horizon, and a few faint stars for the panels. */
+  --sky: radial-gradient(130% 46% at 50% 108%, rgba(120, 138, 186, .16), transparent 70%), linear-gradient(180deg, #0C0D10 0%, #11131A 48%, #1B2030 100%);
+  /* The panels' stars sit in the 24 px padding, so none shows through a render. */
+  --stars: radial-gradient(circle at 11px 12px, rgba(244, 239, 228, .4) 0 .7px, transparent 1.3px), radial-gradient(circle at calc(100% - 15px) 9px, rgba(244, 239, 228, .3) 0 .6px, transparent 1.2px), radial-gradient(circle at calc(100% - 9px) calc(100% - 17px), rgba(244, 239, 228, .3) 0 .7px, transparent 1.3px), radial-gradient(circle at 17px calc(100% - 10px), rgba(244, 239, 228, .24) 0 .6px, transparent 1.2px), radial-gradient(circle at 62% 8px, rgba(244, 239, 228, .2) 0 .6px, transparent 1.2px);
+
   /* App tokens */
   --night: #1C1C1C;
   --app-night: #1C1C1C;
@@ -498,15 +503,16 @@ dl.facts dd { margin: 6px 0 0; font-size: var(--t-small); color: var(--ink-2); l
 .gallery { display: flex; flex-wrap: wrap; gap: 32px 24px; align-items: flex-end; margin-top: 24px; }
 .gallery-h { font-size: var(--t-small); color: var(--ink-3); margin-top: 40px; }
 .shot { margin: 0; display: grid; gap: 12px; max-width: 100%; }
-.shot .frame { padding: 16px; border-radius: var(--r); background: #3A3A3C; display: grid; place-items: center; max-width: 100%; }
-.shot .frame.lock { background: #232326; }
-.shot .frame.island { background: #2C2C2E; }
+/* Each render sits on a small panel of the mockups' wallpaper, the Meridian night sky. */
+.shot .frame { padding: 24px; border-radius: var(--r); background: var(--stars), var(--sky); box-shadow: inset 0 0 0 1px var(--line); display: grid; place-items: center; max-width: 100%; }
 .shot img { display: block; max-width: 100%; height: auto; }
+/* Lock Screen widgets are white ink: iOS draws them straight onto the wallpaper, so their black ground drops out. */
+.shot .frame.ink img, .dev-r.ink > img { mix-blend-mode: screen; }
 /* A render with its art cut out: the show's art (or the neutral placeholder) sits behind the PNG at each hole. */
-.shot .holes { position: relative; display: block; max-width: 100%; overflow: hidden; isolation: isolate; background: #575757; }
-.shot .holes > img { position: relative; z-index: 1; border-radius: 0; }
-.shot .holes > .hole { inset: auto; z-index: 0; }
-.shot .holes > .hole > img { height: 100%; max-width: none; }
+.holes { position: relative; display: block; max-width: 100%; overflow: hidden; isolation: isolate; background: #575757; }
+.holes > img { position: relative; z-index: 1; border-radius: 0; }
+.holes > .hole { inset: auto; z-index: 0; }
+.holes > .hole > img { height: 100%; max-width: none; }
 .shot figcaption { font-size: var(--t-label); color: var(--ink-3); line-height: 1.45; }
 .r-home { border-radius: 22px; }
 .r-card { border-radius: 16px; }
@@ -514,6 +520,51 @@ dl.facts dd { margin: 6px 0 0; font-size: var(--t-small); color: var(--ink-2); l
 .r-circle { border-radius: 50%; }
 .r-capsule { border-radius: 18px; }
 .r-expanded { border-radius: 40px; }
+
+/* Device mockups. One iPhone laid out at true points (1 px = 1 pt) and scaled as a whole by site.js (--s), so the
+   renders keep their real size against the screen. The box's size comes from aspect-ratio, so nothing moves. */
+.showcase { display: flex; flex-wrap: wrap; gap: 48px; margin-top: 40px; align-items: flex-start; }
+.showcase.home .mock { flex: 1 1 300px; max-width: 428px; }
+.showcase.la .mock { flex: 1 1 320px; max-width: 428px; }
+.showcase.la .crops { flex: 1 1 360px; max-width: 560px; display: grid; gap: 40px; }
+.showcase.la .crops .mock { max-width: none; }
+.mock { margin: 0; display: grid; gap: 20px; min-width: 0; }
+.mock figcaption { font-size: var(--t-small); color: var(--ink-3); line-height: 1.45; }
+.dev { --s: 1; position: relative; width: 100%; aspect-ratio: 428 / 900; }
+/* A phone's top only: the screen fades out at its foot, over the icons. */
+.dev.top { aspect-ratio: 428 / 235; overflow: hidden; -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent 100%); mask-image: linear-gradient(180deg, #000 72%, transparent 100%); }
+.dev.top[data-dev="compact"] { aspect-ratio: 428 / 141; -webkit-mask-image: linear-gradient(180deg, #000 50%, transparent 100%); mask-image: linear-gradient(180deg, #000 50%, transparent 100%); }
+.dev-phone { position: absolute; left: 0; top: 0; width: 428px; height: 900px; transform: scale(var(--s)); transform-origin: 0 0; border-radius: 77px; box-shadow: 0 36px 72px -28px rgba(0, 0, 0, .7); }
+.dev-bands { position: absolute; inset: 0; display: block; }
+.dev-screen { position: absolute; left: 13px; top: 13px; width: 402px; height: 874px; overflow: hidden; color: #fff; font-family: var(--sans); letter-spacing: -.015em; line-height: 1.2; }
+.dev-screen > * { position: absolute; }
+.dev-sky { inset: 0; background: var(--sky); }
+.dev-sky-lines { position: absolute; inset: 0; display: block; }
+.dev .dev-r { position: absolute; display: block; overflow: hidden; }
+.dev-r > img { display: block; width: 100%; height: 100%; }
+.dev-r.island { z-index: 3; }
+.dev-island { top: 14px; left: 153.5px; width: 95px; height: 37px; border-radius: 18.5px; background: #000; z-index: 3; }
+.dev-status { left: 0; right: 0; top: 0; height: 62px; z-index: 2; }
+.dev-time { position: absolute; top: 21.5px; line-height: 22px; text-align: center; font: 590 17.67px/22px "SF Pro Text", var(--sans); letter-spacing: 0; }
+.dev-glyphs { position: absolute; top: 25.33px; right: 31.76px; display: flex; gap: 8px; align-items: flex-start; }
+.dev-glyphs svg { display: block; }
+.dev-glyphs svg:first-child:not(:last-child) { margin-top: 1px; }
+/* Home Screen: placeholder apps are quiet glass tiles with a bar for a name; ours is the real icon. */
+.dev-app { width: 60px; display: grid; justify-items: center; gap: 5px; }
+.dev-icon { width: 60px; height: 60px; border-radius: 14px; background: rgba(255, 255, 255, var(--tint, .08)); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .05); overflow: hidden; }
+.dev-icon.is-app { background: none; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12); position: relative; }
+.dev-icon.is-app svg { display: block; width: 100%; height: 100%; }
+.dev-label { font: 500 12px/14px var(--sans); letter-spacing: 0; color: rgba(255, 255, 255, .92); white-space: nowrap; }
+.dev-bar { height: 6px; margin-top: 4px; border-radius: 3px; background: rgba(255, 255, 255, .12); }
+.dev-search { left: 50%; bottom: 118px; height: 30px; padding: 0 12px; transform: translateX(-50%); display: flex; align-items: center; gap: 5px; border-radius: 15px; background: rgba(255, 255, 255, .1); color: rgba(255, 255, 255, .85); font: 600 13px/1 var(--sans); letter-spacing: 0; }
+.dev-dock { left: 12px; right: 12px; bottom: 12px; height: 92px; border-radius: 46px; background: rgba(255, 255, 255, .07); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); }
+/* Lock Screen */
+.dev-date { left: 0; right: 0; top: 70px; height: 22px; display: flex; justify-content: center; align-items: center; font: 600 18px/22px var(--sans); letter-spacing: 0; color: rgba(255, 255, 255, .85); }
+.dev .dev-date .dev-r { position: relative; flex: none; margin-left: -10px; }
+.dev-clock { left: 0; right: 0; top: 92px; text-align: center; font: 600 104px/1 var(--sans); letter-spacing: -.03em; color: rgba(255, 255, 255, .94); font-variant-numeric: tabular-nums; }
+.dev-btn { bottom: 48px; width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; background: rgba(255, 255, 255, .12); color: #fff; }
+.dev-btn svg { display: block; }
+.dev-home { bottom: 8px; left: 129px; width: 144px; height: 5px; border-radius: 2.5px; background: #fff; }
 
 /* ---------------------------------------------------------------- resources */
 .downloads { list-style: none; padding: 0; margin: 24px 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 0 32px; }

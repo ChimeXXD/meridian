@@ -2,6 +2,13 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Design system: iPhone mockups for the widgets and the Live Activity (Mon 2 Nov 2026)
+
+- Chime: make the Widgets and Live Activity sections more presentable with an iPhone mockup. Done by an agent (stageshow skill); checked here.
+- A CSS/SVG iPhone (402 x 874 pt, continuous corners, Dynamic Island) on our own night-sky wallpaper, no Apple images: two Home Screen pages (the large widget; the medium and small beside the Meridian icon) on the real icon grid, a Lock Screen at 04:37 with Silo's Live Activity banner, and close-ups of the compact and expanded island. All are the real renders with their art holes filled. The state galleries stay below, on night-sky panels.
+- The Lock Screen shows no Lock Screen widgets: they would show the soonest drop (Silo), and every widget render tells a different story; they stay in the gallery.
+- Checks: 0 console errors; all art in the mockups loads, placeholders with the CDNs blocked; no overflow at 1440 to 320; axe 0 violations in the surfaces section; no image files added. `/code-review` (medium): 8 findings, 6 fixed (Lock Screen widgets 8 pt off centre, needless blur, forced layouts, a duplicated rule, a regex on markup, an SVG id per kind); then the mismatched Lock Screen widgets removed.
+
 ## Design system: real art in the widget and Live Activity renders (Mon 2 Nov 2026)
 
 - Chime: the Widgets section still showed placeholder art; show each show's poster. Done by an agent; checked here.

@@ -1146,6 +1146,16 @@ Section {
 
   <h2 id="widgets">Widgets</h2>
   <p>One widget, “Next episode”: <em>how long until your next episode, in your time zone, and where it’s on.</em> It comes in six families.</p>
+  <div class="showcase home">
+    <figure class="mock">
+      <div class="dev" data-dev="home-large" role="img" aria-label="iPhone Home Screen with Meridian’s large widget"></div>
+      <figcaption>Large: the next show over its art, then three more</figcaption>
+    </figure>
+    <figure class="mock">
+      <div class="dev" data-dev="home-medium" role="img" aria-label="iPhone Home Screen with Meridian’s medium and small widgets beside the app icon"></div>
+      <figcaption>Medium and small, beside the app</figcaption>
+    </figure>
+  </div>
   <dl class="facts">
     <div id="w-home" data-search="home screen widget backdrop art fade small medium large" data-title="Home Screen widgets" data-kind="Widget"><dt>Home Screen</dt><dd>Night base <code>#1C1C1C</code> with the show’s art across the top (all of it on small and medium, 62% on large), fading clear, then to 0.7, then to the base. The service is tagged top left (“HBO · US”), and “+N more this week” top right when shows don’t fit. Small shows one show, medium three, large four.</dd></div>
     <div id="w-lock" data-search="lock screen widget inline circular rectangular tinted" data-title="Lock Screen widgets" data-kind="Widget"><dt>Lock Screen</dt><dd>System inks, because iOS tints them. Inline: “Silo · 2d 4h”. Circular: an open ring that fills over the last 7 days, a <code>tv</code> glyph, and “2d”, “4h” or “38m” in the gap. Rectangular: “Expected Wed 23:00”, then the name, then the countdown and service.</dd></div>
@@ -1168,6 +1178,22 @@ Section {
 
   <h2 id="live-activity">Live Activity</h2>
   <p>On release night, for the shows you choose, from the lead time (2 hours by default). Night base <code>#0D0D0E</code>, the show’s art on the right edge, and a plain-words label over a serif countdown. At the drop the content goes stale and every view says “Out now”, with no app running.</p>
+  <div class="showcase la">
+    <figure class="mock">
+      <div class="dev" data-dev="lock" role="img" aria-label="iPhone Lock Screen with Meridian’s Live Activity banner for Silo"></div>
+      <figcaption>Two hours before Silo: the Live Activity on the Lock Screen</figcaption>
+    </figure>
+    <div class="crops">
+      <figure class="mock">
+        <div class="dev top" data-dev="compact" role="img" aria-label="Top of an iPhone with Meridian’s compact Live Activity in the Dynamic Island"></div>
+        <figcaption>Compact, in the Dynamic Island</figcaption>
+      </figure>
+      <figure class="mock">
+        <div class="dev top" data-dev="expanded" role="img" aria-label="Top of an iPhone with Meridian’s expanded Live Activity"></div>
+        <figcaption>Expanded, when you touch and hold the island</figcaption>
+      </figure>
+    </div>
+  </div>
   <dl class="facts">
     <div id="la-rules" data-search="live activity rules pause time 160 28 limit payload" data-title="Live Activity rules" data-kind="Live Activity"><dt>Rules</dt><dd>The timer has no <code>pauseTime</code>: with one, it was drawn frozen. The Lock Screen banner is at most 160 pt tall at 360 wide, even with the longest name. The minimal view fits 28 pt when the island is limited. The payload stays well under 4 KB: IDs, title, date and a short service name. At most 3 are scheduled at once.</dd></div>
     <div id="la-copy" data-search="live activity copy band expected in out now alert starts in" data-title="Live Activity copy" data-kind="Live Activity"><dt>Copy</dt><dd>Title “Silo” or “Silo + 1 more”. Details “S2E5 · Apple TV · US”. Band “Out in”, “Expected in” or “Airs in Japan in”, then “Out now”. Time “Expected Fri 02:00”, with an old time struck through. Alert “Starts in 2 hours · 02:00 · Apple TV” for an exact time, or “Expected in 2 hours · …”.</dd></div>

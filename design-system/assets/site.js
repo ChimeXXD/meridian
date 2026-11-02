@@ -451,8 +451,8 @@
   /* ================================================================ galleries */
   // [family, kind, width pt, height pt, frame, corner]
   const WIDGET_FAMILIES = [
-    ['inline', 'accessoryInline', 234, 22, 'lock', ''], ['circular', 'accessoryCircular', 72, 72, 'lock', 'r-circle'],
-    ['rectangular', 'accessoryRectangular', 160, 72, 'lock', 'r-rect'], ['small', 'systemSmall', 158, 158, '', 'r-home'],
+    ['inline', 'accessoryInline', 234, 22, 'ink', ''], ['circular', 'accessoryCircular', 72, 72, 'ink', 'r-circle'],
+    ['rectangular', 'accessoryRectangular', 160, 72, 'ink', 'r-rect'], ['small', 'systemSmall', 158, 158, '', 'r-home'],
     ['medium', 'systemMedium', 338, 158, '', 'r-home'], ['large', 'systemLarge', 338, 354, '', 'r-home'],
   ];
   const WSTATES = [
@@ -462,9 +462,9 @@
     ['allQuiet', 'Followed, but none scheduled'], ['ticking-always-on', 'Always-On, dimmed'],
   ];
   const LA_PRES = [
-    ['lock', 'Lock Screen banner', 'lock', 360, 157, 'r-home'], ['compact', 'Compact', 'island', 221, 36, 'r-capsule'],
-    ['minimal', 'Minimal', 'island', 36, 36, 'r-circle'], ['expanded', 'Expanded', 'island', 371, 156, 'r-expanded'],
-    ['small', 'Small family', 'lock', 170, 105, 'r-card'],
+    ['lock', 'Lock Screen banner', '', 360, 157, 'r-home'], ['compact', 'Compact', '', 221, 36, 'r-capsule'],
+    ['minimal', 'Minimal', '', 36, 36, 'r-circle'], ['expanded', 'Expanded', '', 371, 156, 'r-expanded'],
+    ['small', 'Small family', '', 170, 105, 'r-card'],
   ];
   const LSTATES = [
     ['countingDown', 'Silo, expected in 2 hours'], ['delayed', 'Moved an hour later, the old time struck through'],
@@ -475,7 +475,7 @@
     // A render with art holes sits in a box the show's art fills from behind (see fillHoles). The render sizes the box
     // (its width and height reserve the space), so it shrinks as the plain renders do and nothing moves as art arrives.
     if (holes) img = `<span class="holes ${corner}" data-holes="${esc(src.split('/').pop())}">${img}</span>`;
-    return `<figure class="shot" style="width:${w + 32}px"><div class="frame ${frame}">${img}</div><figcaption>${esc(cap)}</figcaption></figure>`;
+    return `<figure class="shot" style="width:${w + 48}px"><div class="frame ${frame}">${img}</div><figcaption>${esc(cap)}</figcaption></figure>`;
   }
   // Each render with art is the app's own view with the art cut out (alpha 0), the fades over it kept as see-through
   // pixels; art-holes.json, written by the same tests, lists each hole in the PNG's pixels. The show's real art goes
@@ -561,6 +561,127 @@
     }
     $('#la-gallery').innerHTML = h;
     fillHoles($('#la-gallery'), 'live-activity');
+  }
+
+  /* ================================================================ device mockups */
+  // An iPhone 18 Pro in points, after Apple's iOS 27 UI kit: screen 402 × 874, status bar 62, Dynamic Island 95 × 37
+  // at 14 from the top, home indicator 144 × 5 at 8 from the bottom. The screen's corner is a superellipse 71 pt
+  // across, exponent 2.31 (Apple's continuous corner, about a 62 pt radius at the diagonal). Each phone is laid out at
+  // true points, 1 pt = 1 px, and scaled as a whole to its box, so the 3x renders inside stay sharp and every widget
+  // keeps its real size relative to the screen.
+  const SCR = { w: 402, h: 874 }, BAND = 13;
+  const PH = { w: SCR.w + BAND * 2, h: SCR.h + BAND * 2 };
+  function superellipse(w, h, a, n) {
+    const e = 2 / n, pts = [];
+    [[w - a, a, 1, -1], [w - a, h - a, 1, 1], [a, h - a, -1, 1], [a, a, -1, -1]].forEach(([cx, cy, sx, sy], c) => {
+      for (let i = 0; i <= 24; i++) {
+        const t = (i / 24) * (Math.PI / 2);
+        const u = c % 2 === 0 ? Math.sin(t) : Math.cos(t), v = c % 2 === 0 ? Math.cos(t) : Math.sin(t);
+        pts.push(`${(cx + sx * a * Math.pow(u, e)).toFixed(2)} ${(cy + sy * a * Math.pow(v, e)).toFixed(2)}`);
+      }
+    });
+    return `M${pts.join('L')}Z`;
+  }
+  const SCREEN_PATH = superellipse(SCR.w, SCR.h, 71, 2.31);
+  // The status bar glyphs, from the same UI kit: signal, Wi-Fi, a full battery.
+  const GLYPH = {
+    signal: '<svg width="20.33" height="13.67" viewBox="0 0 20.33 13.67">' + [6.33, 8.67, 11, 13.67].map((h, i) => `<rect x="${(i * 5.667).toFixed(2)}" y="${(13.67 - h).toFixed(2)}" width="3.33" height="${h}" rx="1.67" fill="currentColor"/>`).join('') + '</svg>',
+    wifi: '<svg width="19.33" height="14.33" viewBox="0 0 19.33 14.33"><path fill-rule="evenodd" fill="currentColor" d="M0.42 5.54C0.9 6.04 1.66 5.96 2.28 5.41C4.31 3.58 6.84 2.64 9.67 2.64C12.5 2.64 15.05 3.61 17.06 5.41C17.66 5.97 18.42 6.03 18.92 5.54C19.42 5.03 19.49 4.25 18.98 3.71C16.83 1.52 13.33 0 9.67 0C6.01 0 2.49 1.53 0.36 3.72C-0.16 4.25 -0.1 5.03 0.42 5.56ZM3.95 9.14C4.51 9.68 5.22 9.62 5.85 9.11C6.88 8.29 8.25 7.73 9.67 7.75C11.07 7.75 12.44 8.29 13.49 9.12C14.12 9.64 14.86 9.67 15.4 9.12C15.93 8.58 16.02 7.75 15.46 7.23C14.07 5.99 11.99 5.11 9.68 5.11C7.38 5.11 5.28 5.99 3.91 7.23C3.42 7.69 3.32 8.48 3.96 9.14ZM8.73 13.89C9.34 14.48 9.98 14.48 10.6 13.89L11.76 12.78C12.37 12.17 12.5 11.42 11.8 10.9C11.21 10.48 10.47 10.21 9.67 10.21C8.87 10.21 8.11 10.48 7.54 10.91C6.84 11.42 6.98 12.19 7.6 12.78Z"/></svg>',
+    battery: '<svg width="29.33" height="13.67" viewBox="0 0 29.33 13.67"><path fill="currentColor" d="M0 6.4C0 4.16 0 3.04 0.44 2.18C0.82 1.43 1.43 0.82 2.18 0.44C3.04 0 4.16 0 6.4 0L19.93 0C22.17 0 23.29 0 24.15 0.44C24.9 0.82 25.51 1.43 25.9 2.18C26.33 3.04 26.33 4.16 26.33 6.4L26.33 7.27C26.33 9.51 26.33 10.63 25.9 11.48C25.51 12.24 24.9 12.85 24.15 13.23C23.29 13.67 22.17 13.67 19.93 13.67L6.4 13.67C4.16 13.67 3.04 13.67 2.18 13.23C1.43 12.85 0.82 12.24 0.44 11.48C0 10.63 0 9.51 0 7.27Z"/><path fill="currentColor" transform="translate(27.33 4.33)" d="M0 0L0 5C0.6 4.86 2 3.75 2 2.5C2 1.25 0.6 0.14 0 0Z"/></svg>',
+    flashlight: '<svg width="22" height="22" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M7.6 1.6h8.8a1.6 1.6 0 0 1 1.6 1.6v1.9H6V3.2a1.6 1.6 0 0 1 1.6-1.6ZM6 6h12l-2.6 4v10.4a2 2 0 0 1-2 2h-2.8a2 2 0 0 1-2-2V10ZM10.6 14a1.4 1.4 0 1 0 2.8 0 1.4 1.4 0 1 0-2.8 0Z"/></svg>',
+    camera: '<svg width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M4.6 6.6h3.3l1.2-1.8a1.3 1.3 0 0 1 1.1-.6h3.6a1.3 1.3 0 0 1 1.1.6l1.2 1.8h3.3A2.6 2.6 0 0 1 22 9.2v8.6a2.6 2.6 0 0 1-2.6 2.6H4.6A2.6 2.6 0 0 1 2 17.8V9.2a2.6 2.6 0 0 1 2.6-2.6ZM7.5 13.4a4.5 4.5 0 1 0 9 0 4.5 4.5 0 1 0-9 0ZM9 13.4a3 3 0 1 0 6 0 3 3 0 1 0-6 0Z"/></svg>',
+    search: '<svg width="13" height="13" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6.8 12.1a5.3 5.3 0 1 0 0-10.6 5.3 5.3 0 0 0 0 10.6ZM10.7 10.7l3.8 3.8"/></svg>',
+  };
+  // The wallpaper: our own night sky, a faint globe rising from the foot with your meridian lit, and a few stars.
+  // The stars sit only where each screen is open, so none lands on a widget, an icon or a label.
+  const STARS = {
+    'home-large': [[22, 452, 0.9, 0.3], [384, 560, 0.8, 0.26], [70, 668, 1, 0.34], [318, 702, 0.8, 0.26], [150, 712, 0.7, 0.22]],
+    'home-medium': [[22, 300, 0.8, 0.26], [96, 600, 1, 0.34], [330, 578, 0.9, 0.3], [252, 640, 0.7, 0.24], [40, 700, 0.8, 0.24], [362, 690, 0.7, 0.2]],
+    lock: [[44, 330, 1, 0.34], [330, 352, 0.8, 0.28], [128, 418, 0.7, 0.24], [362, 470, 1, 0.3], [236, 506, 0.8, 0.26], [70, 548, 0.7, 0.22]],
+  };
+  function skySVG(kind) {
+    const stars = STARS[kind] || [];
+    const ellipses = [0.38, 0.72].map((k) => `<ellipse cx="201" cy="1230" rx="${(560 * k).toFixed(1)}" ry="560"/>`).join('');
+    const id = 'dev-mer' + (++uid);
+    // A faint globe rising from the foot, and your meridian, lit where it leaves the rim and gone before the dock.
+    return `<svg class="dev-sky-lines" viewBox="0 0 ${SCR.w} ${SCR.h}" width="${SCR.w}" height="${SCR.h}" aria-hidden="true">` +
+      `<defs><linearGradient id="${id}" x1="0" y1="670" x2="0" y2="722" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#F4EFE4" stop-opacity=".22"/><stop offset="1" stop-color="#F4EFE4" stop-opacity="0"/></linearGradient></defs>` +
+      `<g fill="none" stroke="#F4EFE4" stroke-width="1" stroke-opacity=".05"><circle cx="201" cy="1230" r="560"/>${ellipses}</g>` +
+      `<path d="M201 670 V 722" stroke="url(#${id})" stroke-width="1"/><circle cx="201" cy="670" r="1.5" fill="#F4EFE4" fill-opacity=".55"/>` +
+      stars.map(([x, y, r, o]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#F4EFE4" fill-opacity="${o}"/>`).join('') + '</svg>';
+  }
+  const at = (x, y, w, h) => `left:${x}px;top:${y}px;width:${w}px;height:${h}px`;
+  // A render placed on the screen at its point size; with art holes, the show's art fills in behind it (fillHoles).
+  function placed(folder, file, x, y, w, h, corner, extra = '') {
+    const img = `<img src="assets/${folder}/${file}" alt="" width="${w}" height="${h}" decoding="async">`;
+    if (/-art\.png$/.test(file)) return `<span class="holes dev-r ${corner} ${extra}" data-holes="${file}" style="${at(x, y, w, h)}">${img}</span>`;
+    return `<span class="dev-r ${corner} ${extra}" style="${at(x, y, w, h)}">${img}</span>`;
+  }
+  // The Home Screen grid at 402 pt: widgets in two 158 pt columns 22 apart (338 wide, 32 from each side); app icons
+  // 60 pt on a 90 pt pitch, each pair centred on its widget column; rows 98 pt apart from y 76, so a medium widget
+  // spans two rows and a large one four.
+  const COLX = [36, 126, 216, 306], WCOLX = [32, 212], ROWY = (r) => 76 + r * 98;
+  const BAR_W = [34, 26, 40, 30, 22, 36, 28, 38];
+  let tileN = 0;
+  // A dock icon has no name, so no bar under it.
+  function tile(x, y, label, named = true) {
+    const n = tileN++;
+    const name = label ? `<span class="dev-label">${label}</span>` : named ? `<span class="dev-bar" style="width:${BAR_W[n % BAR_W.length]}px"></span>` : '';
+    const face = label ? `<span class="dev-icon is-app">${iconSVG('dark')}</span>` : `<span class="dev-icon" style="--tint:${0.07 + (n * 7 % 5) * 0.012}"></span>`;
+    return `<span class="dev-app" style="left:${x}px;top:${y}px">${face}${name}</span>`;
+  }
+  const row = (r, cols = [0, 1, 2, 3]) => cols.map((c) => tile(COLX[c], ROWY(r))).join('');
+  function statusBar(time, glyphs = ['signal', 'wifi', 'battery'], timeX = 0, timeW = 138.5) {
+    return `<div class="dev-status">${time ? `<span class="dev-time" style="left:${timeX}px;width:${timeW}px">${time}</span>` : ''}` +
+      `<span class="dev-glyphs">${glyphs.map((g) => GLYPH[g]).join('')}</span></div>`;
+  }
+  function dock() {
+    return `<span class="dev-search">${GLYPH.search}Search</span><span class="dev-dock"></span>` + COLX.map((x) => tile(x, 874 - 12 - 76, '', false)).join('');
+  }
+  const SCREENS = {
+    // Two Home Screen pages at 19:00 on Monday, when House of the Dragon is out at 22:10 and Silo on Wednesday.
+    'home-large': () => statusBar('19:00') + placed('widgets', 'large-busy-art.png', WCOLX[0], ROWY(0), 338, 354, 'r-home') + row(4) + row(5) + dock(),
+    'home-medium': () => statusBar('19:00') + placed('widgets', 'medium-countdown-art.png', WCOLX[0], ROWY(0), 338, 158, 'r-home') +
+      placed('widgets', 'small-countdown-art.png', WCOLX[0], ROWY(2), 158, 158, 'r-home') +
+      tile(COLX[2], ROWY(2), 'Meridian') + tile(COLX[3], ROWY(2)) + row(3, [2, 3]) + row(4) + dock(),
+    // The Lock Screen at 04:37 on Monday, two hours before Silo's expected 06:37: the date, the clock and the Live
+    // Activity banner at the foot. No Lock Screen widgets here: they would show the soonest drop, Silo, and every
+    // widget render tells a different story (a date-only Wonder Man, House of the Dragon at 22:10); the widget
+    // gallery below shows them.
+    lock: () => statusBar('', ['signal', 'wifi', 'battery']) +
+      '<div class="dev-date"><span>Monday 2 November</span></div>' +
+      '<div class="dev-clock">04:37</div>' +
+      placed('live-activity', 'lock-countingDown-art.png', 21, 594, 360, 157, 'r-home') +
+      `<span class="dev-btn" style="left:46px">${GLYPH.flashlight}</span><span class="dev-btn" style="right:46px">${GLYPH.camera}</span><span class="dev-home"></span>`,
+    // The island over the Home Screen. Compact widens it to 221 pt, so the status bar keeps only the time and battery;
+    // expanded covers the status bar, 371 pt wide, from the island's top.
+    compact: () => statusBar('04:37', ['battery'], 14, 72) + row(0) + row(1) +
+      placed('live-activity', 'compact-countingDown-art.png', (SCR.w - 220.67) / 2, 14.5, 220.67, 36, 'r-capsule', 'island'),
+    expanded: () => row(0) + row(1) + placed('live-activity', 'expanded-countingDown-art.png', (SCR.w - 371) / 2, 14, 371, 156.33, 'r-expanded', 'island'),
+  };
+  function phoneHTML(kind) {
+    tileN = 0;
+    const band = 'dev-band' + (++uid);
+    const bands = `<svg class="dev-bands" width="${PH.w}" height="${PH.h}" viewBox="0 0 ${PH.w} ${PH.h}"><defs><linearGradient id="${band}" x1=".2" y1="0" x2=".8" y2="1">` +
+      ['#5b5c61', '#2b2c2f', '#48494d', '#232427', '#404145'].map((c, i) => `<stop offset="${[0, 0.22, 0.48, 0.74, 1][i]}" stop-color="${c}"/>`).join('') +
+      `</linearGradient></defs><g transform="translate(${BAND} ${BAND})" fill="none" stroke-linejoin="round">` +
+      `<path d="${SCREEN_PATH}" stroke="url(#${band})" stroke-width="26"/><path d="${SCREEN_PATH}" stroke="#2c2c2d" stroke-width="20"/>` +
+      `<path d="${SCREEN_PATH}" stroke="#0b0b0c" stroke-width="18.5"/></g></svg>`;
+    return `<div class="dev-phone" aria-hidden="true">${bands}<div class="dev-screen dev-${kind}" style="clip-path:path('${SCREEN_PATH}')">` +
+      `<div class="dev-sky">${skySVG(kind)}</div>${SCREENS[kind]()}${kind === 'expanded' || kind === 'compact' ? '' : '<span class="dev-island"></span>'}</div></div>`;
+  }
+  // Scale each phone to its box: the box's size comes from CSS (aspect-ratio), so nothing below it moves.
+  const devFit = 'ResizeObserver' in window ? new ResizeObserver((entries) => entries.forEach((e) => {
+    const w = e.contentRect.width; if (w) e.target.style.setProperty('--s', String(w / PH.w));
+  })) : null;
+  function renderMockups() {
+    $$('.dev[data-dev]').forEach((box) => {
+      box.innerHTML = phoneHTML(box.dataset.dev);
+      // The observer's first callback lands before the first paint; measure by hand only without one.
+      if (devFit) { devFit.observe(box); return; }
+      const w = box.getBoundingClientRect().width; if (w) box.style.setProperty('--s', String(w / PH.w));
+    });
+    $$('.showcase').forEach((s) => { fillHoles(s, 'widgets'); fillHoles(s, 'live-activity'); });
   }
 
   /* ================================================================ tabs (WAI-ARIA tabs, automatic activation) */
@@ -924,7 +1045,7 @@
   }
 
   /* ================================================================ start */
-  renderLogos(); renderTokens(); renderContrast(); renderZone(); renderArt();
+  renderLogos(); renderTokens(); renderContrast(); renderZone(); renderArt(); renderMockups();
   bindTabs(); bindCustomType(); decorate();
   buildRail(); bindRail(); bindSearch(); bindHero(); bindMotion(); bindDemo();
   buildIndex();
