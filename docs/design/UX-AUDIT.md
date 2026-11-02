@@ -41,11 +41,11 @@ Status: **Fixed** · **Planned** (agreed direction, in the current polish round)
 | 9 | High | Welcome, AX5 | The taller text pushes the logo onto the poster wall, where contrast can drop to about 2.1:1. There's no scrolling, so a short phone can't fit it (inferred). | Scroll view; at accessibility sizes, a shorter wall. | **Fixed** |
 | 10 | High | Show page, spotlight (date-only) | The date is said twice: "Fri 9 Jul 2027" in 53 pt type, then "Out Fri 9 Jul 2027, time not announced". | No big line for a date-only show, as the rows already do. | **Fixed** |
 | 11 | High | Show detail | The Live Activity switch says "Starts 2 hours before" even when nothing will be booked: Live Activities are off in iOS Settings, the episode is date-only or more than 7 days away, or 3 are already booked. | Say the truth in the subtitle, with Open Settings when they're off. | **Fixed** |
-| 12 | High | Upcoming | Shows with nothing scheduled can't be tapped, so they can't be unfollowed from Upcoming; only through Search. | A long-press Unfollow (quick), or Show detail by show (full). | Decide |
+| 12 | High | Upcoming | Shows with nothing scheduled can't be tapped, so they can't be unfollowed from Upcoming; only through Search. | A long-press Unfollow (quick), or Show detail by show (full). | **Fixed** |
 | 13 | Medium | Settings | Changing the lead time doesn't move activities already booked, so the footer overpromises. | When the lead time changes, end the ones that haven't started and book again. | **Fixed** |
 | 14 | Medium | Show detail | An open detail keeps the drop it was opened with, so a refresh's delay doesn't reach it until you go back. | Read the drop from the latest result by show. | **Fixed** |
-| 15 | Medium | Search, show page | Unfollowing is one tap there but asks for confirmation in detail, and silently drops the show's Live Activity setting and offset. | The same confirmation everywhere. | Decide |
-| 16 | Medium | Search | While the airing grid loads, when it fails and when it's empty, it shows the same line. A search error has no retry button. | `ContentUnavailableView` states with "Try again"; no TV results → "Search Anime". | Planned |
+| 15 | Medium | Search, show page | Unfollowing is one tap there but asks for confirmation in detail, and silently drops the show's Live Activity setting and offset. | The same confirmation everywhere. | **Fixed** |
+| 16 | Medium | Search | While the airing grid loads, when it fails and when it's empty, it shows the same line. A search error has no retry button. | `ContentUnavailableView` states with "Try again"; no TV results → "Search Anime". | **Fixed** |
 | 17 | Medium | Upcoming, scrolled | The hero countdown slides under the status bar, and its ghost overlaps the clock. | A fade over the status bar. | Planned |
 | 18 | Medium | Section headers | One role, three styles: Upcoming's 15 pt muted sans, Search's 22 pt white serif "Results", Settings' system headers. | 15 pt semibold, muted, everywhere. | Planned |
 | 19 | Medium | Rows, widgets | The "d" and "h" units are half the numeral size, 7.5 pt in widget compact rows, under the 11 pt minimum. | Half size with an 11 pt floor. | **Fixed** |
@@ -59,7 +59,7 @@ Status: **Fixed** · **Planned** (agreed direction, in the current polish round)
 | 27 | Low | Primary buttons | Three styles for one role (Welcome, show page, empty Upcoming). | One white 50 pt capsule with `.headline` text. | Planned |
 | 28 | Low | Report a wrong time | Without Mail, the copied text doesn't say where to send it. | Offer the share sheet with the report. | Planned |
 | 29 | Low | Whole app | No haptics. | Success on follow; selection on chips and the TV/Anime switch. | Planned |
-| 30 | Low | Lock Screen Live Activity | "Expected" twice ("Expected in" over the timer, "Expected Mon 21:00" under it), and a delay is a strike-through rather than words. | The expanded island's wording (D-57). | Decide |
+| 30 | Low | Lock Screen Live Activity | "Expected" twice ("Expected in" over the timer, "Expected Mon 21:00" under it), and a delay is a strike-through rather than words. | The expanded island's wording (D-57). | **Fixed** |
 | 31 | Low | Widgets and Live Activity | Title weights and small sizes drift (serif regular, medium or semibold; 11, 12 and 13 pt). | Serif regular, small text 12 pt medium. | Planned |
 | 32 | Low | VoiceOver | Spotlight, empty and Welcome headlines aren't headers; "S4E1" is spelled letter by letter; the show page reads its art aloud; a failed refresh is heard only at the end. | Header traits, "Season 4, episode 1", hide the art, an announcement. | Planned |
 | 33 | Low | Code | `DropRow` and `SectionHeader` aren't used anywhere. | Delete them. | Planned |

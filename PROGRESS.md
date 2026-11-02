@@ -2,6 +2,26 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Polish batch A: quiet shows, one unfollow, Search states, Lock Screen words (Tue 3 Nov 2026)
+
+- **Batched with one review, at Chime's request ("Please make it faster").**
+- **#12:** a quiet show (poster grid or spotlight) opens its own page (`QuietShowView`): why it's quiet, its last episodes and Unfollow. The Report/Unfollow card is now `ShowActionsCard`, shared with Show detail.
+- **#15:** every unfollow asks "Stop following …?" (`unfollowConfirmation`): Show detail, the quiet page, Search's ✓ and the show page's "Following". Following stays one tap.
+- **#16:** Search says "Finding this week's shows" while loading, "Couldn't load this week's shows" with Try again, Try again on a search error, and "Search anime instead" / "Search TV instead" on no results.
+- **#30:** the Lock Screen Live Activity drops the "Expected in" label (gold "Out now" stays at the drop), and its time line says "Expected Mon 21:00" and "Delayed from 21:00" in words, as the expanded island does. 17 lock renders were re-synced to the site.
+- **Checks:** build; `fidelity/verify-screen.sh` ALL PASS (all screens); the lock render was looked at.
+- **Not verified:** a quiet show's page on the phone (the Debug preview has no quiet shows); Search's states without a network.
+- **`/code-review` (medium):** 8 findings, 3 fixed:
+  - A cancelled airing load no longer shows "Couldn't load".
+  - No flash of the empty line before the spinner.
+  - Search uses the shared `unfollowConfirmation`.
+- **Not fixed, logged:**
+  - SearchView is 315 lines, a little over ~300.
+  - The quiet page doesn't switch to Show detail if a refresh finds an episode while it's open.
+  - QuietShowView repeats Show detail's layout.
+  - A quiet poster button keeps `.contain`.
+  - The dialog title can read "Stop following ?" for a frame while it closes.
+
 ## The Live Activity switch tells the truth (Mon 2 Nov 2026)
 
 - **UX audit #11 (`LiveActivityStatus`):** Show detail's line now says what will really happen. In order: "Live Activities are off in Settings" with an Open Settings link, "Off for this show", "Starts once a time is announced", "Booked once it's within a week" (the planner's 7 days), "Waiting: 3 sooner ones are booked" (the scheduler's last `skippedOverLimit`), or "Starts 2 hours before, on your Lock Screen".

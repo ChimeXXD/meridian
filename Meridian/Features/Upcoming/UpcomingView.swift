@@ -13,6 +13,8 @@ struct UpcomingView: View {
     var formatter = DropFormatter()
     var scrollAnchor: UnitPoint? = nil
     var onSelect: (Drop) -> Void = { _ in }
+    /// A followed show with nothing scheduled: its own page, with its last episodes and Unfollow (UX audit #12).
+    var onSelectQuiet: (QuietShow) -> Void = { _ in }
     var onFind: () -> Void = {}
     var onRefresh: () async -> Void = {}
 
@@ -70,8 +72,11 @@ struct UpcomingView: View {
             Button { onSelect(drop) } label: { spotlight(sections, image: image, base: base, now: now) }
                 .buttonStyle(.plain)
                 .accessibilityIdentifier("upcoming-spotlight")
-        } else if sections.spotlight != nil {
-            spotlight(sections, image: image, base: base, now: now)
+        } else if case .quiet(let show) = sections.spotlight {
+            // A quiet show opens its own page, so it can be unfollowed from here too (UX audit #12).
+            Button { onSelectQuiet(show) } label: { spotlight(sections, image: image, base: base, now: now) }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("upcoming-spotlight")
         } else {
             // Nothing to feature (every drop has gone, or every show failed to load): SPEC's sentence on its own.
             Text(sections.emptyHeadline(formatter: formatter, now: now))
@@ -169,20 +174,24 @@ struct UpcomingView: View {
                                    count: dynamicTypeSize.isAccessibilitySize ? 2 : 3),
                   spacing: Tokens.Space.m) {
             ForEach(Array(shows.enumerated()), id: \.element.showID) { index, show in
-                VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
-                    PosterImage(url: artwork[show.showID]?.posterThumbnail ?? artwork[show.showID]?.poster, cornerRadius: 8)
-                        .aspectRatio(2 / 3, contentMode: .fit)
-                    Text(show.name)
-                        .font(.footnote.weight(.medium))
-                        .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
-                        .accessibilityIdentifier("nothing-\(index + 1)-title")
-                    Text(ReleaseWording.quietNote(status: show.status, lastAired: show.lastAired, formatter: formatter,
-                                                  now: now))
-                        .font(.caption)
-                        .foregroundStyle(NightInk.muted)
-                        .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 3)
-                        .accessibilityIdentifier("nothing-\(index + 1)-note")
+                Button { onSelectQuiet(show) } label: {
+                    VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
+                        PosterImage(url: artwork[show.showID]?.posterThumbnail ?? artwork[show.showID]?.poster, cornerRadius: 8)
+                            .aspectRatio(2 / 3, contentMode: .fit)
+                        Text(show.name)
+                            .font(.footnote.weight(.medium))
+                            .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
+                            .accessibilityIdentifier("nothing-\(index + 1)-title")
+                        Text(ReleaseWording.quietNote(status: show.status, lastAired: show.lastAired, formatter: formatter,
+                                                      now: now))
+                            .font(.caption)
+                            .foregroundStyle(NightInk.muted)
+                            .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 3)
+                            .accessibilityIdentifier("nothing-\(index + 1)-note")
+                    }
+                    .contentShape(.rect)
                 }
+                .buttonStyle(.plain)
                 .accessibilityElement(children: .contain)
                 .accessibilityIdentifier("nothing-\(index + 1)")
             }

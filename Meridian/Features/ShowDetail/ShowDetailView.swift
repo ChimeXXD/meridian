@@ -20,9 +20,6 @@ struct ShowDetailView: View {
     var onUnfollow: () -> Void = {}
 
     @Environment(\.dismiss) private var dismiss
-    /// The action rows' symbol column grows with the text, so a large symbol never overlaps its label.
-    @ScaledMetric(relativeTo: .body) private var iconColumn: CGFloat = 24
-    @State private var confirmingUnfollow = false
     @AppStorage(LeadTime.storageKey) private var leadMinutes = LeadTime.defaultMinutes
 
     var body: some View {
@@ -45,7 +42,7 @@ struct ShowDetailView: View {
                                 EpisodeRows(episodes: episodes, ink: .white, formatter: formatter)
                             }
                         }
-                        actions
+                        ShowActionsCard(showName: drop.showName, onReport: onReport) { onUnfollow(); dismiss() }
                     }
                     .padding(.horizontal, Tokens.Space.l)
                     .padding(.top, -64)
@@ -63,9 +60,6 @@ struct ShowDetailView: View {
         .toolbarBackgroundVisibility(.hidden, for: .navigationBar)
         .scrollEdgeEffectHidden(true, for: .top)
         .environment(\.colorScheme, .dark)
-        .confirmationDialog("Stop following \(drop.showName)?", isPresented: $confirmingUnfollow, titleVisibility: .visible) {
-            Button("Unfollow", role: .destructive) { onUnfollow(); dismiss() }
-        }
     }
 
     private func next(now: Date) -> some View {
@@ -120,53 +114,6 @@ struct ShowDetailView: View {
             }
         }
         .accessibilityIdentifier("detail-offset")
-    }
-
-    /// Report and Unfollow as a grouped card, like Settings' rows (Chime and the UX audit #4, 2 Nov: as grey text they
-    /// looked disabled, and the grey hid Unfollow's red). Report shows it leaves the app; Unfollow is red and still asks.
-    private var actions: some View {
-        VStack(spacing: 0) {
-            if let onReport {
-                Button(action: onReport) {
-                    actionRow("Report a wrong time", systemImage: "exclamationmark.bubble", ink: .white, leavesApp: true)
-                }
-                .accessibilityIdentifier("detail-report")
-                .accessibilityHint(ReportRoute.current == .githubIssue ? "Opens a GitHub issue" : "Opens an email")
-                Rectangle().fill(.white.opacity(0.12)).frame(height: 0.5)
-                    .padding(.leading, Tokens.Space.m + iconColumn + Tokens.Space.s)
-            }
-            Button(role: .destructive) { confirmingUnfollow = true } label: {
-                actionRow("Unfollow", systemImage: "minus.circle", ink: Color(uiColor: .systemRed), leavesApp: false)
-            }
-            .accessibilityIdentifier("detail-unfollow")
-        }
-        .buttonStyle(.plain)
-        .background(.white.opacity(0.08), in: .rect(cornerRadius: Tokens.Radius.card))
-    }
-
-    /// One row: a symbol in a fixed column, the label, and an arrow when it opens another app. At least 52 pt tall,
-    /// tappable across its width.
-    private func actionRow(_ title: String, systemImage: String, ink: Color, leavesApp: Bool) -> some View {
-        HStack(spacing: Tokens.Space.s) {
-            Image(systemName: systemImage)
-                .font(.body)
-                .frame(width: iconColumn)
-                .accessibilityHidden(true)
-            Text(title)
-                .font(.body)
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            if leavesApp {
-                Image(systemName: "arrow.up.right")
-                    .font(.footnote.weight(.semibold))
-                    .foregroundStyle(NightInk.muted)
-                    .accessibilityHidden(true)
-            }
-        }
-        .foregroundStyle(ink)
-        .padding(.horizontal, Tokens.Space.m)
-        .frame(minHeight: 52)
-        .contentShape(.rect)
     }
 }
 

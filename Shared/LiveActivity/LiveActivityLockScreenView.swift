@@ -3,9 +3,10 @@ import UIKit
 
 /// The Lock Screen banner (UI-BRIEF §6.2, at most 160 pt tall), on the night base with the show's key art on the
 /// right edge fading into it (#Duolingo). On the left, top to bottom: the show's name in serif ("+ 1 more" when
-/// same-night drops merge) over "S2E5 · Apple TV · US"; the plain-words label ("Expected in", flipping to "Out now" at
-/// the drop, D-49); the serif countdown; then the absolute local time, with the old one struck through after a delay
-/// (#43 Qantas). Certainty is said in words only (D-40).
+/// same-night drops merge) over "S2E5 · Apple TV · US"; "Out now" in gold once it's out (D-49); the serif countdown;
+/// then the time in words ("Expected Mon 21:00", "Released …" after the drop) and "Delayed from 20:00" when it moved,
+/// as the expanded island says them (D-57, UX audit #30: "Expected" no longer appears twice, nor a struck-through
+/// time). Certainty is said in words only (D-40).
 ///
 /// The view takes `isStale`, `now` and the art rather than reading the activity context or the App Group, so tests
 /// render every state.
@@ -37,13 +38,16 @@ struct LiveActivityLockScreenView: View {
                         .padding(.top, 2)
                         .accessibilityIdentifier("la-details")
                 }
-                Text(LiveActivityText.band(attributes, out: out))
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(out ? LiveActivityInk.out : ink(LiveActivityInk.secondary))
-                    .lineLimit(1)
-                    .padding(.top, 12)
-                    .accessibilityIdentifier("la-label")
+                if out {
+                    Text(LiveActivityText.band(attributes, out: true))
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(LiveActivityInk.out)
+                        .lineLimit(1)
+                        .padding(.top, 12)
+                        .accessibilityIdentifier("la-label")
+                }
                 LiveActivityCountdown(dropDate: state.dropDate, now: now, size: 36)
+                    .padding(.top, out ? 0 : 12)
                     .accessibilityIdentifier("la-countdown")
                 timeLine
                     .padding(.top, 2)
@@ -79,14 +83,14 @@ struct LiveActivityLockScreenView: View {
         }
     }
 
-    /// "Expected Fri 02:00", with the old time struck through after a delay.
+    /// "Expected Fri 02:00" ("Released …" once out), then "Delayed from 01:00" in words when the time moved.
     private var timeLine: some View {
-        HStack(spacing: 6) {
-            Text(LiveActivityText.timeLine(attributes, dropDate: state.dropDate, formatter: formatter))
+        VStack(alignment: .leading, spacing: 0) {
+            Text(LiveActivityText.outLine(attributes, dropDate: state.dropDate, out: out, formatter: formatter))
                 .foregroundStyle(ink(LiveActivityInk.secondary))
-            if let previous = LiveActivityText.previousTime(state, formatter: formatter) {
-                Text(previous)
-                    .strikethrough()
+                .accessibilityIdentifier("la-time")
+            if !out, let moved = LiveActivityText.movedLine(state, formatter: formatter) {
+                Text(moved)
                     .foregroundStyle(ink(LiveActivityInk.muted))
                     .accessibilityIdentifier("la-previous")
             }
@@ -94,7 +98,6 @@ struct LiveActivityLockScreenView: View {
         .font(.system(size: 13, weight: .medium))
         .lineLimit(1)
         .minimumScaleFactor(0.8)
-        .accessibilityIdentifier("la-time")
     }
 
     /// Always-On lowers everything but the countdown a little further, as on the widgets.

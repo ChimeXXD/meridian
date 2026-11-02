@@ -719,7 +719,7 @@
 
   <article class="comp" id="c-quiet-grid" data-search="quiet grid nothing scheduled poster between seasons ended" data-title="Quiet grid cell" data-kind="Component">
     <div class="hrow"><h3>Quiet grid cell</h3></div>
-    <p class="purpose">Followed shows with nothing scheduled, in the same three-across poster grid as Search: poster, title, and why there’s no time.</p>
+    <p class="purpose">Followed shows with nothing scheduled, in the same three-across poster grid as Search: poster, title, and why there’s no time. Tapping one opens its page: why it’s quiet, its last episodes and Unfollow (UX audit #12).</p>
     <div class="states">
       <figure class="state"><div class="stage"><div class="pcell"><div class="poster"><div class="art warm" data-show="from" data-use="poster"></div></div><div class="t">From</div><div class="m">Between seasons · last episode Sun 22 Jun 2025</div></div></div><figcaption>Between seasons</figcaption></figure>
       <figure class="state"><div class="stage"><div class="pcell"><div class="poster"><div class="art warm" data-show="andor" data-use="poster"></div></div><div class="t">Andor</div><div class="m">Ended · last episode Tue 13 May 2025</div></div></div><figcaption>Ended</figcaption></figure>
@@ -851,7 +851,7 @@ AiringFilter.options(for: .tv)   // [.popular, .today, .newSeasons, .exactTime] 
 
   <article class="comp" id="c-follow-plus" data-search="follow plus button poster following checkmark" data-title="Follow (+) button" data-kind="Component">
     <div class="hrow"><h3>Follow (+) button</h3></div>
-    <p class="purpose">Follows a show in one tap from its poster, without opening the page. Nothing is followed until you tap it.</p>
+    <p class="purpose">Follows a show in one tap from its poster, without opening the page. Nothing is followed until you tap it. Tapping ✓ asks “Stop following …?” first, as every unfollow does (UX audit #15).</p>
     <div class="states">
       <figure class="state"><div class="stage art-stage" style="width:110px;height:110px"><div class="art neutral"></div><span class="plus"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></div><figcaption>Follow</figcaption></figure>
       <figure class="state"><div class="stage art-stage" style="width:110px;height:110px"><div class="art neutral"></div><span class="plus on"><svg aria-hidden="true"><use href="#i-check"/></svg></span></div><figcaption>Following</figcaption></figure>
@@ -901,14 +901,15 @@ AiringFilter.options(for: .tv)   // [.popular, .today, .newSeasons, .exactTime] 
       <figure class="state"><div class="stage" style="width:342px"><div class="msg">Search TVmaze for a show to follow</div></div><figcaption>Empty, TV: <code>search-empty</code></figcaption></figure>
       <figure class="state"><div class="stage" style="width:342px"><div class="msg">Search AniList for an anime to follow</div></div><figcaption>Empty, Anime</figcaption></figure>
       <figure class="state"><div class="stage" style="width:342px;height:110px;display:grid;justify-items:center;align-content:start"><span class="spinner" role="img" aria-label="Searching" style="margin-top:16px"></span></div><figcaption>Searching: the system spinner, 32 below the switch</figcaption></figure>
-      <figure class="state"><div class="stage" style="width:342px"><div class="msg">No shows match “Sillo”</div></div><figcaption>No results: <code>search-no-results</code></figcaption></figure>
-      <figure class="state"><div class="stage" style="width:342px"><div class="msg">Couldn’t reach TVmaze. Check your connection and try again.</div></div><figcaption>No connection, TV: <code>search-error</code></figcaption></figure>
+      <figure class="state"><div class="stage" style="width:342px"><div class="msg">No shows match “Sillo”</div><div style="margin-top:12px"><span class="btn-bordered">Search anime instead</span></div></div><figcaption>No results: <code>search-no-results</code>, with the other catalog</figcaption></figure>
+      <figure class="state"><div class="stage" style="width:342px"><div class="msg">Couldn’t reach TVmaze. Check your connection and try again.</div><div style="margin-top:12px"><span class="btn-bordered">Try again</span></div></div><figcaption>No connection, TV: <code>search-error</code></figcaption></figure>
+      <figure class="state"><div class="stage" style="width:342px"><div class="msg">Couldn’t load this week’s shows. You can still search above.</div><div style="margin-top:12px"><span class="btn-bordered">Try again</span></div></div><figcaption>This week’s shows failed: <code>search-airing-error</code></figcaption></figure>
       <figure class="state"><div class="stage" style="width:342px"><div class="msg">Couldn’t reach AniList. Check your connection and try again.</div></div><figcaption>No connection, Anime</figcaption></figure>
       <figure class="state"><div class="stage" style="width:342px"><div class="msg">Nothing left to air today.</div><div style="margin-top:12px"><span class="btn-bordered">Show popular</span></div></div><figcaption>A filter with no match</figcaption></figure>
     </div>
     <div class="spec"><dl class="specs">
       <dt>Type</dt><dd>SF Pro body, <code>NightInk.muted</code>, 24 from the top</dd>
-      <dt>Copy</dt><dd>TV: “Search TVmaze for a show to follow” · “Couldn’t reach TVmaze. Check your connection and try again.” Anime: “Search AniList for an anime to follow” · “Couldn’t reach AniList. …” Both: “No shows match “Sillo””</dd>
+      <dt>Copy</dt><dd>TV: “Search TVmaze for a show to follow” · “Couldn’t reach TVmaze. Check your connection and try again.” Anime: “Search AniList for an anime to follow” · “Couldn’t reach AniList. …” Both: “No shows match “Sillo”” with “Search anime instead” / “Search TV instead” · “Finding this week’s shows” while the grid loads · “Couldn’t load this week’s shows. You can still search above.” Errors offer “Try again” (UX audit #16)</dd>
       <dt>Searching</dt><dd><code>ProgressView()</code>, centred, 32 from the top</dd>
       <dt>Filter lines</dt><dd>“Nothing airing in the next few days.” · “Nothing left to air today.” · “No new seasons in the next few days.” · “No confirmed times in the next few days.” · “Nothing on Netflix in the next few days.” Anime says “this week”</dd>
       <dt>Field</dt><dd>Prompt “Shows and anime”; it searches after 2 characters and a 400 ms pause</dd>
@@ -1258,7 +1259,7 @@ Section {
   <div class="table-wrap"><table>
     <thead><tr><th scope="col">Presentation</th><th scope="col">Spec</th></tr></thead>
     <tbody>
-      <tr id="la-lock" data-search="lock screen banner live activity art edge" data-title="Lock Screen banner" data-kind="Live Activity"><td>Lock Screen banner</td><td>Padding 16 × 14. 112 pt kept clear on the right for the art (44% of the width, fading leftwards) or a faint initial. Title New York Medium 19 (with “+ 1 more” in 13 semibold) · details 13, muted · label 13 semibold, 12 above · countdown Light 36 · time line 13 medium, secondary</td></tr>
+      <tr id="la-lock" data-search="lock screen banner live activity art edge" data-title="Lock Screen banner" data-kind="Live Activity"><td>Lock Screen banner</td><td>Padding 16 × 14. 112 pt kept clear on the right for the art (44% of the width, fading leftwards) or a faint initial. Title New York Medium 19 (with “+ 1 more” in 13 semibold) · details 13, muted · “Out now” 13 semibold, gold, only at the drop · countdown Light 36, 12 above · time line 13 medium, secondary (“Expected Mon 21:00”, “Released …” after the drop) and “Delayed from 21:00”, muted, when it moved: the expanded island’s words (UX audit #30), so “Expected” isn’t said twice and no time is struck through</td></tr>
       <tr id="la-compact" data-search="compact dynamic island poster timer" data-title="Compact" data-kind="Live Activity"><td>Compact</td><td>Leading: a 24 poster mark, radius 6, or the initial on a white disc at 0.16. Trailing: the timer in New York Medium 15, at most 60 wide; “Out now” in SF semibold 14</td></tr>
       <tr id="la-minimal" data-search="minimal ring dynamic island" data-title="Minimal" data-kind="Live Activity"><td>Minimal</td><td>A 24 pt ring (stroke 2.5, track white at 0.18, fill white) that fills from the start to the drop, around a circular poster mark; full at “Out now”</td></tr>
       <tr id="la-expanded" data-search="expanded dynamic island time words delayed" data-title="Expanded" data-kind="Live Activity"><td>Expanded</td><td>Leading: title New York Medium 18 over details 13 · trailing: art 50 × 50, radius 12 · bottom, laid out like an Upcoming row: the time in words (15 medium, “Expected Mon 21:00”, by weekday so it never goes stale) and the countdown Light 24 on its baseline at the right; “Delayed from 21:00” (13 medium, muted) under the words when the time moved; a gold “Out now” in the numbers’ place at the drop. No progress bar (D-57). Every region is inset 4 pt from the island’s edge, so the bottom line’s words sit under the title and its countdown under the art</td></tr>

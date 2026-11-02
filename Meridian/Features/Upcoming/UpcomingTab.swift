@@ -11,16 +11,20 @@ struct UpcomingTab: View {
     var onFind: () -> Void = {}
 
     @Query(sort: \FollowedShow.followedAt) private var followed: [FollowedShow]
-    @State private var path: [Drop] = []
+    @State private var path = NavigationPath()
 
     var body: some View {
         NavigationStack(path: $path) {
             UpcomingView(result: model.result, artwork: model.artwork, hasShows: !followed.isEmpty,
                          lastUpdated: model.lastUpdated,
-                         onSelect: { path.append($0) }, onFind: onFind, onRefresh: { await model.refresh(followed) })
+                         onSelect: { path.append($0) }, onSelectQuiet: { path.append($0) }, onFind: onFind,
+                         onRefresh: { await model.refresh(followed) })
                 .toolbarVisibility(.hidden, for: .navigationBar)
                 .navigationDestination(for: Drop.self) { drop in
                     ShowDetailScreen(drop: drop, model: model, scheduler: scheduler, artwork: model.artwork[drop.showID])
+                }
+                .navigationDestination(for: QuietShow.self) { show in
+                    QuietShowScreen(show: show, model: model, artwork: model.artwork[show.showID])
                 }
         }
     }
@@ -109,5 +113,23 @@ struct ShowDetailScreen: View {
 
     private func unfollow() {
         try? FollowStore(context: context).unfollow(catalog: drop.showKey.catalog, id: drop.showKey.id)
+    }
+}
+
+/// A quiet show's page (UX audit #12): its last episodes, and Unfollow removes it.
+struct QuietShowScreen: View {
+    let show: QuietShow
+    let model: UpcomingModel
+    let artwork: ShowArtwork?
+
+    @Environment(\.modelContext) private var context
+    @State private var episodes: [PastEpisode] = []
+
+    var body: some View {
+        QuietShowView(show: show, artwork: artwork, episodes: episodes) {
+            let key = Drop.key(showID: show.showID)
+            try? FollowStore(context: context).unfollow(catalog: key.catalog, id: key.id)
+        }
+        .task { episodes = await model.pastEpisodes(showID: show.showID) }
     }
 }

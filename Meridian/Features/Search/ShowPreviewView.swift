@@ -11,6 +11,7 @@ struct ShowPreviewView: View {
     let anilist: AniListClient
     let rules: RulesFile
 
+    @State private var confirmingUnfollow = false
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     @Query private var followed: [FollowedShow]
@@ -93,9 +94,9 @@ struct ShowPreviewView: View {
 
     /// White "Follow" until followed, then a dark "Following" with a check, like the poster's (+).
     private var followButton: some View {
+        // Following is one tap; unfollowing asks first, as everywhere (UX audit #15).
         Button {
-            let store = FollowStore(context: context)
-            try? following ? store.unfollow(catalog: result.catalog, id: result.id) : store.follow(result.followShow)
+            if following { confirmingUnfollow = true } else { try? FollowStore(context: context).follow(result.followShow) }
         } label: {
             Label(following ? "Following" : "Follow", systemImage: following ? "checkmark" : "plus")
                 .font(.headline)
@@ -107,5 +108,8 @@ struct ShowPreviewView: View {
         .buttonStyle(.plain)
         .accessibilityLabel(following ? "Following \(result.title)" : "Follow \(result.title)")
         .accessibilityIdentifier("show-preview-follow")
+        .unfollowConfirmation(result.title, isPresented: $confirmingUnfollow) {
+            try? FollowStore(context: context).unfollow(catalog: result.catalog, id: result.id)
+        }
     }
 }

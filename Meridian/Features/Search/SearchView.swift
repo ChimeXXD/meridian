@@ -16,6 +16,8 @@ struct SearchView: View {
 
     enum Kind: String, CaseIterable { case tv = "TV", anime = "Anime" }
 
+    /// The show whose ✓ was tapped, waiting for "Stop following …?".
+    @State private var unfollowing: SearchResult?
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.modelContext) private var context
     @Query(sort: \FollowedShow.followedAt) private var followed: [FollowedShow]
@@ -29,6 +31,10 @@ struct SearchView: View {
     /// The filter picked for each catalog this session; Popular until one is picked.
     @State private var filters: [Kind: SearchFilter] = [:]
     private var airingSoon: [AiringItem] { airing[kind] ?? [] }
+    /// This week's shows per catalog: loading, failed, or loaded (UX audit #16: all three showed the same line).
+    @State private var airingPhase: [Kind: Phase] = [:]
+    /// Bumped by "Try again", so the airing task runs again.
+    @State private var airingAttempt = 0
     private var filter: Binding<SearchFilter> {
         Binding { filters[kind] ?? .popular } set: { filters[kind] = $0 }
     }
@@ -61,19 +67,12 @@ struct SearchView: View {
             .navigationDestination(for: ShowRoute.self) { route in
                 ShowPreviewView(route: route, client: client, anilist: anilist, rules: rules)
             }
+            .unfollowConfirmation($unfollowing, title: \.title) { show in
+                try? FollowStore(context: context).unfollow(catalog: show.catalog, id: show.id)
+            }
             .searchable(text: $query, prompt: "Shows and anime")
             .onSubmit(of: .search) { Task { await search() } }
-            .task(id: kind) {
-                guard airingSoon.isEmpty else { return }
-                switch kind {
-                case .tv:
-                    guard let picks = await AiringSoon.load(client: client, rules: rules) else { return }
-                    airing[.tv] = picks.map(AiringItem.init(pick:))
-                case .anime:
-                    guard let media = try? await anilist.airingSoon(from: .now, days: 7) else { return }
-                    airing[.anime] = media.compactMap { AiringItem(media: $0) }
-                }
-            }
+            .task(id: "\(kind.rawValue)|\(airingAttempt)") { await loadAiring() }
             .onChange(of: kind) {
                 // The other catalog's results must not show (or be followed) while the new search waits.
                 results = []
@@ -99,6 +98,14 @@ struct SearchView: View {
 
     @ViewBuilder private var content: some View {
         switch state {
+        // Nil until the first load starts, which is a load too: no "Search TVmaze…" flash before the spinner.
+        case .idle where airingSoon.isEmpty && (airingPhase[kind] ?? .searching) == .searching:
+            ProgressView("Finding this week's shows")
+                .frame(maxWidth: .infinity).padding(.top, Tokens.Space.xl)
+                .accessibilityIdentifier("search-airing-loading")
+        case .idle where airingSoon.isEmpty && airingPhase[kind] == .failed:
+            message("Couldn't load this week's shows. You can still search above.", id: "search-airing-error",
+                    action: ("Try again", { airingAttempt += 1 }))
         case .idle where airingSoon.isEmpty:
             message(kind == .tv ? "Search TVmaze for a show to follow" : "Search AniList for an anime to follow",
                     id: "search-empty")
@@ -111,9 +118,12 @@ struct SearchView: View {
             ProgressView().frame(maxWidth: .infinity).padding(.top, Tokens.Space.xl)
         case .failed:
             message("Couldn't reach \(kind == .tv ? "TVmaze" : "AniList"). Check your connection and try again.",
-                    id: "search-error")
+                    id: "search-error", action: ("Try again", { Task { await search() } }))
         case .done where results.isEmpty:
-            message("No shows match \u{201C}\(query)\u{201D}", id: "search-no-results")
+            // The other catalog may have it: an anime searched under TV, or the reverse.
+            message("No shows match \u{201C}\(query)\u{201D}", id: "search-no-results",
+                    action: (kind == .tv ? "Search anime instead" : "Search TV instead",
+                             { kind = kind == .tv ? .anime : .tv }))
         case .done:
             posterGrid("Results", headerID: "search-results-header", results, idPrefix: "search-result") { result in
                 // The year, network, country and status tell same-name shows apart.
@@ -127,12 +137,42 @@ struct SearchView: View {
         }
     }
 
-    private func message(_ text: String, id: String) -> some View {
-        Text(text)
-            .foregroundStyle(NightInk.muted)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.top, Tokens.Space.l)
-            .accessibilityIdentifier(id)
+    /// A quiet line, with a way forward when there is one ("Try again", "Search anime instead").
+    private func message(_ text: String, id: String, action: (title: String, run: () -> Void)? = nil) -> some View {
+        VStack(alignment: .leading, spacing: Tokens.Space.s) {
+            Text(text)
+                .foregroundStyle(NightInk.muted)
+                .accessibilityIdentifier(id)
+            if let action {
+                Button(action.title, action: action.run)
+                    .buttonStyle(.bordered)
+                    .tint(.white)
+                    .accessibilityIdentifier("\(id)-action")
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.top, Tokens.Space.l)
+    }
+
+    /// This week's shows for the picked catalog, once; a failure says so and offers "Try again".
+    private func loadAiring() async {
+        guard airingSoon.isEmpty else { return }
+        let loading = kind
+        airingPhase[loading] = .searching
+        switch loading {
+        case .tv:
+            guard let picks = await AiringSoon.load(client: client, rules: rules) else {
+                // A switch of catalog cancels this load; that's not a failure, and the next visit loads again.
+                if !Task.isCancelled { airingPhase[loading] = .failed }; return
+            }
+            airing[.tv] = picks.map(AiringItem.init(pick:))
+        case .anime:
+            guard let media = try? await anilist.airingSoon(from: .now, days: 7) else {
+                if !Task.isCancelled { airingPhase[loading] = .failed }; return
+            }
+            airing[.anime] = media.compactMap { AiringItem(media: $0) }
+        }
+        airingPhase[loading] = .done
     }
 
     // MARK: Plex's poster grid, for both the airing shows and the results
@@ -229,9 +269,9 @@ struct SearchView: View {
 
     private func followButton(_ result: SearchResult, size: CGFloat, id: String) -> some View {
         let following = followed.contains { $0.key == FollowedShow.key(catalog: result.catalog, id: result.id) }
+        // Following is one tap; unfollowing asks first, as everywhere (UX audit #15).
         return Button {
-            let store = FollowStore(context: context)
-            try? following ? store.unfollow(catalog: result.catalog, id: result.id) : store.follow(result.followShow)
+            if following { unfollowing = result } else { try? FollowStore(context: context).follow(result.followShow) }
         } label: {
             Image(systemName: following ? "checkmark" : "plus")
                 .font(.system(size: size * 0.4, weight: .semibold))
