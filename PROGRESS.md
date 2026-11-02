@@ -2,6 +2,15 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Welcome: a drifting wall of show art (Mon 2 Nov 2026)
+
+- Chime: Welcome is "too bland", add posters; picked Mindvalley, Nike and HBO Max from 25 design references (D-55).
+- `WelcomeWall` (load, arrange, tiles) and `WelcomeWallView` (three drifting rows, fade, dim); `WelcomeView` takes the clients and rules.
+- Tests: `WelcomeWallTests` (5): TV and anime alternate, duplicates go, under 9 pictures stays plain, rows capped, recorded schedules give posters, covers and banners. Written with the model, so no red run was seen.
+- Simulator: posters loaded and rows moved between screenshots seconds apart. Two fixes found by looking: a repeating animation kept late-loading pictures from drawing (now a clock-driven offset), and the last row ended in a hard line (now a mask that clears before its edge).
+- `/code-review` (medium): 7 findings. Fixed: soft anime banners (decode for the banner, not the tile), a gap at a short row's end in landscape (more copies), every tile rebuilt 30 times a second (the drift is now a modifier), the wall waiting out TVmaze retries (key art gets 3 s), and no retry after an offline launch (tries again on each return). Skipped: the unused palette work per tile and a possibly redundant safe-area term.
+- Not verified: Reduce Motion (still rows) and the offline first launch, on a device.
+
 ## Renamed to Meridian, with the Longitudes app icon (Mon 2 Nov 2026)
 
 - Chime: rename every trace of Airstamp to Meridian, including GitHub, and make the logo the app icon (D-54).

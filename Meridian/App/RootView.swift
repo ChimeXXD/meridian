@@ -55,7 +55,8 @@ struct RootView: View {
 
     @ViewBuilder private var content: some View {
         if !welcomeDone && followed.isEmpty {
-            WelcomeView(onFind: { welcomeDone = true; tab = .search }, onLater: { welcomeDone = true })
+            WelcomeView(client: client, anilist: anilist, rules: model.rules,
+                        onFind: { welcomeDone = true; tab = .search }, onLater: { welcomeDone = true })
         } else {
             TabView(selection: $tab) {
                 Tab("Upcoming", systemImage: "clock", value: .upcoming) {
