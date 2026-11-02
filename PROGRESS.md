@@ -2,6 +2,16 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Renamed to Meridian, with the Longitudes app icon (Mon 2 Nov 2026)
+
+- Chime: rename every trace of Airstamp to Meridian, including GitHub, and make the logo the app icon (D-54).
+- Targets, folders, schemes and modules renamed; bundle ID `dev.chime.meridian`, App Group `group.dev.chime.meridian`; repo `ChimeXXD/meridian` (still private). TVmaze's `airstamp` field and `parseAirstamp` keep their names.
+- App icon: `scripts/make-app-icon.swift` draws the Longitudes mark (gold star) as AppIcon, AppIcon-Dark and AppIcon-Tinted.
+- Chime OK'd the rename-only edits to `.claude/proof.json`, `.claude/settings.json` and `fidelity/verify-screen.sh`, and removing the six stale agent worktrees.
+- Checks: 244 tests in 41 suites passed under the Meridian scheme; the design-system site checks (ticking, deep links, no overflow at 320, no errors) passed; `/code-review` found no bugs.
+- Phone: Airstamp uninstalled, Meridian installed (not launched). Followed shows and widgets are set up again once.
+- Not verified: the icon on the Home Screen, and the Fidelity screen checks under the new scheme.
+
 ## Brand colour: Meridian Gold (Mon 2 Nov 2026)
 
 - Chime chose option B (D-53). `Tokens.gold` (#E9C46A); "Out now" is gold in `CountdownText` (app, Home Screen widgets) and on the Live Activity (Lock Screen label, expanded and compact island, via `LiveActivityInk.out`).
