@@ -29,3 +29,6 @@ docs/design/direction-board/shots/
 docs/design/search-board/images/
 fidelity/shots/
 .claude/worktrees/
+
+# Vercel CLI link state (design-system deploy)
+.vercel

@@ -1092,24 +1092,24 @@ Section {
     <p class="purpose">One screen, shown once: what the app answers, the time zone it found, and a way to follow the first show.</p>
     <div class="states">
       <figure class="state"><div class="phone welcome" style="--night:#1C1C1C">
+        <div class="wall" aria-hidden="true"><i></i><i class="w"></i><i></i><i class="w"></i><i></i><i></i><i class="w"></i><i></i><i></i><i class="w"></i></div>
         <div class="grow"></div>
-        <div class="wm">Meridian</div>
+        <div class="wm"><span class="mk"><span data-logo data-size="36" data-label=""></span></span>Meridian</div>
         <div class="wh">How long until your next episode, in your time zone, and where it’s on</div>
         <div class="wz">Times shown for <span data-zone>Lagos</span>, <span data-utc>UTC+1</span></div>
-        <div class="grow"></div>
         <span class="btn-primary">Find a show</span>
         <div class="later">Not now</div>
       </div><figcaption>Default, with your own time zone</figcaption></figure>
     </div>
     <div class="spec"><dl class="specs">
-      <dt>Layout</dt><dd>Neutral night <code>#1C1C1C</code>; sides and bottom 24; blocks 24 apart; buttons 12 apart</dd>
-      <dt>Type</dt><dd>Wordmark subheadline medium, muted · headline New York 34 · zone body medium, secondary</dd>
+      <dt>Layout</dt><dd>Neutral night <code>#1C1C1C</code>; this week’s show art in three drifting rows over the top 60%, fading out above the logo (placeholder tiles here); logo, 16, headline, 12, zone, 32, buttons 12 apart; sides and bottom 24</dd>
+      <dt>Type</dt><dd>Logo lockup: the Longitudes mark (36 tall, gold star, scales with text size) and “Meridian” in New York title 2 (22), both Starlight · headline New York 34 · zone body medium, secondary</dd>
       <dt>Primary</dt><dd>“Find a show”: full width, 48 tall, <code>.borderedProminent</code>, white tint, black text</dd>
       <dt>Secondary</dt><dd>“Not now”: secondary ink, 44 tall</dd>
-      <dt>IDs</dt><dd><code>welcome-zone</code>, <code>welcome-find</code>, <code>welcome-later</code></dd>
+      <dt>IDs</dt><dd><code>welcome-logo</code>, <code>welcome-zone</code>, <code>welcome-find</code>, <code>welcome-later</code></dd>
       <dt>Source</dt><dd class="path">Features/Welcome/WelcomeView.swift</dd>
-    </dl><div class="codebox"><pre><code>WelcomeView(onFind: { welcomeDone = true; tab = .search },
-            onLater: { welcomeDone = true })</code></pre></div></div>
+    </dl><div class="codebox"><pre><code>WelcomeView(client: client, anilist: anilist, rules: model.rules,
+            onFind: { welcomeDone = true; tab = .search }, onLater: { welcomeDone = true })</code></pre></div></div>
   </article>
   </div>
 

@@ -36,6 +36,9 @@ enum Tokens {
     /// night bases. It never says how sure a time is; the words do (D-40).
     static let gold = rgb(0xE9C46A)
 
+    /// Starlight, the brand's warm white: the logo's lines and the wordmark (the design system's `color.brand.starlight`).
+    static let starlight = rgb(0xF4EFE4)
+
     static let background = Color(uiColor: .systemGroupedBackground)
     static let card = Color(uiColor: .secondarySystemGroupedBackground)
 

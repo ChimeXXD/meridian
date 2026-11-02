@@ -15,22 +15,25 @@ struct WelcomeView: View {
 
     @Environment(\.scenePhase) private var scenePhase
     @State private var wall: WelcomeWall?
+    /// The mark grows with the wordmark under Dynamic Type (36 at the default size, beside a 22 pt name).
+    @ScaledMetric(relativeTo: .title2) private var markHeight: CGFloat = 36
 
     private let night = ArtworkPalette.neutral.night.color
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Tokens.Space.l) {
+        // Two groups (unslop, 2 Nov): the brand and its promise (logo, 16, headline, 12, zone), then 32 to the actions.
+        VStack(alignment: .leading, spacing: 0) {
             Spacer(minLength: 0)
-            Text("Meridian")
-                .font(.subheadline.weight(.medium))
-                .foregroundStyle(NightInk.muted)
+            lockup
             Text("How long until your next episode, in your time zone, and where it's on")
                 .font(.system(size: 34, design: .serif))
                 .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, Tokens.Space.m)
             Text("Times shown for \(ReleaseWording.zoneSummary(formatter, at: .now))")
                 .font(.body.weight(.medium))
                 .foregroundStyle(NightInk.secondary)
                 .accessibilityIdentifier("welcome-zone")
+                .padding(.top, Tokens.Space.s)
             VStack(spacing: Tokens.Space.s) {
                 Button(action: onFind) {
                     Text("Find a show").frame(maxWidth: .infinity).frame(height: 48)
@@ -44,7 +47,7 @@ struct WelcomeView: View {
                     .frame(height: 44)
                     .accessibilityIdentifier("welcome-later")
             }
-            .padding(.top, Tokens.Space.s)
+            .padding(.top, Tokens.Space.xl)
         }
         .padding(.horizontal, Tokens.Space.l)
         .padding(.bottom, Tokens.Space.l)
@@ -68,5 +71,18 @@ struct WelcomeView: View {
                   let loaded = await WelcomeWall.load(client: client, anilist: anilist, rules: rules) else { return }
             withAnimation(.easeOut(duration: 0.35)) { wall = loaded }
         }
+    }
+
+    /// The logo on the night, never over the art (the design system's "Using the mark"): the Longitudes mark and the
+    /// name in the serif, read by VoiceOver as one "Meridian".
+    private var lockup: some View {
+        HStack(spacing: Tokens.Space.xs) {
+            MeridianMark().frame(width: markHeight * MeridianMark.widthRatio, height: markHeight)
+            Text("Meridian")
+                .font(.system(.title2, design: .serif))
+                .foregroundStyle(Color(uiColor: Tokens.starlight))
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("welcome-logo")
     }
 }

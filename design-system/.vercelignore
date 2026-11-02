@@ -1,0 +1,5 @@
+# Never publish local Vercel or env files
+.env*
+.vercel
+.gitignore
+.vercelignore

@@ -2,6 +2,13 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Welcome: the logo, and two clear groups (Mon 2 Nov 2026)
+
+- Chime asked for the unslop skill on Welcome and for the logo on it. Audit: light slop (a muted grey "Meridian" label, no logo, every block 24 apart). Chime approved the logo lockup and the regrouped spacing; the headline stays.
+- `MeridianMark` (Shared/Design): the Longitudes mark drawn in a Canvas from the app icon's grid, sized by height (`widthRatio` 0.64). Welcome's lockup: the mark (36, scales with text size) and "Meridian" in serif title 2, both `Tokens.starlight` (new), on the night under the art's fade. Spacing: logo, 16, headline, 12, zone, 32, buttons.
+- `/code-review` (medium): 8 findings, 4 fixed (Dynamic Type, one Starlight token, the width ratio, a check for the logo in the Welcome inventory, which I undid because inventories need Chime's OK). Open: on short screens or very large text the logo can sit over the art's fade; the mark doesn't follow widget tint modes (not used in widgets yet).
+- Design system: the Welcome spec and mock-up show the lockup, the spacing and placeholder art tiles. Hosted on Vercel at https://meridian-design-system-liart.vercel.app (public); `.vercelignore` keeps `.env*` and `.vercel` out of the deploy.
+
 ## Welcome: a drifting wall of show art (Mon 2 Nov 2026)
 
 - Chime: Welcome is "too bland", add posters; picked Mindvalley, Nike and HBO Max from 25 design references (D-55).

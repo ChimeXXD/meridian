@@ -472,9 +472,16 @@ dl.specs dd { margin: 0; color: var(--ink-2); overflow-wrap: anywhere; padding-l
 .list .red { color: var(--app-sys-red); }
 .phone.welcome { height: 760px; padding: 24px; display: flex; flex-direction: column; }
 .welcome .grow { flex: 1; }
-.welcome .wm { font: 500 15px var(--sans); color: var(--app-ink-muted); }
-.welcome .wh { font: 400 34px/1.15 var(--serif); margin-top: 24px; }
-.welcome .wz { font: 500 17px var(--sans); color: var(--app-ink-secondary); margin-top: 24px; }
+.phone.welcome { position: relative; overflow: hidden; }
+.welcome .wall { position: absolute; inset: 0 0 auto; height: 60%; display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 120px; gap: 8px; margin-left: -40px; width: calc(100% + 80px);
+  -webkit-mask-image: linear-gradient(#000 35%, rgba(0,0,0,.35) 68%, transparent 90%); mask-image: linear-gradient(#000 35%, rgba(0,0,0,.35) 68%, transparent 90%); }
+.welcome .wall i { border-radius: 10px; background: linear-gradient(160deg, #3a3f47, #24272c); }
+.welcome .wall i.w { grid-column: span 2; background: linear-gradient(160deg, #474039, #2a2724); }
+.welcome .grow, .welcome .wm, .welcome .wh, .welcome .wz, .welcome .btn-primary, .welcome .later { position: relative; }
+.welcome .wm { display: flex; align-items: center; gap: 8px; font: 400 22px var(--serif); color: #F4EFE4; }
+.welcome .wm .mk { width: 23px; height: 36px; display: flex; justify-content: center; align-items: center; overflow: visible; }
+.welcome .wh { font: 400 34px/1.15 var(--serif); margin-top: 16px; }
+.welcome .wz { font: 500 17px var(--sans); color: var(--app-ink-secondary); margin-top: 12px; margin-bottom: 32px; }
 .welcome .later { height: 44px; display: grid; place-items: center; color: var(--app-ink-secondary); font: 17px var(--sans); margin-top: 12px; }
 .lchip { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 12px; font: 600 12px var(--sans); }
 .legacy-card { background: #1C1C1E; border-radius: 14px; padding: 16px; display: flex; gap: 12px; color: #fff; }
