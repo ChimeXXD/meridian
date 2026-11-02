@@ -1,70 +1,110 @@
 # Handoff: read this first when you pick the project back up
 
-Written 1 Nov 2026 (early hours, Lagos) at the end of the third long session with Chime, who continues tomorrow. It summarises the session so a new one can carry on without it. Then read, in order: `CLAUDE.md`, `docs/PLAN.md`, `PROGRESS.md` (newest entry first), `docs/DECISIONS.md` (D-43 to D-45 are new).
+Written 2 Nov 2026 (Lagos) at the end of the fourth long session with Chime (they/them). It summarises the session so a new one can carry on without it. Then read, in order: `CLAUDE.md`, `docs/PLAN.md`, `PROGRESS.md` (newest entry first), `docs/DECISIONS.md` (D-46 to D-56 are new).
 
 ## What we're building
 
-**Meridian** (GitHub `ChimeXXD/meridian`, formerly `next-episode` and Airstamp, private until Day 7): an iPhone app that answers "how long until my next episode, in my time zone, and where is it on?". Lock Screen and Home Screen widgets plus a release-night Live Activity. Local-first, no account or server. Primary user: Chime in Lagos (UTC+1, no DST).
+**Meridian** (GitHub `ChimeXXD/meridian`, private until Day 7; formerly Airstamp, repo formerly `next-episode`): an iPhone app that answers "how long until my next episode, in my time zone, and where is it on?". Lock Screen and Home Screen widgets plus a release-night Live Activity. Local-first, no account or server. Primary user: Chime in Lagos (UTC+1, no DST).
+
+**The name:** a meridian is the line that sets your local time ("in your time zone"), and the line a star crosses at its highest point (the drop, "Out now"). The Longitudes logo is a globe drawn by its meridians, yours rising to a gold star.
 
 ## How Chime wants to work (keep these)
 
 - **Portfolio project, one week** (Thu 29 Oct – Thu 5 Nov 2026), stopping at a **private beta** on Chime's iPhone. No App Store work. Open-sourced (MIT) on Day 7. **$0 budget.**
 - **Show, don't describe.** Chime judges from screenshots and the phone. No legends or colour codes: say it in plain words (D-40).
-- **Design in Night Sky.** New screens reuse Upcoming's look (`NightArtHeader`, `GlassCircleButton`, `ReleaseHeadline`, serif countdown). Chime rejected a framed-poster page as "wack"; when in doubt, match Upcoming and Show detail.
-- **Confirm when asked to.** If Chime says "confirm before you begin", restate the plan and wait.
-- **Push to GitHub after every change.** Commit in its own Bash command, then push.
-- After code changes run `/code-review --fix` (medium; high for risky work), then make sure the checks pass. Never launch `/code-review ultra`.
-- **Check definitions need Chime's OK:** `.claude/proof.json`, anything in `fidelity/` (inventories, `FidelityTests`), and `.claude/settings.json`. The commit gate refuses `.claude/settings.json` changes until Chime confirms after an `NEEDS-INPUT:` line.
-- **Fewer approval prompts (Chime was frustrated by them).** `.claude/settings.json` allowlists read-only tools plus, with Chime's OK, `xcodebuild -scheme Meridian *`, `xcodegen generate`, `fidelity/verify-screen.sh *`, the proof gate `--run`, `git add/commit *`, `git push -q origin main` and `xcrun devicectl device install app *`. Rules match one simple command, so run **one plain command per Bash call**: no `cd … &&`, no `&&` chains or pipes on these, no `sed`/Python heredocs for edits (use Edit/Write). Chime can also switch on auto mode (Shift+Tab).
-- **The phone is personal.** Installing over Wi-Fi is fine; **never launch the app on it or take a screenshot without a fresh go-ahead** (a capture once caught private messages; it was deleted). Use the simulator for checks.
-- **One simulator job at a time.** Run the gate in the foreground (`node "/Users/chimexd/.claude/plugins/cache/proof/proof/0.4.0/scripts/gate.mjs" --run`) and wait; parallel test runs (a background gate, a `/code-review` fork, another session) crash with "Mach error -308" or "Test crashed with signal kill". If that happens, rerun alone; it isn't the code. Tell agents not to run xcodebuild tests.
-- **Agents to fast-track (Chime asked for this).** Commit a contract first (fixed type and function signatures with placeholder bodies), give each agent a worktree and a lane that touches different files, forbid simulator runs (one `build-for-testing` compile allowed after checking memory), then merge and run their tests yourself, one at a time.
-- The Mac has 24 GB; Figma and Brave hold ~6 GB. Check `mem.mjs` before heavy work; never close Chime's apps.
+- **Install on the iPhone after every app change** (over Wi-Fi, no cable). **Never launch the app or screenshot the phone without a fresh go-ahead.** When Chime asked to "reset" the app to see Welcome, a launch with `-inMemoryStore -welcomeDone NO` showed it without deleting their follows (a normal reopen restores everything).
+- **Confirm when asked to.** If Chime says "let me know if you understand", restate the plan, ask the real questions (AskUserQuestion), then start.
+- **Push to GitHub after every commit.** Commit in its own Bash command (the proof gate refuses a commit chained after a file-changing command), then push.
+- After code changes run `/code-review medium --fix` (high for risky work), then make sure the checks pass. Never launch `/code-review ultra`.
+- **Check definitions need Chime's OK:** `.claude/proof.json`, anything in `fidelity/` (inventories, `FidelityTests`, `verify-screen.sh`), and `.claude/settings.json`. Chime OK'd the rename-only edits this session; a review agent's added Welcome inventory item was undone pending their OK.
+- **Never commit show artwork** (rule 9, D-37). The design-system site loads art at runtime from TVmaze/AniList (URLs only), and its widget renders are "art holes" (see below).
+- **Agents in parallel** when Chime asks: give each a lane that touches different files, tell them not to commit, push, install or edit docs; then check their screenshots yourself, run `/code-review`, write the docs, commit and push. One simulator job at a time.
+- **"Live" means ticking on two screenshots seconds apart**, never one render.
+- The Mac has 24 GB; Dia and Claude hold the most. Never close Chime's apps.
 
-## What happened this session
+## What happened this session (1–2 Nov)
 
-1. **Search filters (D-43).** Before typing, Search shows popular shows airing soon (TVmaze `weight`, AniList popularity), with a chip row picked **one at a time like the TV | Anime switch**: Popular (default), Today, New seasons, Exact time, then service chips. Each poster shows its network and its time in `ReleaseWording` words. The 15-show cap applies after filtering; an episode leaves the grid within a minute of coming out. Fixed a rule-2 bug: "still to come" now uses the resolved time, never a placeholder airstamp. Anime premieres come from a second AniList request for this week's episode 1s (up to 3 pages).
-2. **Popularity from "reliable sources":** Netflix's official Top 10 has Nigeria rows, but its terms forbid copying, distributing or scraping it (O-13, quoted in DECISIONS). A link chip was built and then **dropped by Chime** ("it takes us to another link").
-3. **Service chips (D-44, D-45).** Exactly **12 major platforms, always shown, in subscriber order**: Netflix, Prime Video, HBO Max (also holds HBO), Disney+, Paramount+, Hulu, Peacock, Apple TV, then CBS, NBC, ABC, FOX. No YouTube or BBC iPlayer (Chime: "not relevant"). One with nothing coming says "Nothing on Paramount+ in the next few days." Each chip shows the service's **logo** on a white tile, from a hand-checked list of 57 freely licensed **Wikimedia Commons** files (`rules/network-logos.json`, URLs only, loaded at runtime; 3 need credit, shown on Credits).
-4. **Show page (D3-13).** Tapping any poster or title on the Search tab (results or the airing grid) opens the show's page; the poster's (+) still follows in one tap. The page is Night Sky like Upcoming: key art fading into night, the title, serif countdown and out line, year · network · status, Follow/Following. With nothing scheduled, only the title. Times match Upcoming's exactly.
-5. **Day 4 widgets (built by two agents).** `SnapshotStore` + `WidgetSnapshotWriter` write `snapshot.json` and small art to the App Group after every refresh (refresh now runs from `RootView`, so a follow in Search reaches the widgets). `WidgetTimeline` (5-minute spacing, Out now hour, hourly refresh entries up to 48 h, date-only drops leave at midnight after their day). Five families in Night Sky (`Shared/Widgets/`, `MeridianWidgets/NextDropWidget`), each with counting down, Out now, date only and nothing. `WidgetAccessibility.label` ("Silo, expected in 2 days 4 hours, Apple TV"; "out now" only for an exact time).
+1. **Widgets rebuilt on Chime's reference picks (D-46 to D-48):** Apple TV, Tripsy and Udemy. A large widget was added, with small 2:3 posters on rows, "+N more this week", and followed shows with nothing scheduled shown as "Nothing scheduled".
+2. **Live Activity (Day 5, D-49, D-50):** rebuilt on Chime's picks (Duolingo, Instagram, Yazio, Tinder). Same-night merge, at most 3 pending, and a Debug `-fakeActivity <minutes>` option.
+3. **Countdowns:**
+   - D-51 made everything tick.
+   - D-52 dropped `pauseTime`, which froze widget and Live Activity timers (CLAUDE.md rule 4 updated).
+   - **D-56 (latest):** only the last 24 h ticks. Further out it's a still "4d 4h": rounded down, both parts always shown ("1d 0h"), spoken "1 day". Widget timelines add an exact entry at drop − 24 h and refresh 1 s after the hour beyond the last day.
+4. **Renamed Airstamp → Meridian everywhere (D-54):**
+   - targets, folders, schemes, display name and copy
+   - bundle ID `dev.chime.meridian`, App Group `group.dev.chime.meridian`, repo `ChimeXXD/meridian`
+   - memory notes and the description in `~/.claude/settings.json`
 
-## Where things stand (commit `ae49deb`, all pushed, tree clean)
+   TVmaze's `airstamp` field and `parseAirstamp` keep their name (it's the API's). The old Airstamp app was uninstalled from the phone; the phone then needed **Settings → General → VPN & Device Management → Trust** again.
+5. **Brand:**
+   - **Logo:** "Longitudes" (via the logo-generator skill).
+   - **Brand colour (D-53):** **Meridian Gold `#E9C46A`**, only on the logo's star and "Out now" (`Tokens.gold`, `LiveActivityInk.out`). Starlight `#F4EFE4` is `Tokens.starlight`.
+   - **App icon:** default, dark and tinted, drawn by `scripts/make-app-icon.swift`.
+   - **In-app logo:** `Shared/Design/MeridianMark.swift` draws the logo.
+6. **Welcome screen:**
+   - **Art wall (D-55):** a drifting wall of this week's TV and anime art. Three rows, posters and wide art mixed, fading into night. Clock-driven offset, still under Reduce Motion, plain night when offline, retried on return.
+   - **Unslop pass:** the logo lockup above the headline, and the text block in two groups (logo, 16, headline, 12, zone, 32, buttons).
+7. **Design-system website** (`design-system/`, static HTML/CSS/JS):
+   - Built, then QA'd (323 checks) and UX-audited.
+   - Redesigned with the unslop skill: six views, Newsreader serif, honest contrast claims.
+   - Real show art loads at runtime wherever a show is named.
+   - The widget and Live Activity renders are **art holes**: `MeridianTests/Support/ArtMatte.swift` renders them with black, white and grey art and keeps only what sits over it. `art-holes.json` lists each hole, and the site puts the show's art behind it.
+   - CSS-drawn **iPhone mockups** (Home Screen pages, Lock Screen, compact and expanded island) on our own night-sky wallpaper.
+8. **Hosting:** Vercel project `meridian-design-system`, connected to GitHub.
+   - **Deploys:** every push to `main` that changes `design-system/` deploys (root `design-system/`, no build, ignored-build-step `git diff HEAD^ HEAD --quiet -- .`).
+   - **Address:** **https://meridian-designsystem.vercel.app** (the plain `meridian-design-system.vercel.app` belongs to someone else); also `-liart.vercel.app`.
+   - `.vercelignore` keeps `.env*`/`.vercel` out.
+   - **Gotchas:**
+     - CLI deploys from inside the repo were "Blocked" because of the commit author's email (Git deploys work).
+     - Chime's ISP sometimes can't reach some Vercel edge IPs (the `.3` group). It's a DNS/routing issue on their side; suggest DNS `1.1.1.1` / `8.8.8.8`.
 
-- **On Chime's iPhone 14 Pro**, installed over **Wi-Fi** (devicectl reaches it on the local network; no cable needed while it's unlocked and on the same Wi-Fi). **Signing expires Fri 6 Nov 2026 22:27 Lagos** (21:27Z): reinstall before then (an install reuses the profile, so the date only moves when Xcode makes a new one).
-- **Checks:** gate build + test + spec pass. Screen checks (`fidelity/verify-screen.sh`): welcome, upcoming, upcoming-empty, detail, settings, search, search-results, search-filtered, search-filter-empty, show-preview. `show-preview` relies on live TVmaze still listing a next date for Silo.
-- **Widget renders:** `WidgetRenderTests` writes every family × state to `fidelity/shots/widgets/` (git-ignored); the lead looked at them.
-- **features.json passing this session:** D3-8, D3-8b, D3-9, D3-10, D6-9 (dropped), D4-1, D4-2, D4-5.
+## Where things stand (commit `818e0a7`, all pushed)
+
+- **On Chime's iPhone 14 Pro** (UDID 00008120-001044862EC0201E), installed over Wi-Fi. **Signing expires Mon 9 Nov 2026 00:59 Lagos** (2026-11-08T23:59Z, profile for `dev.chime.meridian`): reinstall before then.
+- **Checks:** 252 tests pass (gate build + test + spec). The design-system site has 0 console errors, no overflow at 320, and deep links land.
+- **Live:** https://meridian-designsystem.vercel.app has the latest site.
 
 ## Next steps
 
-1. **Chime's approvals (on the phone):** the Search filter row (D3-11), the logo chips (D3-12), the show page (D3-13), and the widgets once added (D4-3, D4-4: Lock Screen and Home Screen; tinted, Always-On and large text couldn't be rendered here). Chime has "seen the updates" but hasn't given a verdict yet; ask.
-2. **Review leftovers worth doing:** the circular widget's count can read up to an hour high in the last day (refresh entries sit on the hour); widget art never refreshes once saved; launch can start two refreshes (`task(id:)` and scene phase); the "Silo returns …" widget state can't appear (a date-only drop always becomes current; a design call for Chime); the show page's back button uses fixed padding, not the safe area; three hand-kept alias lists (`PopularServices`, `network-logos.json`, `platform-rules.json`) must change together if TVmaze renames a channel; logos share the poster image cache.
-3. **Day 5:** the Live Activity (D5-1 to D5-5) and the Debug menu.
-4. **Day 6:** harden, offline label, Report a wrong time, CI, the accuracy audit (needs real times either side of the 1 Nov US clock change: D3-7, Chime's job, due today), the AX5 pass.
-5. **Day 7 (never cut):** README, case study, video, open-source checklist, make the repo public.
+1. **Chime's verdicts** on the phone: the new countdown rule, the Welcome wall and logo, the widgets and the Live Activity. D5-3 (Debug actions on the phone) and D5-4 (Chime's screen recording) are still open.
+2. **Review leftovers worth doing:**
+   - **Widget rows:** rows other than the widget's main show can read an hour high for up to an hour (their refreshes follow only the main show; fixing it means about 4x the timeline entries).
+   - **Circular widget:** its "4h"/"38m" rounds down in the last day.
+   - **Welcome logo:** can sit over the art's fade on short screens or with very large text.
+   - **Design system:** Wednesday's and Severance's night bases aren't in its token table.
+   - **Live Activity:** Always-On muted contrast is 3.60:1.
+   - **Upcoming:** rebuilds its whole screen every second.
+3. **Day 6:**
+   - harden, the offline label, Report a wrong time, CI
+   - the accuracy audit (D3-7 clock-change capture, Chime's job)
+   - the AX5 pass
+4. **Day 7 (never cut):** README, case study, video, open-source checklist, make the repo public (then the design-system and User-Agent GitHub links stop 404ing).
 
 ## Open questions for Chime
 
-- Verdict on Search, the show page and the widgets on the phone (above).
-- Clock-change capture (D3-7) and the 5-person glance test (D3-6).
-- O-12 artwork in README/video; O-5 AniList permission (before Day 7); O-7 HBO in Nigeria; D-36 Disney+.
-- Earlier skipped items: a poster that fails to load shows an empty tile; posters are cropped about 6%.
+- Verdicts above.
+- Whether to add the `welcome-logo` item to `fidelity/inventory/welcome.json` (needs their OK).
+- O-5 AniList permission (before Day 7); O-12 artwork in README/video; O-3 name trademark check.
 
 ## Useful commands
 
 ```bash
-# Build and install on Chime's iPhone over Wi-Fi (UDID 00008120-001044862EC0201E). Don't launch or screenshot without asking.
+# Build and install on Chime's iPhone over Wi-Fi. Don't launch or screenshot without asking.
 xcodebuild -scheme Meridian -destination 'id=00008120-001044862EC0201E' -allowProvisioningUpdates -derivedDataPath build/device -quiet build
 xcrun devicectl device install app --device 00008120-001044862EC0201E build/device/Build/Products/Debug-iphoneos/Meridian.app
+# Show Welcome on the phone without deleting follows (only with Chime's go-ahead):
+xcrun devicectl device process launch --device 00008120-001044862EC0201E --terminate-existing dev.chime.meridian -- -inMemoryStore -welcomeDone NO
 # All checks (foreground, alone):
 node "/Users/chimexd/.claude/plugins/cache/proof/proof/0.4.0/scripts/gate.mjs" --run
-# One screen check:
-fidelity/verify-screen.sh search-filtered
-# Debug launch options: -follow <ids>, -followAnime <ids>, -tab search|settings, -query <text>, -kind anime,
-#   -inMemoryStore, -filter today|new-seasons|exact-time|service:<label>, -openFirstResult YES, -designPreview
+# Narrow tests: never -quiet; grep the result lines
+xcodebuild -scheme Meridian -destination 'platform=iOS Simulator,name=iPhone 18 Pro,OS=27.0' test -only-testing:MeridianTests/WelcomeWallTests 2>&1 | grep -E "✘|Test run with|error:"
+# Re-render widget/Live Activity art-hole PNGs, then copy fidelity/shots/{widgets,live-activity} into design-system/assets/
+xcodebuild -scheme Meridian -destination 'platform=iOS Simulator,name=iPhone 18 Pro,OS=27.0' test -only-testing:MeridianTests/WidgetRenderTests -only-testing:MeridianTests/LiveActivityLayoutTests
+# Design system: deploys itself on push; check status with
+npx vercel@latest ls meridian-design-system
+# Debug launch options: -designPreview [detail], -fakeActivity <minutes>, -follow <ids>, -followAnime <ids>,
+#   -tab search|settings, -query <text>, -kind anime, -inMemoryStore, -welcomeDone NO, -openFirstResult YES
 ```
 
-- Simulator: `iPhone 18 Pro, OS=27.0` (UDID 3B97D55E-ECD1-4062-9CDB-525FA31CCB10). Use `-collect-test-diagnostics never`. Swift Testing names need parentheses with `-only-testing` (`…/premieresFailing()`). Shut it down after use.
-- Agent worktrees from this session remain under `.claude/worktrees/` (merged; safe to leave).
-- `claude --resume` in this folder reopens the full transcript.
+- **Simulator:** `iPhone 18 Pro, OS=27.0` (UDID 3B97D55E-ECD1-4062-9CDB-525FA31CCB10). Shut it down after use.
+- **Scratchpad:** the scratchpad of session `7d0987d9…` holds the reference pick pages, QA and UX reports, and the Playwright scripts (`pw-unslop.3vSP/`). `claude --resume` in this folder reopens the full transcript.
