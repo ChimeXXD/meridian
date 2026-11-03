@@ -13,6 +13,6 @@ enum WidgetInk {
 
     /// Always-On lowers everything but the countdown a little further (UI-BRIEF §6.1).
     static func dimmed(_ color: Color, when reduced: Bool) -> Color {
-        reduced ? color.opacity(0.7) : color
+        reduced ? color.opacity(0.85) : color
     }
 }

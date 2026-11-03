@@ -143,6 +143,7 @@ private struct WallTile: View {
             .overlay {
                 if let image {
                     Image(uiImage: image).resizable().scaledToFill().transition(.opacity)
+                        .accessibilityIgnoresInvertColors()
                 }
             }
             .frame(width: width, height: height)

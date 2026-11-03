@@ -8,6 +8,8 @@ struct SearchFilterRow: View {
     let options: [SearchFilter]
     @Binding var selection: SearchFilter
     var logos: NetworkLogos = .empty
+    /// Counts chip taps, so the selection tick follows a tap only, not TV | Anime swapping in the other kind's filter.
+    @State private var taps = 0
 
     var body: some View {
         ScrollViewReader { proxy in
@@ -28,12 +30,14 @@ struct SearchFilterRow: View {
             .onAppear { Task { @MainActor in proxy.scrollTo(selection, anchor: .center) } }
             .onChange(of: options) { Task { @MainActor in proxy.scrollTo(selection, anchor: .center) } }
         }
+        .sensoryFeedback(.selection, trigger: taps)
         .accessibilityIdentifier("search-filters")
     }
 
     private func chip(_ option: SearchFilter) -> some View {
         let picked = option == selection
         return Button {
+            if !picked { taps += 1 }
             selection = option
         } label: {
             HStack(spacing: 0) {
@@ -63,6 +67,7 @@ struct SearchFilterRow: View {
                     Image(uiImage: image).resizable().scaledToFit().padding(3)
                         .frame(width: 30, height: 22)
                         .background(.white, in: RoundedRectangle(cornerRadius: 5))
+                        .accessibilityIgnoresInvertColors()  // the white tile too, or Smart Invert blacks it out
                         .padding(.trailing, Tokens.Space.xs)
                 } else {
                     // The tile's space, clear: the row keeps its width (and its scroll) while logos load, and one

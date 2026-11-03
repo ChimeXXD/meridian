@@ -18,6 +18,7 @@ struct WidgetPosterThumb: View {
                         .resizable()
                         .widgetAccentedRenderingMode(.desaturated)
                         .scaledToFill()
+                        .accessibilityIgnoresInvertColors()
                 }
             }
             .frame(width: height * 2 / 3, height: height)

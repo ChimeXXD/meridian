@@ -81,6 +81,7 @@ struct UpcomingView: View {
             // Nothing to feature (every drop has gone, or every show failed to load): SPEC's sentence on its own.
             Text(sections.emptyHeadline(formatter: formatter, now: now))
                 .serif(28, relativeTo: .title)
+                .accessibilityAddTraits(.isHeader)
                 .padding(.horizontal, Tokens.Space.l)
                 .padding(.top, 120)
                 .accessibilityIdentifier("upcoming-empty")
@@ -97,6 +98,7 @@ struct UpcomingView: View {
                 case .dateOnly(let drop):
                     Text(drop.showName)
                         .serif(32, relativeTo: .largeTitle)
+                        .accessibilityAddTraits(.isHeader)
                         .accessibilityIdentifier("upcoming-spotlight-title")
                     // The title already names the show, so the line is the usual wording (D-40), not "Silo returns …".
                     Text(ReleaseWording.outLine(drop, now: now, formatter: formatter))
@@ -106,6 +108,7 @@ struct UpcomingView: View {
                 case .quiet(let show):
                     Text(show.name)
                         .serif(32, relativeTo: .largeTitle)
+                        .accessibilityAddTraits(.isHeader)
                         .accessibilityIdentifier("upcoming-spotlight-title")
                     Text(ReleaseWording.quietNote(status: show.status, lastAired: show.lastAired, formatter: formatter,
                                                   now: now))
@@ -133,9 +136,7 @@ struct UpcomingView: View {
                 .serif(28, relativeTo: .title)
                 .accessibilityIdentifier("upcoming-empty-follow")
             Button("Find a show", action: onFind)
-                .buttonStyle(.borderedProminent)
-                .tint(.white)
-                .foregroundStyle(.black)
+                .buttonStyle(PrimaryButtonStyle())
                 .accessibilityIdentifier("upcoming-empty-find")
         }
         .padding(.horizontal, Tokens.Space.l)

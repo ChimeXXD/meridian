@@ -2,6 +2,21 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Polish batch B: the small audit items (Tue 3 Nov 2026)
+
+- **#18:** Search's "Results" uses the one section-header style (subheadline medium, muted).
+- **#26:** Search grid titles are subheadline medium.
+- **#21:** Always-On dims inks to 0.85, not 0.7, so muted text stays above 4.5:1. Four Always-On renders re-synced.
+- **#23:** Smart Invert leaves art, posters, wall tiles, logos and widget posters alone (`accessibilityIgnoresInvertColors`).
+- **#27:** one `PrimaryButtonStyle` (a white 50 pt capsule, `.headline`) for Welcome's and empty Upcoming's "Find a show".
+- **#29:** haptics: success on follow, selection on TV/Anime and on the filter chips.
+- **#32:** the spotlight, empty and Welcome headlines are headers; "S4E1 · HBO · US" is read "Season 4, episode 1, HBO US".
+- **Left for Chime:**
+  - #6's size and order (a visible restyle).
+  - #22, the widgets' spoken time (it would change CLAUDE.md's example).
+- **Skipped:** #33, deleting `DropRow` and `SectionHeader`. They're archived on the site and a test uses one.
+- **Checks:** build; `fidelity/verify-screen.sh` ALL PASS (all screens); Welcome and Search results were looked at.
+
 ## Polish batch A: quiet shows, one unfollow, Search states, Lock Screen words (Tue 3 Nov 2026)
 
 - **Batched with one review, at Chime's request ("Please make it faster").**

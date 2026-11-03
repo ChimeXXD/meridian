@@ -63,6 +63,7 @@ struct WelcomeView: View {
             lockup
             Text("How long until your next episode, in your time zone, and where it's on")
                 .serif(34, relativeTo: .largeTitle)
+                .accessibilityAddTraits(.isHeader)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.top, Tokens.Space.m)
             Text("Times shown for \(ReleaseWording.zoneSummary(formatter, at: .now))")
@@ -71,13 +72,9 @@ struct WelcomeView: View {
                 .accessibilityIdentifier("welcome-zone")
                 .padding(.top, Tokens.Space.s)
             VStack(spacing: Tokens.Space.s) {
-                Button(action: onFind) {
-                    Text("Find a show").frame(maxWidth: .infinity).frame(minHeight: 48)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.white)
-                .foregroundStyle(.black)
-                .accessibilityIdentifier("welcome-find")
+                Button("Find a show", action: onFind)
+                    .buttonStyle(PrimaryButtonStyle())
+                    .accessibilityIdentifier("welcome-find")
                 Button("Not now", action: onLater)
                     .foregroundStyle(NightInk.secondary)
                     .frame(minHeight: 44)

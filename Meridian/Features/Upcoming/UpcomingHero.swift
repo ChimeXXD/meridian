@@ -78,6 +78,7 @@ struct ReleaseMeta: View {
             }
             // One line normally; never cut at the accessibility sizes, where "HBO · US" lost its country (audit #6).
             Text(drop.episodeAndProvider)
+                .accessibilityLabel(drop.spokenEpisodeAndProvider)
                 .font(.footnote)
                 .foregroundStyle(NightInk.muted)
                 .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 1)

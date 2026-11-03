@@ -54,6 +54,7 @@ struct ArtworkFill: View {
             .overlay {
                 if let image {
                     Image(uiImage: image).resizable().scaledToFill()
+                        .accessibilityIgnoresInvertColors()  // Smart Invert leaves art alone (audit #23)
                 }
             }
             .clipped()

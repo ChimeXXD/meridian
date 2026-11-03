@@ -774,15 +774,13 @@ Text(ReleaseWording.quietNote(status: show.status, lastAired: show.lastAired, fo
     </div>
     <div class="spec"><dl class="specs">
       <dt>Type</dt><dd>Headline New York 28 · error footnote, muted</dd>
-      <dt>Button</dt><dd><code>.borderedProminent</code>, white tint, black text, default height</dd>
+      <dt>Button</dt><dd><code>PrimaryButtonStyle</code>: the app’s one primary button, a white capsule at least 50 tall with black <code>.headline</code> text (UX audit #27)</dd>
       <dt>Layout</dt><dd>Sides 24, top 120</dd>
       <dt>Offline</dt><dd>When a refresh can’t reach every show, the last line says how old the times are and which shows didn’t refresh. “14:05” is the last refresh that reached every show, with the weekday when it was another day; no source is named (<code>UpcomingStatus</code>). A followed show’s next episode is asked again once its cached answer is 15 minutes old (D-59)</dd>
       <dt>IDs</dt><dd><code>upcoming-empty-follow</code>, <code>upcoming-empty-find</code>, <code>upcoming-empty</code>, <code>upcoming-failed</code></dd>
       <dt>Source</dt><dd class="path">Features/Upcoming/UpcomingView.swift:29-77, 120-133</dd>
     </dl><div class="codebox"><pre><code>Button("Find a show", action: onFind)
-    .buttonStyle(.borderedProminent)
-    .tint(.white)
-    .foregroundStyle(.black)
+    .buttonStyle(PrimaryButtonStyle())
     .accessibilityIdentifier("upcoming-empty-find")</code></pre></div></div>
   </article>
   </div>
@@ -879,7 +877,7 @@ AiringFilter.options(for: .tv)   // [.popular, .today, .newSeasons, .exactTime] 
     <div class="spec"><dl class="specs">
       <dt>Poster</dt><dd>2:3, radius 8; TVmaze 210 × 295, loaded at 420 px</dd>
       <dt>Type</dt><dd>Title footnote medium, two lines · meta caption, muted, two lines a part</dd>
-      <dt>Headers</dt><dd>New York 22: “Airing in the next few days” · “Airing in Japan this week” · “Results”</dd>
+      <dt>Headers</dt><dd>“Results” uses the section-header style Upcoming and Show detail use, SF Pro subheadline medium, muted (UX audit #18). Grid titles are subheadline medium, a step above their 12 pt info lines (#26)</dd>
       <dt>VoiceOver</dt><dd>“Tracker, button, Opens the show”; the meta reads as one line, “2023 · HBO · US · Running”</dd>
       <dt>IDs</dt><dd><code>airing-&lt;n&gt;</code> or <code>search-result-&lt;n&gt;</code>, with <code>-title</code>, <code>-meta</code>, <code>-follow</code>; headers <code>search-airing-header</code>, <code>search-results-header</code></dd>
       <dt>Hit target</dt><dd>The whole cell opens the show page; the (+) follows</dd>
@@ -1147,7 +1145,7 @@ Section {
       <dt>Wall</dt><dd>This week’s show art, under the status bar over the top 60% of the screen: three rows 128, 172 and 128 tall, 8 apart, each starting part-way into its run so no two line up. TV posters and anime covers, with the first three TV shows as wide key art and every third anime as its wide banner; posters 2:3, wide art 16:9, radius 10, on white at 0.05 until each picture loads. Dimmed with night at 0.18, faded out by 90% of the rows’ height, and night at 0.7 fading to clear over the top 96 pt. Under 9 pictures the screen stays plain night. Hidden from VoiceOver</dd>
       <dt>Motion</dt><dd>The wall fades in over 0.35 s, ease out, and so does each picture as it loads. Rows drift 9 pt a second, alternating direction. Under Reduce Motion the fades are skipped and the rows stay still</dd>
       <dt>Type</dt><dd>Logo lockup: the Longitudes mark (36 tall, gold star, scales with text size) and “Meridian” in New York title 2 (22), both Starlight · headline New York 34 · zone body medium, secondary</dd>
-      <dt>Primary</dt><dd>“Find a show”: full width, 48 tall, <code>.borderedProminent</code>, white tint, black text</dd>
+      <dt>Primary</dt><dd>“Find a show”: <code>PrimaryButtonStyle</code>, full width, at least 50 tall, white capsule, black <code>.headline</code></dd>
       <dt>Secondary</dt><dd>“Not now”: secondary ink, 44 tall</dd>
       <dt>IDs</dt><dd><code>welcome-logo</code>, <code>welcome-zone</code>, <code>welcome-find</code>, <code>welcome-later</code></dd>
       <dt>Source</dt><dd class="path">Features/Welcome/WelcomeView.swift · WelcomeWallView.swift · WelcomeWall.swift</dd>
@@ -1217,7 +1215,7 @@ Section {
     <div id="w-home" data-search="home screen widget backdrop art fade small medium large" data-title="Home Screen widgets" data-kind="Widget"><dt>Home Screen</dt><dd>Night base <code>#1C1C1C</code> with the show’s art across the top (all of it on small and medium, 62% on large), fading clear, then to 0.7, then to the base. The service is tagged top left (“HBO · US”), and “+N more this week” top right when shows don’t fit. Small shows one show, medium three, large four.</dd></div>
     <div id="w-lock" data-search="lock screen widget inline circular rectangular tinted" data-title="Lock Screen widgets" data-kind="Widget"><dt>Lock Screen</dt><dd>System inks, because iOS tints them. Inline: “Silo · 2d 4h”. Circular: an open ring that fills over the last 7 days, a <code>tv</code> glyph, and “2d”, “4h” or “38m” in the gap. Rectangular: “Expected Wed 23:00”, then the name, then the countdown and service.</dd></div>
     <div id="w-quiet" data-search="quiet rows nothing scheduled empty state follow a show returns widget" data-title="Quiet rows and empty states" data-kind="Widget"><dt>Quiet rows</dt><dd>Followed shows with nothing scheduled fill spare rows: poster, name, “Nothing scheduled”; the large widget adds why. Empty: “Follow a show” with “Its countdown shows up here.”, “Nothing scheduled” with “Meridian checks again each time you open it.”, or “Silo returns Fri 9 Jul 2027” with “Nothing else is scheduled.”</dd></div>
-    <div id="w-modes" data-search="always on tinted accented rendering modes widget dimmed" data-title="Rendering modes" data-kind="Widget"><dt>Tinted and Always-On</dt><dd>When tinted, the countdown takes the tint, and so does the headline when there’s nothing to count down (“Follow a show”, “Nothing scheduled”, “Silo returns …”). On the Lock Screen so do the inline line, the rectangular widget’s title, and the circular widget’s ring fill, value and date-only day number. Everything else keeps its ink, “Out now” loses its gold, and posters lose their colour. Always-On hides the art and dims every ink to 0.7 except the countdown and that empty headline.</dd></div>
+    <div id="w-modes" data-search="always on tinted accented rendering modes widget dimmed" data-title="Rendering modes" data-kind="Widget"><dt>Tinted and Always-On</dt><dd>When tinted, the countdown takes the tint, and so does the headline when there’s nothing to count down (“Follow a show”, “Nothing scheduled”, “Silo returns …”). On the Lock Screen so do the inline line, the rectangular widget’s title, and the circular widget’s ring fill, value and date-only day number. Everything else keeps its ink, “Out now” loses its gold, and posters lose their colour. Always-On hides the art and dims every ink to 0.85 except the countdown and that empty headline, so muted text stays above 4.5:1 (it was 0.7, 3.45:1: UX audit #21).</dd></div>
     <div id="w-a11y" data-search="widget voiceover accessibility label phrase" data-title="Widget VoiceOver" data-kind="Widget"><dt>VoiceOver</dt><dd>One full phrase a show: “House of the Dragon, in 3 hours, HBO US, no official stream in your country”; “Silo, expected in 2 days 4 hours, Apple TV”; “Nothing scheduled for your shows”. The episode title is left out, so nothing is spoiled.</dd></div>
     <div id="w-ids" data-search="widget ids accessibility identifiers" data-title="Widget IDs" data-kind="Widget"><dt>IDs</dt><dd><code>widget-inline</code> · <code>widget-circular-ring</code>, <code>-value</code> · <code>widget-rect-meta</code>, <code>-title</code>, <code>-countdown</code>, <code>-provider</code> · <code>widget-small-provider</code>, <code>-title</code>, <code>-countdown</code>, <code>-out</code> · <code>widget-medium-row-1</code> to <code>-3</code>, <code>widget-large-row-1</code> to <code>-4</code>, <code>widget-more</code>, <code>widget-medium-empty</code>, <code>widget-large-empty</code></dd></div>
   </dl>
@@ -1294,7 +1292,7 @@ Section {
       <tr><td>Contrast</td><td id="a11y-contrast">See the <a href="#contrast">contrast matrix</a>.</td><td id="a11y-contrast-status">See matrix</td></tr>
       <tr><td>Dynamic Type</td><td>Everything in the app grows with the text size. Serif titles keep their designed size (32, 34, 28, 22, 20) and grow like large titles (<code>.serif(_:relativeTo:)</code>); countdowns grow like a large title too, 1.76 times at the largest size. At the accessibility sizes: a row’s countdown goes under its title, the service line and titles are never cut, Show detail’s episodes stack, the art header is 280 tall, Search shows one poster a row, Welcome scrolls and drops the poster wall. Widgets and the Live Activity keep fixed sizes on their fixed canvas. Checked at AX5 on every main screen (2 Nov).</td><td>Done</td></tr>
       <tr><td>Reduce Motion</td><td>The three animations stop: the 0.35 s art fade and Welcome’s two fades (the wall, and each picture on it) are skipped, and the wall’s drifting rows stay still.</td><td>Done</td></tr>
-      <tr><td>Tinted and Always-On</td><td>The countdown and the empty headline take a widget’s tint; on the Lock Screen so do the inline line, the rectangular title and the circular ring, value and day number. Always-On hides the art and dims every other ink to 0.7.</td><td>Done</td></tr>
+      <tr><td>Tinted and Always-On</td><td>The countdown and the empty headline take a widget’s tint; on the Lock Screen so do the inline line, the rectangular title and the circular ring, value and day number. Always-On hides the art and dims every other ink to 0.85 (was 0.7), so muted text stays legible.</td><td>Done</td></tr>
       <tr><td>Decorative images</td><td>Art, posters, logos, the Welcome wall and the poster mark are hidden from VoiceOver. Only one picture is labelled: the key art on the show page that Search opens (<code>ShowPreviewView</code>), read “Silo artwork, image”. Show detail’s and Upcoming’s art stay hidden.</td><td>Done</td></tr>
     </tbody></table></div>
 

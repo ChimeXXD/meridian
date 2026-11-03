@@ -35,7 +35,7 @@ Status: **Fixed** · **Planned** (agreed direction, in the current polish round)
 | 3 | Critical | Every screen at large text sizes | Serif titles have fixed sizes, so they never grow, while everything else does. At AX5 "Silo" stays 32 pt under a 53 pt out line, and the countdown grows 3.1 times. The order of importance flips. | Serif text styles (`.largeTitle`, `.title`, `.title2`, `.title3`); the countdown scales with `.largeTitle` (1.76 times). | **Fixed** |
 | 4 | High | Show detail | "Report a wrong time" and "Unfollow" look disabled: 15 pt, 60% white, no icon. The grey overrides Unfollow's destructive red. At AX5 the wrapped label is centred. | A grouped inset card: symbol and label rows, Report with an "opens elsewhere" arrow, Unfollow in system red, kept the confirmation. | **Fixed** |
 | 5 | High | Show detail (anime) | The anime offset control, a **Must** in PLAN.md, isn't built. There's no way to move Frieren from the Japan time to the stream time. | "Streams N min after Japan" stepper, 0–180 in 15s, for anime only. | **Fixed** (stepper; Chime to approve) |
-| 6 | High | Every hero and row | "Where it's on", a third of the core question, is the weakest text: a 13 pt muted footnote limited to one line. At AX5 it truncates and loses the country ("S3E1 · HBO ·…", against rule 11). | 15 pt at 75% white, two lines at accessibility sizes. | Partly fixed: never cut at large sizes; size and order planned |
+| 6 | High | Every hero and row | "Where it's on", a third of the core question, is the weakest text: a 13 pt muted footnote limited to one line. At AX5 it truncates and loses the country ("S3E1 · HBO ·…", against rule 11). | 15 pt at 75% white, two lines at accessibility sizes. | Partly fixed; the size and order change is for Chime to see first |
 | 7 | High | Show detail, AX5 | The episode label column is fixed at 52 pt, so "S3E9" stacks one letter per line. | Scaled width; at accessibility sizes, stack the label over the title. | **Fixed** |
 | 8 | High | Upcoming rows, AX5 | The row countdown grows to 75 pt and won't shrink (`fixedSize`), squeezing the title to "The Last / of Us". | Scale it with `.largeTitle`; at accessibility sizes, put the countdown under the title. | **Fixed** |
 | 9 | High | Welcome, AX5 | The taller text pushes the logo onto the poster wall, where contrast can drop to about 2.1:1. There's no scrolling, so a short phone can't fit it (inferred). | Scroll view; at accessibility sizes, a shorter wall. | **Fixed** |
@@ -47,22 +47,22 @@ Status: **Fixed** · **Planned** (agreed direction, in the current polish round)
 | 15 | Medium | Search, show page | Unfollowing is one tap there but asks for confirmation in detail, and silently drops the show's Live Activity setting and offset. | The same confirmation everywhere. | **Fixed** |
 | 16 | Medium | Search | While the airing grid loads, when it fails and when it's empty, it shows the same line. A search error has no retry button. | `ContentUnavailableView` states with "Try again"; no TV results → "Search Anime". | **Fixed** |
 | 17 | Medium | Upcoming, scrolled | The hero countdown slides under the status bar, and its ghost overlaps the clock. | A fade over the status bar. | Planned |
-| 18 | Medium | Section headers | One role, three styles: Upcoming's 15 pt muted sans, Search's 22 pt white serif "Results", Settings' system headers. | 15 pt semibold, muted, everywhere. | Planned |
+| 18 | Medium | Section headers | One role, three styles: Upcoming's 15 pt muted sans, Search's 22 pt white serif "Results", Settings' system headers. | 15 pt semibold, muted, everywhere. | **Fixed** |
 | 19 | Medium | Rows, widgets | The "d" and "h" units are half the numeral size, 7.5 pt in widget compact rows, under the 11 pt minimum. | Half size with an 11 pt floor. | **Fixed** |
 | 20 | Medium | Show detail | Live Activity switch on and off look almost the same (white at 60% tint), and the control contrast is 2.49:1 (under 3:1). | A stronger tint; state in the subtitle (#11). | **Fixed** |
-| 21 | Medium | Lock Screen widgets, Live Activity | In Always-On, muted text dims again to about 3.45:1. | Dim to 85%, not 70%, for muted text. | Planned |
-| 22 | Medium | Widgets (VoiceOver) | The spoken countdown is computed per timeline entry, so it can be up to 59 minutes behind the ticking timer. | While ticking, speak the release time instead. | Planned |
-| 23 | Medium | Art everywhere | With Smart Invert, posters, art and logos invert. | `accessibilityIgnoresInvertColors` on images. | Planned |
+| 21 | Medium | Lock Screen widgets, Live Activity | In Always-On, muted text dims again to about 3.45:1. | Dim to 85%, not 70%, for muted text. | **Fixed** |
+| 22 | Medium | Widgets (VoiceOver) | The spoken countdown is computed per timeline entry, so it can be up to 59 minutes behind the ticking timer. | While ticking, speak the release time instead. | Decide: speaking the time would change CLAUDE.md's example wording |
+| 23 | Medium | Art everywhere | With Smart Invert, posters, art and logos invert. | `accessibilityIgnoresInvertColors` on images. | **Fixed** |
 | 24 | Medium | Search, AX5 (inferred) | A fixed 3-column grid with two-line limits cuts titles and certainty words. | One column at accessibility sizes. | **Fixed** |
 | 25 | Medium | Show detail, Upcoming, AX5 | The art header is fixed at 472–500 pt, more than half the screen, pushing the facts below the fold. | 280 pt at accessibility sizes. | **Fixed** |
-| 26 | Low | Search grid | Titles (13 pt) and info lines (12 pt) differ by 1 pt and read as one block. | Titles 15 pt. | Planned |
-| 27 | Low | Primary buttons | Three styles for one role (Welcome, show page, empty Upcoming). | One white 50 pt capsule with `.headline` text. | Planned |
+| 26 | Low | Search grid | Titles (13 pt) and info lines (12 pt) differ by 1 pt and read as one block. | Titles 15 pt. | **Fixed** |
+| 27 | Low | Primary buttons | Three styles for one role (Welcome, show page, empty Upcoming). | One white 50 pt capsule with `.headline` text. | **Fixed** |
 | 28 | Low | Report a wrong time | Without Mail, the copied text doesn't say where to send it. | Offer the share sheet with the report. | Planned |
-| 29 | Low | Whole app | No haptics. | Success on follow; selection on chips and the TV/Anime switch. | Planned |
+| 29 | Low | Whole app | No haptics. | Success on follow; selection on chips and the TV/Anime switch. | **Fixed** |
 | 30 | Low | Lock Screen Live Activity | "Expected" twice ("Expected in" over the timer, "Expected Mon 21:00" under it), and a delay is a strike-through rather than words. | The expanded island's wording (D-57). | **Fixed** |
 | 31 | Low | Widgets and Live Activity | Title weights and small sizes drift (serif regular, medium or semibold; 11, 12 and 13 pt). | Serif regular, small text 12 pt medium. | Planned |
-| 32 | Low | VoiceOver | Spotlight, empty and Welcome headlines aren't headers; "S4E1" is spelled letter by letter; the show page reads its art aloud; a failed refresh is heard only at the end. | Header traits, "Season 4, episode 1", hide the art, an announcement. | Planned |
-| 33 | Low | Code | `DropRow` and `SectionHeader` aren't used anywhere. | Delete them. | Planned |
+| 32 | Low | VoiceOver | Spotlight, empty and Welcome headlines aren't headers; "S4E1" is spelled letter by letter; the show page reads its art aloud; a failed refresh is heard only at the end. | Header traits, "Season 4, episode 1", hide the art, an announcement. | Partly fixed: headers marked, "Season 4, episode 1" spoken; the show page art and a failed-refresh announcement left |
+| 33 | Low | Code | `DropRow` and `SectionHeader` aren't used anywhere. | Delete them. | Skipped: kept in the design system's archive, and a test still uses SectionHeader |
 | 34 | Low | Search (inferred) | No search field shows in the screenshots. | Check on the phone first. | Decide |
 
 ## The type scale after this round

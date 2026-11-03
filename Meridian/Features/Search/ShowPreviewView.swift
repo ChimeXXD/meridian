@@ -107,6 +107,7 @@ struct ShowPreviewView: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(following ? "Following \(result.title)" : "Follow \(result.title)")
+        .sensoryFeedback(.success, trigger: following) { old, new in !old && new }
         .accessibilityIdentifier("show-preview-follow")
         .unfollowConfirmation(result.title, isPresented: $confirmingUnfollow) {
             try? FollowStore(context: context).unfollow(catalog: result.catalog, id: result.id)

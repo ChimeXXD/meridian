@@ -25,6 +25,13 @@ extension Drop {
     var episodeAndProvider: String {
         [episodeLabel, provider?.display].compactMap(\.self).joined(separator: " · ")
     }
+
+    /// The same line as VoiceOver should say it: "Season 4, episode 1, HBO US", not "S 4 E 1" (UX audit #32).
+    var spokenEpisodeAndProvider: String {
+        let episode = number.map { n in season.map { "Season \($0), episode \(n)" } ?? "Episode \(n)" }
+        let service = provider?.display.replacingOccurrences(of: " · ", with: " ")
+        return [episode, service].compactMap(\.self).joined(separator: ", ")
+    }
 }
 
 

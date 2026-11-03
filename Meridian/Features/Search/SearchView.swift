@@ -18,6 +18,8 @@ struct SearchView: View {
 
     /// The show whose ✓ was tapped, waiting for "Stop following …?".
     @State private var unfollowing: SearchResult?
+    /// Counts follow taps in the grid: the success tick follows a tap here, not a follow made on a pushed show page.
+    @State private var followTaps = 0
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.modelContext) private var context
     @Query(sort: \FollowedShow.followedAt) private var followed: [FollowedShow]
@@ -54,6 +56,8 @@ struct SearchView: View {
                         ForEach(Kind.allCases, id: \.self) { Text($0.rawValue).tag($0) }
                     }
                     .pickerStyle(.segmented)
+                    .sensoryFeedback(.selection, trigger: kind)
+                    .sensoryFeedback(.success, trigger: followTaps)  // once for the whole grid, not per button
                     .accessibilityIdentifier("search-kind")
                     content
                 }
@@ -220,8 +224,10 @@ struct SearchView: View {
                                         drops: [Int: Drop] = [:],
                                         @ViewBuilder meta: @escaping (SearchResult) -> Meta) -> some View {
         VStack(alignment: .leading, spacing: Tokens.Space.s) {
+            // The section-header style Upcoming and Show detail use (UX audit #18): one role, one look.
             Text(header)
-                .serif(22, relativeTo: .title2)
+                .font(.subheadline.weight(.medium))
+                .foregroundStyle(NightInk.muted)
                 .accessibilityAddTraits(.isHeader)
                 .accessibilityIdentifier(headerID)
             // One poster a row at the accessibility sizes, so titles and their certainty words aren't cut (audit #24).
@@ -248,7 +254,7 @@ struct SearchView: View {
                     followButton(result, size: 32, id: "\(id)-follow").padding(Tokens.Space.xxs)
                 }
             Text(result.title)
-                .font(.footnote.weight(.medium))
+                .font(.subheadline.weight(.medium))  // a step above its 12 pt info lines (UX audit #26)
                 .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
                 .accessibilityAddTraits(.isButton)
                 .accessibilityHint("Opens the show")
@@ -271,7 +277,12 @@ struct SearchView: View {
         let following = followed.contains { $0.key == FollowedShow.key(catalog: result.catalog, id: result.id) }
         // Following is one tap; unfollowing asks first, as everywhere (UX audit #15).
         return Button {
-            if following { unfollowing = result } else { try? FollowStore(context: context).follow(result.followShow) }
+            if following {
+                unfollowing = result
+            } else {
+                // A tap you feel on follow, only once the show is really saved.
+                if (try? FollowStore(context: context).follow(result.followShow)) != nil { followTaps += 1 }
+            }
         } label: {
             Image(systemName: following ? "checkmark" : "plus")
                 .font(.system(size: size * 0.4, weight: .semibold))
