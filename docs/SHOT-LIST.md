@@ -11,7 +11,12 @@ Everything the portfolio case study and the demo video need, with Silo as the ex
 3. The island shows only outside Meridian: after each Live Activity button, go to the Home Screen.
 4. A clean Home Screen page with the Meridian widgets: small, medium and large. On the Lock Screen: inline,
    circular and rectangular.
-5. Screen Recording in Control Centre, mic off. Recordings are AirDropped to the Mac when you're done.
+5. Record the videos with **QuickTime on the Mac, not Control Centre's Screen Recording**: iOS puts its red
+   recording pill in the island, and it takes the island's place ahead of Meridian. Plug the iPhone into the Mac
+   with a cable, unlock it and trust the Mac. Then QuickTime Player › File › New Movie Recording, and in the menu
+   next to the record button pick the iPhone as Camera and no microphone. The film is the phone's own screen at
+   about 60 fps, with no recording pill. Try a 10-second clip of the island first. Screenshots (side button and
+   volume up) never show a pill, so the screenshot rows can be done either way.
 
 ## Phone recordings and screenshots
 
@@ -32,7 +37,7 @@ Each block starts from one Debug button. Video lengths are what the edit needs; 
 | 4 | Home Screen widgets ticking | video, 5 s |
 
 **C. "Live Activity for Silo now (drop in 3 min)"**: the island starts at once, 3 minutes before the drop. Go
-straight to the Home Screen and start recording: iOS never shows Meridian's own Live Activity in the island while
+straight to the Home Screen and start recording in QuickTime: iOS never shows Meridian's own Live Activity in the island while
 Meridian is open. ("Live Activity for Silo in 3 min (lead 1 min)" books it to start 2 minutes after the tap instead.)
 
 | # | Shot | Kind |
