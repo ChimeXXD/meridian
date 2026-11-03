@@ -2,6 +2,21 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Day 7: published (Tue 3 Nov 2026)
+
+- **Published on Chime's go-ahead:**
+  - Tagged `v0.1.0`, with a pre-release whose 7 screenshots (real art, D-63) the README embeds.
+  - `ChimeXXD/meridian` is **public**, with a description, homepage (the design system) and 10 topics.
+- **Checked:**
+  - All 7 release images return 200, and so does the raw rules URL the app fetches.
+  - CI run 41562872213 on the public repo: 288 tests in 50 suites passed.
+  - The public-mode build is installed on the phone.
+- **README fix (Chime's screenshot):** GitHub shrank the What it does table's images to about 100 px. Each feature now has a heading and its screens centred at 300 pt (the island at 620). Checked on github.com in headless Chrome: rendered widths of 300, 340 and 620.
+- **Left:**
+  - Chime's look at the polish.
+  - The 30-second video and the portfolio case study (Phase 7).
+  - Reinstall before Mon 9 Nov.
+
 ## Day 7: open-source checklist and public mode (Tue 3 Nov 2026)
 
 - **D-62:** AniList stays on, published without their answer; Chime accepts the risk.

@@ -208,22 +208,22 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
 ## Day 7: Portfolio and open source (Thu 5 Nov)
 
 ### Claude CLI does
-- [ ] **README** written for a recruiter or engineer who gives it 60 seconds:
+- [x] **README** written for a recruiter or engineer who gives it 60 seconds:
   - the one-line pitch and the demo video or GIF at the top
   - the problem: "release times are tied to US zones; placeholders lie"
   - how it works: a Mermaid architecture diagram (app → JSON snapshot in the App Group → widgets and Live Activity)
   - the time-rules table and a "how every time is sourced" explainer
   - the test count, the CI badge, how to run it (with a free Apple ID: set your own bundle prefix and App Group), credits and licences
-- [ ] **Case study** draft for the portfolio site, in `docs/CASE-STUDY.md`: the problem, the research (TV Time's closure, the placeholder discovery, the clock-change matrix), design decisions with design references, the engineering, the accuracy audit result, and what's next.
-- [ ] **Open-source checklist:**
+- [x] **Case study** draft for the portfolio site, in `docs/CASE-STUDY.md`: the problem, the research (TV Time's closure, the placeholder discovery, the clock-change matrix), design decisions with design references, the engineering, the accuracy audit result, and what's next.
+- [x] **Open-source checklist:**
   - no secrets in the history (`git log -p` grep, and GitHub secret scanning once public)
   - no artwork files committed (art is fetched at runtime, D-37)
   - the TVmaze fixtures noted as CC BY-SA in `MeridianTests/Fixtures/README.md`
   - AniList's answer recorded (O-5)
   - LICENSE and credits present
   - personal device IDs removed
-- [ ] Switch on the remote rules fetch and the GitHub-issue reporting now that the repo will be public (D-34), and widen CI to every push and PR (D-35). Before switching on, persist `RulesStore`'s last good copy and next-attempt time to Caches, so cold launches and offline launches keep the newest valid rules (Day 1 review item 6).
-- [ ] Tag `v0.1.0`. **Make the repo public:** `gh repo edit --visibility public --accept-visibility-change-consequences`. Add topics and a description.
+- [x] Switch on the remote rules fetch and the GitHub-issue reporting now that the repo will be public (D-34), and widen CI to every push and PR (D-35). Before switching on, persist `RulesStore`'s last good copy and next-attempt time to Caches, so cold launches and offline launches keep the newest valid rules (Day 1 review item 6).
+- [x] Tag `v0.1.0`. **Make the repo public:** `gh repo edit --visibility public --accept-visibility-change-consequences`. Add topics and a description.
 
 ### Chime does
 - [ ] Edit the 30-second video: Lock Screen countdown → Live Activity start → Dynamic Island → "Out now". Use the Debug fake drop recording.
