@@ -9,9 +9,10 @@
 <h1 align="center">Meridian</h1>
 
 <p align="center">
-  <b>How long until your next episode, in your time zone, and where it's on.</b><br>
-  A local-first iPhone app with Lock Screen and Home Screen widgets and a release-night Live Activity.<br>
-  Every time says how sure it is, in plain words, and where it came from.
+  <b>Know exactly when your next episode comes out, in your own time zone.</b><br>
+  Meridian is a free iPhone app for people who follow TV shows and anime. Pick the shows you watch,<br>
+  and it counts down to each new episode in your local time and tells you where to watch it,<br>
+  right on your Lock Screen and Home Screen, so you never have to work out the time yourself.
 </p>
 
 <p align="center">
@@ -51,13 +52,29 @@ app runs and belongs to its owners; it's never stored in this repository.</sub><
 
 ## Why Meridian
 
-Release times are set in the platform's home zone. Netflix drops at midnight Pacific, Apple TV the evening before
-in New York, anime on Japanese TV. A viewer in Lagos, London or Kolkata has to do that maths, and the apps that do it
-for them get it wrong in quiet ways: TVmaze, the data most trackers use, gives a streaming episode with no published
-time a **fake noon placeholder**, and apps show it as if it were real.
+**New episodes come out on their home country's clock, not yours.** A Netflix show drops at midnight in California. An
+HBO series airs at 9 pm in New York. An anime premieres on Japanese TV. If you live anywhere else, you have to work
+out what that means for you, and get it right twice a year when the clocks change.
 
-Meridian does the maths for your zone and is honest when a time is only an estimate. It was built for a viewer in
-Lagos (UTC+1, no daylight saving) first.
+> **For example:** *House of the Dragon* airs on HBO on Sunday at 9 pm New York time. For a fan in Lagos, that's
+> **Monday at 3 am**. Meridian shows exactly that: "Out Mon at 03:00", with a countdown.
+
+Most tracking apps don't help. They show the US time, or worse, a made-up time: when a streaming service hasn't
+announced an hour, the data most of these apps share fills in a placeholder of noon, and the apps show it as if it
+were real. Fans abroad end up staying up for nothing or finding out a day late.
+
+**Meridian does three things about it:**
+
+1. **It converts every release to your time zone**, including the weeks when clocks change.
+2. **It tells you how sure it is, in plain words.** "Out" means the time is official. "Expected" means it's the
+   service's usual release time, not an announced one. When nobody knows the hour, it shows the date and no
+   countdown, rather than inventing a time.
+3. **It puts the countdown where you'll see it**: Home Screen and Lock Screen widgets, and on release night a live
+   countdown on your Lock Screen and in the Dynamic Island (the pill at the top of newer iPhones) that turns to
+   "Out now" when the episode lands.
+
+There's no account and nothing to sign up for, and nothing about you leaves your phone. It was built first for a
+viewer in Lagos, Nigeria, and works in any time zone.
 
 ## What it does
 
