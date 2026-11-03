@@ -61,13 +61,53 @@ Lagos (UTC+1, no daylight saving) first.
 
 ## What it does
 
-| | |
-|---|---|
-| <img src="https://github.com/ChimeXXD/meridian/releases/download/v0.1.0/detail.png" width="260" alt="Show detail: The Last of Us over its key art, its countdown, when it's out in Lagos, S3E1 · HBO · US, the sentence on where the time came from, the Live Activity switch, and Report a wrong time and Unfollow"> | **Upcoming and Show detail.** The next episode as a countdown, the time in your zone in words ("Expected tomorrow at 00:43 Lagos time"), the service and its country, and one sentence on where the time came from. A published time that moves later says "Delayed from 20:55". Anime get a stream delay after their Japanese broadcast. |
-| <img src="https://github.com/ChimeXXD/meridian/releases/download/v0.1.0/search.png" width="260" alt="Search: TV and Anime, filter chips, and a poster grid of shows airing in the next few days, each with its service, time and a follow button"> | **Search.** TV from TVmaze, anime from AniList, with what's airing this week filtered by your services. Follow in one tap; unfollowing always asks. |
-| <img src="https://github.com/ChimeXXD/meridian/releases/download/v0.1.0/widgets.png" width="260" alt="Home Screen widgets on an iPhone: a medium widget with Silo's art, Expected Wed at 23:00 and 2d 4h, two more rows, and a small widget beside the Meridian icon"> | **Widgets.** Small, medium and large on the Home Screen; inline, circular and rectangular on the Lock Screen. The countdown ticks in the last 24 hours and reads "4d 4h" before that. They never count up. |
-| <img src="https://github.com/ChimeXXD/meridian/releases/download/v0.1.0/live-activity.png" width="260" alt="The expanded Dynamic Island: Silo, S2E5 · Apple TV, its art, Expected Mon 21:00 and a 2:00:00 countdown"> | **Release-night Live Activity.** Scheduled before the episode (iOS 26), on the Lock Screen and in the Dynamic Island, then "Out now" in gold with no app running. Same-night episodes merge into one; at most 3 are booked at a time. |
-| <img src="https://github.com/ChimeXXD/meridian/releases/download/v0.1.0/welcome.png" width="260" alt="Welcome: a drifting wall of this week's show art, the Meridian logo, the question it answers and Times shown for Lagos, UTC+1"> | **Local-first.** No account, no server, no analytics. Times refresh when you open the app (at most 15 minutes old) and work offline with "Updated 14:05". |
+### Upcoming and Show detail
+
+<p align="center">
+  <img src="https://github.com/ChimeXXD/meridian/releases/download/v0.1.0/upcoming.png" width="300" alt="Upcoming: Silo's key art fading into night over its countdown, its expected time in Lagos and S4E1 · Apple TV, then the next 24 hours">
+  &nbsp;&nbsp;
+  <img src="https://github.com/ChimeXXD/meridian/releases/download/v0.1.0/detail.png" width="300" alt="Show detail: The Last of Us over its key art, its countdown, when it's out in Lagos, S3E1 · HBO · US, the sentence on where the time came from, the Live Activity switch, and Report a wrong time and Unfollow">
+</p>
+
+The next episode as a countdown, the time in your zone in words ("Expected tomorrow at 00:43 Lagos time"), the service
+and its country, and one sentence on where the time came from. A published time that moves later says "Delayed from
+20:55". Anime get a stream delay after their Japanese broadcast.
+
+### Search
+
+<p align="center">
+  <img src="https://github.com/ChimeXXD/meridian/releases/download/v0.1.0/search.png" width="300" alt="Search: TV and Anime, filter chips, and a poster grid of shows airing in the next few days, each with its service, time and a follow button">
+</p>
+
+TV from TVmaze, anime from AniList, with what's airing this week filtered by your services. Follow in one tap;
+unfollowing always asks.
+
+### Widgets
+
+<p align="center">
+  <img src="https://github.com/ChimeXXD/meridian/releases/download/v0.1.0/widgets.png" width="340" alt="Home Screen widgets on an iPhone: a medium widget with Silo's art, Expected Wed at 23:00 and 2d 4h, two more rows, and a small widget beside the Meridian icon">
+</p>
+
+Small, medium and large on the Home Screen; inline, circular and rectangular on the Lock Screen. The countdown ticks
+in the last 24 hours and reads "4d 4h" before that. They never count up.
+
+### Release-night Live Activity
+
+<p align="center">
+  <img src="https://github.com/ChimeXXD/meridian/releases/download/v0.1.0/live-activity.png" width="620" alt="The expanded Dynamic Island: Silo, S2E5 · Apple TV, its art, Expected Mon 21:00 and a 2:00:00 countdown">
+</p>
+
+Scheduled before the episode (iOS 26), on the Lock Screen and in the Dynamic Island, then "Out now" in gold with no
+app running. Same-night episodes merge into one; at most 3 are booked at a time.
+
+### Local-first
+
+<p align="center">
+  <img src="https://github.com/ChimeXXD/meridian/releases/download/v0.1.0/welcome.png" width="300" alt="Welcome: a drifting wall of this week's show art, the Meridian logo, the question it answers and Times shown for Lagos, UTC+1">
+</p>
+
+No account, no server, no analytics. Times refresh when you open the app (at most 15 minutes old) and work offline
+with "Updated 14:05".
 
 ## Every time says how sure it is
 
