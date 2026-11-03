@@ -1,14 +1,13 @@
 # Build and test Meridian on GitHub's macOS runners (D6-4, D-35).
 #
-# While the repo is private, Actions minutes come out of the free plan's $12 a month (macOS at $0.062 a minute, about
-# 190 minutes), and we push after every commit, so this runs only when started by hand: Actions › CI › Run workflow,
-# or `gh workflow run ci.yml`. On Day 7, when the repo is public and standard runners are free, add:
-#   push:
-#     branches: [main]
-#   pull_request:
+# Every push to main and every pull request, now that the repo is public and standard runners are free (Day 7,
+# D-35). While it was private, this ran only by hand: the free plan's macOS minutes would not cover a push a commit.
 name: CI
 
 on:
+  push:
+    branches: [main]
+  pull_request:
   workflow_dispatch:
 
 concurrency:

@@ -2,6 +2,23 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Day 7: open-source checklist and public mode (Tue 3 Nov 2026)
+
+- **D-62:** AniList stays on, published without their answer; Chime accepts the risk.
+- **D-63:** README screenshots show real art as `v0.1.0` release assets, never committed.
+- **Checklist:**
+  - The history has no secrets, keys or Team ID, and Chime's email isn't in it (only the `YOURTEAMID` placeholder).
+  - Device and simulator UDIDs are replaced by placeholders in `docs/HANDOFF.md`. Older commits still hold them: not secret, and a rewrite would mean a force-push.
+- **Remote rules:**
+  - `RulesStore` fetches `rules/platform-rules.json` from `main` once a day and keeps the last good copy and the next attempt time in Caches, so cold and offline launches serve the newest valid rules (PLAN Day 1 review item 6).
+  - A bundled file newer than the cache wins.
+  - `UpcomingModel.refresh` uses the newest rules.
+  - RulesStoreCacheTests: 3, red first. The existing remote test's sample date moved to 2099, because the bundled file is now dated 3 Nov.
+- **Reports:** `ReportRoute.repoIsPublic = true`, so "Report a wrong time" opens a prefilled GitHub issue.
+- **CI:** runs on every push to main and every pull request (D-35).
+- **Case study draft:** `docs/CASE-STUDY.md`, by an agent, with TODO(Chime) marks.
+- **Not done:** publishing, which waits for Chime's go-ahead.
+
 ## Day 6: the accuracy audit, 20 of 20 (Tue 3 Nov 2026)
 
 - **D6-5:**

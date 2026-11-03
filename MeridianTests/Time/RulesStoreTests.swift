@@ -86,7 +86,7 @@ struct RulesStoreTests {
     func remoteValidIsUsedDaily() async throws {
         let counter = CallCounter()
         var remote = try Fixture.bundledRules()
-        remote.updated = "2026-11-01"
+        remote.updated = "2099-01-01"  // newer than the bundled file, which the store would otherwise serve
         let remoteData = try JSONEncoder.rules.encode(remote)
         let clock = TestClock(now: Date(iso: "2026-11-01T09:00:00Z"))
         let store = RulesStore(bundled: try Fixture.bundledRules(), remoteURL: URL(string: "https://rules.example/r.json"),
@@ -94,7 +94,7 @@ struct RulesStoreTests {
             await counter.hit()
             return remoteData
         }
-        #expect(await store.current().updated == "2026-11-01")
+        #expect(await store.current().updated == "2099-01-01")
         clock.now = Date(iso: "2026-11-01T20:00:00Z")
         _ = await store.current()
         #expect(await counter.count == 1)

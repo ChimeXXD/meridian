@@ -60,7 +60,7 @@ Written 2 Nov 2026 (Lagos) at the end of the fourth long session with Chime (the
 
 ## Where things stand (commit `818e0a7`, all pushed)
 
-- **On Chime's iPhone 14 Pro** (UDID 00008120-001044862EC0201E), installed over Wi-Fi. **Signing expires Mon 9 Nov 2026 00:59 Lagos** (2026-11-08T23:59Z, profile for `dev.chime.meridian`): reinstall before then.
+- **On Chime's iPhone 14 Pro** (UDID <your-iphone-udid>), installed over Wi-Fi. **Signing expires Mon 9 Nov 2026 00:59 Lagos** (2026-11-08T23:59Z, profile for `dev.chime.meridian`): reinstall before then.
 - **Checks:** 252 tests pass (gate build + test + spec). The design-system site has 0 console errors, no overflow at 320, and deep links land.
 - **Live:** https://meridian-designsystem.vercel.app has the latest site.
 
@@ -90,10 +90,10 @@ Written 2 Nov 2026 (Lagos) at the end of the fourth long session with Chime (the
 
 ```bash
 # Build and install on Chime's iPhone over Wi-Fi. Don't launch or screenshot without asking.
-xcodebuild -scheme Meridian -destination 'id=00008120-001044862EC0201E' -allowProvisioningUpdates -derivedDataPath build/device -quiet build
-xcrun devicectl device install app --device 00008120-001044862EC0201E build/device/Build/Products/Debug-iphoneos/Meridian.app
+xcodebuild -scheme Meridian -destination 'id=<your-iphone-udid>' -allowProvisioningUpdates -derivedDataPath build/device -quiet build
+xcrun devicectl device install app --device <your-iphone-udid> build/device/Build/Products/Debug-iphoneos/Meridian.app
 # Show Welcome on the phone without deleting follows (only with Chime's go-ahead):
-xcrun devicectl device process launch --device 00008120-001044862EC0201E --terminate-existing dev.chime.meridian -- -inMemoryStore -welcomeDone NO
+xcrun devicectl device process launch --device <your-iphone-udid> --terminate-existing dev.chime.meridian -- -inMemoryStore -welcomeDone NO
 # All checks (foreground, alone):
 node "/Users/chimexd/.claude/plugins/cache/proof/proof/0.4.0/scripts/gate.mjs" --run
 # Narrow tests: never -quiet; grep the result lines
@@ -106,5 +106,5 @@ npx vercel@latest ls meridian-design-system
 #   -tab search|settings, -query <text>, -kind anime, -inMemoryStore, -welcomeDone NO, -openFirstResult YES
 ```
 
-- **Simulator:** `iPhone 18 Pro, OS=27.0` (UDID 3B97D55E-ECD1-4062-9CDB-525FA31CCB10). Shut it down after use.
+- **Simulator:** `iPhone 18 Pro, OS=27.0` (UDID <simulator-udid>). Shut it down after use.
 - **Scratchpad:** the scratchpad of session `7d0987d9…` holds the reference pick pages, QA and UX reports, and the Playwright scripts (`pw-unslop.3vSP/`). `claude --resume` in this folder reopens the full transcript.

@@ -7,8 +7,8 @@ enum ReportRoute: Equatable, Sendable {
     case email(String)
     case githubIssue
 
-    /// Flip to `true` when the repo goes public on Day 7 (D-34): reports then become GitHub issues.
-    static let repoIsPublic = false
+    /// The repo is public (Day 7, D-34): reports are prefilled GitHub issues anyone can follow.
+    static let repoIsPublic = true
 
     static var current: ReportRoute {
         repoIsPublic ? .githubIssue

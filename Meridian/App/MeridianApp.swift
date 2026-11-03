@@ -16,8 +16,11 @@ struct MeridianApp: App {
         // The country from the time zone (D2-6), so Lagos means Nigeria whatever the region setting says.
         let country = (try? ViewerCountry.loadBundled())?.code(zone: TimeZone.current.identifier,
                                                                region: Locale.current.region?.identifier)
+        // Rules updates come from the public repo once a day, kept in Caches between launches (D-34, Day 7).
+        let store = RulesStore(bundled: rules, remoteURL: RulesStore.remoteURL, cacheURL: RulesStore.cacheURL,
+                               fetch: RulesStore.httpFetch())
         _model = State(initialValue: UpcomingModel(client: client, anilist: anilist, rules: rules,
-                                                   viewerCountry: country))
+                                                   viewerCountry: country, rulesStore: store))
     }
 
     var body: some Scene {

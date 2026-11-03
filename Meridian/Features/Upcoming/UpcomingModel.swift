@@ -14,7 +14,9 @@ final class UpcomingModel {
 
     private let client: TVmazeClient
     private let anilist: AniListClient
-    private let loader: UpcomingLoader
+    private var loader: UpcomingLoader
+    /// Fetches the rules file from GitHub at most once a day (D-34); nil keeps the bundled rules.
+    private let rulesStore: RulesStore?
     private let snapshots: WidgetSnapshotWriter
     /// Bumped by each refresh, so a slower, older refresh (a launch and a foreground at once, or a follow change
     /// mid-load) can't overwrite a newer result.
@@ -25,7 +27,9 @@ final class UpcomingModel {
     /// The rules Upcoming resolves times with, shared with Search so both say the same time for an episode.
     var rules: RulesFile { loader.rules }
     init(client: TVmazeClient, anilist: AniListClient, rules: RulesFile, viewerCountry: String?,
-         snapshots: WidgetSnapshotWriter = .appGroup, defaults: UserDefaults = .standard) {
+         snapshots: WidgetSnapshotWriter = .appGroup, defaults: UserDefaults = .standard,
+         rulesStore: RulesStore? = nil) {
+        self.rulesStore = rulesStore
         self.defaults = defaults
         lastUpdated = defaults.object(forKey: Self.lastUpdatedKey) as? Date
         self.client = client
@@ -40,6 +44,14 @@ final class UpcomingModel {
         }
         generation += 1
         let current = generation
+        // The newest valid rules first, so a fixed time reaches the phone without an app update.
+        if let rulesStore {
+            let latest = await rulesStore.current()
+            if latest != loader.rules {
+                loader = UpcomingLoader(client: loader.client, anilist: loader.anilist, rules: latest,
+                                        viewerCountry: loader.viewerCountry)
+            }
+        }
         var loaded = await loader.load(requests, now: now)
         guard current == generation else { return }
         // An empty follow list reached nothing, so it doesn't count as an update.
