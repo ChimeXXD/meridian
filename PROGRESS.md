@@ -2,6 +2,19 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Day 6: the accuracy audit, 20 of 20 (Tue 3 Nov 2026)
+
+- **D6-5:**
+  - **Cases:** two research agents found 18 drops from 29 Oct to 2 Nov with confirmed times and sources: 11 streaming, 9 broadcast and anime. 2 were skipped because no source gave the hour. 2 more (The Simpsons and Grey's Anatomy, either side of the clock change) were sourced here.
+  - **The check:** `scripts/record-fixtures.py --audit` recorded them to `MeridianTests/Fixtures/audit/`, and `AccuracyAuditTests` checks the SPEC definition in Lagos.
+- **First pass: 14 of 18.**
+  - The misses were WWE Raw and Thursday Night Football (live events on Netflix and Prime), Steel Ball Run (Netflix anime on JST) and The Apothecary Diaries (TVmaze's time wrong, a 40-minute delay).
+  - Fixed with 4 sourced overrides in `rules/platform-rules.json`: 2 show, 2 episode.
+  - **After: 20 of 20**, 3 date-only, drops on both sides of the clock change. FixtureResolutionTests still pass.
+- **Write-up:** `docs/research/accuracy-audit.md` grades each source (official, press or weak) and states the limits.
+- **D3-7** is closed with the clock-change pair.
+- **Process note:** the audit test was parked in the scratchpad while the research ran, so the gate wasn't red for hours on a test with no data yet. It came back unchanged with the 20 cases.
+
 ## Chime's two decisions (Tue 3 Nov 2026)
 
 - **D-61:**

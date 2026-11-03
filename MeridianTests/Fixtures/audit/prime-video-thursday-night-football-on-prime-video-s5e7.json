@@ -1,0 +1,50 @@
+{
+  "show": {
+    "id": 59591,
+    "url": "https://www.tvmaze.com/shows/59591/thursday-night-football-on-prime-video",
+    "name": "Thursday Night Football on Prime Video",
+    "type": "Sports",
+    "language": "English",
+    "genres": [],
+    "status": "Running",
+    "runtime": null,
+    "averageRuntime": 192,
+    "premiered": "2022-09-15",
+    "ended": null,
+    "schedule": {
+      "time": "",
+      "days": [
+        "Thursday"
+      ]
+    },
+    "network": null,
+    "webChannel": {
+      "id": 3,
+      "name": "Prime Video",
+      "country": null,
+      "officialSite": "https://www.primevideo.com"
+    },
+    "externals": {
+      "tvrage": null,
+      "thetvdb": null,
+      "imdb": null
+    }
+  },
+  "episode": {
+    "id": 3617948,
+    "url": "https://www.tvmaze.com/episodes/3617948/thursday-night-football-on-prime-video-5x07-carolina-panthers-at-green-bay-packers",
+    "name": "Carolina Panthers at Green Bay Packers",
+    "season": 5,
+    "number": 7,
+    "type": "regular",
+    "airdate": "2026-10-29",
+    "airtime": "",
+    "airstamp": "2026-10-29T12:00:00+00:00",
+    "runtime": 210
+  },
+  "expected": {
+    "instant": "2026-10-30T00:15:00Z",
+    "source": "https://www.aboutamazon.com/news/entertainment/thursday-night-football-schedule-prime-video",
+    "note": "Prime Video: 8:15 p.m. ET on Thu 29 Oct (Amazon's own schedule: Week 8, Panthers at Packers; games kick off at 8:15 p.m. ET; EDT, so 00:15Z on 30 Oct; pregame starts 7 p.m. ET)"
+  }
+}

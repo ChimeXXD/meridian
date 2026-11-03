@@ -319,8 +319,8 @@
         "at least 6 drops logged with sources"
       ],
       "verify": "rows in docs/research/accuracy-audit.md marked 'day 3'",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "Captured on 3 Nov rather than on Day 3: 6 audit drops on each side of the 1 Nov clock change with sources (e.g. CBS 20:00 ET: Georgie & Mandy at 00:00Z on 29 Oct, FBI at 01:00Z on 2 Nov); AccuracyAuditTests.clockChange."
     },
     {
       "id": "D3-8",
@@ -606,8 +606,8 @@
         "20 of 20 correct per the SPEC definition"
       ],
       "verify": "docs/research/accuracy-audit.md with 20 rows",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "AccuracyAuditTests: 20 real drops (29 Oct to 2 Nov 2026, 15 services) pass the SPEC definition in Lagos, 3 date-only; docs/research/accuracy-audit.md lists the app time, the confirmed time and the source for each. The first pass was 14 of 18; 4 misses (live events on Netflix and Prime, Netflix anime on JST, an NTV delay) were fixed with sourced overrides in rules/platform-rules.json."
     },
     {
       "id": "D6-6",

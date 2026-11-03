@@ -1,0 +1,59 @@
+{
+  "show": {
+    "id": 5429,
+    "url": "https://www.tvmaze.com/shows/5429/detective-conan",
+    "name": "Detective Conan",
+    "type": "Animation",
+    "language": "Japanese",
+    "genres": [
+      "Anime",
+      "Crime",
+      "Science-Fiction",
+      "Mystery"
+    ],
+    "status": "Running",
+    "runtime": 30,
+    "averageRuntime": 31,
+    "premiered": "1996-01-08",
+    "ended": null,
+    "schedule": {
+      "time": "18:00",
+      "days": [
+        "Saturday"
+      ]
+    },
+    "network": {
+      "id": 476,
+      "name": "YTV",
+      "country": {
+        "name": "Japan",
+        "code": "JP",
+        "timezone": "Asia/Tokyo"
+      },
+      "officialSite": null
+    },
+    "webChannel": null,
+    "externals": {
+      "tvrage": 3296,
+      "thetvdb": 72454,
+      "imdb": "tt0131179"
+    }
+  },
+  "episode": {
+    "id": 3795688,
+    "url": "https://www.tvmaze.com/episodes/3795688/detective-conan-2026-10-31-a-paw-sitively-wonderful-investigation",
+    "name": "A Paw-sitively Wonderful Investigation",
+    "season": 2026,
+    "number": 32,
+    "type": "regular",
+    "airdate": "2026-10-31",
+    "airtime": "18:00",
+    "airstamp": "2026-10-31T09:00:00+00:00",
+    "runtime": 30
+  },
+  "expected": {
+    "instant": "2026-10-31T09:00:00Z",
+    "source": "https://www.ytv.co.jp/conan/data/caseTop.json",
+    "note": "YTV: onair_date 2026-10-31, onair_time 18:00 (YTV's own Conan site data feed, ep 1218「わんダフルな捜査」; site says 毎週土曜よる6:00)"
+  }
+}

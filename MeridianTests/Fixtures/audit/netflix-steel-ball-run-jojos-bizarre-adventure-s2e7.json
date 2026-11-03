@@ -1,0 +1,55 @@
+{
+  "show": {
+    "id": 90817,
+    "url": "https://www.tvmaze.com/shows/90817/steel-ball-run-jojos-bizarre-adventure",
+    "name": "Steel Ball Run: JoJo's Bizarre Adventure",
+    "type": "Animation",
+    "language": "Japanese",
+    "genres": [
+      "Action",
+      "Anime",
+      "Fantasy",
+      "Science-Fiction"
+    ],
+    "status": "Running",
+    "runtime": null,
+    "averageRuntime": 28,
+    "premiered": "2026-03-19",
+    "ended": null,
+    "schedule": {
+      "time": "",
+      "days": [
+        "Friday"
+      ]
+    },
+    "network": null,
+    "webChannel": {
+      "id": 1,
+      "name": "Netflix",
+      "country": null,
+      "officialSite": "https://www.netflix.com/"
+    },
+    "externals": {
+      "tvrage": null,
+      "thetvdb": null,
+      "imdb": "tt38268282"
+    }
+  },
+  "episode": {
+    "id": 3800549,
+    "url": "https://www.tvmaze.com/episodes/3800549/steel-ball-run-jojos-bizarre-adventure-2x07-tusk-part-1",
+    "name": "Tusk, Part 1",
+    "season": 2,
+    "number": 7,
+    "type": "regular",
+    "airdate": "2026-10-30",
+    "airtime": "",
+    "airstamp": "2026-10-30T12:00:00+00:00",
+    "runtime": 25
+  },
+  "expected": {
+    "instant": "2026-10-30T08:00:00Z",
+    "source": "https://www.netflix.com/tudum/articles/steel-ball-run-jojos-bizarre-adventure-2nd-3rd-stage-how-to-watch",
+    "note": "Netflix: 5 p.m. JST on Fri 30 Oct (Tudum states the 2nd stage began at 1 a.m. PDT / 5 p.m. JST on 25 Sep, with a new episode each Friday; the per-episode time is taken from that weekly slot, not stated for E7)"
+  }
+}

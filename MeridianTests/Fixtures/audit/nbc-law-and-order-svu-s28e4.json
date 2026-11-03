@@ -1,0 +1,58 @@
+{
+  "show": {
+    "id": 103,
+    "url": "https://www.tvmaze.com/shows/103/law-order-special-victims-unit",
+    "name": "Law & Order: Special Victims Unit",
+    "type": "Scripted",
+    "language": "English",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Legal"
+    ],
+    "status": "Running",
+    "runtime": 60,
+    "averageRuntime": 60,
+    "premiered": "1999-09-20",
+    "ended": null,
+    "schedule": {
+      "time": "21:00",
+      "days": [
+        "Thursday"
+      ]
+    },
+    "network": {
+      "id": 1,
+      "name": "NBC",
+      "country": {
+        "name": "United States",
+        "code": "US",
+        "timezone": "America/New_York"
+      },
+      "officialSite": "https://www.nbc.com/"
+    },
+    "webChannel": null,
+    "externals": {
+      "tvrage": 4204,
+      "thetvdb": 75692,
+      "imdb": "tt0203259"
+    }
+  },
+  "episode": {
+    "id": 3768258,
+    "url": "https://www.tvmaze.com/episodes/3768258/law-order-special-victims-unit-28x04-arcana",
+    "name": "Arcana",
+    "season": 28,
+    "number": 4,
+    "type": "regular",
+    "airdate": "2026-10-29",
+    "airtime": "21:00",
+    "airstamp": "2026-10-30T01:00:00+00:00",
+    "runtime": 60
+  },
+  "expected": {
+    "instant": "2026-10-30T01:00:00Z",
+    "source": "https://seat42f.com/law-order-svu-season-28-episode-4-photos-arcana/",
+    "note": "NBC: Thursday, October 29, 2026, 9:00-10:00 p.m. ET/PT ('Arcana'; EDT UTC-4; listing built from NBC press materials)"
+  }
+}

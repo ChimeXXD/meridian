@@ -4,6 +4,7 @@
 Each fixture pairs TVmaze's show and episode JSON with the release time confirmed
 by an independent source, so tests check the resolver against reality, not against
 itself. Usage: python3 scripts/record-fixtures.py  (writes MeridianTests/Fixtures/rules/)
+       python3 scripts/record-fixtures.py --audit cases.json …  (the D6-5 audit, writes MeridianTests/Fixtures/audit/)
 """
 import json
 import pathlib
@@ -88,7 +89,29 @@ def write(slug, show, episode, expected):
     print(f"{slug}: airdate={episode['airdate']} airtime={episode['airtime']!r} airstamp={episode['airstamp']}")
 
 
+def record_audit(paths):
+    """`--audit cases.json …`: the accuracy audit's real drops from the build week (D6-5), written to
+    MeridianTests/Fixtures/audit/. Each case names its TVmaze show ID, season and number, and the release instant an
+    independent source confirmed; a case with no confirmed instant is skipped and reported, never guessed."""
+    out = OUT.parent / "audit"
+    out.mkdir(parents=True, exist_ok=True)
+    for path in paths:
+        for case in json.loads(pathlib.Path(path).read_text()):
+            if not case.get("instant"):
+                print(f"skipped {case['slug']}: no confirmed instant ({case.get('note', '')})")
+                continue
+            show = get(f"/shows/{case['tvmazeShowId']}")
+            episode = get(f"/shows/{show['id']}/episodebynumber", season=case["season"], number=case["number"])
+            data = {"show": trim(show), "episode": trim(episode),
+                    "expected": {"instant": case["instant"], "source": case["source"], "note": case["note"]}}
+            (out / f"{case['slug']}.json").write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
+            print(f"{case['slug']}: airdate={episode['airdate']} airtime={episode['airtime']!r} "
+                  f"airstamp={episode['airstamp']} confirmed={case['instant']}")
+
+
 def main():
+    if len(sys.argv) > 2 and sys.argv[1] == "--audit":
+        return record_audit(sys.argv[2:])
     for slug, query, season, number, instant, confidence, source, note in CASES:
         show = get("/singlesearch/shows", q=query)
         episode = get(f"/shows/{show['id']}/episodebynumber", season=season, number=number)

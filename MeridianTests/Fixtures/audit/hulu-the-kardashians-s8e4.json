@@ -1,0 +1,57 @@
+{
+  "show": {
+    "id": 59888,
+    "url": "https://www.tvmaze.com/shows/59888/the-kardashians",
+    "name": "The Kardashians",
+    "type": "Reality",
+    "language": "English",
+    "genres": [
+      "Drama",
+      "Family"
+    ],
+    "status": "Running",
+    "runtime": null,
+    "averageRuntime": 47,
+    "premiered": "2022-04-14",
+    "ended": null,
+    "schedule": {
+      "time": "",
+      "days": [
+        "Thursday"
+      ]
+    },
+    "network": null,
+    "webChannel": {
+      "id": 2,
+      "name": "Hulu",
+      "country": {
+        "name": "United States",
+        "code": "US",
+        "timezone": "America/New_York"
+      },
+      "officialSite": "https://www.hulu.com/"
+    },
+    "externals": {
+      "tvrage": null,
+      "thetvdb": 414093,
+      "imdb": "tt15791630"
+    }
+  },
+  "episode": {
+    "id": 3768854,
+    "url": "https://www.tvmaze.com/episodes/3768854/the-kardashians-8x04-not-a-cheater-not-a-liar",
+    "name": "Not a Cheater, Not a Liar",
+    "season": 8,
+    "number": 4,
+    "type": "regular",
+    "airdate": "2026-10-29",
+    "airtime": "",
+    "airstamp": "2026-10-29T16:00:00+00:00",
+    "runtime": null
+  },
+  "expected": {
+    "instant": "2026-10-29T04:00:00Z",
+    "source": "https://blog.reelgood.com/how-to-watch-the-kardashians-season-8-outside-the-us",
+    "note": "Hulu: 12 a.m. ET on Thu 29 Oct (9 p.m. PT Wed) (Reelgood, 8 Oct 2026: new episodes every Thursday at 12 a.m. ET; weak secondary source, no Hulu press statement found; TVmaze's 16:00Z is the fake-noon placeholder)"
+  }
+}

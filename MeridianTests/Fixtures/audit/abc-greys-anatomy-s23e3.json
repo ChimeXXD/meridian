@@ -1,0 +1,58 @@
+{
+  "show": {
+    "id": 67,
+    "url": "https://www.tvmaze.com/shows/67/greys-anatomy",
+    "name": "Grey's Anatomy",
+    "type": "Scripted",
+    "language": "English",
+    "genres": [
+      "Drama",
+      "Romance",
+      "Medical"
+    ],
+    "status": "Running",
+    "runtime": 60,
+    "averageRuntime": 60,
+    "premiered": "2005-03-27",
+    "ended": null,
+    "schedule": {
+      "time": "22:00",
+      "days": [
+        "Thursday"
+      ]
+    },
+    "network": {
+      "id": 3,
+      "name": "ABC",
+      "country": {
+        "name": "United States",
+        "code": "US",
+        "timezone": "America/New_York"
+      },
+      "officialSite": "https://abc.com/"
+    },
+    "webChannel": null,
+    "externals": {
+      "tvrage": 3741,
+      "thetvdb": 73762,
+      "imdb": "tt0413573"
+    }
+  },
+  "episode": {
+    "id": 3784751,
+    "url": "https://www.tvmaze.com/episodes/3784751/greys-anatomy-23x03-its-all-wrong-but-its-all-right",
+    "name": "It's All Wrong, but It's All Right",
+    "season": 23,
+    "number": 3,
+    "type": "regular",
+    "airdate": "2026-10-29",
+    "airtime": "22:00",
+    "airstamp": "2026-10-30T02:00:00+00:00",
+    "runtime": 60
+  },
+  "expected": {
+    "instant": "2026-10-30T02:00:00Z",
+    "source": "https://seat42f.com/greys-anatomy-season-23-episode-3-photos/",
+    "note": "ABC: Thu 29 Oct 22:00 ET (EDT, before the clock change)"
+  }
+}

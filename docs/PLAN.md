@@ -192,7 +192,7 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
 - [x] Refresh when the app opens, with delay detection (`previousDate` and "Delayed from 20:55" in words, D-58) and rescheduling.
 - [x] An offline "Updated <time>" label, "Report a wrong time" (email while the repo is private), and `PRIVACY.md`.
 - [x] GitHub Actions: build and test by hand (`workflow_dispatch`) while private. Pushes to `main` were left out: the free plan's $12 a month buys about 190 macOS minutes and we push after every commit (checked 2 Nov). No SPM dependencies, so no cache step. On Day 7, widen it to every push and PR.
-- [ ] **Accuracy audit:** 20 real drops from this week, including Chime's Day 3 clock-change logs, comparing the app's time with each platform's confirmed time. Log them in `docs/research/accuracy-audit.md`.
+- [x] **Accuracy audit:** 20 real drops from this week, including Chime's Day 3 clock-change logs, comparing the app's time with each platform's confirmed time. Log them in `docs/research/accuracy-audit.md`.
 - [ ] **Private beta:** a fresh install on Chime's iPhone (the 7-day clock restarts), plus any friend's iPhone plugged into Chime's Mac. Testers use it for the rest of the week and report through "Report a wrong time" or a message.
 
 ### Chime does

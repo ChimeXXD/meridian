@@ -1,0 +1,54 @@
+{
+  "show": {
+    "id": 61315,
+    "url": "https://www.tvmaze.com/shows/61315/dark-matter",
+    "name": "Dark Matter",
+    "type": "Scripted",
+    "language": "English",
+    "genres": [
+      "Science-Fiction",
+      "Thriller",
+      "Mystery"
+    ],
+    "status": "To Be Determined",
+    "runtime": null,
+    "averageRuntime": 55,
+    "premiered": "2024-05-08",
+    "ended": null,
+    "schedule": {
+      "time": "",
+      "days": [
+        "Friday"
+      ]
+    },
+    "network": null,
+    "webChannel": {
+      "id": 310,
+      "name": "Apple TV",
+      "country": null,
+      "officialSite": "https://tv.apple.com/"
+    },
+    "externals": {
+      "tvrage": null,
+      "thetvdb": 393159,
+      "imdb": "tt19231492"
+    }
+  },
+  "episode": {
+    "id": 3591073,
+    "url": "https://www.tvmaze.com/episodes/3591073/dark-matter-2x10-no-quiet-life",
+    "name": "No Quiet Life",
+    "season": 2,
+    "number": 10,
+    "type": "regular",
+    "airdate": "2026-10-30",
+    "airtime": "",
+    "airstamp": "2026-10-30T12:00:00+00:00",
+    "runtime": 51
+  },
+  "expected": {
+    "instant": "2026-10-30T01:00:00Z",
+    "source": "https://www.dexerto.fr/films-series/calendrier-dark-matter-saison-2-sortie-episodes-1657234/",
+    "note": "Apple TV: 2:00 a.m. French time on Fri 30 Oct (dexerto.fr; France is on CET after 25 Oct, so 01:00Z, which is 9 p.m. ET Thu 29 Oct, Apple's usual night-before slot; no Apple statement of the time found)"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "show": {
+    "id": 78665,
+    "url": "https://www.tvmaze.com/shows/78665/dexter-resurrection",
+    "name": "Dexter: Resurrection",
+    "type": "Scripted",
+    "language": "English",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Mystery"
+    ],
+    "status": "Running",
+    "runtime": null,
+    "averageRuntime": 51,
+    "premiered": "2025-07-11",
+    "ended": null,
+    "schedule": {
+      "time": "",
+      "days": [
+        "Friday"
+      ]
+    },
+    "network": null,
+    "webChannel": {
+      "id": 107,
+      "name": "Paramount+",
+      "country": null,
+      "officialSite": "https://www.paramountplus.com/"
+    },
+    "externals": {
+      "tvrage": null,
+      "thetvdb": 452595,
+      "imdb": "tt33043892"
+    }
+  },
+  "episode": {
+    "id": 3748281,
+    "url": "https://www.tvmaze.com/episodes/3748281/dexter-resurrection-2x01-risky-business",
+    "name": "Risky Business",
+    "season": 2,
+    "number": 1,
+    "type": "regular",
+    "airdate": "2026-10-30",
+    "airtime": "",
+    "airstamp": "2026-10-30T12:00:00+00:00",
+    "runtime": 50
+  },
+  "expected": {
+    "instant": "2026-10-30T07:01:00Z",
+    "source": "https://hollywoodlife.com/feature/dexter-resurrection-season-2-release-date-start-time-5564968/",
+    "note": "Paramount+: 3:01 a.m. ET / 12:01 a.m. PT on Fri 30 Oct (HollywoodLife, 17 Oct 2026; FandomWire says 12 a.m. PT / 3 a.m. ET, one minute off; no Paramount press statement of the time found)"
+  }
+}

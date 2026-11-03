@@ -1,0 +1,57 @@
+{
+  "show": {
+    "id": 34685,
+    "url": "https://www.tvmaze.com/shows/34685/the-gilded-age",
+    "name": "The Gilded Age",
+    "type": "Scripted",
+    "language": "English",
+    "genres": [
+      "Drama",
+      "History"
+    ],
+    "status": "Running",
+    "runtime": 60,
+    "averageRuntime": 60,
+    "premiered": "2022-01-24",
+    "ended": null,
+    "schedule": {
+      "time": "21:00",
+      "days": [
+        "Sunday"
+      ]
+    },
+    "network": {
+      "id": 8,
+      "name": "HBO",
+      "country": {
+        "name": "United States",
+        "code": "US",
+        "timezone": "America/New_York"
+      },
+      "officialSite": "https://www.hbo.com/"
+    },
+    "webChannel": null,
+    "externals": {
+      "tvrage": null,
+      "thetvdb": 364412,
+      "imdb": "tt4406178"
+    }
+  },
+  "episode": {
+    "id": 3713680,
+    "url": "https://www.tvmaze.com/episodes/3713680/the-gilded-age-4x01-ring-the-bells",
+    "name": "Ring the Bells",
+    "season": 4,
+    "number": 1,
+    "type": "regular",
+    "airdate": "2026-11-01",
+    "airtime": "21:00",
+    "airstamp": "2026-11-02T02:00:00+00:00",
+    "runtime": 60
+  },
+  "expected": {
+    "instant": "2026-11-02T02:00:00Z",
+    "source": "https://www.tvline.com/2243685/the-gilded-age-season-4-release-date-hbo/",
+    "note": "HBO: Sunday, November 1 (9/8c) (season 4 premiere 'Ring the Bells' on linear HBO; first evening after the clock change, EST UTC-5)"
+  }
+}

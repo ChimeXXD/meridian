@@ -1,0 +1,57 @@
+{
+  "show": {
+    "id": 361,
+    "url": "https://www.tvmaze.com/shows/361/saturday-night-live",
+    "name": "Saturday Night Live",
+    "type": "Variety",
+    "language": "English",
+    "genres": [
+      "Comedy",
+      "Music"
+    ],
+    "status": "Running",
+    "runtime": 93,
+    "averageRuntime": 90,
+    "premiered": "1975-10-11",
+    "ended": null,
+    "schedule": {
+      "time": "23:29",
+      "days": [
+        "Saturday"
+      ]
+    },
+    "network": {
+      "id": 1,
+      "name": "NBC",
+      "country": {
+        "name": "United States",
+        "code": "US",
+        "timezone": "America/New_York"
+      },
+      "officialSite": "https://www.nbc.com/"
+    },
+    "webChannel": null,
+    "externals": {
+      "tvrage": 5098,
+      "thetvdb": 76177,
+      "imdb": "tt0072562"
+    }
+  },
+  "episode": {
+    "id": 3700600,
+    "url": "https://www.tvmaze.com/episodes/3700600/saturday-night-live-52x04-inde-navarrette-gracie-abrams",
+    "name": "Inde Navarrette / Gracie Abrams",
+    "season": 52,
+    "number": 4,
+    "type": "regular",
+    "airdate": "2026-10-31",
+    "airtime": "23:29",
+    "airstamp": "2026-11-01T03:29:00+00:00",
+    "runtime": 93
+  },
+  "expected": {
+    "instant": "2026-11-01T03:30:00Z",
+    "source": "https://tvline.com/2294958/is-snl-new-tonight-october-24-2026-host-musical-guest-watch-details/",
+    "note": "NBC: back on October 31, starts 11:30 p.m. ET (live; Inde Navarrette / Gracie Abrams; still EDT UTC-4 at 23:30, ends ~01:00 EDT before the 02:00 change; TVmaze's 23:29 is 1 min early)"
+  }
+}

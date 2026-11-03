@@ -1,0 +1,59 @@
+{
+  "show": {
+    "id": 67017,
+    "url": "https://www.tvmaze.com/shows/67017/the-apothecary-diaries",
+    "name": "The Apothecary Diaries",
+    "type": "Animation",
+    "language": "Japanese",
+    "genres": [
+      "Anime",
+      "Romance",
+      "Mystery",
+      "History"
+    ],
+    "status": "Running",
+    "runtime": 30,
+    "averageRuntime": 30,
+    "premiered": "2023-10-21",
+    "ended": null,
+    "schedule": {
+      "time": "22:30",
+      "days": [
+        "Friday"
+      ]
+    },
+    "network": {
+      "id": 137,
+      "name": "NTV",
+      "country": {
+        "name": "Japan",
+        "code": "JP",
+        "timezone": "Asia/Tokyo"
+      },
+      "officialSite": null
+    },
+    "webChannel": null,
+    "externals": {
+      "tvrage": null,
+      "thetvdb": 431162,
+      "imdb": "tt26743760"
+    }
+  },
+  "episode": {
+    "id": 3779155,
+    "url": "https://www.tvmaze.com/episodes/3779155/the-apothecary-diaries-3x05-the-white-snake-immortal",
+    "name": "The White-Snake Immortal",
+    "season": 3,
+    "number": 5,
+    "type": "regular",
+    "airdate": "2026-10-30",
+    "airtime": "22:30",
+    "airstamp": "2026-10-30T13:30:00+00:00",
+    "runtime": 30
+  },
+  "expected": {
+    "instant": "2026-10-30T14:40:00Z",
+    "source": "https://animeanime.jp/article/2026/10/29/104314.html",
+    "note": "NTV: 10月30日23時40分から 第53話「白蛇仙女」 (one-off 40-min delay from the regular Fri 23:00 FRIDAY ANIME NIGHT slot; TVmaze's 22:30 is wrong even for the regular slot, so TVmaze is 70 min early; TheTV (thetv.jp/program/0001067396/) gives regular slot Fri 23:00-23:30 and 6 Nov at 23:30; single source for 23:40)"
+  }
+}

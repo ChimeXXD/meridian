@@ -1,0 +1,55 @@
+{
+  "show": {
+    "id": 79108,
+    "url": "https://www.tvmaze.com/shows/79108/the-celebrity-traitors",
+    "name": "The Celebrity Traitors",
+    "type": "Game Show",
+    "language": "English",
+    "genres": [],
+    "status": "Running",
+    "runtime": null,
+    "averageRuntime": 66,
+    "premiered": "2025-10-08",
+    "ended": null,
+    "schedule": {
+      "time": "20:00",
+      "days": [
+        "Thursday",
+        "Friday"
+      ]
+    },
+    "network": {
+      "id": 12,
+      "name": "BBC One",
+      "country": {
+        "name": "United Kingdom",
+        "code": "GB",
+        "timezone": "Europe/London"
+      },
+      "officialSite": "https://www.bbc.co.uk/bbcone"
+    },
+    "webChannel": null,
+    "externals": {
+      "tvrage": null,
+      "thetvdb": 453660,
+      "imdb": "tt33248156"
+    }
+  },
+  "episode": {
+    "id": 3789372,
+    "url": "https://www.tvmaze.com/episodes/3789372/the-celebrity-traitors-2x09-episode-9",
+    "name": "Episode 9",
+    "season": 2,
+    "number": 9,
+    "type": "regular",
+    "airdate": "2026-10-29",
+    "airtime": "20:00",
+    "airstamp": "2026-10-29T20:00:00+00:00",
+    "runtime": 65
+  },
+  "expected": {
+    "instant": "2026-10-29T20:00:00Z",
+    "source": "https://www.bbc.co.uk/schedules/p00fzl6p/2026/10/29",
+    "note": "BBC One: 20:00 The Celebrity Traitors — Series 2, Episode 9 (BBC One London schedule for Thu 29 Oct 2026; GMT UTC+0 since 25 Oct)"
+  }
+}

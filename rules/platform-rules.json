@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-10-30",
+  "updated": "2026-11-03",
   "platforms": [
     {
       "match": ["Netflix"],
@@ -79,6 +79,38 @@
       "confirmed": false,
       "note": "Disney+ Marvel releases at 18:00 PT",
       "source": "https://www.dexerto.com/tv-movies/wonder-man-release-date-time-3310024/"
+    },
+    {
+      "show": "tvmaze:59591",
+      "zone": "America/New_York",
+      "time": "20:15",
+      "dayOffset": 0,
+      "confirmed": true,
+      "note": "Thursday Night Football on Prime Video: live, kickoff 20:15 ET on the listed Thursday",
+      "source": "https://www.aboutamazon.com/news/entertainment/thursday-night-football-schedule-prime-video"
+    },
+    {
+      "show": "tvmaze:90817",
+      "zone": "Asia/Tokyo",
+      "time": "17:00",
+      "dayOffset": 0,
+      "confirmed": false,
+      "note": "Netflix releases Steel Ball Run weekly at 17:00 JST, not 00:00 PT",
+      "source": "https://www.netflix.com/tudum/articles/steel-ball-run-jojos-bizarre-adventure-2nd-3rd-stage-how-to-watch"
+    },
+    {
+      "episode": "tvmaze:3680025",
+      "instant": "2026-11-02T23:00:00Z",
+      "confirmed": false,
+      "note": "WWE Raw on Netflix: live, a special 18:00 ET start on 2 Nov",
+      "source": "https://www.sacnilk.com/news/wwe_raw_11226_predictions_preview_match_card_and_how_to_watch"
+    },
+    {
+      "episode": "tvmaze:3779155",
+      "instant": "2026-10-30T14:40:00Z",
+      "confirmed": false,
+      "note": "The Apothecary Diaries S3E5 aired 40 minutes late on NTV (23:40 JST); TVmaze lists 22:30",
+      "source": "https://animeanime.jp/article/2026/10/29/104314.html"
     }
   ],
   "providers": [

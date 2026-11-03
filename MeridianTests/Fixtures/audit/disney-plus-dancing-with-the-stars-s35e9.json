@@ -1,0 +1,61 @@
+{
+  "show": {
+    "id": 71,
+    "url": "https://www.tvmaze.com/shows/71/dancing-with-the-stars",
+    "name": "Dancing with the Stars",
+    "type": "Reality",
+    "language": "English",
+    "genres": [
+      "Family"
+    ],
+    "status": "Running",
+    "runtime": 120,
+    "averageRuntime": 117,
+    "premiered": "2005-06-01",
+    "ended": null,
+    "schedule": {
+      "time": "20:00",
+      "days": [
+        "Tuesday"
+      ]
+    },
+    "network": {
+      "id": 3,
+      "name": "ABC",
+      "country": {
+        "name": "United States",
+        "code": "US",
+        "timezone": "America/New_York"
+      },
+      "officialSite": "https://abc.com/"
+    },
+    "webChannel": {
+      "id": 287,
+      "name": "Disney+",
+      "country": null,
+      "officialSite": "https://www.disneyplus.com/"
+    },
+    "externals": {
+      "tvrage": 3220,
+      "thetvdb": 79590,
+      "imdb": "tt0463398"
+    }
+  },
+  "episode": {
+    "id": 3710817,
+    "url": "https://www.tvmaze.com/episodes/3710817/dancing-with-the-stars-35x09-disney-night",
+    "name": "Disney Night",
+    "season": 35,
+    "number": 9,
+    "type": "regular",
+    "airdate": "2026-11-02",
+    "airtime": "20:00",
+    "airstamp": "2026-11-03T01:00:00+00:00",
+    "runtime": 120
+  },
+  "expected": {
+    "instant": "2026-11-03T01:00:00Z",
+    "source": "https://www.tvinsider.com/1300281/dancing-with-the-stars-schedule-change-disney-night-2026-election/",
+    "note": "Disney+: Mon 2 Nov at 8/7c on ABC and Disney+ (live Disney Night, moved from Tuesday for election coverage; 8 p.m. EST = 01:00Z on 3 Nov; TV Insider calls it episode 8, TVmaze numbers it S35E9; TVmaze has a real airtime here)"
+  }
+}

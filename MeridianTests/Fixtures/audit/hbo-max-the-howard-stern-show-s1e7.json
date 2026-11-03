@@ -1,0 +1,50 @@
+{
+  "show": {
+    "id": 94778,
+    "url": "https://www.tvmaze.com/shows/94778/the-howard-stern-show",
+    "name": "The Howard Stern Show",
+    "type": "Talk Show",
+    "language": "English",
+    "genres": [],
+    "status": "Running",
+    "runtime": null,
+    "averageRuntime": 119,
+    "premiered": "2026-09-17",
+    "ended": null,
+    "schedule": {
+      "time": "",
+      "days": [
+        "Thursday"
+      ]
+    },
+    "network": null,
+    "webChannel": {
+      "id": 329,
+      "name": "HBO Max",
+      "country": null,
+      "officialSite": "https://www.hbomax.com"
+    },
+    "externals": {
+      "tvrage": null,
+      "thetvdb": 482620,
+      "imdb": "tt45495066"
+    }
+  },
+  "episode": {
+    "id": 3800083,
+    "url": "https://www.tvmaze.com/episodes/3800083/the-howard-stern-show-1x07-october-29-2026-naked-ccktober",
+    "name": "October 29, 2026: Naked C*cktober",
+    "season": 1,
+    "number": 7,
+    "type": "regular",
+    "airdate": "2026-10-29",
+    "airtime": "",
+    "airstamp": "2026-10-29T12:00:00+00:00",
+    "runtime": 135
+  },
+  "expected": {
+    "instant": "2026-10-29T07:01:00Z",
+    "source": "https://press.wbd.com/us/media-release/hbo-max-brings-howard-stern-show-streaming-debuting-september-17",
+    "note": "HBO Max: 12:01 a.m. PT / 3:01 a.m. ET on Thu 29 Oct (WBD press release: debut 17 Sep at that time globally, new episodes on later Thursdays; TheWrap states every Thursday at 12:01 a.m. PT/3:01 a.m. ET; EDT, so 07:01Z)"
+  }
+}

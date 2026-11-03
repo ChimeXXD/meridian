@@ -1,0 +1,58 @@
+{
+  "show": {
+    "id": 79151,
+    "url": "https://www.tvmaze.com/shows/79151/ranma-12",
+    "name": "Ranma ½",
+    "type": "Animation",
+    "language": "Japanese",
+    "genres": [
+      "Comedy",
+      "Anime",
+      "Fantasy"
+    ],
+    "status": "Running",
+    "runtime": 30,
+    "averageRuntime": 30,
+    "premiered": "2024-10-05",
+    "ended": null,
+    "schedule": {
+      "time": "00:55",
+      "days": [
+        "Saturday"
+      ]
+    },
+    "network": {
+      "id": 137,
+      "name": "NTV",
+      "country": {
+        "name": "Japan",
+        "code": "JP",
+        "timezone": "Asia/Tokyo"
+      },
+      "officialSite": null
+    },
+    "webChannel": null,
+    "externals": {
+      "tvrage": null,
+      "thetvdb": 451479,
+      "imdb": "tt32766897"
+    }
+  },
+  "episode": {
+    "id": 3795807,
+    "url": "https://www.tvmaze.com/episodes/3795807/ranma-12-3x05-the-way-the-cookie-crumbles",
+    "name": "The Way the Cookie Crumbles",
+    "season": 3,
+    "number": 5,
+    "type": "regular",
+    "airdate": "2026-10-31",
+    "airtime": "00:55",
+    "airstamp": "2026-10-31T15:55:00+00:00",
+    "runtime": 30
+  },
+  "expected": {
+    "instant": "2026-10-31T15:55:00Z",
+    "source": "https://ranma-pr.com/onair/",
+    "note": "NTV: 毎週土曜日24:55〜 (official site regular slot; ep 29「黒バラクッキー」 dated 2026年10月31日 on thetv.jp/program/0001074198/5/; Sat 24:55 = Sun 1 Nov 00:55 JST. Slot-level, not episode-level, confirmation: the next episode (7 Nov) is shifted to 25:00, so a one-off shift on 31 Oct cannot be ruled out. TVmaze airdate 10-31 + airtime 00:55 read literally gives 10-30T15:55Z, 24 h early; only its airstamp is right)"
+  }
+}

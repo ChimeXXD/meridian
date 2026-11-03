@@ -1,0 +1,54 @@
+{
+  "show": {
+    "id": 802,
+    "url": "https://www.tvmaze.com/shows/802/wwe-monday-night-raw",
+    "name": "WWE Monday Night RAW",
+    "type": "Sports",
+    "language": "English",
+    "genres": [
+      "Drama",
+      "Action",
+      "Sports"
+    ],
+    "status": "Running",
+    "runtime": null,
+    "averageRuntime": 179,
+    "premiered": "1993-01-11",
+    "ended": null,
+    "schedule": {
+      "time": "",
+      "days": [
+        "Monday"
+      ]
+    },
+    "network": null,
+    "webChannel": {
+      "id": 1,
+      "name": "Netflix",
+      "country": null,
+      "officialSite": "https://www.netflix.com/"
+    },
+    "externals": {
+      "tvrage": 6659,
+      "thetvdb": 76779,
+      "imdb": "tt0185103"
+    }
+  },
+  "episode": {
+    "id": 3680025,
+    "url": "https://www.tvmaze.com/episodes/3680025/wwe-monday-night-raw-33x44-1744-barclays-center-in-brooklyn-ny",
+    "name": "#1744 - Barclays Center in Brooklyn, NY",
+    "season": 33,
+    "number": 44,
+    "type": "regular",
+    "airdate": "2026-11-02",
+    "airtime": "",
+    "airstamp": "2026-11-02T12:00:00+00:00",
+    "runtime": null
+  },
+  "expected": {
+    "instant": "2026-11-02T23:00:00Z",
+    "source": "https://www.sacnilk.com/news/wwe_raw_11226_predictions_preview_match_card_and_how_to_watch",
+    "note": "Netflix: 6 p.m. ET / 3 p.m. PT on Mon 2 Nov (live; WWE announced a special start time, two hours earlier than the usual 8 p.m. ET in Netflix Tudum's guide; EST after the clock change, so 23:00Z; WWE's X post is quoted by netflixjunkie.com 27 Oct)"
+  }
+}
