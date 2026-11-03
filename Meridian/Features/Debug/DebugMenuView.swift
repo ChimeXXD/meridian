@@ -29,6 +29,12 @@ struct DebugMenuView: View {
             Section("Live Activity") {
                 Button("Live Activity for fake drop in 3 min (lead 1 min)") { Task { await fakeActivity() } }
                     .accessibilityIdentifier("debug-activity")
+                if let real = nextRealDrop {
+                    Button("Live Activity for \(real.showName) in 3 min (lead 1 min)") {
+                        Task { await fakeActivity(like: real) }
+                    }
+                    .accessibilityIdentifier("debug-activity-real")
+                }
                 Button("Simulate delay +1 h") { Task { await delay() } }
                     .accessibilityIdentifier("debug-delay")
             }
@@ -57,10 +63,16 @@ struct DebugMenuView: View {
         status = "Fake drop removed."
     }
 
+    /// The soonest followed episode with a time, to dress the fake drop as (its art is already in the App Group).
+    private var nextRealDrop: Drop? {
+        model.result?.drops.first { !DebugFakeDrop.isFake($0) && $0.confidence != .dateOnly }
+    }
+
     /// Requests the activity first, while the app is surely in the foreground, then shows the drop in Upcoming.
-    private func fakeActivity() async {
-        let drop = DebugFakeDrop.set(minutes: 3)
-        let outcome = await scheduler.sync(drops: [drop], optedIn: [DebugFakeDrop.showID], leadMinutes: 1)
+    /// With `real`, the fake drop is a copy of that episode moved to 3 minutes from now.
+    private func fakeActivity(like real: Drop? = nil) async {
+        let drop = real.map { DebugFakeDrop.set(minutes: 3, like: $0) } ?? DebugFakeDrop.set(minutes: 3)
+        let outcome = await scheduler.sync(drops: [drop], optedIn: [drop.showID], leadMinutes: 1)
         status = Self.describe(outcome, drop: drop)
         await model.refresh(followed)
     }

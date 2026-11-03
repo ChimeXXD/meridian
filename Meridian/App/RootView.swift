@@ -52,7 +52,12 @@ struct RootView: View {
     private func syncActivities(rebookPending: Bool = false) async {
         guard UIApplication.shared.applicationState == .active else { return }
         let optedOut = Set(followed.filter { !$0.liveActivity }.map(\.showID))
-        await scheduler.sync(drops: model.result?.drops ?? [], optedIn: optedIn, optedOut: optedOut,
+        var drops = model.result?.drops ?? []
+        #if DEBUG
+        // Debug's copy of a real drop is booked once by the Debug menu, never again with the real lead time.
+        drops.removeAll(where: DebugFakeDrop.isFake)
+        #endif
+        await scheduler.sync(drops: drops, optedIn: optedIn, optedOut: optedOut,
                              leadMinutes: leadMinutes, rebookPending: rebookPending)
     }
 

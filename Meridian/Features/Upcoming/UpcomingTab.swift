@@ -81,9 +81,19 @@ struct ShowDetailScreen: View {
     }
 
     /// The show's latest drop, so a refresh while this page is open (a delay, a new stream delay) shows here too
-    /// (UX audit #14); the drop it was opened with until then.
+    /// (UX audit #14); the drop it was opened with until then. The same episode first, then the show's.
     private var current: Drop {
-        model.result?.drops.first { $0.showID == drop.showID } ?? drop
+        let drops = model.result?.drops ?? []
+        return drops.first { $0.id == drop.id } ?? drops.first { $0.showID == drop.showID && !Self.isFake($0) } ?? drop
+    }
+
+    /// Debug's copy of a real drop shares its show, so a real row mustn't open on the copy's time.
+    private static func isFake(_ drop: Drop) -> Bool {
+        #if DEBUG
+        DebugFakeDrop.isFake(drop)
+        #else
+        false
+        #endif
     }
 
     /// What the Live Activity switch will really do for this episode (UX audit #11).
