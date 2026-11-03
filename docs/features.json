@@ -569,8 +569,8 @@
         "'Updated <time>' shown offline"
       ],
       "verify": "manual flight-mode steps in SPEC; PRIVACY.md linked from Credits",
-      "passes": false,
-      "evidence": ""
+      "passes": true,
+      "evidence": "Chime ran the SPEC manual flight-mode steps on the iPhone and confirmed it works (2 Nov). UpcomingStatusTests 3, and TVmazeClientTests.upcomingFreshness (D-59). PRIVACY.md is linked from Credits (credits-privacy); fidelity/verify-screen.sh settings ALL PASS."
     },
     {
       "id": "D6-3",
