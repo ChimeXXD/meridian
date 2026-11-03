@@ -108,3 +108,58 @@ npx vercel@latest ls meridian-design-system
 
 - **Simulator:** `iPhone 18 Pro, OS=27.0` (UDID <simulator-udid>). Shut it down after use.
 - **Scratchpad:** the scratchpad of session `7d0987d9…` holds the reference pick pages, QA and UX reports, and the Playwright scripts (`pw-unslop.3vSP/`). `claude --resume` in this folder reopens the full transcript.
+
+## Session of Tue 3 Nov 2026: the demo video (Phase 7)
+
+**Where it stands:** the compositions are built and checked with simulator footage. Rendering waits for Chime's iPhone recording.
+
+**Shipped in the app** (`f3fdfa8`, pushed, installed on the phone)
+- Settings › Debug › **"Live Activity for <show> in 3 min (lead 1 min)"** copies the soonest followed episode with a time (show, episode, network, art) to a fake drop 3 minutes away. Its ID starts `debug:fake:`.
+- Fixes from the review:
+  - Show detail opens on the episode tapped, not the copy (`UpcomingTab.current` matches by ID first).
+  - `RootView.syncActivities` never books a copy.
+  - A stale copy can't come back from the last snapshot after an offline relaunch.
+- `MeridianUITests/DemoRecordingTests` scripts a simulator recording of the plain "Debug Show". It runs only with `TEST_RUNNER_MERIDIAN_DEMO=1`, so CI and the screen checks skip it. To record:
+  1. Build with `xcodebuild build-for-testing -scheme MeridianFidelity -derivedDataPath build/demo`.
+  2. Start `xcrun simctl io <sim> recordVideo --codec=h264 --force take.mov`.
+  3. Run `test-without-building -xctestrun build/demo/Build/Products/MeridianFidelity_*.xctestrun -only-testing:MeridianUITests/DemoRecordingTests`.
+  4. Stop the recording with SIGINT.
+- The simulator take (`take1`) wasn't usable as the final cut:
+  - placeholder show with no art
+  - the "Allow Live Activities?" prompt on the Lock Screen
+  - test app icons on the Home Screen
+  - "Carrier" in the status bar
+  - 0:00 rather than "Out now" within 30 s
+- So Chime chose to record on the iPhone.
+
+**Phone shot list** (Do Not Disturb on, Live Activities on, a clean Home Screen page)
+1. Debug › "Live Activity for <show>…". The island appears 2 minutes later.
+2. Start Screen Recording at about 1:45, mic off.
+3. Island ticking on the Home Screen, about 5 s.
+4. Press and hold to expand, about 5 s.
+5. Pull down from the top left for the Lock Screen banner, about 5 s.
+6. Stay through 0:00 for "Out now". If it's still 0:00 after about 10 s, open Meridian for a second; that bit gets cut.
+7. Expand again on "Out now", then stop.
+8. AirDrop the file to the Mac.
+
+**The video project:** `~/Projects/Personal Projects/Meridian Video/`
+- It's local git only; footage and renders are git-ignored.
+- `build.mjs` writes `square/index.html` (1080×1080) and `vertical/index.html` (1080×1920) from one `CUTS` list (seconds into the footage) and the footage size.
+- It's a silent loop like the dahnizzy.com reference: the phone in a near-black frame with a thin rim, on a `#f4f4f2` card.
+- To swap in the phone footage:
+  1. Copy it to `footage/`.
+  2. Point `square/assets/footage.mov` and `vertical/assets/footage.mov` at it (symlinks today).
+  3. Set `FOOTAGE` width and height and pick new `CUTS`: `scratchpad/scripts/timesheet.swift` makes a labelled frame grid.
+  4. Run `node build.mjs`.
+  5. In each folder, run `npx hyperframes check --json` and `npx hyperframes snapshot --at …`, then `npx hyperframes render` once Chime approves the frames.
+- Checked with the stand-in footage: lint and layout pass. The only warning is `film_silent`, which is intended.
+- Tooling: HyperFrames CLI 0.9.8 via npx, with telemetry disabled. ffmpeg comes from Homebrew; snapshots and renders need it.
+
+**Open for Chime**
+- The recording.
+- Light card (like the reference) or near-black to match the portfolio.
+
+**Next**
+1. Render both videos and review the frames.
+2. Then the portfolio case study at chimexd.work. Read its CONTENT.md and the two MDX case studies first, and never open `.env.local`.
+3. Reinstall on the phone before Mon 9 Nov 00:59 Lagos.
