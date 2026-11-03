@@ -60,8 +60,9 @@ enum LiveActivityText {
         isStale || state.phase == .outNow || state.dropDate <= now
     }
 
-    /// The plain-words label over the countdown: "Out in", "Expected in", "Airs in Japan in", flipping to "Out now"
-    /// at the drop while the numbers below stay put (D-49).
+    /// The plain-words band: "Out in", "Expected in", "Airs in Japan in", flipping to "Out now" at the drop (D-49).
+    /// The small family shows it over the countdown, which stays at 0:00; the Lock Screen banner and the island put
+    /// "Out now" in the numbers' place.
     static func band(_ attributes: DropActivityAttributes, out: Bool) -> String {
         out ? "Out now" : "\(verb(attributes)) in"
     }

@@ -3,10 +3,10 @@ import UIKit
 
 /// The Lock Screen banner (UI-BRIEF §6.2, at most 160 pt tall), on the night base with the show's key art on the
 /// right edge fading into it (#Duolingo). On the left, top to bottom: the show's name in serif ("+ 1 more" when
-/// same-night drops merge) over "S2E5 · Apple TV · US"; "Out now" in gold once it's out (D-49); the serif countdown;
-/// then the time in words ("Expected Mon 21:00", "Released …" after the drop) and "Delayed from 20:00" when it moved,
-/// as the expanded island says them (D-57, UX audit #30: "Expected" no longer appears twice, nor a struck-through
-/// time). Certainty is said in words only (D-40).
+/// same-night drops merge) over "S2E5 · Apple TV · US"; the serif countdown, which "Out now" in gold replaces at the
+/// drop (D-49), as in the island and the widgets; then the time in words ("Expected Mon 21:00", "Released …" after
+/// the drop) and "Delayed from 20:00" when it moved, as the expanded island says them (D-57, UX audit #30:
+/// "Expected" no longer appears twice, nor a struck-through time). Certainty is said in words only (D-40).
 ///
 /// The view takes `isStale`, `now` and the art rather than reading the activity context or the App Group, so tests
 /// render every state.
@@ -38,17 +38,27 @@ struct LiveActivityLockScreenView: View {
                         .padding(.top, 2)
                         .accessibilityIdentifier("la-details")
                 }
-                if out {
-                    Text(LiveActivityText.band(attributes, out: true))
-                        .font(.system(size: 13, weight: .semibold))
-                        .foregroundStyle(LiveActivityInk.out)
-                        .lineLimit(1)
-                        .padding(.top, 12)
-                        .accessibilityIdentifier("la-label")
+                Group {
+                    if out {
+                        // "Out now" over a stopped 0:00 read as one odd sentence (Chime's iPhone, 3 Nov): the words
+                        // take the numbers' place, 0.7 times their size as in `CountdownText`, on their baseline and
+                        // in their line's height, so the banner doesn't shrink at the drop. The hidden stand-in is
+                        // plain text, not a timer: a timer asks for its widest value's width on the phone (D-57).
+                        ZStack(alignment: Alignment(horizontal: .leading, vertical: .firstTextBaseline)) {
+                            Text(verbatim: "0:00")
+                                .font(NumeralStudy.night.font(size: 36))
+                                .hidden()
+                            Text(LiveActivityText.band(attributes, out: true))
+                                .font(NumeralStudy.night.font(size: 36 * 0.7))
+                                .foregroundStyle(LiveActivityInk.out)
+                                .lineLimit(1)
+                        }
+                    } else {
+                        LiveActivityCountdown(dropDate: state.dropDate, now: now, size: 36)
+                    }
                 }
-                LiveActivityCountdown(dropDate: state.dropDate, now: now, size: 36)
-                    .padding(.top, out ? 0 : 12)
-                    .accessibilityIdentifier("la-countdown")
+                .padding(.top, 12)
+                .accessibilityIdentifier("la-countdown")
                 timeLine
                     .padding(.top, 2)
             }

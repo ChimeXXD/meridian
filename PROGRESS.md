@@ -2,6 +2,12 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Phase 7: case study footage, and "Out now" on the Lock Screen (Tue 3 Nov 2026)
+
+- **Footage:** Control Centre's Screen Recording puts its red pill in the island ahead of Meridian, so Chime filmed over a cable with QuickTime (no pill, 9:41 status bar, 1180×2556 at about 58 fps). Five takes, kept in `Meridian Video/footage/` (`take2.mov`, `take3-*.mov`); 21 stills cut from them in `Meridian Video/stills/`. `docs/SHOT-LIST.md` is now one take in a running order.
+- **Lock Screen at the drop:** the banner showed a small gold "Out now" over a stopped 0:00, which reads as one odd sentence (the island already put the words in the numbers' place). Now "Out now" takes the countdown's place, 0.7 times its size as in `CountdownText`, on its baseline and in its line's height, so the banner stays 141 pt at the drop instead of shrinking. The small family (Watch, CarPlay) keeps its label over 0:00. Renders synced to the design system on Chime's go-ahead ("do your recommendation"); only the eight `lock-outNow`/`lock-stale` pictures changed.
+- **Not verified:** the new banner on the phone (needs one short QuickTime clip through a drop).
+
 ## Phase 7: Silo island didn't show on the phone (Tue 3 Nov 2026)
 
 - **Chime's report:** "Live Activity for Silo in 3 min" said "Requested: it appears at …", but no island.

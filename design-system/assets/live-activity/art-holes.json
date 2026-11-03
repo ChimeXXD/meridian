@@ -383,14 +383,14 @@
       "width" : 1080
     },
     "lock-outNow-art.png" : {
-      "height" : 471,
+      "height" : 424,
       "holes" : [
         {
           "align" : "center",
           "circle" : false,
           "corner" : "none",
           "fit" : "cover",
-          "h" : 471,
+          "h" : 424,
           "kind" : "wide",
           "radius" : 0,
           "show" : "Silo",
@@ -402,14 +402,14 @@
       "width" : 1080
     },
     "lock-outNow-longest-art.png" : {
-      "height" : 471,
+      "height" : 424,
       "holes" : [
         {
           "align" : "center",
           "circle" : false,
           "corner" : "none",
           "fit" : "cover",
-          "h" : 471,
+          "h" : 424,
           "kind" : "wide",
           "radius" : 0,
           "show" : "Silo",
@@ -421,14 +421,14 @@
       "width" : 1080
     },
     "lock-stale-art.png" : {
-      "height" : 471,
+      "height" : 424,
       "holes" : [
         {
           "align" : "center",
           "circle" : false,
           "corner" : "none",
           "fit" : "cover",
-          "h" : 471,
+          "h" : 424,
           "kind" : "wide",
           "radius" : 0,
           "show" : "Silo",
@@ -440,14 +440,14 @@
       "width" : 1080
     },
     "lock-stale-longest-art.png" : {
-      "height" : 471,
+      "height" : 424,
       "holes" : [
         {
           "align" : "center",
           "circle" : false,
           "corner" : "none",
           "fit" : "cover",
-          "h" : 471,
+          "h" : 424,
           "kind" : "wide",
           "radius" : 0,
           "show" : "Silo",

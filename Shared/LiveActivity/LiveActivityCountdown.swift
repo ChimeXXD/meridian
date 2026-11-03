@@ -2,8 +2,8 @@ import SwiftUI
 
 /// The Live Activity's ticking countdown in Night Sky's serif numerals, light by default. Always
 /// `Text(timerInterval:countsDown:)` ending at the drop, with no `pauseTime` (D-52), so it stops at 0:00 and never
-/// counts up (CLAUDE.md rule 4). When the content goes stale at the drop the numbers stay at 0:00 while the label
-/// above flips to "Out now".
+/// counts up (CLAUDE.md rule 4). Once the content goes stale at the drop the Lock Screen banner and the island show
+/// "Out now" in its place; the small family keeps it at 0:00 under its "Out now" label.
 struct LiveActivityCountdown: View {
     let dropDate: Date
     var now = Date.now
