@@ -2,6 +2,16 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Chime's two decisions (Tue 3 Nov 2026)
+
+- **D-61:**
+  - **Widgets' VoiceOver:** in a drop's last day it speaks the release time ("out today at 21:00", "airs in Japan today at 23:30"), not a countdown that could be an hour stale. Further out it keeps "in 2 days 4 hours".
+  - **CLAUDE.md:** the accessibility example now uses this wording.
+  - **The "where it's on" line:** stays 13 pt; Chime looked and kept it.
+- **Checks:**
+  - AccessibilityLabelTests were red first (6 issues), then green with the widget render and timeline suites: 30 tests.
+  - No separate code review: a 4-line change covered by its tests (batching, per Chime).
+
 ## Polish batch B: the small audit items (Tue 3 Nov 2026)
 
 - **#18:** Search's "Results" uses the one section-header style (subheadline medium, muted).

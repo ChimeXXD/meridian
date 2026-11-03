@@ -39,7 +39,7 @@ struct AccessibilityLabelTests {
     func noOfficialStream() {
         let drop = Self.drop("House of the Dragon", in: 3 * Self.hours, .broadcast(network: "HBO"), .exact,
                              provider: Self.hboBlocked)
-        #expect(Self.label(drop) == "House of the Dragon, in 3 hours, HBO US, no official stream in your country")
+        #expect(Self.label(drop) == "House of the Dragon, out today at 21:00, HBO US, no official stream in your country")
     }
 
     @Test("an estimate says expected, so VoiceOver claims no more than the screen", arguments: [
@@ -55,7 +55,19 @@ struct AccessibilityLabelTests {
     @Test("an AniList time is the Japanese broadcast, and says so")
     func anilist() {
         let drop = Self.drop("Frieren", in: 5 * Self.hours + 30 * 60, .anilist, .exact, provider: Self.crunchyroll)
-        #expect(Self.label(drop) == "Frieren, airs in Japan in 5 hours 30 minutes, Crunchyroll")
+        #expect(Self.label(drop) == "Frieren, airs in Japan today at 23:30, Crunchyroll")
+        let later = Self.drop("Frieren", in: 3 * Self.days, .anilist, .exact, provider: Self.crunchyroll)
+        #expect(Self.label(later) == "Frieren, airs in Japan in 3 days, Crunchyroll")
+    }
+
+    @Test("in the last day it speaks the release time, not a countdown that goes stale between widget entries (D-61)",
+          arguments: [
+        (TimeInterval(20), "Silo, out today at 18:00, Apple TV"),
+        (TimeInterval(3_660), "Silo, out today at 19:01, Apple TV"),
+        (TimeInterval(86_400), "Silo, out tomorrow at 18:00, Apple TV"),
+    ])
+    func lastDay(seconds: TimeInterval, expected: String) {
+        #expect(Self.label(Self.drop("Silo", in: seconds, .broadcast(network: "Apple TV"), .exact)) == expected)
     }
 
     @Test("a date-only drop gives its listed day and no countdown (D-28)")
@@ -90,11 +102,10 @@ struct AccessibilityLabelTests {
         #expect(Self.label(nil) == "Nothing scheduled for your shows")
     }
 
-    @Test("units are spoken in full and singular when one", arguments: [
-        (TimeInterval(86_400), "Silo, in 1 day, Apple TV"),
-        (TimeInterval(3_660), "Silo, in 1 hour 1 minute, Apple TV"),
-        (TimeInterval(11_520), "Silo, in 3 hours 12 minutes, Apple TV"),
-        (TimeInterval(20), "Silo, in 1 minute, Apple TV"),
+    @Test("further out, units are spoken in full and singular when one, a zero part left out", arguments: [
+        (TimeInterval(86_400 + 3_600), "Silo, in 1 day 1 hour, Apple TV"),
+        (TimeInterval(2 * 86_400 + 600), "Silo, in 2 days, Apple TV"),
+        (TimeInterval(3 * 86_400 + 5 * 3_600), "Silo, in 3 days 5 hours, Apple TV"),
     ])
     func units(seconds: TimeInterval, expected: String) {
         #expect(Self.label(Self.drop("Silo", in: seconds, .broadcast(network: "Apple TV"), .exact)) == expected)
@@ -103,7 +114,7 @@ struct AccessibilityLabelTests {
     @Test("no provider leaves the phrase at the show and its time")
     func noProvider() {
         let drop = Self.drop("Silo", in: 3 * Self.hours, .broadcast(network: "Apple TV"), .exact, provider: nil)
-        #expect(Self.label(drop) == "Silo, in 3 hours")
+        #expect(Self.label(drop) == "Silo, out today at 21:00")
     }
 
     @Test("never 'on HBO' (D-20) and never the episode title (spoiler-safe)")
