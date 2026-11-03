@@ -21,6 +21,11 @@ final class UpcomingModel {
     /// Bumped by each refresh, so a slower, older refresh (a launch and a foreground at once, or a follow change
     /// mid-load) can't overwrite a newer result.
     private var generation = 0
+    #if DEBUG
+    /// The last result before Debug's fake drops went in. A fake copy hides its show's real drop, so the next refresh
+    /// compares with this one, or a real delay ("Delayed from 21:00") and an offline show's last known drop would be lost.
+    @ObservationIgnored private var realResult: UpcomingLoader.Result?
+    #endif
     private let defaults: UserDefaults
     static let lastUpdatedKey = "lastUpdated"
 
@@ -61,7 +66,12 @@ final class UpcomingModel {
         }
         // On a cold launch the last snapshot is the last known result, so an offline start doesn't empty the widgets
         // (and delete their art) for shows that merely failed to load.
-        let previous = result ?? snapshots.lastWritten().map {
+        #if DEBUG
+        let last = realResult ?? result
+        #else
+        let last = result
+        #endif
+        let previous = last ?? snapshots.lastWritten().map {
             UpcomingLoader.Result(drops: $0.drops, nothingScheduled: $0.nothingScheduled)
         }
         // A published time that moved later keeps its first listed time, for "Delayed from 21:00" (D-58).
@@ -69,6 +79,7 @@ final class UpcomingModel {
         result = loaded.keepingLastKnown(from: previous, followOrder: requests.map(\.showID))
         #if DEBUG
         // Debug → "Fake drop in N minutes" (SPEC §7): the fake show goes to Upcoming and the widgets like a real one.
+        realResult = result
         result = DebugFakeDrop.adding(to: result)
         #endif
         // The widgets get the times at once; their art follows once it's loaded.

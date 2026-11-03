@@ -2,6 +2,16 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Phase 7: Silo demo for the case study recordings (Tue 3 Nov 2026)
+
+- **Why:** the simulator take ran at about 12.6 frames a second (1,430 frames in 113 s, one 12.3 s freeze), so Chime records on the iPhone. Silo returns only in 2027, so nothing real puts it on the island.
+- **Settings › Debug › Silo demo** (`DebugSiloDemo`): Silo's listed episode (S4E1) moved to 4 days ("4d 4h", held for 30 min), 3 hours (ticking), or a Live Activity in 3 min, alone or with another followed show on the same night. "Simulate delay +1 h" moves it too. Show, episode, Apple TV and art stay real; the wording comes from the rules file's Apple TV rule ("Expected"), and with no rule there's no demo.
+- `DebugFakeDrop` holds several fakes. A copy stands in for its show's real drops in Upcoming and the widgets, so Silo isn't listed twice. `UpcomingModel` compares the next refresh with the result from before the fakes, so a real delay or an offline show's last known drop isn't lost. A new demo take ends the earlier demo-only activities (`ActivityScheduler.endFakes`).
+- `docs/SHOT-LIST.md`: what Chime records on the phone, what Claude takes in the simulator, and what each shot is for. Chime's calls: "Expected" wording, Claude takes the app stills, merge + delay + StandBy in, near-black video card.
+- **Red → green:** `DebugSiloDemoTests` failed with "cannot find 'DebugSiloDemo' in scope", then "has no member 'endFakes'"; now 8 tests pass. Mutation: setting the ID back to 44778 fails "the demo's show ID is Silo's in TVmaze's own recorded data".
+- **Reviews:** /code-review medium --fix tightened the "4d 4h" test (uses `CountdownFormatter`) and merged `nextRealDrop`; I fixed its delay-history and leftover-activity findings. proof:verifier found the demo used 44778, which is House of the Dragon; Silo is 38052 (fixture `show-silo-embed.json`). Fixed, with the fixture-backed test.
+- **Not verified:** the buttons on the phone (needs Chime). `LiveActivitySamples` and `ShowPreviewTests` also call 44778 "Silo" (older, cosmetic, left alone). After a demo, an offline cold relaunch shows no Silo row until a refresh succeeds (Debug only).
+
 ## Day 7: published (Tue 3 Nov 2026)
 
 - **Published on Chime's go-ahead:**

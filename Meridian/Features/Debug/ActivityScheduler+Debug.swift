@@ -16,5 +16,14 @@ extension ActivityScheduler {
         }
         return running.count
     }
+
+    /// Ends every activity booked for Debug's fake drops only, so a new demo take doesn't show an earlier one's
+    /// activity too (RootView's sync never touches fakes). Real activities keep running. Returns how many ended.
+    @discardableResult
+    func endFakes() async -> Int {
+        let fakes = requester.current().filter { !$0.dropIDs.isEmpty && $0.dropIDs.allSatisfy { DebugFakeDrop.isFake(id: $0) } }
+        for activity in fakes { await requester.end(id: activity.id) }
+        return fakes.count
+    }
 }
 #endif

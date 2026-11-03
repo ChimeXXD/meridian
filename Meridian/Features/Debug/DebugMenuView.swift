@@ -29,7 +29,7 @@ struct DebugMenuView: View {
             Section("Live Activity") {
                 Button("Live Activity for fake drop in 3 min (lead 1 min)") { Task { await fakeActivity() } }
                     .accessibilityIdentifier("debug-activity")
-                if let real = nextRealDrop {
+                if let real = nextRealDrop() {
                     Button("Live Activity for \(real.showName) in 3 min (lead 1 min)") {
                         Task { await fakeActivity(like: real) }
                     }
@@ -38,6 +38,7 @@ struct DebugMenuView: View {
                 Button("Simulate delay +1 h") { Task { await delay() } }
                     .accessibilityIdentifier("debug-delay")
             }
+            siloDemo
             Section {
                 NavigationLink("Dump snapshot") { DebugSnapshotView() }
                     .accessibilityIdentifier("debug-snapshot")
@@ -64,8 +65,11 @@ struct DebugMenuView: View {
     }
 
     /// The soonest followed episode with a time, to dress the fake drop as (its art is already in the App Group).
-    private var nextRealDrop: Drop? {
-        model.result?.drops.first { !DebugFakeDrop.isFake($0) && $0.confidence != .dateOnly }
+    /// A copy stands in for its show's real drop, so a copy counts too; "Debug Show" doesn't.
+    private func nextRealDrop(excluding showID: String? = nil) -> Drop? {
+        model.result?.drops.first {
+            $0.showID != DebugFakeDrop.showID && $0.confidence != .dateOnly && $0.showID != showID
+        }
     }
 
     /// Requests the activity first, while the app is surely in the foreground, then shows the drop in Upcoming.
@@ -74,6 +78,58 @@ struct DebugMenuView: View {
         let drop = real.map { DebugFakeDrop.set(minutes: 3, like: $0) } ?? DebugFakeDrop.set(minutes: 3)
         let outcome = await scheduler.sync(drops: [drop], optedIn: [drop.showID], leadMinutes: 1)
         status = Self.describe(outcome, drop: drop)
+        await model.refresh(followed)
+    }
+
+    /// Debug › Silo demo (DebugSiloDemo): every state the case study films, with Silo's real art and wording.
+    @ViewBuilder private var siloDemo: some View {
+        Section {
+            if let silo = DebugSiloDemo.listed(in: model.result?.drops ?? []) {
+                Button("Silo in 4 days (still “4d 4h”)") {
+                    Task { await siloDemo(silo, minutes: DebugSiloDemo.fourDaysMinutes) }
+                }
+                .accessibilityIdentifier("debug-silo-days")
+                Button("Silo in 3 hours (last day, ticking)") {
+                    Task { await siloDemo(silo, minutes: DebugSiloDemo.lastDayMinutes) }
+                }
+                .accessibilityIdentifier("debug-silo-hours")
+                Button("Live Activity for Silo in 3 min (lead 1 min)") {
+                    Task { await siloDemo(silo, minutes: 3, activity: true) }
+                }
+                .accessibilityIdentifier("debug-silo-activity")
+                if let other = nextRealDrop(excluding: DebugSiloDemo.showID) {
+                    Button("Live Activity for Silo and \(other.showName), same night") {
+                        Task { await siloDemo(silo, minutes: 3, activity: true, sameNightWith: other) }
+                    }
+                    .accessibilityIdentifier("debug-silo-same-night")
+                }
+            } else {
+                Text("Follow Silo to use the demo.")
+            }
+        } header: {
+            Text("Silo demo")
+        } footer: {
+            Text("Silo, its art, Apple TV and “Expected” are real; only the time is made up. “Simulate delay +1 h” "
+                + "moves it too. A relaunch clears it.")
+        }
+    }
+
+    /// Sets Silo's demo drop (and its same-night partner), books its Live Activity when asked, then refreshes Upcoming
+    /// and the widgets.
+    private func siloDemo(_ silo: Drop, minutes: Double, activity: Bool = false, sameNightWith other: Drop? = nil) async {
+        guard let drop = DebugSiloDemo.drop(minutes: minutes, from: silo, rules: model.rules) else {
+            status = "No platform rule covers Silo’s network, so there’s no honest time to show."
+            return
+        }
+        let fakes = other.map { DebugSiloDemo.sameNight(silo: drop, with: $0) } ?? [drop]
+        await scheduler.endFakes()
+        DebugFakeDrop.set(fakes)
+        if activity {
+            let outcome = await scheduler.sync(drops: fakes, optedIn: Set(fakes.map(\.showID)), leadMinutes: 1)
+            status = Self.describe(outcome, drop: drop)
+        } else {
+            status = "Silo at \(DropFormatter().localTime(drop.date)), in Upcoming and the widgets."
+        }
         await model.refresh(followed)
     }
 
