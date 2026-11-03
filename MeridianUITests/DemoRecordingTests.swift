@@ -46,4 +46,35 @@ final class DemoRecordingTests: XCTestCase {
         expandIsland(springboard, holdFor: 6)
         Thread.sleep(forTimeInterval: 3)
     }
+
+    /// Settings › Debug › Silo demo › "Live Activity for Silo now (drop in 3 min)", the button the phone recording
+    /// uses: Silo's island on the Home Screen at once. `TEST_RUNNER_MERIDIAN_SILO_SCHEDULED=1` taps
+    /// "… in 3 min (lead 1 min)" instead and waits the 2 minutes its scheduled start takes.
+    @MainActor
+    func test_siloDemo() throws {
+        let scheduled = ProcessInfo.processInfo.environment["MERIDIAN_SILO_SCHEDULED"] == "1"
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        let app = XCUIApplication()
+        app.launchArguments = ["-welcomeDone", "YES", "-follow", "38052", "-tab", "settings"]
+        app.launch()
+        let debug = app.buttons["Debug"].firstMatch
+        for _ in 0..<4 where !debug.waitForExistence(timeout: 3) { app.swipeUp() }
+        guard debug.exists else { return XCTFail("Settings has no Debug row") }
+        debug.tap()
+        // The Silo rows appear once Upcoming has loaded, and may sit below the fold of the lazy list.
+        let button = app.buttons[scheduled ? "debug-silo-activity" : "debug-silo-activity-now"]
+        for _ in 0..<3 where !button.waitForExistence(timeout: 10) { app.swipeUp() }
+        guard button.exists else { return XCTFail("Silo never loaded") }
+        button.tap()
+        let status = app.staticTexts["debug-status"]
+        for _ in 0..<3 where !status.waitForExistence(timeout: 2) { app.swipeUp() }
+        XCTAssertTrue(status.exists)
+        print("silo-demo status: \(status.label)")
+        XCUIDevice.shared.press(.home)
+        Thread.sleep(forTimeInterval: scheduled ? 140 : 8)  // a scheduled island is due 2 minutes after the tap
+        let shot = XCTAttachment(screenshot: springboard.screenshot())
+        shot.name = "silo-demo-home"
+        shot.lifetime = .keepAlways
+        add(shot)
+    }
 }

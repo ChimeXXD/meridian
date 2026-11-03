@@ -93,6 +93,10 @@ struct DebugMenuView: View {
                     Task { await siloDemo(silo, minutes: DebugSiloDemo.lastDayMinutes) }
                 }
                 .accessibilityIdentifier("debug-silo-hours")
+                Button("Live Activity for Silo now (drop in 3 min)") {
+                    Task { await siloDemo(silo, minutes: 3, activity: true, leadMinutes: 3) }
+                }
+                .accessibilityIdentifier("debug-silo-activity-now")
                 Button("Live Activity for Silo in 3 min (lead 1 min)") {
                     Task { await siloDemo(silo, minutes: 3, activity: true) }
                 }
@@ -109,14 +113,15 @@ struct DebugMenuView: View {
         } header: {
             Text("Silo demo")
         } footer: {
-            Text("Silo, its art, Apple TV and “Expected” are real; only the time is made up. “Simulate delay +1 h” "
-                + "moves it too. A relaunch clears it.")
+            Text("Silo, its art, Apple TV and “Expected” are real; only the time is made up. The island shows only "
+                + "outside Meridian: go to the Home Screen. “Simulate delay +1 h” moves it too. A relaunch clears it.")
         }
     }
 
     /// Sets Silo's demo drop (and its same-night partner), books its Live Activity when asked, then refreshes Upcoming
     /// and the widgets.
-    private func siloDemo(_ silo: Drop, minutes: Double, activity: Bool = false, sameNightWith other: Drop? = nil) async {
+    private func siloDemo(_ silo: Drop, minutes: Double, activity: Bool = false, leadMinutes: Int = 1,
+                          sameNightWith other: Drop? = nil) async {
         guard let drop = DebugSiloDemo.drop(minutes: minutes, from: silo, rules: model.rules) else {
             status = "No platform rule covers Silo’s network, so there’s no honest time to show."
             return
@@ -125,8 +130,8 @@ struct DebugMenuView: View {
         await scheduler.endFakes()
         DebugFakeDrop.set(fakes)
         if activity {
-            let outcome = await scheduler.sync(drops: fakes, optedIn: Set(fakes.map(\.showID)), leadMinutes: 1)
-            status = Self.describe(outcome, drop: drop)
+            let outcome = await scheduler.sync(drops: fakes, optedIn: Set(fakes.map(\.showID)), leadMinutes: leadMinutes)
+            status = Self.describe(outcome, drop: drop, leadMinutes: leadMinutes)
         } else {
             status = "Silo at \(DropFormatter().localTime(drop.date)), in Upcoming and the widgets."
         }
@@ -141,11 +146,13 @@ struct DebugMenuView: View {
             : "Moved \(count) Live \(count == 1 ? "Activity" : "Activities") 1 hour later."
     }
 
-    private static func describe(_ outcome: ActivityScheduler.Outcome, drop: Drop) -> String {
+    private static func describe(_ outcome: ActivityScheduler.Outcome, drop: Drop, leadMinutes: Int = 1) -> String {
         if !outcome.enabled { return "Live Activities are off in Settings › Meridian." }
         if !outcome.requested.isEmpty {
-            return "Requested: it appears at \(DropFormatter().localTime(drop.date.addingTimeInterval(-60))), "
-                + "drop at \(DropFormatter().localTime(drop.date))."
+            let start = drop.date.addingTimeInterval(TimeInterval(-leadMinutes * 60))
+            let appears = start > .now ? "it appears at \(DropFormatter().localTime(start))" : "it’s running now"
+            return "Requested: \(appears), drop at \(DropFormatter().localTime(drop.date)). "
+                + "Go to the Home Screen to see the island."
         }
         if !outcome.skippedOverLimit.isEmpty { return "Skipped: 3 Live Activities are already pending." }
         return "The request failed."

@@ -2,6 +2,14 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Phase 7: Silo island didn't show on the phone (Tue 3 Nov 2026)
+
+- **Chime's report:** "Live Activity for Silo in 3 min" said "Requested: it appears at …", but no island.
+- **Simulator, scripted** (`DemoRecordingTests.test_siloDemo`, `TEST_RUNNER_MERIDIAN_DEMO=1`): the scheduled booking showed Silo's island when due, art and countdown at 0:34. So the booking works; the likely cause is that iOS never shows an app's own Live Activity in the island while that app is open.
+- **Fix:** "Live Activity for Silo now (drop in 3 min)" starts at once, the path `-fakeActivity` proved on the phone. The status and the section footer say to go to the Home Screen, and so does `docs/SHOT-LIST.md`. Checked: Silo's island at 2:46, seconds after the tap.
+- **Review:** /code-review medium --fix hardened the scripted test's waits and fixed its env var name; no bugs in the Debug change. Gate: build, test, spec pass.
+- **Not verified:** on the phone (Chime).
+
 ## Phase 7: Silo demo for the case study recordings (Tue 3 Nov 2026)
 
 - **Why:** the simulator take ran at about 12.6 frames a second (1,430 frames in 113 s, one 12.3 s freeze), so Chime records on the iPhone. Silo returns only in 2027, so nothing real puts it on the island.
