@@ -1,6 +1,57 @@
 # Handoff: read this first when you pick the project back up
 
-Written 2 Nov 2026 (Lagos) at the end of the fourth long session with Chime (they/them). It summarises the session so a new one can carry on without it. Then read, in order: `CLAUDE.md`, `docs/PLAN.md`, `PROGRESS.md` (newest entry first), `docs/DECISIONS.md` (D-46 to D-56 are new).
+Updated 4 Nov 2026 (Lagos), the night before Day 7, by the session that made the case study footage and shipped the portfolio case study. Chime is they/them. **Start with "Latest: session of Wed 4 Nov 2026" just below**; the older sections follow, newest first. Then read, in order: `CLAUDE.md`, `docs/PLAN.md`, `PROGRESS.md` (newest entry first), `docs/DECISIONS.md` (D-64 and D-65 are the newest).
+
+## Latest: session of Wed 4 Nov 2026 (footage, case study, history rewrite)
+
+### Where it stands
+
+- **The repo's history was rewritten on 4 Nov** to remove every mention of the design reference library before it goes public (Chime: "I don't want to disclose that workflow to the public"; then "Remove it from the repo. Yes."). Every commit ID changed. `main` is **`fb8df25`** plus this handoff, and the tag **v0.1.0** was moved to match (its release kept its 10 README images). Old IDs quoted in older docs and below (`818e0a7`, `f3fdfa8`, `dff65d4`…) no longer exist.
+  - **Backup of the old history:** `~/Projects/Personal Projects/meridian-backup-before-history-rewrite-2026-11-04.bundle`.
+  - **Removed from every commit:** `docs/design/{reference,search,style,direction}-board/`, `docs/design/REFERENCES.md`, and the board scripts (`build-reference-board.py`, `build-direction-board.py`, `picks-to-references.py`, `reference-sections.py`, `reference-board-template.html`). The rest was reworded ("design references"…). A search of every commit, message and blob found 0 mentions. Two permission lines for that library's tools in `.claude/settings.json` were removed with Chime's OK.
+  - **Never** merge or push anything built on the old history, and never name the reference library in this repo, its commits or the case study. Another local session (`personal-projects-c6`) committed here earlier today and was messaged to reset to `origin/main` first.
+  - GitHub can keep the old commits reachable by exact ID for a while. Nobody outside has those IDs; GitHub support can purge them if Chime wants certainty.
+- **CI passed** on `fb8df25`. The proof gate (build, test, spec) passed on the Lock Screen change below.
+- **On the phone:** the build with the Lock Screen "Out now" change is installed. **Signing expires Mon 9 Nov 2026 00:59 Lagos**: reinstall before then.
+- **Portfolio case study is live:** https://chimexd.work/work/meridian (repo `My Portfolio`, `main` = `5b3c1f1`, deployed by Cloudflare Pages). The home page features **Meridian, Clepso, then Perpetual Trading**; Bulan moved to /work only (Chime's call).
+
+### What Chime asked for, in order (the conversation, condensed)
+
+1. **The screen-recording pill took over the Dynamic Island.** Fix: record with **QuickTime on the Mac** over a cable (File › New Movie Recording, iPhone as camera, Quality Maximum), never the phone's Screen Recording. `docs/SHOT-LIST.md` became one QuickTime take in a running order.
+2. **"Record one video and you cut it."** Chime filmed takes 2 and 3 (standby, same night + Lock Screen widgets, Out now, three widgets). I cut the clips and stills from them.
+3. **StandBy:** the small circle at the top *is* Silo's Live Activity (Chime corrected me). Still 21 uses it.
+4. **Lock Screen at the drop ("do your recommendation"):** the banner now puts gold **"Out now" in the countdown's place**, 0.7× its size on its baseline, and keeps its height, with a hidden plain-text stand-in (not a timer, D-57). Commit `9cc291e` (renders and design system synced, five review fixes, gate green). **Not yet seen on the phone.**
+5. **"Why is it one video? It should be cut into the states."** I cut **17 clips** (later 18) of single states.
+6. **Zoom like the reference** (a portfolio video that eases in on what it shows, holds, eases out): built in HyperFrames, camera as a pure function of time (geometric scale, straight-line pan, `power2.inOut`, the phone's edge kept at the frame's edge).
+7. **"Why 29 seconds, and why speed up the countdown?"** Chime was right: a 3× timer looks broken in an app about trustworthy time. Recut to **16.6 s at real speed** with the countdown only going down, and the island press kept as real footage.
+8. **"Do all the different states, each with the zoom."** Nine state films, square, for the case study's 544 px column.
+9. **Search › service chips should show "Popular"** (Chime watches a lot but didn't know the airing shows). An agent planned it; Chime chose: Wikipedia pageviews, the 3 newest season starts first, built **after Day 7**, refreshed by a **weekly GitHub bot**. Recorded as **D-64**; nothing built yet.
+10. **Case study** drafted on a branch by an agent, reviewed (`/code-review`: 10 findings, 8 fixed: a refused play now restores controls, byte ranges in `serve-out.mjs`, etc.), previewed at `meridian-case-study.chimexd.pages.dev`.
+11. **Remove Chime's Man United and X Lock Screen widgets without cropping:** painted out frame by frame by rebuilding rows 1998–2154 from the clean rows above and below (no trace in any frame). Originals are in `clips/with-widgets/` and `stills/with-widgets/`.
+12. **The page says "demo"**; **home order** Meridian, Clepso, Perpetual Trading.
+13. **"It was taking a long time."** Small copy and config edits are now done directly with narrow tests, not by agents running the whole suite.
+14. **Nothing about the reference library in public;** say "I designed". Then: **say the first version was designed by hand in Figma** (a design engineer case study must show the design work). Recorded as **D-65** (supersedes D-31's "no Figma"); CLAUDE.md, PLAN, SPEC, UI-BRIEF and CASE-STUDY updated.
+15. **Widgets:** the three sizes as one image cut out at near real size (`widgets.jpg`), in their own **Widgets** section under Key decisions.
+16. **Posters in Figma:** a **Meridian** page in "Portfolio Elements" (file `mageMpQwkjfpW2jBY66fNl`, frame `73:6`): card at rest (Longitudes mark plus "Meridian" in Newsreader on night), hover (six real screens), list row (app icon and three preview cards). Chime approved, and an agent exported them to the site (new "night" tone) and published to chimexd.work.
+
+### Files and where they live
+
+- **Video project** `~/Projects/Personal Projects/Meridian Video/` (local git; footage, clips, stills and renders are git-ignored):
+  - `footage/`: takes; `clips/`: 18 single-state MP4s (1180×2556, 60 fps); `stills/`: 21 phone stills plus `stills/app/` (7 simulator app screens; Settings had its Debug row painted out).
+  - `build.mjs`: one shot list (`FILMS`) writes the reel (`square/`, `vertical/`) and each state's project (`films/<format>/<name>/`), with the zoom targets in `LOOK`.
+  - Renders: `square/renders/meridian-square.mp4` and `vertical/renders/meridian-vertical.mp4` (16.6 s reel); `renders/states/*.mp4` (9 state films, square). The vertical state films are built but not rendered.
+- **Portfolio** `~/Projects/Personal Projects/My Portfolio/`: `content/work/meridian.mdx`, `public/images/work/meridian/` (films, posters, screens, `widgets.jpg`, `logo.svg`, `icon.svg`, `page.jpg`, `card-1..3.jpg`), `tests/meridian.spec.ts` (fails if the page names the reference library; checks the Figma line, 9 films, 4 metrics). Chime's uncommitted GitHub/PSN/X data refreshes there were never touched.
+
+### Next steps (Day 7, Thu 5 Nov, never cut)
+
+1. **Make `ChimeXXD/meridian` public.** Then, in the portfolio, put `repo: "https://github.com/ChimeXXD/meridian"` back in `meridian.mdx`'s meta and restore the GitHub-link test (both marked TODO there). The case study already says the repo "went public" (three places).
+2. **Confirm the Lock Screen "Out now" banner on the phone:** a short QuickTime clip of the Lock Screen through a drop (tap "Live Activity for Silo now", lock, wait about 3 minutes). That clip can replace the old-design still 13.
+3. **Chime to read and confirm the case study copy** (drafted from these docs; every drafted line is marked `TODO(copy)` in the MDX's top comment).
+4. After Day 7: **build D-64** (Popular per service) with the weekly GitHub Action; reinstall before 9 Nov.
+
+### Open for Chime
+
+- Copy approval (above); whether to ask GitHub support to purge the pre-rewrite commits; vertical state films if wanted; StandBy is the weakest film (Apple draws its ring tiny).
 
 ## What we're building
 
@@ -17,6 +68,8 @@ Written 2 Nov 2026 (Lagos) at the end of the fourth long session with Chime (the
 - **Push to GitHub after every commit.** Commit in its own Bash command (the proof gate refuses a commit chained after a file-changing command), then push.
 - After code changes run `/code-review medium --fix` (high for risky work), then make sure the checks pass. Never launch `/code-review ultra`.
 - **Check definitions need Chime's OK:** `.claude/proof.json`, anything in `fidelity/` (inventories, `FidelityTests`, `verify-screen.sh`), and `.claude/settings.json`. Chime OK'd the rename-only edits this session; a review agent's added Welcome inventory item was undone pending their OK.
+- **Speed over ceremony (4 Nov):** do small copy and config edits directly and run only the affected tests; keep agents for big or parallel work and tell them to run narrow tests.
+- **Nothing about the design reference library in public:** the repo, commits and case study say "I designed"; the first version was designed by hand in Figma (D-65).
 - **Never commit show artwork** (rule 9, D-37). The design-system site loads art at runtime from TVmaze/AniList (URLs only), and its widget renders are "art holes" (see below).
 - **Agents in parallel** when Chime asks: give each a lane that touches different files, tell them not to commit, push, install or edit docs; then check their screenshots yourself, run `/code-review`, write the docs, commit and push. One simulator job at a time.
 - **"Live" means ticking on two screenshots seconds apart**, never one render.
@@ -58,13 +111,13 @@ Written 2 Nov 2026 (Lagos) at the end of the fourth long session with Chime (the
      - CLI deploys from inside the repo were "Blocked" because of the commit author's email (Git deploys work).
      - Chime's ISP sometimes can't reach some Vercel edge IPs (the `.3` group). It's a DNS/routing issue on their side; suggest DNS `1.1.1.1` / `8.8.8.8`.
 
-## Where things stand (commit `818e0a7`, all pushed)
+## Where things stood on 2 Nov (before the 4 Nov history rewrite; IDs changed)
 
 - **On Chime's iPhone 14 Pro** (UDID <your-iphone-udid>), installed over Wi-Fi. **Signing expires Mon 9 Nov 2026 00:59 Lagos** (2026-11-08T23:59Z, profile for `dev.chime.meridian`): reinstall before then.
 - **Checks:** 252 tests pass (gate build + test + spec). The design-system site has 0 console errors, no overflow at 320, and deep links land.
 - **Live:** https://meridian-designsystem.vercel.app has the latest site.
 
-## Next steps
+## Next steps as of 2 Nov (mostly done since; see the 4 Nov section)
 
 1. **Chime's verdicts** on the phone: the new countdown rule, the Welcome wall and logo, the widgets and the Live Activity. D5-3 (Debug actions on the phone) and D5-4 (Chime's screen recording) are still open.
 2. **Review leftovers worth doing:**
@@ -155,9 +208,9 @@ npx vercel@latest ls meridian-design-system
 - Checked with the stand-in footage: lint and layout pass. The only warning is `film_silent`, which is intended.
 - Tooling: HyperFrames CLI 0.9.8 via npx, with telemetry disabled. ffmpeg comes from Homebrew; snapshots and renders need it.
 
-**Open for Chime**
-- The recording.
-- Light card (like the reference) or near-black to match the portfolio.
+**Open for Chime** (resolved 4 Nov)
+- The recording: done with QuickTime on the Mac.
+- The card: near-black (`#0d0d0e`), to match the portfolio.
 
 **Next**
 1. Render both videos and review the frames.
