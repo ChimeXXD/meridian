@@ -21,7 +21,7 @@ MeridianWidgets/MeridianWidgets.entitlements
 # proof plugin local state
 .claude/proof-cache/
 
-# reference screenshots: other apps' copyrighted UI, kept local only (CLAUDE.md rule 9)
+# Reference screenshots: other apps' copyrighted UI, kept local only (CLAUDE.md rule 9)
 docs/design/reference-board/images/
 docs/design/style-board/images/
 docs/design/direction-board/images/

@@ -112,7 +112,7 @@ If a day overruns, cut from its Should column first and never from Day 7. The po
 **Goal:** know what each screen looks like before building it. Chime designed the first version by hand in Figma (D-65). That design and the design references go into a written brief, and the brief goes into SwiftUI.
 
 ### Claude CLI does
-- [x] **reference sweep:** (Done 30 Oct as the reference board: 154 references, Chime liked 47, all saved to the collection.) One iOS search per surface, following the `references:search` skill rules. Save the best 3–5 per surface to `Meridian references`, and note the pattern taken from each in `docs/design/REFERENCES.md`. The seed pass is already there.
+- [x] **Reference sweep:** (Done 30 Oct as the reference board: 154 references, Chime liked 47, all saved to the collection.) One iOS search per surface, following the `references:search` skill rules. Save the best 3–5 per surface to `Meridian references`, and note the pattern taken from each in `docs/design/REFERENCES.md`. The seed pass is already there.
 
   | Surface | Query |
   | --- | --- |

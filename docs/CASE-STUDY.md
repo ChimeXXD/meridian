@@ -44,9 +44,9 @@ Show detail names the source in one sentence: "Apple TV doesn't publish release 
 
 **Words, not colour codes.** The first trust signal was a coloured dot with a word. I had to ask what the dots meant, so users wouldn't know either. Three word-based options were built and compared, and I picked putting the certainty in the verb. It adds nothing to the screen and needs no legend (D-40).
 
-**Reference-led surfaces.** On my phone, the first Live Activity looked "kind of whack". Widgets and Live Activity were rebuilt from references I picked:
-- **Widgets:** 3 of 28 references. Tripsy for the small, Apple TV for the medium and a new large, Udemy for the Lock Screen (D-46).
-- **Live Activity:** Duolingo, Instagram, Yazio and Tinder (D-50).
+**Redesigned surfaces.** On my phone, the first Live Activity looked "kind of whack", so I redesigned it and the widgets:
+- **Widgets:** the small and medium ones, a new large one, and the Lock Screen's (D-46).
+- **Live Activity:** the Lock Screen banner, the compact and expanded island, and the minimal ring (D-50).
 
 **The expanded island.** It had a progress bar that filled from whenever the activity started: a picture with no words. An unslop pass removed it, cut the timer from 34 pt to 24 pt and wrote delays as "Delayed from 22:00" instead of a struck-through time (D-57).
 
@@ -127,5 +127,4 @@ TODO(Chime): a short personal reflection.
 - **TV data:** TVmaze, CC BY-SA 4.0.
 - **Anime data:** AniList, under its API terms.
 - **Network logos:** Wikimedia Commons, loaded at runtime. The in-app Credits screen lists the required attributions.
-- **Design references:** references.
 - **Built with:** Claude Code.

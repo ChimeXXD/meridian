@@ -154,7 +154,7 @@ Three research passes ran on 29 Oct 2026: competitors and users, Apple platform 
 ## Tooling
 
 - XcodeBuildMCP is now published as `mobilebuildmcp` (npm 2.7.1, checked 29 Oct). `xcodebuildmcp` 2.7.0 still installs.
-- reference search works. First references are in `design/REFERENCES.md`.
+- Reference search works.
 
 ## Network logos (1 Nov 2026)
 

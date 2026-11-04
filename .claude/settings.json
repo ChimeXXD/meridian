@@ -3,7 +3,6 @@
     "allow": [
       "mcp__figma__get_screenshot",
       "Bash(sips -g *)",
-      "mcp__claude_ai_references__search_screens",
       "Bash(xcrun simctl list *)",
       "Bash(xcrun simctl bootstatus *)",
       "mcp__claude-in-chrome__find",
@@ -11,7 +10,6 @@
       "Bash(xcrun devicectl device info *)",
       "mcp__figma__whoami",
       "mcp__claude-in-chrome__tabs_context_mcp",
-      "mcp__claude_ai_references__search_flows",
       "mcp__claude-in-chrome__read_page",
       "Bash(xcodebuild -scheme Meridian *)",
       "Bash(xcodegen generate *)",
