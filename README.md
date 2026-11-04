@@ -102,7 +102,7 @@ unfollowing always asks.
 ### Widgets
 
 <p align="center">
-  <img src="https://github.com/ChimeXXD/meridian/releases/download/v0.1.0/widgets.png" width="340" alt="Home Screen widgets on an iPhone: a medium widget with Silo's art, Expected Wed at 23:00 and 2d 4h, two more rows, and a small widget beside the Meridian icon">
+  <img src="https://github.com/ChimeXXD/meridian/releases/download/v0.1.0/widgets-home.png" width="300" alt="Home Screen widgets on an iPhone: a medium widget with Silo's art, Expected Wed at 23:00 and 2d 4h, two more rows, and a small widget beside the Meridian icon">
 </p>
 
 Small, medium and large on the Home Screen; inline, circular and rectangular on the Lock Screen. The countdown ticks
@@ -111,7 +111,9 @@ in the last 24 hours and reads "4d 4h" before that. They never count up.
 ### Release-night Live Activity
 
 <p align="center">
-  <img src="https://github.com/ChimeXXD/meridian/releases/download/v0.1.0/live-activity.png" width="620" alt="The expanded Dynamic Island: Silo, S2E5 · Apple TV, its art, Expected Mon 21:00 and a 2:00:00 countdown">
+  <img src="https://github.com/ChimeXXD/meridian/releases/download/v0.1.0/live-activity-lock.png" width="300" alt="The Lock Screen with the Live Activity banner: Silo, S2E5 · Apple TV, a 2:00:00 countdown and Expected Mon 21:00, with its art on the right">
+  &nbsp;&nbsp;
+  <img src="https://github.com/ChimeXXD/meridian/releases/download/v0.1.0/live-activity-island.png" width="300" alt="The expanded Dynamic Island over the Home Screen: Silo, S2E5 · Apple TV, its art, Expected Mon 21:00 and a 2:00:00 countdown">
 </p>
 
 Scheduled before the episode (iOS 26), on the Lock Screen and in the Dynamic Island, then "Out now" in gold with no
