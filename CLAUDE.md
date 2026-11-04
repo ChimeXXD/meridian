@@ -19,7 +19,7 @@ The app is local-first: no account, no server, no analytics. Its edge is **relea
 - **The repo is private until Day 7**, then made public as open source (MIT). While it's private, the app uses only the bundled rules file, and "Report a wrong time" uses email (D-34).
 - **Budget is $0.** No Apple Developer Program, no TestFlight, no paid services. Sign with Chime's free Apple ID; builds expire after 7 days. While the repo is private, CI runs only on pushes to `main` (D-35).
 - **Scope** is the Must / Should / Cut table in `docs/PLAN.md`. If a day overruns, cut its Should items. Never cut Day 7 (README, video, case study, open source).
-- **Design: no Figma.** Build UI directly in SwiftUI from the design references (`docs/design/REFERENCES.md`) and `docs/design/UI-BRIEF.md`. Chime approves each screen from simulator screenshots. Approved screenshots become the `fidelity/refs/` baselines (D-31).
+- **Design:** Chime designed the first version by hand in Figma (D-65); the app is now the source of truth (D-57). Build UI in SwiftUI from the design references (`docs/design/REFERENCES.md`) and `docs/design/UI-BRIEF.md`. Chime approves each screen from simulator screenshots. Approved screenshots become the `fidelity/refs/` baselines (D-31).
 
 ## Stack (fixed)
 

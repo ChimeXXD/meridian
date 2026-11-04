@@ -40,7 +40,7 @@ Show detail names the source in one sentence: "Apple TV doesn't publish release 
 
 ## Design
 
-**Direction.** There was no Figma (D-31). I picked 47 of 154 design references, and a written brief went straight into SwiftUI. I turned down the type-only studies, so the app shows show art, fetched at runtime and never committed (D-37). Of three directions I chose **Night Sky**, after Insight Timer's player (D-38). The art fades into a near-black base under a large serif countdown. Warm art gets neutral charcoal, because darkened reds read as brown. One brand colour, Meridian Gold, appears only on the logo's star and the words "Out now" (D-53).
+**Direction.** I designed the first version in Figma, to get a feel for the product and how I'd build it (D-65). From that design and a written brief I built the screens in SwiftUI. I turned down the type-only studies, so the app shows show art, fetched at runtime and never committed (D-37). Of three directions I chose **Night Sky**, after Insight Timer's player (D-38). The art fades into a near-black base under a large serif countdown. Warm art gets neutral charcoal, because darkened reds read as brown. One brand colour, Meridian Gold, appears only on the logo's star and the words "Out now" (D-53).
 
 **Words, not colour codes.** The first trust signal was a coloured dot with a word. I had to ask what the dots meant, so users wouldn't know either. Three word-based options were built and compared, and I picked putting the certainty in the verb. It adds nothing to the screen and needs no legend (D-40).
 

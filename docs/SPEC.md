@@ -111,6 +111,7 @@ This version is a **portfolio project**: it's built in one week, ends at a priva
 - 2026-10-29: Zero spend: free Apple ID signing, no TestFlight, CI on `main` only while private (D-35). Chime's call.
 - 2026-10-29: Portfolio project: one week, private beta, private repo made public on Day 7; no App Store (D-32). Week scope in D-33. Rules fetch and GitHub reporting switch on only once the repo is public (D-34). Chime's call.
 - 2026-10-31: Search filters (Today, New seasons, Exact time known, Service), with popularity taken from TVmaze and AniList now and Netflix's official Top 10 later (D-43). Chime's call, from three options: free scores, official charts bundled, or a keyed trending service. Revisit if the TVmaze ranking looks wrong to Chime, or a keyless consensus source appears.
+- 2026-11-04: Chime designed the first version by hand in Figma; the docs no longer say "no Figma" (D-65, supersedes that part of D-31). Chime's call.
 
 ## Open questions
 
