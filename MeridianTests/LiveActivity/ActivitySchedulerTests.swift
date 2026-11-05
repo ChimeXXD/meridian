@@ -117,14 +117,14 @@ struct ActivitySchedulerTests {
         let exact = ActivityPlanner.attributes(for: [Self.drop("1", at: Self.now + Self.day)])
         #expect(exact.episodeLabel == "S2E5")
         #expect(exact.provider == "HBO · US")
-        #expect(exact.verb == "Out")
+        #expect(exact.verb == .out)
         var bare = Self.drop("2", at: Self.now + Self.day, confidence: .estimated)
         bare.number = nil
         bare.provider = nil
         let estimate = ActivityPlanner.attributes(for: [bare])
         #expect(estimate.episodeLabel == "")
         #expect(estimate.provider == nil)
-        #expect(estimate.verb == "Expected")
+        #expect(estimate.verb == .expected)
     }
 
     @Test("Live Activities switched off: no requests, and the outcome says so")

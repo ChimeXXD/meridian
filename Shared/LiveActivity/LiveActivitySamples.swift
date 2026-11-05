@@ -23,7 +23,7 @@ enum LiveActivitySamples {
             silo
         case .longName:
             DropActivityAttributes(dropIDs: ["anilist:154587:s2e3"], showName: "Frieren: Beyond Journey's End",
-                                   episodeLabel: "S2E3", provider: "Nippon TV · JP", verb: "Airs in Japan",
+                                   episodeLabel: "S2E3", provider: "Nippon TV · JP", verb: .airsInJapan,
                                    showID: "anilist:154587")
         case .merged:
             DropActivityAttributes(dropIDs: [silo.dropIDs[0], hotd.dropIDs[0]], showName: silo.showName,
@@ -49,9 +49,9 @@ enum LiveActivitySamples {
     }
 
     private static let silo = DropActivityAttributes(dropIDs: ["tvmaze:44778:s2e5"], showName: "Silo",
-                                                     episodeLabel: "S2E5", provider: "Apple TV", verb: "Expected",
+                                                     episodeLabel: "S2E5", provider: "Apple TV", verb: .expected,
                                                      showID: "44778")
     private static let hotd = DropActivityAttributes(dropIDs: ["tvmaze:44229:s3e4"], showName: "House of the Dragon",
-                                                     episodeLabel: "S3E4", provider: "HBO · US", verb: "Out",
+                                                     episodeLabel: "S3E4", provider: "HBO · US", verb: .out,
                                                      showID: "44229")
 }

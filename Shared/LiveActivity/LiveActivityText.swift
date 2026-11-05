@@ -19,7 +19,7 @@ enum LiveActivityText {
 
     /// The absolute local time line: "Out Fri 02:00", "Expected Wed 23:00".
     static func timeLine(_ attributes: DropActivityAttributes, dropDate: Date, formatter: DropFormatter) -> String {
-        "\(verb(attributes)) \(formatter.weekdayTime(dropDate))"
+        "\(attributes.verb.rawValue) \(formatter.weekdayTime(dropDate))"
     }
 
     /// The alert when the activity starts: title "Silo", body "Starts in 2 hours · 02:00 · Apple TV" (SPEC §6
@@ -30,7 +30,7 @@ enum LiveActivityText {
     static func alert(_ attributes: DropActivityAttributes, leadMinutes: Int, dropDate: Date,
                       formatter: DropFormatter) -> (title: String, body: String) {
         let lead = LeadTime.phrase(minutes: leadMinutes)
-        let opener = verb(attributes) == "Out" ? "Starts in \(lead)" : "\(verb(attributes)) in \(lead)"
+        let opener = attributes.verb == .out ? "Starts in \(lead)" : "\(attributes.verb.rawValue) in \(lead)"
         let body = [opener, formatter.localTime(dropDate), provider(attributes)].compactMap(\.self)
             .joined(separator: " · ")
         return (title(attributes), body)
@@ -64,7 +64,7 @@ enum LiveActivityText {
     /// The small family shows it over the countdown, which stays at 0:00; the Lock Screen banner and the island put
     /// "Out now" in the numbers' place.
     static func band(_ attributes: DropActivityAttributes, out: Bool) -> String {
-        out ? "Out now" : "\(verb(attributes)) in"
+        out ? "Out now" : "\(attributes.verb.rawValue) in"
     }
 
     /// "+ 1 more" when same-night drops are merged; nil for one drop.
@@ -81,12 +81,12 @@ enum LiveActivityText {
 
     /// The expanded island's time in words: "Expected Wed 23:00", as the Lock Screen's time line says it. At the drop
     /// a sure time turns to "Released" and an anime to "Aired in Japan"; an estimate keeps "Expected"
-    /// (`ReleaseWording.verb`). A weekday, never "today": the view isn't redrawn at midnight, so "tomorrow" would go
+    /// (`ReleaseVerb.word(past:)`). A weekday, never "today": the view isn't redrawn at midnight, so "tomorrow" would go
     /// stale while the timer kept ticking.
     static func outLine(_ attributes: DropActivityAttributes, dropDate: Date, out: Bool,
                         formatter: DropFormatter) -> String {
         guard out else { return timeLine(attributes, dropDate: dropDate, formatter: formatter) }
-        return "\(ReleaseWording.pastVerb(verb(attributes))) \(formatter.weekdayTime(dropDate))"
+        return "\(attributes.verb.word(past: true)) \(formatter.weekdayTime(dropDate))"
     }
 
     /// "Delayed from 01:00", or "Moved from 03:00" when it came earlier: a changed time in words. Nil when it hasn't
@@ -103,12 +103,6 @@ enum LiveActivityText {
 
     // MARK: - Private
 
-    /// The certainty verb, "Out" when the scheduler left it empty.
-    private static func verb(_ attributes: DropActivityAttributes) -> String {
-        let word = attributes.verb.trimmingCharacters(in: .whitespaces)
-        return word.isEmpty ? "Out" : word
-    }
-
     private static func provider(_ attributes: DropActivityAttributes) -> String? {
         guard let label = attributes.provider?.trimmingCharacters(in: .whitespaces), !label.isEmpty else { return nil }
         return label
@@ -120,25 +114,11 @@ enum LiveActivityText {
         return others > 0 ? "\(attributes.showName) and \(others) more" : attributes.showName
     }
 
-    /// "in 2 hours", "expected in 2 hours", "airs in Japan in 2 hours", "out now", as `WidgetAccessibility` says them.
+    /// "in 2 hours", "expected in 2 hours", "airs in Japan in 2 hours", "out now": `ReleaseVerb.spoken`, as the
+    /// widgets say it. Unlike a widget in its last day (D-61), the activity speaks a countdown up to the drop.
     private static func when(_ attributes: DropActivityAttributes, state: DropActivityAttributes.ContentState,
                              out: Bool, now: Date) -> String {
-        let word = verb(attributes)
         let parts = CountdownFormatter.parts(from: now, to: state.dropDate, maxUnits: 2)
-        if out || parts.isEmpty {
-            switch word {
-            case "Out": return "out now"
-            case "Airs in Japan": return "just aired in Japan"
-            default: return "\(lowercasingFirst(word)) now"
-            }
-        }
-        let left = "in " + CountdownFormatter.spokenText(parts)
-        return word == "Out" ? left : "\(lowercasingFirst(word)) \(left)"
-    }
-
-    /// "Expected" → "expected", so it sits mid-sentence. "Japan" keeps its capital.
-    private static func lowercasingFirst(_ text: String) -> String {
-        guard let first = text.first else { return text }
-        return first.lowercased() + text.dropFirst()
+        return attributes.verb.spoken(left: out || parts.isEmpty ? nil : CountdownFormatter.spokenText(parts))
     }
 }

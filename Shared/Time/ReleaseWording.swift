@@ -88,20 +88,7 @@ enum ReleaseWording {
     /// The certainty word alone ("Out", "Expected", "Airs in Japan"), for lines too short for `outLine`, such as the
     /// rectangular widget's "Expected Wed 02:00 · Apple TV".
     static func verb(_ drop: Drop, past: Bool) -> String {
-        if case .anilist = drop.source { return past ? "Aired in Japan" : "Airs in Japan" }
-        guard drop.confidence == .exact else { return "Expected" }
-        return past ? "Released" : "Out"
-    }
-
-    /// `verb(_:past: false)`'s word turned to the past, for a Live Activity that carries only the word: "Out" →
-    /// "Released", "Airs in Japan" → "Aired in Japan"; "Expected" stays, as an estimate is never sure. Kept beside
-    /// `verb` so the two can't drift apart.
-    static func pastVerb(_ present: String) -> String {
-        switch present {
-        case "Out": "Released"
-        case "Airs in Japan": "Aired in Japan"
-        default: present
-        }
+        ReleaseVerb(drop).word(past: past)
     }
 
     /// "Netflix rule" → "Netflix".

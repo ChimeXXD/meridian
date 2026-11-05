@@ -13,7 +13,7 @@ struct LiveActivityTextTests {
     static let now = Date(iso: "2026-11-05T23:00:00Z")
 
     static func attributes(_ name: String = "Silo", episode: String = "S2E5", provider: String? = "Apple TV",
-                           verb: String = "Out", drops: Int = 1) -> DropActivityAttributes {
+                           verb: ReleaseVerb = .out, drops: Int = 1) -> DropActivityAttributes {
         DropActivityAttributes(dropIDs: (1...drops).map { "tvmaze:44778:s2e\($0 + 4)" }, showName: name,
                                episodeLabel: episode, provider: provider, verb: verb)
     }
@@ -43,13 +43,11 @@ struct LiveActivityTextTests {
     func timeLine() {
         #expect(LiveActivityText.timeLine(Self.attributes(), dropDate: Self.drop, formatter: Self.lagos)
             == "Out Fri 02:00")
-        #expect(LiveActivityText.timeLine(Self.attributes(verb: "Expected"), dropDate: Date(iso: "2026-11-04T22:00:00Z"),
+        #expect(LiveActivityText.timeLine(Self.attributes(verb: .expected), dropDate: Date(iso: "2026-11-04T22:00:00Z"),
                                           formatter: Self.lagos) == "Expected Wed 23:00")
-        #expect(LiveActivityText.timeLine(Self.attributes("Frieren", verb: "Airs in Japan"),
+        #expect(LiveActivityText.timeLine(Self.attributes("Frieren", verb: .airsInJapan),
                                           dropDate: Date(iso: "2026-11-06T14:00:00Z"), formatter: Self.lagos)
             == "Airs in Japan Fri 15:00")
-        #expect(LiveActivityText.timeLine(Self.attributes(verb: ""), dropDate: Self.drop, formatter: Self.lagos)
-            == "Out Fri 02:00")
     }
 
     @Test("alert: the title, then the lead, the local time and the provider; an estimate never 'starts'")
@@ -58,12 +56,12 @@ struct LiveActivityTextTests {
         #expect(sure.title == "Silo")
         #expect(sure.body == "Starts in 2 hours · 02:00 · Apple TV")
 
-        let estimate = LiveActivityText.alert(Self.attributes(verb: "Expected", drops: 2), leadMinutes: 60,
+        let estimate = LiveActivityText.alert(Self.attributes(verb: .expected, drops: 2), leadMinutes: 60,
                                               dropDate: Self.drop, formatter: Self.lagos)
         #expect(estimate.title == "Silo + 1 more")
         #expect(estimate.body == "Expected in 1 hour · 02:00 · Apple TV")
 
-        let anime = LiveActivityText.alert(Self.attributes("Frieren", provider: "Nippon TV · JP", verb: "Airs in Japan"),
+        let anime = LiveActivityText.alert(Self.attributes("Frieren", provider: "Nippon TV · JP", verb: .airsInJapan),
                                            leadMinutes: 30, dropDate: Self.drop, formatter: Self.lagos)
         #expect(anime.body == "Airs in Japan in 30 minutes · 02:00 · Nippon TV · JP")
 
@@ -78,13 +76,13 @@ struct LiveActivityTextTests {
             LiveActivityText.accessibilityLabel(attributes, state: state, isStale: false, now: Self.now,
                                                 formatter: Self.lagos)
         }
-        #expect(label(Self.attributes(verb: "Expected"), Self.state()) == "Silo, expected in 2 hours, Apple TV")
+        #expect(label(Self.attributes(verb: .expected), Self.state()) == "Silo, expected in 2 hours, Apple TV")
         #expect(label(Self.attributes("House of the Dragon", episode: "S3E4", provider: "HBO · US"), Self.state())
             == "House of the Dragon, in 2 hours, HBO US")
-        #expect(label(Self.attributes("Frieren: Beyond Journey's End", provider: "Nippon TV · JP", verb: "Airs in Japan"),
+        #expect(label(Self.attributes("Frieren: Beyond Journey's End", provider: "Nippon TV · JP", verb: .airsInJapan),
                       Self.state(at: Self.drop + 1_800))
             == "Frieren: Beyond Journey's End, airs in Japan in 2 hours 30 minutes, Nippon TV JP")
-        #expect(label(Self.attributes(verb: "Expected", drops: 2), Self.state())
+        #expect(label(Self.attributes(verb: .expected, drops: 2), Self.state())
             == "Silo and 1 more, expected in 2 hours, Apple TV")
         #expect(label(Self.attributes(provider: nil), Self.state()) == "Silo, in 2 hours")
     }
@@ -122,10 +120,10 @@ struct LiveActivityTextTests {
         #expect(LiveActivityText.accessibilityLabel(attributes, state: Self.state(), isStale: false,
                                                     now: Self.drop + 60, formatter: Self.lagos) == "Silo, out now, Apple TV")
         // An estimate stays an estimate, as on the widgets, and the old time no longer matters.
-        #expect(LiveActivityText.accessibilityLabel(Self.attributes(verb: "Expected"),
+        #expect(LiveActivityText.accessibilityLabel(Self.attributes(verb: .expected),
                                                     state: Self.state(delayedFrom: Self.drop - 3_600), isStale: true,
                                                     now: Self.now, formatter: Self.lagos) == "Silo, expected now, Apple TV")
-        #expect(LiveActivityText.accessibilityLabel(Self.attributes("Frieren", provider: nil, verb: "Airs in Japan"),
+        #expect(LiveActivityText.accessibilityLabel(Self.attributes("Frieren", provider: nil, verb: .airsInJapan),
                                                     state: Self.state(), isStale: true, now: Self.now,
                                                     formatter: Self.lagos) == "Frieren, just aired in Japan")
     }
@@ -133,9 +131,9 @@ struct LiveActivityTextTests {
     @Test("the band carries the certainty, then flips to Out now")
     func band() {
         #expect(LiveActivityText.band(Self.attributes(), out: false) == "Out in")
-        #expect(LiveActivityText.band(Self.attributes(verb: "Expected"), out: false) == "Expected in")
-        #expect(LiveActivityText.band(Self.attributes(verb: "Airs in Japan"), out: false) == "Airs in Japan in")
-        #expect(LiveActivityText.band(Self.attributes(verb: "Expected"), out: true) == "Out now")
+        #expect(LiveActivityText.band(Self.attributes(verb: .expected), out: false) == "Expected in")
+        #expect(LiveActivityText.band(Self.attributes(verb: .airsInJapan), out: false) == "Airs in Japan in")
+        #expect(LiveActivityText.band(Self.attributes(verb: .expected), out: true) == "Out now")
     }
 
     @Test("the struck-through old time, and the monogram")
@@ -153,16 +151,15 @@ struct LiveActivityTextTests {
 
     @Test("out line: the expanded island's time in words, by weekday so it can't go stale; past tense only when sure")
     func outLine() {
-        let line = { (verb: String, out: Bool) in
+        let line = { (verb: ReleaseVerb, out: Bool) in
             LiveActivityText.outLine(Self.attributes(verb: verb), dropDate: Self.drop, out: out, formatter: Self.lagos)
         }
-        #expect(line("Out", false) == "Out Fri 02:00")
-        #expect(line("Expected", false) == "Expected Fri 02:00")
-        #expect(line("Airs in Japan", false) == "Airs in Japan Fri 02:00")
-        #expect(line("Out", true) == "Released Fri 02:00")
-        #expect(line("Expected", true) == "Expected Fri 02:00")
-        #expect(line("Airs in Japan", true) == "Aired in Japan Fri 02:00")
-        #expect(line(" ", false) == "Out Fri 02:00")
+        #expect(line(.out, false) == "Out Fri 02:00")
+        #expect(line(.expected, false) == "Expected Fri 02:00")
+        #expect(line(.airsInJapan, false) == "Airs in Japan Fri 02:00")
+        #expect(line(.out, true) == "Released Fri 02:00")
+        #expect(line(.expected, true) == "Expected Fri 02:00")
+        #expect(line(.airsInJapan, true) == "Aired in Japan Fri 02:00")
     }
 
     @Test("moved line: a delay or an earlier time in words, instead of a struck-through time")

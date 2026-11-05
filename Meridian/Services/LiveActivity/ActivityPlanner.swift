@@ -80,7 +80,7 @@ enum ActivityPlanner {
         let first = group[0]
         return DropActivityAttributes(dropIDs: group.map(\.id), showName: first.showName,
                                       episodeLabel: first.episodeLabel ?? "", provider: first.provider?.display,
-                                      verb: ReleaseWording.verb(first, past: false),
+                                      verb: ReleaseVerb(first),
                                       noOfficialStream: first.provider?.noOfficialStream ?? false,
                                       showID: first.showID, windowStart: start)
     }

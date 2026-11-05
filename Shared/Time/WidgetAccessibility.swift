@@ -26,16 +26,14 @@ enum WidgetAccessibility {
         case .dateOnly, .released:
             return lowercasingFirst(ReleaseWording.outLine(drop, now: now, formatter: formatter))
         case .outNow:
-            if case .anilist = drop.source { return "just aired in Japan" }
-            return drop.confidence == .exact ? "out now" : "expected now"
+            return ReleaseVerb(drop).spoken(left: nil)
         case .ticking:
             // The last day: the release time, which stays true between the widget's entries; a spoken countdown
             // ("in 3 hours") was computed per entry and could be up to an hour behind the timer (Chime, D-61).
             return lowercasingFirst(ReleaseWording.outLine(drop, now: now, formatter: formatter))
         case .coarse:
-            let left = "in " + CountdownFormatter.spokenText(CountdownFormatter.parts(from: now, to: drop.date, maxUnits: 2))
-            if case .anilist = drop.source { return "airs in Japan \(left)" }
-            return drop.confidence == .exact ? left : "expected \(left)"
+            let parts = CountdownFormatter.parts(from: now, to: drop.date, maxUnits: 2)
+            return ReleaseVerb(drop).spoken(left: CountdownFormatter.spokenText(parts))
         }
     }
 

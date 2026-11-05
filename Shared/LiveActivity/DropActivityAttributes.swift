@@ -27,8 +27,8 @@ struct DropActivityAttributes: ActivityAttributes {
     var episodeLabel: String
     /// `ProviderLabel.display`: "Apple TV", "HBO · US" (D-20).
     var provider: String?
-    /// How sure the time is, in `ReleaseWording`'s verb: "Out", "Expected", "Airs in Japan" (D-40).
-    var verb: String
+    /// How sure the time is (D-40), encoded as its word: "Out", "Expected", "Airs in Japan".
+    var verb: ReleaseVerb
     /// `ProviderLabel.noOfficialStream`: VoiceOver adds "no official stream in your country", as the widgets do.
     var noOfficialStream = false
     /// The first drop's show (`Drop.showID`), to find its art in the App Group; "" when there's none to find.
@@ -58,7 +58,9 @@ extension DropActivityAttributes {
         showName = try container.decode(String.self, forKey: .showName)
         episodeLabel = try container.decodeIfPresent(String.self, forKey: .episodeLabel) ?? ""
         provider = try container.decodeIfPresent(String.self, forKey: .provider)
-        verb = try container.decodeIfPresent(String.self, forKey: .verb) ?? ""
+        // An empty or unknown word was read as "Out" before the verb had a type, so it still is.
+        let word = try container.decodeIfPresent(String.self, forKey: .verb)?.trimmingCharacters(in: .whitespaces)
+        verb = word.flatMap(ReleaseVerb.init(rawValue:)) ?? .out
         noOfficialStream = try container.decodeIfPresent(Bool.self, forKey: .noOfficialStream) ?? false
         showID = try container.decodeIfPresent(String.self, forKey: .showID) ?? ""
         windowStart = try container.decodeIfPresent(Date.self, forKey: .windowStart)
