@@ -20,8 +20,10 @@ final class FollowedShow {
 
     var catalog: Catalog { Catalog(rawValue: catalogRaw) ?? .tvmaze }
 
+    var show: ShowID { ShowID(catalog: catalog, id: catalogID) }
+
     /// Same form as `Drop.showID`: "38052" or "anilist:154587" (as `UpcomingLoader.Request.showID`).
-    var showID: String { catalog == .anilist ? "anilist:\(catalogID)" : String(catalogID) }
+    var showID: String { show.description }
 
     init(catalog: Catalog, catalogID: Int, name: String, year: Int?, network: String?, followedAt: Date = .now) {
         key = Self.key(catalog: catalog, id: catalogID)
@@ -35,5 +37,5 @@ final class FollowedShow {
         self.followedAt = followedAt
     }
 
-    static func key(catalog: Catalog, id: Int) -> String { "\(catalog.rawValue):\(id)" }
+    static func key(catalog: Catalog, id: Int) -> String { ShowID(catalog: catalog, id: id).key }
 }

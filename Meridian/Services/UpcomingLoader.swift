@@ -10,8 +10,10 @@ struct UpcomingLoader: Sendable {
         var name: String
         var offsetMinutes: Int
 
+        var show: ShowID { ShowID(catalog: catalog, id: id) }
+
         /// Same form as `Drop.showID` and `QuietShow.showID`: "38052" or "anilist:154587".
-        var showID: String { catalog == .anilist ? "anilist:\(id)" : String(id) }
+        var showID: String { show.description }
     }
 
     /// A followed show with no next episode, shared with the widgets through the snapshot.
@@ -97,8 +99,9 @@ struct UpcomingLoader: Sendable {
         if request.catalog == .anilist { return await loadAnime(request, now: now) }
         guard let show = try? await client.show(id: request.id, maxAge: Self.freshness)
         else { return .failed(request) }
+        let id = ShowID(catalog: .tvmaze, id: show.id)
         guard let next = show.embedded?.nextepisode else {
-            return .nothing(Quiet(showID: String(show.id), name: show.name, status: show.status,
+            return .nothing(Quiet(showID: id.description, name: show.name, status: show.status,
                                   lastAired: show.embedded?.previousepisode?.airdate))
         }
         let resolution = TimeResolver.resolve(next.listing(show: show), rules: rules, offsetMinutes: request.offsetMinutes,
@@ -107,7 +110,7 @@ struct UpcomingLoader: Sendable {
         let provider = channel.map {
             ProviderLabel(name: $0.name, countryCode: show.network?.country?.code, viewerCountry: viewerCountry, rules: rules)
         }
-        return .drop(Drop(id: "tvmaze:\(show.id):\(next.id)", showID: String(show.id), showName: show.name,
+        return .drop(Drop(id: id.dropID(episode: next.id), showID: id.description, showName: show.name,
                           season: next.season, number: next.number, episodeTitle: next.name, date: resolution.date,
                           airdate: resolution.airdate, confidence: resolution.confidence, source: resolution.source,
                           provider: provider, previousDate: nil, broadcastZone: show.network?.country?.timezone))
@@ -117,8 +120,9 @@ struct UpcomingLoader: Sendable {
     private func loadAnime(_ request: Request, now: Date) async -> Outcome {
         guard let anilist, let media = try? await anilist.media(id: request.id, maxAge: Self.freshness)
         else { return .failed(request) }
+        let id = ShowID(catalog: .anilist, id: media.id)
         guard let next = media.nextAiringEpisode else {
-            return .nothing(Quiet(showID: "anilist:\(media.id)", name: media.displayTitle, status: media.status,
+            return .nothing(Quiet(showID: id.description, name: media.displayTitle, status: media.status,
                                   lastAired: nil))
         }
         let resolution = TimeResolver.resolveAniList(airingAt: Date(timeIntervalSince1970: TimeInterval(next.airingAt)),
@@ -126,7 +130,7 @@ struct UpcomingLoader: Sendable {
         let provider = media.streamingSite.map {
             ProviderLabel(name: $0, countryCode: nil, viewerCountry: viewerCountry, rules: rules)
         }
-        return .drop(Drop(id: "anilist:\(media.id):\(next.episode)", showID: "anilist:\(media.id)",
+        return .drop(Drop(id: id.dropID(episode: next.episode), showID: id.description,
                           showName: media.displayTitle, season: nil, number: next.episode, episodeTitle: nil,
                           date: resolution.date, airdate: resolution.airdate, confidence: resolution.confidence,
                           source: resolution.source, provider: provider, previousDate: nil))

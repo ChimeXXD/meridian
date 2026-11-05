@@ -48,7 +48,8 @@ struct ShowDetailScreen: View {
         self.model = model
         self.scheduler = scheduler
         self.artwork = artwork
-        let key = FollowedShow.key(catalog: drop.showKey.catalog, id: drop.showKey.id)
+        // The debug show isn't followed, so its key matches nothing.
+        let key = drop.show?.key ?? ""
         _shows = Query(filter: #Predicate<FollowedShow> { $0.key == key })
     }
 
@@ -122,7 +123,8 @@ struct ShowDetailScreen: View {
     }
 
     private func unfollow() {
-        try? FollowStore(context: context).unfollow(catalog: drop.showKey.catalog, id: drop.showKey.id)
+        guard let show = drop.show else { return }
+        try? FollowStore(context: context).unfollow(catalog: show.catalog, id: show.id)
     }
 }
 
@@ -137,8 +139,8 @@ struct QuietShowScreen: View {
 
     var body: some View {
         QuietShowView(show: show, artwork: artwork, episodes: episodes) {
-            let key = Drop.key(showID: show.showID)
-            try? FollowStore(context: context).unfollow(catalog: key.catalog, id: key.id)
+            guard let id = ShowID(show.showID) else { return }
+            try? FollowStore(context: context).unfollow(catalog: id.catalog, id: id.id)
         }
         .task { episodes = await model.pastEpisodes(showID: show.showID) }
     }

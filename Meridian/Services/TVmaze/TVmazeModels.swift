@@ -87,7 +87,7 @@ extension TVmazeEpisode {
     func listing(show: TVmazeShow) -> EpisodeListing {
         EpisodeListing(
             episodeID: "tvmaze:\(id)",
-            showID: "tvmaze:\(show.id)",
+            showID: ShowID(catalog: .tvmaze, id: show.id).key,
             airdate: airdate.flatMap { $0.isEmpty ? nil : $0 },
             airtime: airtime ?? "",
             airstamp: airstamp.flatMap(Self.parseAirstamp),

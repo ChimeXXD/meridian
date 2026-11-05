@@ -14,8 +14,8 @@ struct AiringItem: Hashable, Identifiable, Sendable {
     init(pick: AiringSoon.Pick) {
         result = SearchResult(show: pick.show)
         weight = pick.show.weight ?? 0
-        let episode = pick.episode
-        drop = Drop(id: "tvmaze:\(pick.show.id):\(episode.id)", showID: String(pick.show.id), showName: pick.show.name,
+        let episode = pick.episode, show = ShowID(catalog: .tvmaze, id: pick.show.id)
+        drop = Drop(id: show.dropID(episode: episode.id), showID: show.description, showName: pick.show.name,
                     season: episode.season, number: episode.number, episodeTitle: nil, date: pick.resolution.date,
                     airdate: pick.resolution.airdate, confidence: pick.resolution.confidence,
                     source: pick.resolution.source, provider: nil, previousDate: nil)
@@ -28,7 +28,8 @@ struct AiringItem: Hashable, Identifiable, Sendable {
         weight = media.popularity ?? 0
         let resolution = TimeResolver.resolveAniList(airingAt: Date(timeIntervalSince1970: TimeInterval(next.airingAt)),
                                                      offsetMinutes: offsetMinutes)
-        drop = Drop(id: "anilist:\(media.id):\(next.episode)", showID: "anilist:\(media.id)",
+        let show = ShowID(catalog: .anilist, id: media.id)
+        drop = Drop(id: show.dropID(episode: next.episode), showID: show.description,
                     showName: media.displayTitle, season: nil, number: next.episode, episodeTitle: nil,
                     date: resolution.date, airdate: resolution.airdate, confidence: resolution.confidence, source: resolution.source,
                     provider: nil, previousDate: nil)

@@ -85,21 +85,17 @@ final class UpcomingModel {
         // The widgets get the times at once; their art follows once it's loaded.
         let snapshot = snapshots.write(result?.drops ?? [], nothingScheduled: result?.nothingScheduled ?? [], now: now)
         let ids = (result?.drops ?? []).map(\.showID) + (result?.nothingScheduled ?? []).map(\.showID)
-        var missing = Set(ids).filter { artwork[$0] == nil }
-        #if DEBUG
-        // The fake show has no art; "debug" would ask TVmaze for show 0 on every refresh.
-        missing.remove(DebugFakeDrop.showID)
-        #endif
+        // The debug show's "debug" isn't a show ID, so it has no art to ask for.
+        let missing = Set(ids).filter { artwork[$0] == nil }.sorted().compactMap { id in ShowID(id).map { (id, $0) } }
         await withTaskGroup(of: (String, ShowArtwork?).self) { group in
             // As many at once as the loader asks for shows, each finished one starting the next.
-            var waiting = missing.sorted().makeIterator()
+            var waiting = missing.makeIterator()
             func startNext() -> Bool {
-                guard let id = waiting.next() else { return false }
-                let key = Drop.key(showID: id)
+                guard let (id, show) = waiting.next() else { return false }
                 group.addTask { [client, anilist] in
-                    switch key.catalog {
-                    case .tvmaze: (id, try? ShowArtwork(images: await client.images(showID: key.id)))
-                    case .anilist: (id, try? await anilist.media(id: key.id).map(ShowArtwork.init(media:)))
+                    switch show.catalog {
+                    case .tvmaze: (id, try? ShowArtwork(images: await client.images(showID: show.id)))
+                    case .anilist: (id, try? await anilist.media(id: show.id).map(ShowArtwork.init(media:)))
                     }
                 }
                 return true
@@ -117,8 +113,9 @@ final class UpcomingModel {
 
     /// The last three aired episodes, newest first, for Show detail.
     func pastEpisodes(showID: String, now: Date = .now) async -> [PastEpisode] {
-        // TVmaze shows only: AniList has no episode list in this query ("anilist:<id>" isn't an Int).
-        guard let id = Int(showID), let episodes = try? await client.episodes(showID: id) else { return [] }
+        // TVmaze shows only: AniList has no episode list in this query.
+        guard let show = ShowID(showID), show.catalog == .tvmaze,
+              let episodes = try? await client.episodes(showID: show.id) else { return [] }
         let today = DropFormatter(timeZone: .gmt).localDay(now)
         // Numbered episodes only, before taking three, so specials don't use up the slots.
         let aired = episodes.compactMap { episode -> PastEpisode? in
