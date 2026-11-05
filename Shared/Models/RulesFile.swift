@@ -4,6 +4,7 @@ import Foundation
 /// Bundled with the app; a remote copy is used only when the repo is public (D-34).
 struct RulesFile: Codable, Hashable, Sendable {
     var schemaVersion: Int
+    /// The day the file last changed, as "yyyy-MM-dd" (zero-padded, checked by `validate`).
     var updated: String
     var platforms: [PlatformRule]
     var overrides: [ReleaseOverride]
@@ -28,6 +29,10 @@ struct RulesFile: Codable, Hashable, Sendable {
 
     func validate() throws {
         guard schemaVersion == 1 else { throw RulesValidationError.unsupportedSchema(schemaVersion) }
+        // RulesStore picks the newer copy by comparing `updated` as text, which needs zero-padded yyyy-MM-dd.
+        guard updated.wholeMatch(of: /[0-9]{4}-[0-9]{2}-[0-9]{2}/) != nil, WallClock.parseDate(updated) != nil else {
+            throw RulesValidationError.invalidUpdated(updated)
+        }
         var claimedNames: Set<String> = []
         for rule in platforms {
             // A name in two rules would let file order decide which applies.

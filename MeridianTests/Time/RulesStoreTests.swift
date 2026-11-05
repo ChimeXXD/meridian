@@ -62,6 +62,28 @@ struct RulesStoreTests {
         #expect(throws: RulesValidationError.invalidOverride("tvmaze:2")) { try rules.validate() }
     }
 
+    /// The store serves whichever copy is newer by comparing `updated` as text, which only orders zero-padded
+    /// yyyy-MM-dd dates: "9" or "2026-12-1" would beat the bundled file.
+    @Test("the updated date must be a real, zero-padded yyyy-MM-dd", arguments: [
+        "", "9", "2026-12-1", "2026-1-05", "26-11-03", "2026/11/03", "2026-11-03T00:00", "2026-02-30", "20261-01-01",
+    ])
+    func badUpdatedIsRejected(_ updated: String) throws {
+        var rules = try Fixture.bundledRules()
+        rules.updated = updated
+        #expect(throws: RulesValidationError.invalidUpdated(updated)) { try rules.validate() }
+    }
+
+    @Test("a remote copy with a bad updated date isn't served, however new it claims to be")
+    func remoteWithBadUpdatedFallsBack() async throws {
+        let bundled = try Fixture.bundledRules()
+        var remote = bundled
+        remote.updated = "9999"
+        remote.platforms[0].time = "23:59"
+        let remoteData = try JSONEncoder.rules.encode(remote)
+        let store = RulesStore(bundled: bundled, remoteURL: URL(string: "https://rules.example/r.json")) { _ in remoteData }
+        #expect(await store.current() == bundled)
+    }
+
     @Test("a channel name can belong to only one platform rule")
     func duplicateMatchIsRejected() throws {
         var rules = try Fixture.bundledRules()
