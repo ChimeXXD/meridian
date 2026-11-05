@@ -5,8 +5,8 @@ import Testing
 /// SPEC core flow 5 and the D6-1 criteria: a refresh that finds a later time for the same episode keeps the first
 /// listed time as `previousDate`, so the views say "Delayed from 21:00" and the Live Activity moves (D-58). Only a
 /// sure time can be delayed: a refined estimate isn't the show moving. Monday 2 Nov 2026, 20:00 UTC.
-@Suite("Refresh")
-struct RefreshServiceTests {
+@Suite("Delay detection")
+struct DelayDetectionTests {
     static let listed = Date(iso: "2026-11-02T20:00:00Z")
     static let hour: TimeInterval = 3_600
 

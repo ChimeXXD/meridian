@@ -3,8 +3,8 @@ import Foundation
 
 extension ActivityScheduler {
     /// Debug → "Simulate delay +1 h" (SPEC §7): moves every running activity's drop later, keeping the first listed
-    /// time as `delayedFrom` (shown struck through). The requester moves the stale date with the drop. Returns how
-    /// many were moved.
+    /// time as `delayedFrom` (the views say "Delayed from 22:00"). The requester moves the stale date with the drop.
+    /// Returns how many were moved.
     @discardableResult
     func delayAll(by interval: TimeInterval) async -> Int {
         let running = requester.current()

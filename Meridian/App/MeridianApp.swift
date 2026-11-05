@@ -10,7 +10,7 @@ struct MeridianApp: App {
 
     init() {
         _scheduler = State(initialValue: ActivityScheduler())
-        // The bundled rules only while the repo is private (D-34); the remote fetch switches on at Day 7.
+        // The bundled rules are the floor; RulesStore serves a newer valid copy from the public repo (D-34).
         let rules = (try? RulesStore.loadBundled())
             ?? RulesFile(schemaVersion: 1, updated: "", platforms: [], overrides: [], providers: [])
         // The country from the time zone (D2-6), so Lagos means Nigeria whatever the region setting says.

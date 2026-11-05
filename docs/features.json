@@ -556,9 +556,9 @@
         "later time sets previousDate and Delayed",
         "activity rescheduled"
       ],
-      "verify": "RefreshServiceTests; ActivitySchedulerTests.reschedulesOnDelay",
+      "verify": "DelayDetectionTests; ActivitySchedulerTests.reschedulesOnDelay",
       "passes": true,
-      "evidence": "RefreshServiceTests (delayDetection, notDelayed, onlyExactTimes, keepsTheRest) and ActivitySchedulerTests (movedDropUpdated, the spec's reschedulesOnDelay; refinedEstimateMoved) pass; ReleaseWordingTests.delayLine; simulator -designPreview 44778 shows \"Delayed from 20:55\" under \"Out today at 21:55 Lagos time\" (2 Nov). Refresh on open was already in RootView (scenePhase .active)."
+      "evidence": "DelayDetectionTests (delayDetection, notDelayed, onlyExactTimes, keepsTheRest) and ActivitySchedulerTests (movedDropUpdated, the spec's reschedulesOnDelay; refinedEstimateMoved) pass; ReleaseWordingTests.delayLine; simulator -designPreview 44778 shows \"Delayed from 20:55\" under \"Out today at 21:55 Lagos time\" (2 Nov). Refresh on open was already in RootView (scenePhase .active)."
     },
     {
       "id": "D6-2",

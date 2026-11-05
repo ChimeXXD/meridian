@@ -10,7 +10,7 @@ struct PlatformRule: Codable, Hashable, Sendable {
     var time: String
     /// Days relative to the listed airdate (Apple TV is -1).
     var dayOffset: Int
-    /// Source chip text, e.g. "Netflix rule".
+    /// The rule's name, e.g. "Netflix rule": Show detail names the platform from it (`ReleaseWording.explanation`).
     var label: String
     /// At least 2 real examples.
     var sources: [String]

@@ -2,6 +2,14 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Skill review pass 2, batch 1: Swift correctness and tests (Thu 5 Nov 2026)
+
+- **Bugs fixed, each red first:** a failed show kept its last known drop by display name, so two followed shows called "The Office" both came back and the good one showed twice (now by show ID; names stay for the status line). A cold launch's two refreshes fetched every show twice (`TVmazeClient` now shares a request already on its way). Upcoming fanned out one request per show at once (now at most 6, for shows and for artwork). `WallClock` read "2026-xx-11-05" and "21:xx:00" by dropping the junk part (now rejected). A rules file's `updated` date that isn't a zero-padded yyyy-MM-dd (it's compared as text) is now rejected.
+- **Tests:** a real airtime at 12/16/17Z stays exact (D-25); the fixture and audit loops are parameterised, totals as their own tests, AUDIT rows still printed; a WallClock edge table (spring gap, fall overlap, month/year/leap ends, rejects, unpadded forms); App Group tests that can fail (checked red against an ungranted group). `RefreshServiceTests` is now `DelayDetectionTests` (SPEC and features.json follow).
+- **Removed:** the Day 0 `SetupCheck`, `PlaceholderView`, the `-setupCheck` launch and `AppGroup.defaults` (no other users). **Smaller:** `DropFormatter` builds its calendars once; widget art is saved off the main actor; stale comments fixed.
+- **Checks:** narrow test runs per change; the commit gate (build, all tests) on every commit; spec check passes.
+- **Not verified:** the art fan-out limit has no test of its own (the loader's has). CLAUDE.md's layout still lists `RefreshService`, which doesn't exist (left for Chime). A cancelled search now finishes its request in the background (it's shared), at most one per 400 ms pause.
+
 ## Phase 7: case study footage, and "Out now" on the Lock Screen (Tue 3 Nov 2026)
 
 - **Footage:** Control Centre's Screen Recording puts its red pill in the island ahead of Meridian, so Chime filmed over a cable with QuickTime (no pill, 9:41 status bar, 1180×2556 at about 58 fps). Five takes, kept in `Meridian Video/footage/` (`take2.mov`, `take3-*.mov`); 21 stills cut from them in `Meridian Video/stills/`. `docs/SHOT-LIST.md` is now one take in a running order.

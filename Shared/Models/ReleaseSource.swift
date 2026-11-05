@@ -1,6 +1,7 @@
 import Foundation
 
-/// Where a displayed time came from. Every time in the UI shows one as its source chip.
+/// Where a displayed time came from. The views say how sure it is in words (`ReleaseWording`), and Show detail
+/// explains the source in one sentence (D-40).
 enum ReleaseSource: Codable, Hashable, Sendable {
     /// TVmaze airtime in the network's own time zone.
     case broadcast(network: String)
