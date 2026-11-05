@@ -30,7 +30,7 @@ struct AnimeOffsetTests {
     @Test("only anime get the control: an AniList show, or a time already adjusted from Japan's")
     func onlyAnime() {
         #expect(AnimeOffset.applies(to: Self.drop(.anilist), catalog: .anilist))
-        #expect(AnimeOffset.applies(to: Self.drop(.adjusted(base: "JP broadcast", offsetMinutes: 30)), catalog: .tvmaze))
+        #expect(AnimeOffset.applies(to: Self.drop(.adjusted(base: .anilist, offsetMinutes: 30)), catalog: .tvmaze))
         #expect(!AnimeOffset.applies(to: Self.drop(.broadcast(network: "HBO")), catalog: .tvmaze))
         #expect(!AnimeOffset.applies(to: Self.drop(.platformRule("Netflix rule")), catalog: .tvmaze))
     }

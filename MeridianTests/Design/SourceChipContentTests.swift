@@ -9,7 +9,7 @@ struct SourceChipContentTests {
         (.platformRule("Netflix rule"), .estimated, "Netflix rule", .estimated),
         (.override(note: "Marvel 18:00 PT"), .exact, "Confirmed", .exact),
         (.override(note: "Reported by fans"), .estimated, "Adjusted", .adjusted),
-        (.adjusted(base: "JP broadcast", offsetMinutes: 60), .estimated, "Adjusted", .adjusted),
+        (.adjusted(base: .anilist, offsetMinutes: 60), .estimated, "Adjusted", .adjusted),
         (.anilist, .exact, "JP broadcast", .exact),
         (.dateOnly, .dateOnly, "Date only", .dateOnly),
     ])

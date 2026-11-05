@@ -49,7 +49,7 @@ enum TimeResolver {
     private static func applyingOffset(_ minutes: Int, to resolution: Resolution) -> Resolution {
         guard minutes != 0, resolution.confidence != .dateOnly else { return resolution }
         return Resolution(date: resolution.date.addingTimeInterval(TimeInterval(minutes * 60)), confidence: .estimated,
-                          source: .adjusted(base: resolution.source.baseLabel, offsetMinutes: minutes),
+                          source: .adjusted(base: resolution.source, offsetMinutes: minutes),
                           airdate: resolution.airdate)
     }
 }

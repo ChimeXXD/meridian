@@ -125,7 +125,7 @@ struct TimeResolverTests {
         let result = TimeResolver.resolveAniList(airingAt: Date(iso: "2026-10-30T15:00:00Z"), offsetMinutes: 30)
         #expect(result.date == Date(iso: "2026-10-30T15:30:00Z"))
         #expect(result.confidence == .estimated)
-        #expect(result.source == .adjusted(base: "JP broadcast", offsetMinutes: 30))
+        #expect(result.source == .adjusted(base: .anilist, offsetMinutes: 30))
     }
 
     @Test("an offset never invents a time for a date-only drop")

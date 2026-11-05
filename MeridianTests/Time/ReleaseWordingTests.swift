@@ -24,7 +24,7 @@ struct ReleaseWordingTests {
         (.override(note: "Marvel 18:00 PT"), .exact, "Out today at 21:00"),
         (.platformRule("Netflix rule"), .estimated, "Expected today at 21:00"),
         (.override(note: "Reported"), .estimated, "Expected today at 21:00"),
-        (.adjusted(base: "JP broadcast", offsetMinutes: 30), .estimated, "Expected today at 21:00"),
+        (.adjusted(base: .anilist, offsetMinutes: 30), .estimated, "Expected today at 21:00"),
         (.anilist, .exact, "Airs in Japan today at 21:00"),
     ])
     func verb(source: ReleaseSource, confidence: Confidence, expected: String) {
@@ -96,8 +96,12 @@ struct ReleaseWordingTests {
          "Apple TV doesn't publish release times, so this is when its new episodes usually arrive."),
         (.override(note: "Marvel 18:00 PT"), .exact, "This time was checked and confirmed."),
         (.override(note: "Reported"), .estimated, "This time was reported but isn't confirmed yet."),
-        (.adjusted(base: "JP broadcast", offsetMinutes: -30), .estimated,
+        (.adjusted(base: .anilist, offsetMinutes: -30), .estimated,
          "Your 30-minute adjustment is taken off the Japanese TV time."),
+        (.adjusted(base: .platformRule("Crunchyroll rule"), offsetMinutes: 15), .estimated,
+         "Your 15-minute adjustment is added to the Crunchyroll's usual time."),
+        (.adjusted(base: .broadcast(network: "Tokyo MX"), offsetMinutes: 15), .estimated,
+         "Your 15-minute adjustment is added to the listed time."),
         (.anilist, .exact, "This is when it airs on Japanese TV. Streaming services may add it a little later."),
         (.dateOnly, .dateOnly, "Only the date is announced. The countdown starts once there's a time."),
     ])

@@ -45,7 +45,7 @@ struct AccessibilityLabelTests {
     @Test("an estimate says expected, so VoiceOver claims no more than the screen", arguments: [
         ReleaseSource.platformRule("Apple TV rule"),
         .override(note: "Reported"),
-        .adjusted(base: "JP broadcast", offsetMinutes: 30),
+        .adjusted(base: .anilist, offsetMinutes: 30),
     ])
     func estimate(source: ReleaseSource) {
         let drop = Self.drop("Silo", in: 2 * Self.days + 4 * Self.hours, source, .estimated)

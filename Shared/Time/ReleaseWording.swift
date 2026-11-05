@@ -97,9 +97,12 @@ enum ReleaseWording {
     }
 
     /// What an offset is applied to, in words: "Japanese TV time", "Netflix's usual time", "listed time".
-    private static func baseTime(_ base: String) -> String {
-        if base == ReleaseSource.anilist.baseLabel { return "Japanese TV time" }
-        if base.hasSuffix(" rule") { return "\(platform(base))'s usual time" }
-        return "listed time"
+    private static func baseTime(_ base: ReleaseSource) -> String {
+        switch base {
+        case .anilist: "Japanese TV time"
+        case .platformRule(let rule): "\(platform(rule))'s usual time"
+        case .adjusted(let inner, _): baseTime(inner)
+        case .broadcast, .override, .dateOnly: "listed time"
+        }
     }
 }
