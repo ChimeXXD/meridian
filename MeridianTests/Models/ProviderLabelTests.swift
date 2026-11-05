@@ -39,4 +39,15 @@ struct ProviderLabelTests {
         #expect(split.lead == lead)
         #expect(split.country == country)
     }
+
+    /// At the largest text sizes a wrapped meta line left "· US" alone on its last line (BU-10): the country is glued
+    /// to its network and each dot to the word before it, while the names' own spaces can still break.
+    @Test("a wrapped meta line keeps the country with its network and each dot with the word before it",
+          arguments: [("S3E4 · HBO · US", "S3E4\u{00A0}· HBO\u{00A0}·\u{00A0}US"),
+                      ("S4E1 · Apple TV", "S4E1\u{00A0}· Apple TV"),
+                      ("Paramount+ with Showtime · US", "Paramount+ with Showtime\u{00A0}·\u{00A0}US"),
+                      ("Apple TV", "Apple TV")])
+    func wrapsWithoutStrandingTheCountry(line: String, expected: String) {
+        #expect(ProviderLabel.wrapping(line) == expected)
+    }
 }

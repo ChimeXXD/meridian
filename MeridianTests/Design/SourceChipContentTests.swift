@@ -27,6 +27,7 @@ struct SourceChipContentTests {
     }
 
     @Test("section counts read as a phrase", arguments: [(0, "No shows"), (1, "1 show"), (3, "3 shows")])
+    @MainActor
     func sectionCount(count: Int, text: String) {
         #expect(SectionHeader.countText(count) == text)
     }
