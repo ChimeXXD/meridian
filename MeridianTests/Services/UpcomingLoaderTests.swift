@@ -58,6 +58,35 @@ struct UpcomingLoaderTests {
         #expect(result.failed == ["Silo"])
         #expect(result.failedShowIDs == ["38052"])
     }
+
+    /// Counts the requests waiting at once.
+    actor Concurrency {
+        private var running = 0
+        private(set) var most = 0
+        func begin() { running += 1; most = max(most, running) }
+        func end() { running -= 1 }
+    }
+
+    @Test("a long follow list asks TVmaze for at most 6 shows at a time, inside its 20 calls per 10 seconds")
+    func boundedFanOut() async throws {
+        let network = TVmazeClientTests.FakeNetwork([try TVmazeClientTests.ok("show-silo-embed")])
+        let concurrency = Concurrency()
+        let client = TVmazeClient(cache: ResponseCache(directory: FileManager.default.temporaryDirectory
+                                      .appendingPathComponent("tvmaze-fanout-\(UUID().uuidString)"), ttl: 60),
+                                  transport: { request in
+                                      await concurrency.begin()
+                                      try? await Task.sleep(for: .milliseconds(50))
+                                      await concurrency.end()
+                                      return try await network.send(request)
+                                  })
+        let loader = UpcomingLoader(client: client, rules: try RulesStore.loadBundled(), viewerCountry: "NG")
+        let requests = (1...15).map { UpcomingLoader.Request(catalog: .tvmaze, id: $0, name: "Show \($0)", offsetMinutes: 0) }
+        let result = await loader.load(requests, now: Date(iso: "2026-10-30T17:00:00Z"))
+        #expect(result.drops.count == 15)
+        #expect(await network.requests.count == 15)
+        #expect(await concurrency.most == UpcomingLoader.maxInFlight)
+        #expect(UpcomingLoader.maxInFlight == 6)
+    }
 }
 
 /// Offline or a TVmaze hiccup keeps the last known times (UI-BRIEF §5.2, offline state) instead of emptying Upcoming.

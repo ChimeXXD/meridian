@@ -51,6 +51,9 @@ struct UpcomingLoader: Sendable {
     /// How old a cached next episode may be when Upcoming refreshes: 15 minutes, so a delay shows soon after it's
     /// announced and "Updated 14:05" is true to within it (D-59). Search and artwork keep the 6-hour cache.
     static let freshness: TimeInterval = 15 * 60
+    /// Shows asked for at once. TVmaze allows about 20 calls per 10 seconds, and a long follow list fired all at once
+    /// would spend that on the first refresh; Upcoming's artwork follows the same limit.
+    static let maxInFlight = 6
 
     let client: TVmazeClient
     /// Anime come from AniList (D-19); nil leaves followed anime out.
@@ -61,11 +64,19 @@ struct UpcomingLoader: Sendable {
 
     func load(_ requests: [Request], now: Date) async -> Result {
         let outcomes = await withTaskGroup(of: (Int, Outcome).self) { group in
-            for (index, request) in requests.enumerated() where request.catalog == .tvmaze || anilist != nil {
+            var waiting = requests.enumerated().filter { $0.element.catalog == .tvmaze || anilist != nil }.makeIterator()
+            // At most `maxInFlight` at once: each finished show starts the next.
+            func startNext() -> Bool {
+                guard let (index, request) = waiting.next() else { return false }
                 group.addTask { (index, await load(request, now: now)) }
+                return true
             }
+            for _ in 0..<Self.maxInFlight { guard startNext() else { break } }
             var collected: [(Int, Outcome)] = []
-            for await outcome in group { collected.append(outcome) }
+            for await outcome in group {
+                collected.append(outcome)
+                _ = startNext()
+            }
             return collected.sorted { $0.0 < $1.0 }.map(\.1)
         }
         var result = Result()

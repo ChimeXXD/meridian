@@ -91,7 +91,10 @@ final class UpcomingModel {
         missing.remove(DebugFakeDrop.showID)
         #endif
         await withTaskGroup(of: (String, ShowArtwork?).self) { group in
-            for id in missing {
+            // As many at once as the loader asks for shows, each finished one starting the next.
+            var waiting = missing.sorted().makeIterator()
+            func startNext() -> Bool {
+                guard let id = waiting.next() else { return false }
                 let key = Drop.key(showID: id)
                 group.addTask { [client, anilist] in
                     switch key.catalog {
@@ -99,9 +102,12 @@ final class UpcomingModel {
                     case .anilist: (id, try? await anilist.media(id: key.id).map(ShowArtwork.init(media:)))
                     }
                 }
+                return true
             }
+            for _ in 0..<UpcomingLoader.maxInFlight { guard startNext() else { break } }
             for await (id, art) in group {
                 if let art { artwork[id] = art }
+                _ = startNext()
             }
         }
         // A newer refresh writes its own art; this one mustn't delete what that one needs.
