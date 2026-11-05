@@ -41,33 +41,34 @@ struct AccuracyAuditTests {
         }
     }
 
-    @Test("20 real drops from the build week, each right in Lagos (SPEC's definition)")
-    func twentyOfTwenty() throws {
+    @Test("20 real drops from the build week, at most 4 of them date only")
+    func twentyDrops() throws {
         let rules = try Fixture.bundledRules()
         let cases = try Self.cases()
         #expect(cases.count >= 20, "the audit needs 20 drops, has \(cases.count)")
-
-        var dateOnly = 0
-        for item in cases {
-            let result = TimeResolver.resolve(item.episode.listing(show: item.show), rules: rules)
-            let confirmedDay = Self.lagos.localDay(item.expected.instant)
-            if result.confidence == .dateOnly {
-                dateOnly += 1
-                #expect(result.airdate == confirmedDay,
-                        "\(item.slug): date only, listed \(result.airdate ?? "none"), out \(confirmedDay) in Lagos")
-            } else {
-                let gap = result.date.timeIntervalSince(item.expected.instant)
-                #expect(Self.lagos.localDay(result.date) == confirmedDay, "\(item.slug): wrong day in Lagos")
-                #expect(abs(gap) <= Self.tolerance,
-                        "\(item.slug): off by \(Int(gap / 60)) min (\(item.expected.note))")
-            }
-            // One row a case, for docs/research/accuracy-audit.md.
-            let shown = result.confidence == .dateOnly
-                ? "\(result.airdate ?? "?"), no time"
-                : "\(Self.lagos.weekdayTime(result.date)) (\(result.confidence.rawValue))"
-            print("AUDIT|\(item.slug)|\(shown)|\(Self.lagos.weekdayTime(item.expected.instant))|\(item.expected.source)")
-        }
+        let dateOnly = cases.filter {
+            TimeResolver.resolve($0.episode.listing(show: $0.show), rules: rules).confidence == .dateOnly
+        }.count
         #expect(dateOnly <= 4, "\(dateOnly) of the drops are date only; SPEC allows 4")
+    }
+
+    @Test("a real drop from the build week is right in Lagos (SPEC's definition)", arguments: try Self.cases())
+    func rightInLagos(_ item: Case) throws {
+        let result = TimeResolver.resolve(item.episode.listing(show: item.show), rules: try Fixture.bundledRules())
+        let confirmedDay = Self.lagos.localDay(item.expected.instant)
+        if result.confidence == .dateOnly {
+            #expect(result.airdate == confirmedDay,
+                    "\(item.slug): date only, listed \(result.airdate ?? "none"), out \(confirmedDay) in Lagos")
+        } else {
+            let gap = result.date.timeIntervalSince(item.expected.instant)
+            #expect(Self.lagos.localDay(result.date) == confirmedDay, "\(item.slug): wrong day in Lagos")
+            #expect(abs(gap) <= Self.tolerance, "\(item.slug): off by \(Int(gap / 60)) min (\(item.expected.note))")
+        }
+        // One row a case, for docs/research/accuracy-audit.md; cases run in parallel, so sort the rows by slug.
+        let shown = result.confidence == .dateOnly
+            ? "\(result.airdate ?? "?"), no time"
+            : "\(Self.lagos.weekdayTime(result.date)) (\(result.confidence.rawValue))"
+        print("AUDIT|\(item.slug)|\(shown)|\(Self.lagos.weekdayTime(item.expected.instant))|\(item.expected.source)")
     }
 
     @Test("drops on both sides of the 1 Nov US clock change")
@@ -76,4 +77,9 @@ struct AccuracyAuditTests {
         #expect(instants.contains { $0 < Self.clockChange }, "no drop before the clock change")
         #expect(instants.contains { $0 >= Self.clockChange }, "no drop after the clock change")
     }
+}
+
+extension AccuracyAuditTests.Case: CustomTestStringConvertible {
+    /// A parameterised test names each case by its file.
+    var testDescription: String { slug }
 }

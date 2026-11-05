@@ -46,6 +46,21 @@ struct TimeResolverTests {
         #expect(result.date == Date(iso: "2026-06-22T01:00:00Z"))
     }
 
+    /// The other half of D-25: the placeholder is found by its empty airtime alone, never by its hour, so a real
+    /// airtime whose airstamp lands on a placeholder hour is still the exact broadcast, even where a rule exists.
+    @Test("a real airtime at a placeholder hour (12:00Z, 16:00Z, 17:00Z) is still exact", arguments: [
+        ("07:00", "2026-11-26T12:00:00Z", "Netflix"),
+        ("11:00", "2026-11-26T16:00:00Z", "Peacock"),
+        ("12:00", "2026-11-26T17:00:00Z", "Hulu"),
+        ("13:00", "2026-11-26T12:00:00Z", "Netflix"),
+    ])
+    func realAirtimeAtPlaceholderHourIsExact(_ airtime: String, _ stamp: String, _ channel: String) {
+        let result = TimeResolver.resolve(Self.listing(airtime: airtime, airstamp: stamp, channel: channel), rules: Self.rules)
+        #expect(result.confidence == .exact)
+        #expect(result.source == .broadcast(network: channel))
+        #expect(result.date == Date(iso: stamp))
+    }
+
     @Test("episode override beats show override beats platform rule")
     func overrideBeatsRule() {
         let both = TimeResolver.resolve(Self.listing(episode: "tvmaze:10", show: "tvmaze:500"), rules: Self.rules)

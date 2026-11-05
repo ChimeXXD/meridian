@@ -1,4 +1,5 @@
 import Foundation
+import Testing
 @testable import Meridian
 
 final class FixtureBundleToken {}
@@ -46,6 +47,11 @@ struct RuleCase: Decodable {
     let expected: Expected
 
     enum CodingKeys: String, CodingKey { case show, episode, expected }
+}
+
+extension RuleCase: CustomTestStringConvertible {
+    /// A parameterised test names each case by its file.
+    var testDescription: String { slug }
 }
 
 extension Date {

@@ -8,22 +8,20 @@ struct FixtureResolutionTests {
     /// The accuracy definition in SPEC: within 5 minutes of the confirmed release.
     static let tolerance: TimeInterval = 5 * 60
 
-    @Test("every recorded episode matches its confirmed time and confidence")
-    func everyFixtureMatches() throws {
-        let rules = try Fixture.bundledRules()
-        let cases = try Fixture.ruleCases()
-        #expect(cases.count >= 17)
+    @Test("at least 17 real episodes are recorded")
+    func enoughFixtures() throws {
+        #expect(try Fixture.ruleCases().count >= 17)
+    }
 
-        for item in cases {
-            let listing = item.episode.listing(show: item.show)
-            let result = TimeResolver.resolve(listing, rules: rules)
-            #expect(result.confidence == item.expected.confidence, "\(item.slug): confidence")
-            if let instant = item.expected.instant {
-                let gap = abs(result.date.timeIntervalSince(instant))
-                #expect(gap <= Self.tolerance, "\(item.slug): off by \(Int(gap / 60)) min (\(item.expected.note))")
-            } else {
-                #expect(result.airdate == item.episode.airdate, "\(item.slug): date-only keeps the listed airdate")
-            }
+    @Test("a recorded episode matches its confirmed time and confidence", arguments: try Fixture.ruleCases())
+    func fixtureMatches(_ item: RuleCase) throws {
+        let result = TimeResolver.resolve(item.episode.listing(show: item.show), rules: try Fixture.bundledRules())
+        #expect(result.confidence == item.expected.confidence, "\(item.slug): confidence")
+        if let instant = item.expected.instant {
+            let gap = abs(result.date.timeIntervalSince(instant))
+            #expect(gap <= Self.tolerance, "\(item.slug): off by \(Int(gap / 60)) min (\(item.expected.note))")
+        } else {
+            #expect(result.airdate == item.episode.airdate, "\(item.slug): date-only keeps the listed airdate")
         }
     }
 
