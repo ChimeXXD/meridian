@@ -4,10 +4,15 @@ import Foundation
 struct DropFormatter: Sendable {
     let timeZone: TimeZone
     let locale: Locale
+    /// Built once: app screens format every second (their countdowns' pace).
+    private let calendar: Calendar
 
     init(timeZone: TimeZone = .current, locale: Locale = .current) {
         self.timeZone = timeZone
         self.locale = locale
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = timeZone
+        self.calendar = calendar
     }
 
     /// A formatter for a named IANA zone, falling back to the device zone if the name is unknown.
@@ -39,8 +44,7 @@ struct DropFormatter: Sendable {
     /// With `now`, a date in another year adds it ("Fri 9 Jul 2027"), as `relativeDay` does.
     func airdate(_ airdate: String, now: Date? = nil) -> String? {
         guard let parts = WallClock.parseDate(airdate) else { return nil }
-        var utc = Calendar(identifier: .gregorian)
-        utc.timeZone = .gmt
+        let utc = Self.utc
         guard let date = utc.date(from: DateComponents(year: parts.year, month: parts.month, day: parts.day, hour: 12)) else {
             return nil
         }
@@ -56,7 +60,6 @@ struct DropFormatter: Sendable {
     /// with the year when it isn't this year ("Fri 9 Jul 2027").
     /// Days are counted in this formatter's zone, so 00:30 Saturday in Lagos is "Tomorrow" on a Friday evening.
     func relativeDay(_ date: Date, now: Date) -> String {
-        let calendar = calendar
         let days = calendar.dateComponents([.day], from: calendar.startOfDay(for: now), to: calendar.startOfDay(for: date)).day ?? 0
         switch days {
         case 0: return "Today"
@@ -94,13 +97,13 @@ struct DropFormatter: Sendable {
         date.formatted(verbatim("\(weekday: .abbreviated)"))
     }
 
+    private static let utc: Calendar = {
+        var utc = Calendar(identifier: .gregorian)
+        utc.timeZone = .gmt
+        return utc
+    }()
+
     private func verbatim(_ format: Date.FormatString) -> Date.VerbatimFormatStyle {
         Date.VerbatimFormatStyle(format: format, locale: locale, timeZone: timeZone, calendar: calendar)
-    }
-
-    private var calendar: Calendar {
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = timeZone
-        return calendar
     }
 }

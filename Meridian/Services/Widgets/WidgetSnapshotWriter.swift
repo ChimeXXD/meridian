@@ -53,8 +53,9 @@ struct WidgetSnapshotWriter {
     /// Saves the images each show in the snapshot needs, where missing: the hero art (`ShowArtwork.widget`, the wide
     /// key art or the poster) for shows with something scheduled, and the rows' small poster
     /// (`ShowArtwork.widgetPoster`) for every show, those with nothing scheduled too. Deletes any other file, so art for
-    /// shows no longer in the snapshot goes. Reloads the timelines once if anything changed.
-    func saveArt(for snapshot: DropSnapshot, artwork: [String: ShowArtwork]) async {
+    /// shows no longer in the snapshot goes. Reloads the timelines once if anything changed. Off the main actor, so the
+    /// folder listing and the image writes never hold up a frame.
+    nonisolated func saveArt(for snapshot: DropSnapshot, artwork: [String: ShowArtwork]) async {
         guard let container else { return }
         let files = FileManager.default
         let directory = SnapshotStore.artworkDirectory(in: container)
@@ -82,6 +83,6 @@ struct WidgetSnapshotWriter {
                 changed = true
             }
         }
-        if changed { reload() }
+        if changed { await reload() }
     }
 }
