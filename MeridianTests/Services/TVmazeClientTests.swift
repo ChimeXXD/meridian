@@ -170,4 +170,24 @@ struct TVmazeClientTests {
         _ = try await client.show(id: 44933, maxAge: UpcomingLoader.freshness)
         #expect(await network.requests.count == 2)
     }
+
+    @Test("the same request made twice at once goes to TVmaze once, as on a cold launch's two refreshes")
+    func concurrentRequestsShareOneFetch() async throws {
+        let network = FakeNetwork([try Self.ok("show-silo-embed")])
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent("tvmaze-dedupe-\(UUID().uuidString)")
+        // A slow answer, so every call starts while the first is still waiting for it.
+        let client = TVmazeClient(cache: ResponseCache(directory: directory, ttl: 6 * 60 * 60),
+                                  transport: { request in
+                                      try await Task.sleep(for: .milliseconds(300))
+                                      return try await network.send(request)
+                                  },
+                                  sleep: { await network.sleep($0) })
+        let names = try await withThrowingTaskGroup(of: String.self) { group in
+            for _ in 0..<5 { group.addTask { try await client.show(id: 38052, maxAge: UpcomingLoader.freshness).name } }
+            return try await group.reduce(into: []) { $0.append($1) }
+        }
+        #expect(names == Array(repeating: "Silo", count: 5))
+        #expect(await network.requests.count == 1)
+    }
 }
+

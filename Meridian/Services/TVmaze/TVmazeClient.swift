@@ -15,6 +15,9 @@ actor TVmazeClient {
     private let cache: ResponseCache
     private let transport: Transport
     private let sleep: Sleep
+    /// Requests on their way, so the same URL asked for again meanwhile shares the answer instead of spending a second
+    /// call (a cold launch refreshes twice: on first appearance and on becoming active).
+    private var inFlight: [URL: Task<Data, Error>] = [:]
 
     init(cache: ResponseCache = .standard(name: "TVmaze"),
          transport: @escaping Transport = TVmazeClient.urlSession,
@@ -70,7 +73,14 @@ actor TVmazeClient {
         if let cached = await cache.body(for: url, maxAge: maxAge), let decoded = try? JSONDecoder().decode(T.self, from: cached) {
             return decoded
         }
-        let body = try await fetch(url)
+        if let shared = inFlight[url] {
+            return try JSONDecoder().decode(T.self, from: try await shared.value)
+        }
+        let task = Task { try await fetch(url) }
+        inFlight[url] = task
+        // Cleared only once the body is cached, so a caller arriving in between finds one or the other.
+        defer { inFlight[url] = nil }
+        let body = try await task.value
         let decoded = try JSONDecoder().decode(T.self, from: body)
         await cache.store(body, for: url)
         return decoded
