@@ -9,7 +9,4 @@ enum AppGroup {
         }
         return id
     }()
-
-    /// Nil when the entitlement is missing or signing didn't grant the group.
-    static var defaults: UserDefaults? { UserDefaults(suiteName: identifier) }
 }

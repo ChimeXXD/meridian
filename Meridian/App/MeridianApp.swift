@@ -44,8 +44,6 @@ struct MeridianApp: App {
         let arguments = ProcessInfo.processInfo.arguments
         if arguments.contains("-designPreview") {
             DesignPreview()
-        } else if arguments.contains("-setupCheck") {
-            PlaceholderView()
         } else {
             RootView(client: client, anilist: anilist, model: model, scheduler: scheduler)
         }
