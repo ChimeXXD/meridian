@@ -18,10 +18,12 @@
       `<path d="M 50 86 V 20" stroke="${ink}" stroke-width="3.5" stroke-linecap="round" fill="none"/>` +
       `<circle cx="50" cy="12" r="3.5" fill="${star || ink}"/>`;
   }
-  function logoSVG({ size = 32, ink = 'currentColor', star = null, label = 'Meridian logo' } = {}) {
+  // `crop` trims the 100-unit square to the mark itself (16 6 68 84), so a small mark fills its box: `size` is then its height.
+  function logoSVG({ size = 32, ink = 'currentColor', star = null, label = 'Meridian logo', crop = false } = {}) {
     const id = 'mlg' + (++uid);
     const a11y = label ? `role="img" aria-label="${esc(label)}"` : 'aria-hidden="true" focusable="false"';
-    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" ${a11y}>${logoInner(ink, star, id)}</svg>`;
+    const box = crop ? '16 6 68 84' : '0 0 100 100', w = crop ? +(size * 68 / 84).toFixed(2) : size;
+    return `<svg viewBox="${box}" width="${w}" height="${size}" ${a11y}>${logoInner(ink, star, id)}</svg>`;
   }
   const GOLD = '#E9C46A';
   const ICONS = {
@@ -66,7 +68,7 @@
     $$('[data-logo]').forEach((el) => {
       // The star is gold on night; on paper it stays ink, since gold on white is under 2:1.
       const star = el.closest('.paper') ? null : GOLD;
-      el.innerHTML = logoSVG({ size: Number(el.dataset.size || 32), star, label: el.dataset.label === undefined ? 'Meridian logo' : el.dataset.label });
+      el.innerHTML = logoSVG({ size: Number(el.dataset.size || 32), star, label: el.dataset.label === undefined ? 'Meridian logo' : el.dataset.label, crop: 'crop' in el.dataset });
     });
     $$('[data-icon]').forEach((el) => { el.innerHTML = iconSVG(el.dataset.icon); });
     const c = $('#construction'); if (c) c.innerHTML = construction();
@@ -677,18 +679,18 @@
     'home-medium': () => statusBar('19:00') + placed('widgets', 'medium-countdown-art.png', WCOLX[0], ROWY(0), 338, 158, 'r-home') +
       placed('widgets', 'small-countdown-art.png', WCOLX[0], ROWY(2), 158, 158, 'r-home') +
       tile(COLX[2], ROWY(2), 'Meridian') + tile(COLX[3], ROWY(2)) + row(3, [2, 3]) + row(4) + dock(),
-    // The Lock Screen at 04:37 on Monday, two hours before Silo's expected 06:37: the date, the clock and the Live
+    // The Lock Screen at 19:00 on Monday, two hours before Silo's expected 21:00: the date, the clock and the Live
     // Activity banner at the foot. No Lock Screen widgets here: they would show the soonest drop, Silo, and every
     // widget render tells a different story (a date-only Wonder Man, House of the Dragon at 22:10); the widget
     // gallery below shows them.
     lock: () => statusBar('', ['signal', 'wifi', 'battery']) +
       '<div class="dev-date"><span>Monday 2 November</span></div>' +
-      '<div class="dev-clock">04:37</div>' +
+      '<div class="dev-clock">19:00</div>' +
       placed('live-activity', 'lock-countingDown-art.png', 21, 594, 360, 157, 'r-home') +
       `<span class="dev-btn" style="left:46px">${GLYPH.flashlight}</span><span class="dev-btn" style="right:46px">${GLYPH.camera}</span><span class="dev-home"></span>`,
     // The island over the Home Screen. Compact widens it to 221 pt, so the status bar keeps only the time and battery;
     // expanded covers the status bar, 371 pt wide, from the island's top.
-    compact: () => statusBar('04:37', ['battery'], 14, 72) + row(0) + row(1) +
+    compact: () => statusBar('19:00', ['battery'], 14, 72) + row(0) + row(1) +
       placed('live-activity', 'compact-countingDown-art.png', (SCR.w - 220.67) / 2, 14.5, 220.67, 36, 'r-capsule', 'island'),
     expanded: () => row(0) + row(1) + placed('live-activity', 'expanded-countingDown-art.png', (SCR.w - 371) / 2, 14, 371, 118.67, 'r-expanded', 'island'),
   };

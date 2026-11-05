@@ -31,6 +31,8 @@
   --top-h: 64px;
   --rail-w: 264px;
   --gutter: 56px;
+  --col-gap: 48px;  /* between columns of text */
+  --card-gap: 16px; /* between cards */
   /* Easing. The site's own chrome eases out strongly; the drawer uses iOS's sheet curve; only pictures of the app
      use the app's .easeOut, so they move as the phone does. */
   --ease-out: cubic-bezier(.23, 1, .32, 1);
@@ -158,7 +160,8 @@ p { margin: 16px 0 0; max-width: 68ch; }
   background: var(--bg); border-bottom: 1px solid var(--line);
 }
 .brand { display: flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none; min-width: 0; }
-.brand [data-logo], .brand svg { width: 32px; height: 32px; flex: none; display: block; }
+.brand [data-logo], .brand svg { flex: none; display: block; }
+.brand svg { width: auto; height: 28px; }
 .brand .wordmark { font: 400 var(--t-h3)/1 var(--serif); }
 .brand .sub { font-size: var(--t-label); color: var(--ink-3); white-space: nowrap; padding-top: 4px; }
 .topbar .spacer { flex: 1; }
@@ -205,19 +208,21 @@ main:focus { outline: none; }
 /* ---------------------------------------------------------------- overview hero */
 .hero {
   --night: #1C1B1A;
-  margin: 0 calc(var(--gutter) * -1); padding: 0 var(--gutter);
+  /* The band runs the full width of the page; its contents keep to the 1120 px column the rest of the view uses. */
+  margin: 0 calc(var(--gutter) * -1); padding: 0 calc(var(--gutter) + max(0px, 100% - 1120px)) 0 var(--gutter);
   height: 720px; overflow: hidden; background: var(--night);
   display: grid; grid-template-columns: minmax(0, 1fr) 390px; gap: 64px; align-items: start;
-  border-bottom: 1px solid var(--line);
 }
+#overview.view { max-width: none; }
+:where(#overview > :not(.hero)) { max-width: 1120px; }
 /* The night is a registered colour, so the band and the phone in it (its art header, fade and copy) fade to a new
    base together, over the art's 0.35 s, as the app's base does. */
 @property --night { syntax: '<color>'; inherits: true; initial-value: #1C1C1C; }
 .hero, .hero .hero-phone { transition: --night .35s var(--ease-app); }
-.hero-copy { align-self: center; padding: 48px 0 64px; }
+.hero-copy { align-self: center; padding: 48px 0 64px; max-width: 460px; }
 .hero h1 { font-size: 88px; line-height: 1; }
-.hero .lede { max-width: 30ch; }
-.hero-copy > p:not(.lede) { color: var(--ink-2); max-width: 46ch; }
+.hero-copy p { max-width: none; }
+.hero-copy > p:not(.lede) { color: var(--ink-2); }
 .pick-block { margin-top: 40px; display: grid; gap: 12px; }
 .pick { display: flex; flex-wrap: wrap; gap: 8px; }
 .pick button, .btn {
@@ -230,16 +235,18 @@ main:focus { outline: none; }
 .btn:disabled { opacity: .48; cursor: default; pointer-events: none; }
 /* Press feedback: every site button sinks a little, easing back as it's let go. */
 .btn:active, .pick button:active, .search-btn:active, .icon-btn:active, .copy-val:active, .copy-code:active, .link-btn:active, .anchor-btn:active { transform: scale(.97); }
-.hero-phone { margin: 48px 0 0; border-radius: 44px 44px 0 0; }
+/* The phone rises from the band's foot, cut off flat there, as if the screen carries on below. */
+.hero .hero-phone { margin: 48px 0 0; align-self: end; border-radius: var(--phone-r) var(--phone-r) 0 0; }
+.hero .hero-phone::after { bottom: -1px; }
 .hero-phone figcaption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 
 /* ---------------------------------------------------------------- overview blocks */
-.doors { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 0 32px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
-.doors li { padding: 16px 0 20px; border-top: 1px solid var(--line); display: grid; gap: 4px; }
+.doors { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 0 var(--col-gap); grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); }
+.doors li { padding: 16px 0 20px; border-top: 1px solid var(--line); display: grid; gap: 4px; align-content: start; }
 .doors a { font: 400 var(--t-h3)/1.25 var(--serif); text-decoration: none; }
 @media (hover: hover) and (pointer: fine) { .doors a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } }
 .doors span { font-size: var(--t-small); color: var(--ink-3); }
-.principles { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap: 0 48px; margin-top: 8px; }
+.principles { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap: 0 var(--col-gap); margin-top: 8px; }
 .principles > div { border-top: 1px solid var(--line); padding: 20px 0 8px; margin-top: 16px; }
 .principles h3 { margin: 0; }
 .principles p { margin-top: 8px; }
@@ -253,7 +260,7 @@ main:focus { outline: none; }
 .sizes { display: flex; align-items: flex-end; gap: 40px; flex-wrap: wrap; padding: 32px 0 8px; color: var(--ink); }
 .sizes figure { margin: 0; display: grid; justify-items: center; gap: 12px; }
 .sizes figcaption { font: var(--t-label) var(--mono); color: var(--ink-3); }
-.icon-walls { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr)); gap: 24px; margin-top: 24px; }
+.icon-walls { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr)); gap: var(--card-gap); margin-top: 24px; }
 .wall { padding: 32px 24px; border-radius: var(--r); background: #2C2C2E; }
 .wall.light { background: #E5E5EA; }
 .wall.light figcaption { color: #3A3A3C; }
@@ -262,13 +269,13 @@ main:focus { outline: none; }
 .icons figcaption { font-size: var(--t-label); color: rgba(255, 255, 255, .78); max-width: 128px; line-height: 1.4; }
 .icon-tile { width: 112px; height: 112px; border-radius: 25px; overflow: hidden; display: block; flex: none; }
 .icon-tile svg { width: 100%; height: 100%; display: block; }
-.lockups { display: grid; gap: 24px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); margin-top: 24px; }
+.lockups { display: grid; gap: var(--card-gap); grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); margin-top: 24px; }
 .lockup { display: flex; align-items: center; justify-content: center; gap: 16px; color: var(--ink); padding: 40px 24px; border-radius: var(--r); background: #1C1C1C; }
 .lockup.paper { background: var(--ink); color: #1C1C1C; }
 .lockup .w { font: 400 40px/1 var(--serif); }
 .lockup.stack { flex-direction: column; gap: 12px; }
 .lockup.stack .w { font-size: 32px; }
-.dodont { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 40px 32px; margin-top: 24px; }
+.dodont { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 40px var(--card-gap); margin-top: 24px; }
 .dodont figure { margin: 0; }
 .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .tile { position: relative; height: 148px; display: grid; place-items: center; border-radius: var(--r); background: #1C1C1C; color: var(--ink); overflow: hidden; }
@@ -276,7 +283,7 @@ main:focus { outline: none; }
 .pair .tile:first-child::before { content: "Do"; }
 .pair .tile:last-child::before { content: "Don’t"; background: rgba(0, 0, 0, .7); padding: 0 6px; border-radius: 4px; left: 6px; }
 .dodont figcaption { font-size: var(--t-small); color: var(--ink-3); margin-top: 12px; line-height: 1.5; }
-.options { display: grid; gap: 40px 32px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); margin-top: 32px; }
+.options { display: grid; gap: 40px var(--card-gap); grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); margin-top: 32px; }
 .option .preview { padding: 28px 24px; display: flex; gap: 20px; align-items: center; border-radius: var(--r); }
 .option .preview .icon-tile { width: 88px; height: 88px; border-radius: 20px; }
 .option .pv-line { font: 500 var(--t-label) var(--sans); color: rgba(255, 255, 255, .75); margin-top: 8px; }
@@ -289,7 +296,15 @@ main:focus { outline: none; }
 
 /* ---------------------------------------------------------------- tables */
 .table-wrap { margin-top: 24px; max-width: 100%; }
-.table-wrap.scroll { overflow-x: auto; overscroll-behavior-x: contain; }
+.table-wrap.scroll { overflow-x: auto; overscroll-behavior-x: contain;
+  /* Scroll cues: a faint starlight edge where the table runs on. A cover at each end of the content scrolls with it
+     and hides the cue there. */
+  background:
+    linear-gradient(90deg, var(--bg) 30%, rgba(13, 13, 14, 0)) left / 48px 100% no-repeat local,
+    linear-gradient(270deg, var(--bg) 30%, rgba(13, 13, 14, 0)) right / 48px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, rgba(244, 239, 228, .10), transparent) left / 16px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, rgba(244, 239, 228, .10), transparent) right / 16px 100% no-repeat scroll;
+}
 table { border-collapse: collapse; width: 100%; font-size: var(--t-small); }
 th, td { text-align: left; padding: 12px 20px 12px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
 thead th { font-size: var(--t-label); font-weight: 500; color: var(--ink-3); border-bottom-color: var(--line-2); }
@@ -304,19 +319,20 @@ td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .tokens { list-style: none; padding: 0; margin: 20px 0 0; }
 .tok { display: grid; grid-template-columns: 48px minmax(0, 1fr) minmax(0, 1.25fr); gap: 8px 20px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
 .tok:last-child { border-bottom: 1px solid var(--line); }
-.chip { width: 48px; height: 48px; border-radius: var(--r); position: relative; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .10); }
+.chip { width: 48px; height: 48px; border-radius: var(--r); position: relative; overflow: hidden; box-shadow: inset 0 0 0 1px var(--line-2); }
 .chip > i { position: absolute; inset: 0; }
 .chip.alpha { background-image: conic-gradient(#2a2a2a 25%, #1a1a1a 0 50%, #2a2a2a 0 75%, #1a1a1a 0); background-size: 12px 12px; }
 .tok .name { color: var(--ink); display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
 .tok .use { font-size: var(--t-small); color: var(--ink-3); line-height: 1.45; margin-top: 2px; }
-.vals { display: flex; flex-wrap: wrap; gap: 8px; }
+/* A token's values, one under another: hex, Swift name, CSS variable. */
+.vals { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
 .copy-val {
-  font: var(--t-label) var(--mono); min-height: 32px; padding: 4px 10px; text-align: left;
-  background: transparent; border: 1px solid var(--line); border-radius: var(--r); cursor: pointer; color: var(--ink-2);
+  font: var(--t-label) var(--mono); min-height: 32px; padding: 4px 8px; text-align: left;
+  background: rgba(244, 239, 228, .05); border: 0; border-radius: var(--r); cursor: pointer; color: var(--ink-2);
   overflow-wrap: anywhere; max-width: 100%;
-  transition: border-color .15s var(--ease-out), color .15s var(--ease-out), transform .16s var(--ease-out);
+  transition: background-color .15s var(--ease-out), color .15s var(--ease-out), transform .16s var(--ease-out);
 }
-@media (hover: hover) and (pointer: fine) { .copy-val:hover { border-color: var(--line-2); color: var(--ink); } }
+@media (hover: hover) and (pointer: fine) { .copy-val:hover { background: rgba(244, 239, 228, .09); color: var(--ink); } }
 .anchor-btn { width: 32px; height: 32px; border: 0; background: none; color: var(--ink-3); border-radius: var(--r); cursor: pointer; font: var(--t-label) var(--mono); opacity: 0; transition: opacity .15s var(--ease-out), transform .16s var(--ease-out); flex: none; }
 @media (hover: hover) and (pointer: fine) { .anchor-btn:hover { color: var(--ink); background: rgba(244, 239, 228, .06); } }
 .anchor-btn:focus-visible { opacity: 1; }
@@ -386,7 +402,7 @@ td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .symbols span { font-size: var(--t-small); color: var(--ink-3); }
 
 /* ---------------------------------------------------------------- countdown view */
-.cd-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); margin-top: 24px; }
+.cd-grid { display: grid; gap: var(--card-gap); grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); margin-top: 24px; }
 .cd-card { background: #1C1C1C; border-radius: var(--r); padding: 24px; min-width: 0; color: #fff; }
 .cd-card .label { margin-bottom: 16px; color: rgba(244, 239, 228, .7); }
 .cd-card .label code { background: none; padding: 0 0 0 6px; color: rgba(244, 239, 228, .7); }
@@ -452,7 +468,14 @@ dl.specs dd { margin: 0; color: var(--ink-2); overflow-wrap: anywhere; padding-l
 .art > img[hidden] { display: none; }
 @keyframes arrive { from { opacity: 0; } to { opacity: 1; } }
 
-.phone { position: relative; width: 390px; max-width: 100%; background: var(--night); border-radius: 44px; overflow: hidden; color: #fff; }
+.phone { --phone-r: 62px; position: relative; width: 390px; max-width: 100%; background: var(--night); border-radius: var(--phone-r); overflow: hidden; color: #fff; }
+/* The replicas' corners match the mockups' screens (site.js): Apple's continuous corner, a superellipse 71 pt across
+   with exponent 2.31, which is superellipse(1.21) (2^1.21 = 2.31). Without corner-shape, a round 62 pt corner meets
+   it at the diagonal. */
+@supports (corner-shape: superellipse(2)) {
+  .phone { --phone-r: 71px; corner-shape: superellipse(1.21); }
+  .phone::after { corner-shape: inherit; }
+}
 .phone::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .10); pointer-events: none; }
 .nah { position: relative; height: 472px; overflow: hidden; background: var(--night); }
 .nah.tall { height: 500px; }
@@ -576,7 +599,7 @@ dl.specs dd { margin: 0; color: var(--ink-2); overflow-wrap: anywhere; padding-l
 .legacy-card { background: #1C1C1E; border-radius: 14px; padding: 16px; display: flex; gap: 12px; color: #fff; }
 
 /* ---------------------------------------------------------------- surfaces */
-dl.facts { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap: 0 48px; margin: 24px 0 0; }
+dl.facts { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap: 0 var(--col-gap); margin: 24px 0 0; }
 dl.facts > div { border-top: 1px solid var(--line); padding: 16px 0 20px; }
 dl.facts dt { font-weight: 600; color: var(--ink); font-size: var(--t-small); }
 dl.facts dd { margin: 6px 0 0; font-size: var(--t-small); color: var(--ink-2); line-height: 1.55; }
@@ -584,7 +607,7 @@ dl.facts dd { margin: 6px 0 0; font-size: var(--t-small); color: var(--ink-2); l
 .gallery-h { font-size: var(--t-small); color: var(--ink-3); margin-top: 40px; }
 .shot { margin: 0; display: grid; gap: 12px; max-width: 100%; }
 /* Each render sits on a small panel of the mockups' wallpaper, the Meridian night sky. */
-.shot .frame { padding: 24px; border-radius: var(--r); background: var(--stars), var(--sky); box-shadow: inset 0 0 0 1px var(--line); display: grid; place-items: center; max-width: 100%; }
+.shot .frame { padding: 24px; border-radius: 20px; background: var(--stars), var(--sky); display: grid; place-items: center; max-width: 100%; }
 .shot img { display: block; max-width: 100%; height: auto; }
 /* Lock Screen widgets are white ink: iOS draws them straight onto the wallpaper, so their black ground drops out. */
 .shot .frame.ink img, .dev-r.ink > img { mix-blend-mode: screen; }
@@ -603,18 +626,17 @@ dl.facts dd { margin: 6px 0 0; font-size: var(--t-small); color: var(--ink-2); l
 
 /* Device mockups. One iPhone laid out at true points (1 px = 1 pt) and scaled as a whole by site.js (--s), so the
    renders keep their real size against the screen. The box's size comes from aspect-ratio, so nothing moves. */
-.showcase { display: flex; flex-wrap: wrap; gap: 48px; margin-top: 40px; align-items: flex-start; }
-.showcase.home .mock { flex: 1 1 300px; max-width: 428px; }
-.showcase.la .mock { flex: 1 1 320px; max-width: 428px; }
-.showcase.la .crops { flex: 1 1 360px; max-width: 560px; display: grid; gap: 40px; }
-.showcase.la .crops .mock { max-width: none; }
+/* Two columns, every phone (and every crop of one) the same width, so all share one scale, and none taller than the window. */
+.showcase { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--col-gap); margin-top: 40px; align-items: start; }
+.showcase .mock { width: 100%; max-width: min(428px, max(260px, calc((100vh - 160px) * 428 / 900))); }
+.showcase.la .crops { align-self: center; display: grid; gap: 40px; }
 .mock { margin: 0; display: grid; gap: 20px; min-width: 0; }
 .mock figcaption { font-size: var(--t-small); color: var(--ink-3); line-height: 1.45; }
 .dev { --s: 1; position: relative; width: 100%; aspect-ratio: 428 / 900; }
 /* A phone's top only: the screen fades out at its foot, over the icons. */
 .dev.top { aspect-ratio: 428 / 235; overflow: hidden; -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent 100%); mask-image: linear-gradient(180deg, #000 72%, transparent 100%); }
 .dev.top[data-dev="compact"] { aspect-ratio: 428 / 141; -webkit-mask-image: linear-gradient(180deg, #000 50%, transparent 100%); mask-image: linear-gradient(180deg, #000 50%, transparent 100%); }
-.dev-phone { position: absolute; left: 0; top: 0; width: 428px; height: 900px; transform: scale(var(--s)); transform-origin: 0 0; border-radius: 77px; box-shadow: 0 36px 72px -28px rgba(0, 0, 0, .7); }
+.dev-phone { position: absolute; left: 0; top: 0; width: 428px; height: 900px; transform: scale(var(--s)); transform-origin: 0 0; }
 .dev-bands { position: absolute; inset: 0; display: block; }
 .dev-screen { position: absolute; left: 13px; top: 13px; width: 402px; height: 874px; overflow: hidden; color: #fff; font-family: var(--sans); letter-spacing: -.015em; line-height: 1.2; }
 .dev-screen > * { position: absolute; }
@@ -754,7 +776,7 @@ dialog.search::backdrop { background: rgba(0, 0, 0, .64); }
   footer.foot { padding-left: var(--gutter); }
   .hero { grid-template-columns: minmax(0, 1fr); height: auto; gap: 0; }
   .hero-copy { padding: 48px 0 0; }
-  .hero-phone { height: 640px; margin: 40px auto 0; }
+  .hero .hero-phone { height: 640px; margin: 40px auto 0; }
   .logo-hero { grid-template-columns: minmax(0, 1fr); }
   .spec { grid-template-columns: minmax(0, 1fr); }
   .demo-cd { grid-template-columns: minmax(0, 1fr); }
@@ -797,7 +819,7 @@ dialog.search::backdrop { background: rgba(0, 0, 0, .64); }
   :root { --gutter: 16px; }
   .hl-cd { font-size: 64px; }
   .hero h1 { font-size: 48px; }
-  .hero-phone { height: 600px; }
+  .hero .hero-phone { height: 600px; }
   .cd-card .cd { font-size: 48px; }
   .demo-cd .cd { font-size: 56px; }
   .pair .tile { height: 120px; }
@@ -828,7 +850,6 @@ dialog.search::backdrop { background: rgba(0, 0, 0, .64); }
 .ink-cell { display: grid; gap: 10px; }
 .ink-cell .chip { width: 100%; height: 48px; display: flex; align-items: center; padding-left: 14px; }
 .ink-cell .chip b { position: relative; font: 300 24px var(--serif); white-space: pre; font-variant-numeric: tabular-nums; }
-.ink-cell .vals { gap: 6px; }
 .a11y td:last-child { white-space: nowrap; padding-right: 0; }
 @media (max-width: 700px) {
   /* Every tab row scrolls sideways on a phone, edge to edge, rather than wrapping; site.js keeps the chosen tab in view. */
@@ -838,9 +859,19 @@ dialog.search::backdrop { background: rgba(0, 0, 0, .64); }
   .inks, .inks tbody, .inks tr, .inks th, .inks td { display: block; min-width: 0; width: auto; }
   .inks thead { display: none; }
   .inks tr { border-top: 1px solid var(--line-2); padding-top: 8px; }
-  .inks th[scope="row"], .inks td { border: 0; padding: 8px 0; }
+  .inks th[scope="row"], .inks td { border: 0; padding: 8px 0; width: auto; }
   .inks td::before { content: attr(data-surface); display: block; font-size: var(--t-label); color: var(--ink-3); margin-bottom: 6px; }
   .inks td.none { display: none; }
+}
+
+@media (max-width: 700px) {
+  .showcase { grid-template-columns: minmax(0, 1fr); }
+}
+/* On a touch screen the small controls get a 44 pt hit area without growing: an invisible margin around each. */
+@media (pointer: coarse) {
+  .copy-val, .anchor-btn, .copy-code, .link-btn { position: relative; }
+  .copy-val::after, .anchor-btn::after, .copy-code::after, .link-btn::after { content: ""; position: absolute; inset: -6px; }
+  .vals { gap: 12px; }
 }
 
 @media (max-width: 700px) {
