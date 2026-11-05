@@ -2,6 +2,15 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Skill review pass 2, batch 2: Swift API refactors and Upcoming's redraw (Thu 5 Nov 2026)
+
+- **`ReleaseVerb`** (WS-4): the certainty verb is an enum whose raw values are the words, so the Live Activity payload is byte-identical (a sorted-key JSON test per verb); an empty, blank or missing verb still decodes as "Out". The widgets' and the Live Activity's VoiceOver phrases share `ReleaseVerb.spoken(left:)`; D-61's split stays (a widget's last day speaks the release time, the activity a countdown).
+- **`ReleaseSource.adjusted(base:)`** (WS-11) carries its base source. Old snapshots (`"base":"JP broadcast"`) still decode, as the source the label came from; `baseLabel` and every explanation read as before. Tests on the old JSON for every case were written and passed before the change.
+- **`ShowID`** (WS-3, partly): catalog + ID, a strict failable init from today's strings and a single-value Codable writing them. It now builds every show and drop ID string, and `Drop.key`'s show-0 fallback is gone (`Drop.show` is nil instead). Left: the stored `showID: String` fields (Drop, QuietShow, the Live Activity attributes, EpisodeListing) and the String-keyed art dictionaries.
+- **Upcoming's redraw** (WS-7): the page follows `UpcomingSchedule` (every minute, and the instant a drop changes section); only the hero's headline and each row's countdown redraw every second. A test checks that the sections never change between two of the page's entries (red with a boundary removed). Two simulator screenshots 3 s apart differ in both countdowns.
+- **Checks:** narrow test runs per change, `fidelity/verify-screen.sh upcoming` ALL PASS, the commit gate on every commit.
+- **Not verified:** no Instruments run, so the per-second cost saved is inferred. Show detail's "added to the Netflix's usual time" has a stray "the" (existing wording, kept unchanged). WS-15 (impossible Drop states) not started.
+
 ## Skill review pass 2, batch 1: Swift correctness and tests (Thu 5 Nov 2026)
 
 - **Bugs fixed, each red first:** a failed show kept its last known drop by display name, so two followed shows called "The Office" both came back and the good one showed twice (now by show ID; names stay for the status line). A cold launch's two refreshes fetched every show twice (`TVmazeClient` now shares a request already on its way). Upcoming fanned out one request per show at once (now at most 6, for shows and for artwork). `WallClock` read "2026-xx-11-05" and "21:xx:00" by dropping the junk part (now rejected). A rules file's `updated` date that isn't a zero-padded yyyy-MM-dd (it's compared as text) is now rejected.
