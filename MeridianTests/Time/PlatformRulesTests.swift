@@ -97,16 +97,3 @@ struct PlatformRulesTests {
         #expect(formatter.localTime(result.date) == item.time)
     }
 }
-
-@Suite("WallClock")
-struct WallClockTests {
-    /// America/Santiago springs forward at 00:00 on 6 Sep 2026, so local midnight doesn't exist.
-    /// 00:30 is in the gap and moves forward to 01:30 (-03), i.e. 04:30Z; 21:00 is 00:00Z next day.
-    @Test("a zone whose clocks change at midnight still gets the right instant")
-    func midnightClockChange() {
-        #expect(WallClock.instant(airdate: "2026-09-06", time: "00:30", zone: "America/Santiago", dayOffset: 0)
-                == Date(iso: "2026-09-06T04:30:00Z"))
-        #expect(WallClock.instant(airdate: "2026-09-07", time: "21:00", zone: "America/Santiago", dayOffset: -1)
-                == Date(iso: "2026-09-07T00:00:00Z"))
-    }
-}

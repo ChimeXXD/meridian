@@ -26,10 +26,9 @@ enum WallClock {
         TimeZone.knownTimeZoneIdentifiers.contains(identifier)
     }
 
-    /// Parses "yyyy-MM-dd", rejecting impossible dates such as 2026-02-30.
+    /// Parses "yyyy-MM-dd", rejecting impossible dates such as 2026-02-30. Zero padding is optional ("2026-1-5").
     static func parseDate(_ text: String) -> (year: Int, month: Int, day: Int)? {
-        let parts = text.split(separator: "-").compactMap { Int($0) }
-        guard parts.count == 3, (1...12).contains(parts[1]), (1...31).contains(parts[2]) else { return nil }
+        guard let parts = numbers(text, separator: "-"), parts.count == 3, (1...12).contains(parts[1]), (1...31).contains(parts[2]) else { return nil }
         var utc = Calendar(identifier: .gregorian)
         utc.timeZone = .gmt
         let components = DateComponents(year: parts[0], month: parts[1], day: parts[2])
@@ -38,10 +37,16 @@ enum WallClock {
         return (parts[0], parts[1], parts[2])
     }
 
-    /// Parses "HH:mm" on a 24-hour clock.
+    /// Parses "HH:mm" on a 24-hour clock. Zero padding is optional ("9:05").
     static func parseTime(_ text: String) -> (hour: Int, minute: Int)? {
-        let parts = text.split(separator: ":").compactMap { Int($0) }
-        guard parts.count == 2, (0..<24).contains(parts[0]), (0..<60).contains(parts[1]) else { return nil }
+        guard let parts = numbers(text, separator: ":"), parts.count == 2,
+              (0..<24).contains(parts[0]), (0..<60).contains(parts[1]) else { return nil }
         return (parts[0], parts[1])
+    }
+
+    /// Every part as a number, or nil if any part isn't one, so "2026-xx-11-05" or "21:00:" can't pass by losing a part.
+    private static func numbers(_ text: String, separator: Character) -> [Int]? {
+        let parts = text.split(separator: separator, omittingEmptySubsequences: false).map { Int($0) }
+        return parts.contains(nil) ? nil : parts.compactMap { $0 }
     }
 }
