@@ -2,6 +2,17 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Skill review pass 2, batch 3: widgets and the Live Activity in their worst cases (Thu 5 Nov 2026)
+
+- **Words** (BU-1, BU-2/14): the inline line shortens only the name, measured to fit 234 pt in the 17 pt system font, so " · 2d 4h", "Out now", the day or the live timer always stays ("House of the Drag… · Out now"). `WidgetText.when` says today/tomorrow, the weekday for 2–6 days, then the date, with the year when it differs ("Out Tue 6 Dec 2072 22:00").
+- **Country kept** (BU-3): `CountryKeepingText` (from `ProviderLabel.splitCountry`) shortens the words before " · US" on the small tag, the rectangular widget and the Lock Screen details; in that case neither part shrinks, so they never differ in size.
+- **Layout** (BU-4, BU-5, BU-8, BU-9, BU-11, BU-12): the small family keeps "+ 4 more"; the compact timer shrinks to 0.7 inside its 60 pt slot; widget countdowns pass `scalesWithText: false`; the large widget's hero and the Lock Screen title take two lines (the small widget stays at one, D-46). Two lines didn't fit 160 pt as the banner was (it was already 141 pt, not 104 as the report said): its vertical padding is now 12 and the countdown sits 10 under the details, and the title stays on one line under "Delayed from", so the longest is 158 pt and a delayed one 151. An emoji-only title shows its emoji as the initial, faint on the banner like a letter.
+- **Not done:** BU-5's still "1d 2h" beyond 24 h in the compact island: the island isn't redrawn between content updates, so a still count would go stale and never turn into the ticking timer (the reason D-57 uses a weekday). The timer shrinks instead.
+- **Deleted** (BU-15): `DropRow` and `SourceChip`, used by nothing. `SourceChipContent`, `SourceKind`, `ProviderLabelView` and `SectionHeader` stay (tests or the site's archive use them); the site's archive says they're deleted.
+- **Guards:** `WidgetSamples.WorstCase` and `LiveActivitySamples.WorstCase` (kept out of `Case`, so the design system shows real states only), worst-case `#Preview`s, and tests that failed first: Vision reads "US" on the small and rectangular widgets and "4 more" on the small family; every family fits at AX5; a two-line banner within 160 pt; the compact timer's widest value at 0.7. Renders go to `fidelity/shots/worst-cases/`.
+- **Checks:** narrow runs red then green; renders synced (57 site pictures and the Live Activity art-holes.json); the gate passes (build, all tests, spec).
+- **Not verified:** everything on the phone. Renders miss device layout (rule 4): the inline line's real font, the compact timer's scaling, the two-line banner and the country-keeping lines.
+
 ## Skill review pass 2, batch 2: Swift API refactors and Upcoming's redraw (Thu 5 Nov 2026)
 
 - **`ReleaseVerb`** (WS-4): the certainty verb is an enum whose raw values are the words, so the Live Activity payload is byte-identical (a sorted-key JSON test per verb); an empty, blank or missing verb still decodes as "Out". The widgets' and the Live Activity's VoiceOver phrases share `ReleaseVerb.spoken(left:)`; D-61's split stays (a widget's last day speaks the release time, the activity a countdown).

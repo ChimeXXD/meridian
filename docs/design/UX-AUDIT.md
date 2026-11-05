@@ -62,7 +62,7 @@ Status: **Fixed** · **Planned** (agreed direction, in the current polish round)
 | 30 | Low | Lock Screen Live Activity | "Expected" twice ("Expected in" over the timer, "Expected Mon 21:00" under it), and a delay is a strike-through rather than words. | The expanded island's wording (D-57). | **Fixed** |
 | 31 | Low | Widgets and Live Activity | Title weights and small sizes drift (serif regular, medium or semibold; 11, 12 and 13 pt). | Serif regular, small text 12 pt medium. | Planned |
 | 32 | Low | VoiceOver | Spotlight, empty and Welcome headlines aren't headers; "S4E1" is spelled letter by letter; the show page reads its art aloud; a failed refresh is heard only at the end. | Header traits, "Season 4, episode 1", hide the art, an announcement. | Partly fixed: headers marked, "Season 4, episode 1" spoken; the show page art and a failed-refresh announcement left |
-| 33 | Low | Code | `DropRow` and `SectionHeader` aren't used anywhere. | Delete them. | Skipped: kept in the design system's archive, and a test still uses SectionHeader |
+| 33 | Low | Code | `DropRow` and `SectionHeader` aren't used anywhere. | Delete them. | Partly (5 Nov): `DropRow` deleted, with `SourceChip`; `SectionHeader` stays, a test uses it |
 | 34 | Low | Search (inferred) | No search field shows in the screenshots. | Check on the phone first. | Decide |
 
 ## The type scale after this round
