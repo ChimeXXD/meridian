@@ -2,6 +2,20 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Skill review pass 2: docs, code review and midnight entries (Thu 5 Nov 2026)
+
+**Changed**
+- Case study: a "Motion" paragraph describing the motion as it is now (from the animation-vocabulary run). SHOT-LIST step 4, SITEMAP and three Live Activity comments say "Delayed from 22:00" instead of a struck-through time.
+- /code-review high --fix over 66a3398..HEAD fixed: CI red since a346856 (the App Group tests need a signed build; skipped when `MERIDIAN_UNSIGNED` is set, which ci.yml sets), WallClock accepting signed parts ("-0:30", "+9:05"), the "today/tomorrow" wording copied three times (now `DropFormatter.spokenRelativeDay`), and the inline widget's copy of the "returns" sentence.
+- Widget timeline: an entry just after each midnight in the next 48 h when a drop is under a week past it, so "tomorrow" becomes "today" at midnight, not at the next hourly refresh (the review found this gap in batch 3's today/tomorrow wording).
+
+**Checked**
+- Red first: `midnightEntries` failed (no entry between 00:00 and 00:01 Lagos). Then TimelineProviderTests, WidgetTextTests, WallClockTests and AppGroupTests: 34 tests pass. The commit ran the full gate.
+
+**Skipped by the review (reasons in the session)**: the copied 6-at-once throttle (a shared helper would delay art), ShowID's unused Codable, and three micro-optimisations.
+
+**Not verified**: the midnight entry on the phone's widget overnight.
+
 ## Skill review pass 2, batch 5: app layout and loading (Thu 5 Nov 2026)
 
 - **Upcoming rows** (EA-7, EA-8, BU-6): the show's poster at 2:3 (44 × 66, radius 8, `ShowArtwork.widgetPoster`, as the widgets' rows, D-47) with the neutral placeholder, top-aligned 3 pt down; rows 16 apart, 8 under their header, sections 32, hero to list 32. At AX sizes the poster goes above the text, so the title has the full width, and the countdown keeps its full size (`fixedSize`, app screen only).

@@ -155,6 +155,20 @@ struct TimelineProviderTests {
         #expect(Self.gaps(timeline).allSatisfy { $0 >= WidgetTimeline.minimumSpacing })
     }
 
+    @Test("an entry just after each midnight in the next 48 h, so \"tomorrow\" becomes \"today\" on time")
+    func midnightEntries() throws {
+        // 23:10 in Lagos; the drop is at 01:30 tomorrow. Without a midnight entry the widget says "tomorrow" until
+        // the 00:30 refresh, for something already out today.
+        let now = Date(iso: "2026-11-02T22:10:00Z")
+        let drop = Self.drop("night", at: Date(iso: "2026-11-03T00:30:00Z"))
+        let timeline = Self.timeline([drop], now: now)
+        let midnight = Date(iso: "2026-11-02T23:00:00Z")
+        let entry = try #require(timeline.entries.first { $0.date >= midnight && $0.date < midnight + 60 })
+        #expect(WidgetText.when(drop, now: entry.date, formatter: DropFormatter(zoneIdentifier: "Africa/Lagos"))
+                .contains("today"))
+        #expect(Self.gaps(timeline).allSatisfy { $0 >= WidgetTimeline.minimumSpacing })
+    }
+
     /// What the countdown of the drop a widget leads with would read: the still "4d 4h" parts, or just the state.
     static func shown(_ moment: WidgetMoment) -> CountdownState? {
         moment.current.map { CountdownFormatter.state(drop: $0.date, confidence: $0.confidence, now: moment.date) }

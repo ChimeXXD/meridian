@@ -45,8 +45,10 @@ enum WallClock {
     }
 
     /// Every part as a number, or nil if any part isn't one, so "2026-xx-11-05" or "21:00:" can't pass by losing a part.
+    /// Digits only: `Int` alone reads a sign, which let "-0:30" through as 00:30.
     private static func numbers(_ text: String, separator: Character) -> [Int]? {
-        let parts = text.split(separator: separator, omittingEmptySubsequences: false).map { Int($0) }
-        return parts.contains(nil) ? nil : parts.compactMap { $0 }
+        let parts = text.split(separator: separator, omittingEmptySubsequences: false)
+        guard parts.allSatisfy({ part in !part.isEmpty && part.allSatisfy { $0.isASCII && $0.isNumber } }) else { return nil }
+        return parts.compactMap { Int($0) }
     }
 }

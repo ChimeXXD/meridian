@@ -10,7 +10,7 @@ enum WidgetText {
     static func inline(_ moment: WidgetMoment, formatter: DropFormatter) -> String? {
         guard let drop = moment.current else {
             guard let back = moment.nextReturn else { return emptyHeadline(moment, formatter: formatter) }
-            return shortened(back.showName, before: " returns \(day(back, now: moment.date, formatter: formatter))")
+            return shortened(back.showName, before: returns(back, now: moment.date, formatter: formatter))
         }
         return switch CountdownFormatter.state(drop: drop.date, confidence: drop.confidence, now: moment.date) {
         case .dateOnly: shortened(drop.showName, before: " · \(day(drop, now: moment.date, formatter: formatter))")
@@ -55,8 +55,7 @@ enum WidgetText {
     /// out line's (`DropFormatter.relativeDay`); the hourly entries redraw it past midnight.
     static func when(_ drop: Drop, now: Date, formatter: DropFormatter) -> String {
         guard drop.confidence != .dateOnly else { return "Time not announced" }
-        let day = formatter.relativeDay(drop.date, now: now)
-        let spoken = ["Today": "today", "Tomorrow": "tomorrow", "Yesterday": "yesterday"][day] ?? day
+        let spoken = formatter.spokenRelativeDay(drop.date, now: now)
         return "\(ReleaseWording.verb(drop, past: drop.date <= now)) \(spoken) \(formatter.localTime(drop.date))"
     }
 
@@ -76,7 +75,12 @@ enum WidgetText {
         guard let back = moment.nextReturn else {
             return moment.nothingScheduled.isEmpty ? "Follow a show" : nothingScheduled
         }
-        return "\(back.showName) returns \(day(back, now: moment.date, formatter: formatter))"
+        return back.showName + returns(back, now: moment.date, formatter: formatter)
+    }
+
+    /// " returns Fri 9 Jul 2027", after the show's name: `emptyHeadline`, and the inline line, which shortens the name.
+    private static func returns(_ back: Drop, now: Date, formatter: DropFormatter) -> String {
+        " returns \(day(back, now: now, formatter: formatter))"
     }
 
     /// The line under `emptyHeadline`. The app never promises when it next checks (D-27).
@@ -94,7 +98,6 @@ enum WidgetText {
         if drop.confidence == .dateOnly {
             return drop.airdate.flatMap { formatter.airdate($0, now: now) } ?? "date to be confirmed"
         }
-        let day = formatter.relativeDay(drop.date, now: now)
-        return ["Today": "today", "Tomorrow": "tomorrow"][day] ?? day
+        return formatter.spokenRelativeDay(drop.date, now: now)
     }
 }

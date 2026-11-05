@@ -39,8 +39,11 @@ jobs:
         # TEST_RUNNER_MERIDIAN_SYNC_RENDERS skips only the byte-for-byte check of the design system's widget and Live
         # Activity pictures (DesignSystemCopy): text renders a little differently on another iOS version, so those
         # are checked on the iOS 27 simulator by the local proof gate. Every other assertion in the render tests runs.
+        # TEST_RUNNER_MERIDIAN_UNSIGNED skips the App Group container tests: CODE_SIGNING_ALLOWED=NO grants no
+        # entitlements, so there is no container to find. The signed local proof gate runs them.
         env:
           TEST_RUNNER_MERIDIAN_SYNC_RENDERS: "1"
+          TEST_RUNNER_MERIDIAN_UNSIGNED: "1"
         run: |
           set -o pipefail
           xcodebuild -scheme Meridian \

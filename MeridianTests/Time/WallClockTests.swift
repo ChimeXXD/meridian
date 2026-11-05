@@ -59,7 +59,7 @@ struct WallClockTests {
     @Test("dates that don't exist or aren't dates are rejected", arguments: [
         "2026-02-30", "2027-02-29", "2026-11-31", "2026-13-01", "2026-00-10", "2026-11-00",
         "", "2026-11", "2026/11/05", "2026-11-05T00:00", "05-11-2026x",
-        "2026-xx-11-05", "2026-11-05-", "2026--11-05", "2026-11-05-junk",
+        "2026-xx-11-05", "2026-11-05-", "2026--11-05", "2026-11-05-junk", "2026-+11-05", "2026-11- 5",
     ])
     func rejectsDate(_ text: String) {
         #expect(WallClock.parseDate(text) == nil)
@@ -75,7 +75,7 @@ struct WallClockTests {
     }
 
     @Test("times off a 24-hour clock or not times are rejected", arguments: [
-        "24:00", "12:60", "-1:00", "9", "", "21:00:00", "21h00", "21:xx:00", "21::00", "21:00:",
+        "24:00", "12:60", "-1:00", "9", "", "21:00:00", "21h00", "21:xx:00", "21::00", "21:00:", "-0:30", "+9:05", "21:+5",
     ])
     func rejectsTime(_ text: String) {
         #expect(WallClock.parseTime(text) == nil)

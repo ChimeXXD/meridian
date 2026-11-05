@@ -73,6 +73,13 @@ struct DropFormatter: Sendable {
         }
     }
 
+    /// `relativeDay` as it sits mid-sentence: "today", "tomorrow", "yesterday"; a weekday or date keeps its capital
+    /// ("Out tomorrow at 02:00", "Out Wed 11 Nov at 02:00").
+    func spokenRelativeDay(_ date: Date, now: Date) -> String {
+        let day = relativeDay(date, now: now)
+        return ["Today": "today", "Tomorrow": "tomorrow", "Yesterday": "yesterday"][day] ?? day
+    }
+
     /// The zone's short name at that moment, in US English so New York reads "EDT"/"EST" rather than "GMT-4".
     func zoneAbbreviation(_ date: Date) -> String {
         let style: NSTimeZone.NameStyle = timeZone.isDaylightSavingTime(for: date) ? .shortDaylightSaving : .shortStandard

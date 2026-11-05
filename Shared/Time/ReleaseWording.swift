@@ -13,8 +13,7 @@ enum ReleaseWording {
             let day = drop.airdate.flatMap { formatter.airdate($0, now: now) } ?? "date to be confirmed"
             return "Out \(day), time not announced"
         }
-        let day = formatter.relativeDay(drop.date, now: now)
-        let spoken = ["Today": "today", "Tomorrow": "tomorrow", "Yesterday": "yesterday"][day] ?? day
+        let spoken = formatter.spokenRelativeDay(drop.date, now: now)
         let line = "\(verb(drop, past: drop.date <= now)) \(spoken) at \(formatter.localTime(drop.date))"
         return naming ? "\(line) \(place(formatter)) time" : line
     }

@@ -15,6 +15,8 @@ import Foundation
 ///   entry before it (never earlier, so "Out now" is never shown before the drop). A refresh entry within 5 minutes
 ///   before a drop change is dropped, so drops win; one just after a change moves to 5 minutes after it, so the
 ///   still count never stays an hour out.
+/// - Each midnight before the refresh horizon with a drop under a week past it is a change too: the widgets say
+///   "today" and "tomorrow", so those words must step at midnight, not at the next hourly refresh.
 /// - A date-only drop shows its airdate until that day ends in the viewer's zone, then leaves: an entry at that
 ///   midnight, so a widget never keeps a day that has passed when the app isn't opened.
 /// - Reload `.after(nextDrop)`: the next timed drop still ahead (or a date-only day's end), or the refresh horizon if
@@ -54,7 +56,14 @@ struct WidgetTimeline: Hashable, Sendable {
             }
         }
         let dropMoments: [Date] = ahead.flatMap { [$0.date, $0.date.addingTimeInterval(outNowWindow)] }
-        let changes = Set(dropMoments + dayEnds + dayEdges).filter { $0 > now }
+        // A midnight matters only to a drop under a week past it: further out its date reads the same either side.
+        let nights = midnights(after: now, through: horizon, formatter: formatter).filter { night in
+            showing.contains { drop in
+                let at = dayStart(of: drop, formatter: formatter) ?? drop.date
+                return at.addingTimeInterval(outNowWindow) > night && at < night.addingTimeInterval(week - edgeLag)
+            }
+        }
+        let changes = Set(dropMoments + dayEnds + dayEdges + nights).filter { $0 > now }
         let anchors = changes.union([now])
         let planned = refreshTimes(ahead, now: now, horizon: horizon)
         let refreshes = planned.compactMap { time -> Date? in
@@ -104,6 +113,20 @@ struct WidgetTimeline: Hashable, Sendable {
             drop.confidence == .dateOnly && (dayEnd(of: drop, formatter: formatter).map { $0 > date } ?? true)
         }
         return timed + undated
+    }
+
+    /// Each midnight where the viewer is, after `now` and up to `end`, `edgeLag` late like the other day edges: the
+    /// day words ("tomorrow" becomes "today") step there. Counted on the calendar, so a day the clocks change is right.
+    private static func midnights(after now: Date, through end: Date, formatter: DropFormatter) -> [Date] {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = formatter.timeZone
+        var nights: [Date] = []
+        var day = calendar.startOfDay(for: now)
+        while let next = calendar.date(byAdding: .day, value: 1, to: day), next <= end {
+            nights.append(next.addingTimeInterval(edgeLag))
+            day = next
+        }
+        return nights
     }
 
     /// Midnight after a date-only drop's airdate where the viewer is; nil for a timed drop or one with no airdate.
