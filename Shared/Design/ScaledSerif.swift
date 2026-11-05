@@ -14,8 +14,10 @@ struct ScaledSerif: ViewModifier {
         _scale = ScaledMetric(wrappedValue: 1, relativeTo: style)
     }
 
+    /// Headings of 28 pt and up set tight: at body leading their wrapped lines ran about 1.2 apart and read as two
+    /// separate lines (AD-10). Smaller titles keep the standard leading.
     func body(content: Content) -> some View {
-        content.font(.system(size: size * scale, weight: weight, design: .serif))
+        content.font(.system(size: size * scale, weight: weight, design: .serif).leading(size >= 28 ? .tight : .standard))
     }
 }
 

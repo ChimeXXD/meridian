@@ -6,11 +6,13 @@ struct UpcomingHero: View {
     let drop: Drop
     let image: UIImage?
     let base: Color
+    /// False once the show is known to have no art: the short header (EA-13).
+    var hasArt = true
     var formatter = DropFormatter()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            NightArtHeader(image: image, base: base)
+            NightArtHeader(image: image, base: base, hasArt: hasArt)
             VStack(alignment: .leading, spacing: Tokens.Space.s) {
                 // Only the headline follows the clock, so only it redraws every second, not the art above it.
                 TimelineView(.countdown) { context in
@@ -37,15 +39,14 @@ struct ReleaseHeadline: View {
     var countdownSize: CGFloat = 64
     /// Prefix for the test IDs: `upcoming-hero` or `detail` (UI-BRIEF).
     var testID = "headline"
+    /// False when the page draws the title itself, above lines that load later (the show page, EA-9).
+    var showsTitle = true
 
     var body: some View {
         VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
-            Text(drop.showName)
-                // Grows like a large title, so it never ends up smaller than the lines under it.
-                .serif(titleSize, relativeTo: .largeTitle)
-                .lineLimit(2).minimumScaleFactor(0.7)
-                .accessibilityAddTraits(.isHeader)
-                .accessibilityIdentifier("\(testID)-title")
+            if showsTitle {
+                ShowTitle(name: drop.showName, size: titleSize, testID: "\(testID)-title")
+            }
             // A date-only drop has no countdown: its day is in the out line, so it isn't said twice in big type.
             if drop.confidence != .dateOnly {
                 // The slot holds the line's height at the drop and brings "Out now" in (EA-2).
@@ -62,6 +63,21 @@ struct ReleaseHeadline: View {
                 .padding(.top, Tokens.Space.xxs)
                 .accessibilityIdentifier("\(testID)-out")
         }
+    }
+}
+
+/// A page's show title in New York, growing like a large title so it never ends up smaller than the lines under it.
+struct ShowTitle: View {
+    let name: String
+    var size: CGFloat = 32
+    let testID: String
+
+    var body: some View {
+        Text(name)
+            .serif(size, relativeTo: .largeTitle)
+            .showTitleLines()
+            .accessibilityAddTraits(.isHeader)
+            .accessibilityIdentifier(testID)
     }
 }
 
@@ -83,7 +99,7 @@ struct ReleaseMeta: View {
                     .accessibilityIdentifier("release-delayed")
             }
             // One line normally; never cut at the accessibility sizes, where "HBO · US" lost its country (audit #6).
-            Text(drop.episodeAndProvider)
+            Text(ProviderLabel.wrapping(drop.episodeAndProvider))
                 .accessibilityLabel(drop.spokenEpisodeAndProvider)
                 .font(.footnote)
                 .foregroundStyle(NightInk.muted)

@@ -43,7 +43,8 @@ Taken as counterexamples, not patterns: #24 Paramount+ (US-only times) and #64 P
   - **Press:** one `PressStyle`, instant on press and a 0.16 s ease out on release. The hero dims to 0.8; rows and the quiet grid scale to 0.98; posters, chips, Follow, the (+) and "Find a show" scale to 0.97; Show detail's card rows get a lighter fill.
   - **The drop:** the countdown's slot keeps its height, so "Out now" fades in with a 0.97 scale from the reading edge, on `timingCurve(0.23, 1, 0.32, 1)` over 0.4 s, and nothing below it moves. The still count's hourly step rolls (`.numericText`, `.smooth` 0.35 s), keyed on the countdown's state; the ticking digits never animate (D-52). All of this is app-only: the shared `CountdownText` in widgets and the Live Activity is untouched.
   - **State changes:** Follow's + turns into ✓ (`.symbolEffect(.replace)`, `.snappy` 0.25 s); the filter chips change in `.snappy` 0.2 s and the grid crossfades; the stream delay and the Live Activity switch animate their lines (`.snappy` 0.25 s); Welcome hands over to the tabs with a 0.4 s crossfade.
-  - **Art:** fades in over 0.35 s, ease out; Welcome's wall drifts 9 pt a second.
+  - **Art:** fades in over 0.35 s, ease out; art the phone already decoded is drawn on the first frame, with no fade (EA-3). Welcome's wall drifts 9 pt a second.
+  - **Loading:** no spinners in place of a layout (EA-6). Upcoming's cold launch draws the hero in quiet bars on the night base; Search's grid waits as 2:3 poster outlines under its chips; a newer search keeps the last results at 0.5 with a small spinner, then crossfades (0.25 s); the show page holds its countdown and out line's space with bars, crossfades them in over 0.25 s and closes the space when there's no episode (EA-9). Upcoming's list moves into place on unfollow and refresh (`.smooth` 0.35 s, keyed on the shows shown; cut under Reduce Motion), and the countdowns keep ticking.
   - **Status bar:** a shade of the page colour, solid through the bar and fading over 40 pt, appears as the text under the art reaches it.
   - **Reduce Motion:** the drift stops and the drop's scale becomes a plain fade. Fades stay, because they move nothing and a cut would flash bright art onto the night.
 
@@ -88,7 +89,7 @@ Navigation is still O-11 (`SITEMAP.md`). This brief assumes the proposed tab bar
   - `upcoming-zone` "Times in Lagos (WAT, UTC+1)" with `upcoming-updated` "Updated 3 h ago" (*new*)
   - `upcoming-hero`: relative day, huge local time, countdown, source chip, provider label
   - sections in this order (**SPEC**): `section-header-out-now` "Out now", `-next-24` "Next 24 hours", `-this-week` "This week", `-later` "Later", `-date-only` "Date only", `-nothing` "Nothing scheduled"
-  - rows `drop-row-1…n`
+  - rows `drop-row-1…n`: the show's 2:3 poster (44 × 66, radius 8, D-47), top-aligned 3 pt down, then the title with its countdown, the out line and the meta; rows 16 apart, 8 under their header, sections 32 apart, the hero 32 above the list (EA-7, EA-8). At the accessibility sizes the poster goes above the text and the countdown keeps its full size (BU-6). A show with no art at all gets a 200 pt header (EA-13)
 - **States:**
   - no shows: card with `upcoming-empty-follow` "Follow a show to see its countdown here" (*new*) and "Find a show"
   - nothing scheduled: "Nothing scheduled for your shows yet. Meridian checks again each time you open it." (**SPEC**), or the next real date, "Silo returns 9 Jul 2027" (**SPEC**)

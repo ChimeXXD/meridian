@@ -29,31 +29,39 @@ struct ShowPreviewView: View {
     private var heroURL: URL? { loaded ? artwork?.hero ?? result.largePoster : nil }
 
     private static let artHeight: CGFloat = 500
+    /// The tall header until the page knows the show has no art at all (EA-13).
+    private var hasArt: Bool { !loaded || heroURL != nil }
 
     var body: some View {
         ArtworkLoaderView(url: heroURL, maxPixel: ShowArtwork.idealBackgroundWidth) { hero in
             let base = (hero?.palette ?? .neutral).night.color
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    NightArtHeader(image: hero?.image, base: base, height: Self.artHeight)
+                    NightArtHeader(image: hero?.image, base: base, height: Self.artHeight, hasArt: hasArt)
                         .accessibilityElement()
                         .accessibilityLabel("\(result.title) artwork")
                         .accessibilityAddTraits(.isImage)
                         .accessibilityIdentifier("show-preview-art")
                     VStack(alignment: .leading, spacing: Tokens.Space.xl) {
                         VStack(alignment: .leading, spacing: Tokens.Space.s) {
-                            if let drop {
-                                // Only the countdown follows the clock, so only it redraws every second.
-                                TimelineView(.countdown) { timeline in
-                                    ReleaseHeadline(drop: drop, now: timeline.date, countdownSize: 48,
-                                                    testID: "show-preview")
+                            VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
+                                ShowTitle(name: result.title, testID: "show-preview-title")
+                                // While the episode loads its lines' space is held with quiet bars, so Follow doesn't
+                                // jump down when it arrives; the lines crossfade in, and the space closes when there's
+                                // no episode (EA-9).
+                                ZStack(alignment: .topLeading) {
+                                    if let drop {
+                                        // Only the countdown follows the clock, so only it redraws every second.
+                                        TimelineView(.countdown) { timeline in
+                                            ReleaseHeadline(drop: drop, now: timeline.date, countdownSize: 48,
+                                                            testID: "show-preview", showsTitle: false)
+                                        }
+                                        .transition(.opacity)
+                                    } else if !loaded {
+                                        HeadlinePlaceholder(countdownSize: 48).transition(.opacity)
+                                    }
                                 }
-                            } else {
-                                Text(result.title)
-                                    .serif(32, relativeTo: .largeTitle)
-                                    .lineLimit(2).minimumScaleFactor(0.7)
-                                    .accessibilityAddTraits(.isHeader)
-                                    .accessibilityIdentifier("show-preview-title")
+                                .animation(.easeOut(duration: 0.25), value: loaded)
                             }
                             if !result.meta.isEmpty {
                                 Text(result.meta)
@@ -72,7 +80,7 @@ struct ShowPreviewView: View {
             .scrollIndicators(.hidden)
             .background(base)
             // Once the text passes the art, the status bar gets the page colour behind it (AD-4).
-            .statusBarShade(base, art: Self.artHeight)
+            .statusBarShade(base, art: hasArt ? Self.artHeight : NightArtHeader.noArtHeight)
         }
         // The system bar stays, invisible, so its back button brings the edge swipe back (Chime, 2 Nov: hiding it
         // and drawing our own button switched the gesture off). On iOS 26 that button is a glass circle over the art.

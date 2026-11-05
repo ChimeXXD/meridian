@@ -13,20 +13,18 @@ struct QuietShowView: View {
     @Environment(\.dismiss) private var dismiss
 
     private static let artHeight: CGFloat = 500
+    /// Nil artwork is still loading, so the header keeps its height; artwork with no picture gets the short header.
+    private var hasArt: Bool { artwork.map { $0.hero != nil } ?? true }
 
     var body: some View {
         ArtworkLoaderView(url: artwork?.hero, maxPixel: ShowArtwork.idealBackgroundWidth) { hero in
             let base = (hero?.palette ?? .neutral).night.color
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    NightArtHeader(image: hero?.image, base: base, height: Self.artHeight)
+                    NightArtHeader(image: hero?.image, base: base, height: Self.artHeight, hasArt: hasArt)
                     VStack(alignment: .leading, spacing: Tokens.Space.xl) {
                         VStack(alignment: .leading, spacing: Tokens.Space.xs) {
-                            Text(show.name)
-                                .serif(32, relativeTo: .largeTitle)
-                                .lineLimit(2).minimumScaleFactor(0.7)
-                                .accessibilityAddTraits(.isHeader)
-                                .accessibilityIdentifier("quiet-title")
+                            ShowTitle(name: show.name, testID: "quiet-title")
                             Text("Nothing scheduled")
                                 .font(.body.weight(.medium))
                                 .foregroundStyle(NightInk.primary)
@@ -55,7 +53,7 @@ struct QuietShowView: View {
             .scrollIndicators(.hidden)
             .background(base)
             // Once the text passes the art, the status bar gets the page colour behind it (AD-4).
-            .statusBarShade(base, art: Self.artHeight)
+            .statusBarShade(base, art: hasArt ? Self.artHeight : NightArtHeader.noArtHeight)
         }
         // The system bar, invisible, so the edge swipe goes back (as on Show detail).
         .navigationBarTitleDisplayMode(.inline)

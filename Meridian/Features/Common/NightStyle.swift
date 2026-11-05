@@ -52,19 +52,24 @@ struct NightArtHeader: View {
     let image: UIImage?
     let base: Color
     var height: CGFloat = Self.defaultHeight
+    /// False only once it's known the show has no art at all; while art is loading the header keeps its height.
+    var hasArt = true
 
     /// Upcoming's header; the show pages use 500.
     static let defaultHeight: CGFloat = 472
+    /// A show with no art: room for the status bar and the back button, not 472 pt of empty night (EA-13).
+    static let noArtHeight: CGFloat = 200
 
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     /// More than half the screen at the default size; 280 at the accessibility sizes, so the facts under it stay on
-    /// the first screen (UX audit #25).
-    static func shownHeight(_ height: CGFloat, dynamicTypeSize: DynamicTypeSize) -> CGFloat {
-        dynamicTypeSize.isAccessibilitySize ? min(height, 280) : height
+    /// the first screen (UX audit #25); 200 without art.
+    static func shownHeight(_ height: CGFloat, dynamicTypeSize: DynamicTypeSize, hasArt: Bool = true) -> CGFloat {
+        guard hasArt else { return min(height, noArtHeight) }
+        return dynamicTypeSize.isAccessibilitySize ? min(height, 280) : height
     }
 
-    private var shown: CGFloat { Self.shownHeight(height, dynamicTypeSize: dynamicTypeSize) }
+    private var shown: CGFloat { Self.shownHeight(height, dynamicTypeSize: dynamicTypeSize, hasArt: hasArt) }
 
     var body: some View {
         ZStack {

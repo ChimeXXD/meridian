@@ -41,6 +41,8 @@ struct ShowDetailScreen: View {
     @Query private var shows: [FollowedShow]
     @State private var episodes: [PastEpisode] = []
     @State private var reportCopied = false
+    /// The prefilled issue, open in a sheet over this page.
+    @State private var reportPage: ReportPage?
     @Environment(\.openURL) private var openURL
 
     init(drop: Drop, model: UpcomingModel, scheduler: ActivityScheduler, artwork: ShowArtwork?) {
@@ -57,6 +59,7 @@ struct ShowDetailScreen: View {
         ShowDetailView(drop: current, artwork: artwork, episodes: episodes, liveActivity: liveActivity,
                        offset: offset, activityStatus: activityStatus, onReport: report, onUnfollow: unfollow)
             .task { episodes = await model.pastEpisodes(showID: drop.showID) }
+            .sheet(item: $reportPage) { page in ReportSheet(url: page.url).ignoresSafeArea() }
             .alert("Couldn't open the report", isPresented: $reportCopied) {
                 Button("OK", role: .cancel) {}
             } message: {
@@ -64,8 +67,9 @@ struct ShowDetailScreen: View {
             }
     }
 
-    /// "Report a wrong time" (D6-3, D-34): a prefilled email while the repo is private, a GitHub issue once public.
-    /// Without a mail app the email can't open, so the report goes to the clipboard instead of nowhere.
+    /// "Report a wrong time" (D6-3, D-34): a prefilled GitHub issue now the repo is public, in a sheet (D-41, AD-12);
+    /// the private repo's email went to the mail app. Without a mail app the email can't open, so the report goes to
+    /// the clipboard instead of nowhere.
     private func report() {
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "unknown"
         let formatter = DropFormatter()
@@ -73,6 +77,7 @@ struct ShowDetailScreen: View {
         let drop = current  // the time on screen, not the one the page opened with
         guard let url = ReportURLBuilder.url(for: drop, route: .current, now: now, formatter: formatter,
                                              appVersion: version) else { return }
+        if url.scheme == "https" { reportPage = ReportPage(url: url); return }
         openURL(url) { opened in
             guard !opened else { return }
             UIPasteboard.general.string = ReportURLBuilder.body(for: drop, now: now, formatter: formatter,

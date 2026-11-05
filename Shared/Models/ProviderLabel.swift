@@ -19,6 +19,16 @@ struct ProviderLabel: Codable, Hashable, Sendable {
         guard code.count == 2, code.allSatisfy({ $0.isASCII && $0.isUppercase }) else { return (line, nil) }
         return (String(line[..<dot.lowerBound]), String(line[dot.lowerBound...]))
     }
+
+    /// The same line for a view that wraps it (BU-10): the country is glued to its network ("HBO\u{A0}·\u{A0}US") and
+    /// every other dot to the word before it ("S3E4\u{A0}· HBO"), so a line never starts with a dot or ends on "· US"
+    /// alone; the names' own spaces still break. The stored text keeps plain spaces, for the widgets' one-line
+    /// shortening (`splitCountry`) and VoiceOver.
+    static func wrapping(_ line: String) -> String {
+        let (lead, country) = splitCountry(line)
+        let glued = lead.replacingOccurrences(of: " · ", with: "\u{00A0}· ")
+        return glued + (country.map { $0.replacingOccurrences(of: " · ", with: "\u{00A0}·\u{00A0}") } ?? "")
+    }
 }
 
 extension ProviderLabel {

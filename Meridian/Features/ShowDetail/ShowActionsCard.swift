@@ -2,7 +2,7 @@ import SwiftUI
 import UIKit
 
 /// Report and Unfollow as a grouped card, like Settings' rows (Chime and the UX audit #4, 2 Nov: as grey text they
-/// looked disabled, and the grey hid Unfollow's red). Report shows it leaves the app; Unfollow is red and always asks
+/// looked disabled, and the grey hid Unfollow's red). Report's ↗ says it opens a web page (in a sheet); Unfollow is red and always asks
 /// first (UX audit #15). Shared by Show detail and a quiet show's page.
 struct ShowActionsCard: View {
     let showName: String

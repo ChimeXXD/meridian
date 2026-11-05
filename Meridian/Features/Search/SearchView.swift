@@ -103,10 +103,12 @@ struct SearchView: View {
 
     @ViewBuilder private var content: some View {
         switch state {
-        // Nil until the first load starts, which is a load too: no "Search TVmaze…" flash before the spinner.
+        // Nil until the first load starts, which is a load too: no "Search TVmaze…" flash before the posters. The
+        // chips are already known, so they're drawn; the posters wait as outlines (EA-6).
         case .idle where airingSoon.isEmpty && (airingPhase[kind] ?? .searching) == .searching:
-            ProgressView("Finding this week's shows")
-                .frame(maxWidth: .infinity).padding(.top, Tokens.Space.xl)
+            SearchFilterRow(options: AiringFilter.options(for: kind), selection: filter, logos: Self.logos)
+                .padding(.top, Tokens.Space.s)
+            SearchPlaceholderGrid(header: airingHeader, label: "Finding this week's shows")
                 .accessibilityIdentifier("search-airing-loading")
         case .idle where airingSoon.isEmpty && airingPhase[kind] == .failed:
             message("Couldn't load this week's shows. You can still search above.", id: "search-airing-error",
@@ -119,8 +121,8 @@ struct SearchView: View {
                             selection: filter, logos: Self.logos)
                 .padding(.top, Tokens.Space.s)
             airingGrid
-        case .searching:
-            ProgressView().frame(maxWidth: .infinity).padding(.top, Tokens.Space.xl)
+        case .searching where results.isEmpty:
+            SearchPlaceholderGrid(header: "Results", label: "Searching")
         case .failed:
             message("Couldn't reach \(kind == .tv ? "TVmaze" : "AniList"). Check your connection and try again.",
                     id: "search-error", action: ("Try again", { Task { await search() } }))
@@ -129,7 +131,10 @@ struct SearchView: View {
             message("No shows match \u{201C}\(query)\u{201D}", id: "search-no-results",
                     action: (kind == .tv ? "Search anime instead" : "Search TV instead",
                              { kind = kind == .tv ? .anime : .tv }))
-        case .done:
+        case .searching, .done:
+            // A newer search keeps the last results on screen, dimmed under a small spinner, until its own crossfade
+            // in (EA-6), instead of blinking them out on every pause in typing.
+            let searching = state == .searching
             posterGrid("Results", headerID: "search-results-header", results, idPrefix: "search-result") { result in
                 // The year, network, country and status tell same-name shows apart.
                 VStack(alignment: .leading, spacing: 0) {
@@ -139,8 +144,14 @@ struct SearchView: View {
                 .accessibilityElement(children: .ignore)
                 .accessibilityLabel(result.meta)
             }
+            .opacity(searching ? 0.5 : 1)
+            .overlay(alignment: .topTrailing) {
+                if searching { ProgressView().controlSize(.small).padding(.top, Tokens.Space.s) }
+            }
         }
     }
+
+    private var airingHeader: String { kind == .tv ? "Airing in the next few days" : "Airing in Japan this week" }
 
     /// A quiet line, with a way forward when there is one ("Try again", "Search anime instead").
     private func message(_ text: String, id: String, action: (title: String, run: () -> Void)? = nil) -> some View {
@@ -213,8 +224,7 @@ struct SearchView: View {
                     }
                 }
             } else {
-                posterGrid(kind == .tv ? "Airing in the next few days" : "Airing in Japan this week",
-                           headerID: "search-airing-header", shown.map(\.result), idPrefix: "airing",
+                posterGrid(airingHeader, headerID: "search-airing-header", shown.map(\.result), idPrefix: "airing",
                            drops: Dictionary(shown.map { ($0.id, $0.drop) }, uniquingKeysWith: { first, _ in first })) { result in
                     VStack(alignment: .leading, spacing: 0) {
                         if let network = result.network { Text(network) }
@@ -283,8 +293,10 @@ struct SearchView: View {
             guard searched == kind else { return }
             // A search for text the field no longer holds is stale; the newer one owns the list.
             guard text == query.trimmingCharacters(in: .whitespaces) else { return }
-            results = found
-            state = .done
+            withAnimation(.easeOut(duration: 0.25)) {
+                results = found
+                state = .done
+            }
             #if DEBUG
             if DebugLaunch.openFirstResult, path.isEmpty, let first = found.first {
                 path.append(ShowRoute(result: first, knownDrop: nil))
