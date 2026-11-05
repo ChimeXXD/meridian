@@ -2,10 +2,11 @@
 <html lang="en-GB">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content">
 <title>Meridian Design System</title>
 <meta name="description" content="Meridian counts down to your next episode, in your time zone. Its colours, type, components, widgets and Live Activity, read from the app's code.">
 <meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0D0D0E">
 <link rel="icon" href="assets/icon/meridian-icon-dark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1451,7 +1452,7 @@ NavigationLink("Debug") { DebugMenuView(model: model, scheduler: scheduler) }
 <dialog class="search" id="search" aria-label="Search the design system">
   <div class="search-panel">
     <label class="sr-only" for="search-input">Search tokens, components and pages</label>
-    <input id="search-input" type="search" placeholder="Search tokens, components, words" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="true" aria-controls="search-results" aria-autocomplete="list">
+    <input id="search-input" type="search" placeholder="Search tokens, components, words" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="combobox" aria-expanded="true" aria-controls="search-results" aria-autocomplete="list">
     <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
     <div class="search-foot"><span><kbd>↑</kbd> <kbd>↓</kbd> to move</span><span><kbd>↵</kbd> to open</span><span><kbd>esc</kbd> to close</span><button type="button" class="link-btn" id="search-close">Close</button></div>
   </div>

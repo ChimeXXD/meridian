@@ -718,6 +718,14 @@
   }
 
   /* ================================================================ tabs (WAI-ARIA tabs, automatic activation) */
+  // On a phone a tab row scrolls sideways: bring the chosen tab into view by moving the row only, never the page.
+  function revealTab(list, tab, smooth) {
+    if (!tab || !list.offsetParent || list.scrollWidth <= list.clientWidth) return;
+    const l = list.getBoundingClientRect(), t = tab.getBoundingClientRect();
+    const pad = parseFloat(getComputedStyle(list).paddingLeft) || 0;
+    const dx = t.left < l.left + pad ? t.left - l.left - pad : t.right > l.right - pad ? t.right - l.right + pad : 0;
+    if (dx) list.scrollTo({ left: list.scrollLeft + dx, behavior: smooth && !reduceMotion.matches ? 'smooth' : 'auto' });
+  }
   function initTabs(list, onSelect) {
     const tabs = $$('[role="tab"]', list);
     const shared = new Set(tabs.map((t) => t.getAttribute('aria-controls'))).size === 1;
@@ -728,9 +736,11 @@
         if (!shared) { const p = document.getElementById(t.getAttribute('aria-controls')); if (p) p.hidden = !on; }
       });
       if (shared) { const p = document.getElementById(tab.getAttribute('aria-controls')); if (p) p.setAttribute('aria-labelledby', tab.id); }
-      if (focus) tab.focus();
+      if (focus) tab.focus({ preventScroll: true });
+      revealTab(list, tab, initial !== true);
       if (onSelect) onSelect(tab.dataset.tab, tab);
     };
+    let initial = true;
     list.addEventListener('click', (e) => { const t = e.target.closest('[role="tab"]'); if (t) select(t, false); });
     list.addEventListener('keydown', (e) => {
       const i = tabs.indexOf(document.activeElement); if (i < 0) return;
@@ -741,6 +751,7 @@
       if (n !== null) { e.preventDefault(); select(tabs[n], true); }
     });
     select(tabs.find((t) => t.getAttribute('aria-selected') === 'true') || tabs[0], false);
+    initial = false;
     return { select: (key) => { const t = tabs.find((x) => x.dataset.tab === key); if (t) select(t, false); } };
   }
   const tabsets = {};
@@ -820,6 +831,7 @@
     views.forEach((v) => v.classList.toggle('is-active', v === view));
     current = view; document.title = titleFor(view);
     buildSub(); rearm(view);
+    $$('[role="tablist"]', view).forEach((l) => revealTab(l, $('[aria-selected="true"]', l), false));
   }
   function revealInside(el) {
     let d = el.closest('details'); while (d) { d.open = true; d = d.parentElement && d.parentElement.closest('details'); }
