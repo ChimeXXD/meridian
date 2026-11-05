@@ -1032,6 +1032,16 @@
       img.alt = ''; img.decoding = 'async'; img.referrerPolicy = 'no-referrer';
       // A failed or blocked image is hidden, so the placeholder underneath shows, never a broken-image icon.
       img.addEventListener('error', () => { img.hidden = true; });
+      // It fades in as it loads, as the app's art does (ArtworkLoaderView: 0.35 s ease out, none with Reduce Motion).
+      // Hidden from here only, just before its src is set, so art never stays invisible if this script stops. The
+      // hero's art is left out: its whole layer fades (.arrive). Widget and Live Activity art never fades (fillHoles).
+      if (!reduceMotion.matches && !art.closest('.hero')) {
+        img.style.opacity = '0';
+        img.addEventListener('load', () => {
+          img.style.opacity = '';
+          if (img.animate) img.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 350, easing: 'cubic-bezier(0, 0, .58, 1)' });
+        }, { once: true });
+      }
       art.prepend(img);
     }
     const hero = !!art.closest('.hero');
@@ -1084,6 +1094,8 @@
     const art = $('#hero-art'), code = $('#hero-night'), phone = $('.hero-phone', hero);
     $$('.pick button', hero).forEach((b) => b.addEventListener('click', () => {
       const k = b.dataset.art, h = HERO[k];
+      // The same choice again changes nothing, so the art doesn't fade in again (the app keeps art whose URL is the same).
+      if (hero.dataset.art === k) return;
       $$('.pick button', hero).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
       const night = h ? SHOWS[h.show].night : NO_ART;
       hero.dataset.art = k;
@@ -1106,6 +1118,12 @@
   function bindMotion() {
     const b = $('#motion-play'); if (!b) return;
     b.addEventListener('click', () => { const a = $('#motion-art'); a.classList.remove('in'); void a.offsetWidth; requestAnimationFrame(() => a.classList.add('in')); });
+    // With Reduce Motion there's nothing to play: the app skips this fade too, so say so instead.
+    const note = document.createElement('p'); note.className = 'small'; note.id = 'motion-note';
+    note.textContent = 'Reduce Motion is on, so the app skips this fade too.';
+    b.after(note);
+    const sync = () => { b.disabled = reduceMotion.matches; note.hidden = !reduceMotion.matches; };
+    sync(); reduceMotion.addEventListener('change', sync);
   }
 
   /* ================================================================ start */

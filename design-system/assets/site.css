@@ -31,7 +31,11 @@
   --top-h: 64px;
   --rail-w: 264px;
   --gutter: 56px;
-  --ease: cubic-bezier(0, 0, .58, 1); /* the app's .easeOut */
+  /* Easing. The site's own chrome eases out strongly; the drawer uses iOS's sheet curve; only pictures of the app
+     use the app's .easeOut, so they move as the phone does. */
+  --ease-out: cubic-bezier(.23, 1, .32, 1);
+  --ease-drawer: cubic-bezier(.32, .72, 0, 1);
+  --ease-app: cubic-bezier(0, 0, .58, 1); /* the app's .easeOut */
 
   /* The mockups' wallpaper: a neutral night lifting to ink at the horizon, and a few faint stars for the panels. */
   --sky: radial-gradient(130% 46% at 50% 108%, rgba(120, 138, 186, .16), transparent 70%), linear-gradient(180deg, #0C0D10 0%, #11131A 48%, #1B2030 100%);
@@ -112,7 +116,7 @@ body {
   -webkit-font-smoothing: antialiased; font-optical-sizing: auto;
 }
 [id] { scroll-margin-top: calc(var(--top-h) + 24px); }
-a { color: var(--ink); text-decoration-color: var(--line-2); text-underline-offset: 3px; text-decoration-thickness: 1px; transition: text-decoration-color .15s var(--ease); }
+a { color: var(--ink); text-decoration-color: var(--line-2); text-underline-offset: 3px; text-decoration-thickness: 1px; transition: text-decoration-color .15s var(--ease-out); }
 a:hover { text-decoration-color: currentColor; }
 :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-radius: 2px; }
 button { font: inherit; color: inherit; }
@@ -160,7 +164,7 @@ p { margin: 16px 0 0; max-width: 68ch; }
 .search-btn {
   display: flex; align-items: center; gap: 12px; min-width: 248px; height: 40px; padding: 0 8px 0 12px;
   background: transparent; border: 1px solid var(--line-2); border-radius: var(--r); color: var(--ink-3); cursor: pointer;
-  font-size: var(--t-small); transition: border-color .15s var(--ease), color .15s var(--ease);
+  font-size: var(--t-small); transition: border-color .15s var(--ease-out), color .15s var(--ease-out), transform .16s var(--ease-out);
 }
 .search-btn:hover { color: var(--ink-2); border-color: rgba(244, 239, 228, .32); }
 .search-btn .keys { margin-left: auto; display: flex; gap: 4px; }
@@ -202,8 +206,11 @@ main:focus { outline: none; }
   height: 720px; overflow: hidden; background: var(--night);
   display: grid; grid-template-columns: minmax(0, 1fr) 390px; gap: 64px; align-items: start;
   border-bottom: 1px solid var(--line);
-  transition: background-color .35s var(--ease);
 }
+/* The night is a registered colour, so the band and the phone in it (its art header, fade and copy) fade to a new
+   base together, over the art's 0.35 s, as the app's base does. */
+@property --night { syntax: '<color>'; inherits: true; initial-value: #1C1C1C; }
+.hero, .hero .hero-phone { transition: --night .35s var(--ease-app); }
 .hero-copy { align-self: center; padding: 48px 0 64px; }
 .hero h1 { font-size: 88px; line-height: 1; }
 .hero .lede { max-width: 30ch; }
@@ -213,11 +220,13 @@ main:focus { outline: none; }
 .pick button, .btn {
   min-height: 40px; padding: 0 14px; border-radius: var(--r); border: 1px solid var(--line-2);
   background: transparent; color: var(--ink-2); cursor: pointer; font-size: var(--t-small);
-  transition: background-color .15s var(--ease), color .15s var(--ease), border-color .15s var(--ease);
+  transition: background-color .15s var(--ease-out), color .15s var(--ease-out), border-color .15s var(--ease-out), transform .16s var(--ease-out);
 }
 .pick button:hover, .btn:hover { color: var(--ink); border-color: rgba(244, 239, 228, .36); }
 .pick button[aria-pressed="true"] { background: var(--ink); color: #111; border-color: var(--ink); }
-.btn:active, .pick button:active { transform: scale(.98); }
+.btn:disabled { opacity: .48; cursor: default; pointer-events: none; }
+/* Press feedback: every site button sinks a little, easing back as it's let go. */
+.btn:active, .pick button:active, .search-btn:active, .icon-btn:active, .copy-val:active, .copy-code:active, .link-btn:active, .anchor-btn:active { transform: scale(.97); }
 .hero-phone { margin: 48px 0 0; border-radius: 44px 44px 0 0; }
 .hero-phone figcaption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 
@@ -302,10 +311,10 @@ td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
   font: var(--t-label) var(--mono); min-height: 32px; padding: 4px 10px; text-align: left;
   background: transparent; border: 1px solid var(--line); border-radius: var(--r); cursor: pointer; color: var(--ink-2);
   overflow-wrap: anywhere; max-width: 100%;
-  transition: border-color .15s var(--ease), color .15s var(--ease);
+  transition: border-color .15s var(--ease-out), color .15s var(--ease-out), transform .16s var(--ease-out);
 }
 .copy-val:hover { border-color: var(--line-2); color: var(--ink); }
-.anchor-btn { width: 32px; height: 32px; border: 0; background: none; color: var(--ink-3); border-radius: var(--r); cursor: pointer; font: var(--t-label) var(--mono); opacity: 0; transition: opacity .15s var(--ease); flex: none; }
+.anchor-btn { width: 32px; height: 32px; border: 0; background: none; color: var(--ink-3); border-radius: var(--r); cursor: pointer; font: var(--t-label) var(--mono); opacity: 0; transition: opacity .15s var(--ease-out), transform .16s var(--ease-out); flex: none; }
 .anchor-btn:hover { color: var(--ink); background: rgba(244, 239, 228, .06); }
 .hrow:hover .anchor-btn, .tok:hover .anchor-btn, .anchor-btn:focus-visible { opacity: 1; }
 @media (hover: none) { .anchor-btn { opacity: .7; } }
@@ -365,7 +374,8 @@ td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .motion-demo p { margin: 0 0 16px; }
 .motion-stage { height: 136px; border-radius: var(--r); background: #1C1C1C; position: relative; overflow: hidden; }
 .motion-stage .art { opacity: 0; }
-.motion-stage .art.in { opacity: 1; transition: opacity .35s var(--ease); }
+.motion-stage .art.in { opacity: 1; transition: opacity .35s var(--ease-app); }
+#motion-note { margin: 12px 0 0; }
 .symbols { list-style: none; padding: 0; margin: 24px 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 0 32px; }
 .symbols li { display: grid; grid-template-columns: 18px auto minmax(0, 1fr); gap: 12px; align-items: center; padding: 12px 0; border-top: 1px solid var(--line); color: var(--ink-2); }
 .symbols code { background: none; padding: 0; color: var(--ink); }
@@ -417,9 +427,11 @@ dl.specs dd { margin: 0; color: var(--ink-2); overflow-wrap: anywhere; padding-l
 
 /* tabs (ARIA tablist) */
 .tabs { display: flex; gap: 0 24px; flex-wrap: wrap; border-bottom: 1px solid var(--line); margin-top: 24px; }
-.tabs [role="tab"] { min-height: 44px; padding: 0; border: 0; border-bottom: 1px solid transparent; margin-bottom: -1px; background: none; color: var(--ink-3); cursor: pointer; font-size: var(--t-small); transition: color .15s var(--ease), border-color .15s var(--ease); }
+/* No transition: a tab, its line and its panel change in the same frame. The selected tab's line is 2 px, drawn inside
+   the tab, so it sits on the row's hairline and survives a row that scrolls sideways. */
+.tabs [role="tab"] { min-height: 44px; padding: 0; border: 0; background: none; color: var(--ink-3); cursor: pointer; font-size: var(--t-small); }
 .tabs [role="tab"]:hover { color: var(--ink); }
-.tabs [role="tab"][aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+.tabs [role="tab"][aria-selected="true"] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--ink); }
 [role="tabpanel"]:focus-visible { outline-offset: 8px; }
 
 /* ---------------------------------------------------------------- app replicas */
@@ -429,7 +441,7 @@ dl.specs dd { margin: 0; color: var(--ink-2); overflow-wrap: anywhere; padding-l
 .art.cool { --a1: #5f7a92; --a2: #364b5e; --a3: #1d2a36; --glow: rgba(196, 218, 236, .78); --ridge: #141c24; }
 .art.warm { --a1: #9c806a; --a2: #604838; --a3: #2b221c; --glow: rgba(246, 218, 186, .74); --ridge: #1d1814; }
 .art.neutral { --a1: #8c8c8c; --a2: #575757; --a3: #2b2b2b; --glow: rgba(226, 226, 226, .72); --ridge: #1b1b1b; }
-.art.arrive { animation: arrive .35s var(--ease); }
+.art.arrive { animation: arrive .35s var(--ease-app); }
 /* A named show's real art, loaded at runtime from TVmaze or AniList and never stored here (rule 9). It covers the
    placeholder, which stays underneath: while it loads, or if it fails and is hidden, the placeholder shows. */
 .art > img { position: absolute; inset: 0; z-index: 1; display: block; width: 100%; height: 100%; object-fit: cover; }
@@ -457,8 +469,8 @@ dl.specs dd { margin: 0; color: var(--ink-2); overflow-wrap: anywhere; padding-l
 .tabbar .tab svg { width: 22px; height: 22px; }
 .glass { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; color: #fff; padding: 0;
   background: rgba(255, 255, 255, .14); backdrop-filter: blur(10px) saturate(1.6); -webkit-backdrop-filter: blur(10px) saturate(1.6);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35), inset 0 0 0 .5px rgba(255, 255, 255, .25); border: 0; cursor: pointer; transition: transform .15s var(--ease); }
-.glass:active, .glass.pressed { transform: scale(1.08); background: rgba(255, 255, 255, .22); }
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35), inset 0 0 0 .5px rgba(255, 255, 255, .25); border: 0; cursor: pointer; transition: transform .15s var(--ease-app); }
+.glass:active { transform: scale(1.08); background: rgba(255, 255, 255, .22); }
 .glass svg { width: 17px; height: 17px; }
 .urow { display: flex; gap: 16px; align-items: flex-start; }
 .art-thumb { position: relative; width: 64px; height: 64px; border-radius: 10px; overflow: hidden; flex: none; }
@@ -692,12 +704,19 @@ dialog.search::backdrop { background: rgba(0, 0, 0, .64); }
 .link-btn { margin-left: auto; min-height: 32px; padding: 0 10px; border: 0; background: none; color: var(--ink-2); cursor: pointer; border-radius: var(--r); font-size: var(--t-label); }
 .link-btn:hover { color: var(--ink); background: rgba(244, 239, 228, .06); }
 
-.toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 8px); opacity: 0; z-index: 120; background: var(--ink); color: #111; padding: 8px 14px; border-radius: var(--r); font: 500 var(--t-small) var(--sans); pointer-events: none; transition: opacity .2s var(--ease), transform .2s var(--ease); max-width: calc(100% - 32px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.toast.show { opacity: 1; transform: translate(-50%, 0); }
-.flash { outline: 2px solid var(--ink); outline-offset: 6px; border-radius: 2px; }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 8px); opacity: 0; z-index: 120; background: var(--ink); color: #111; padding: 8px 14px; border-radius: var(--r); font: 500 var(--t-small) var(--sans); pointer-events: none; transition: opacity .15s var(--ease-out), transform .15s var(--ease-out); max-width: calc(100% - 32px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); transition-duration: .2s; }
+/* A search result's target: the ring holds, then fades out before site.js removes it at 1.6 s. */
+.flash { outline: 2px solid var(--ink); outline-offset: 6px; border-radius: 2px; animation: flash-out 1.6s linear forwards; }
+@keyframes flash-out { 0% { outline-color: var(--ink); } 70% { outline-color: var(--ink); animation-timing-function: var(--ease-out); } 100% { outline-color: transparent; } }
 
+/* Reduce Motion: gentler, not zero. Nothing moves or scales, and the app's art fades are skipped as the app skips
+   them, but colour and opacity changes that move nothing still ease. */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { transition: none !important; animation: none !important; }
+  .art.arrive, .welcome .wall-strip, .flash { animation: none; }
+  .motion-stage .art.in, .hero, .hero .hero-phone { transition: none; }
+  .toast { transform: translate(-50%, 0); }
+  .btn:active, .pick button:active, .search-btn:active, .icon-btn:active, .copy-val:active, .copy-code:active, .link-btn:active, .anchor-btn:active, .glass:active { transform: none; }
 }
 
 /* ---------------------------------------------------------------- responsive */
@@ -712,14 +731,16 @@ dialog.search::backdrop { background: rgba(0, 0, 0, .64); }
   .menu-btn { display: grid; }
   .rail {
     position: fixed; top: 0; left: 0; bottom: 0; height: auto; width: min(320px, 86vw); z-index: 60;
-    background: #121213; border-right: 1px solid var(--line-2); padding: 8px 16px 48px;
+    background: #121213; border-right: 0; padding: 8px 16px 48px;
     visibility: hidden; transform: translateX(-100%);
-    transition: transform .2s var(--ease), visibility 0s linear .2s;
+    transition: transform .2s var(--ease-drawer), visibility 0s linear .2s;
   }
-  .rail.open { visibility: visible; transform: none; transition: transform .2s var(--ease); }
+  .rail.open { visibility: visible; transform: none; transition: transform .25s var(--ease-drawer); }
   .rail-head { display: flex; align-items: center; justify-content: space-between; height: 56px; margin-bottom: 8px; color: var(--ink-3); font-size: var(--t-small); padding-left: 12px; }
-  .scrim { position: fixed; inset: 0; background: rgba(0, 0, 0, .6); z-index: 55; display: block; }
-  .scrim[hidden] { display: none; }
+  /* The scrim fades with the drawer, in as it slides in and out as it leaves. */
+  .scrim { position: fixed; inset: 0; background: rgba(0, 0, 0, .6); z-index: 55; display: block; opacity: 1; transition: opacity .25s var(--ease-out), display .25s allow-discrete; }
+  @starting-style { .scrim { opacity: 0; } }
+  .scrim[hidden] { display: none; opacity: 0; transition-duration: .2s; }
   footer.foot { padding-left: var(--gutter); }
   .hero { grid-template-columns: minmax(0, 1fr); height: auto; gap: 0; }
   .hero-copy { padding: 48px 0 0; }
@@ -727,6 +748,11 @@ dialog.search::backdrop { background: rgba(0, 0, 0, .64); }
   .logo-hero { grid-template-columns: minmax(0, 1fr); }
   .spec { grid-template-columns: minmax(0, 1fr); }
   .demo-cd { grid-template-columns: minmax(0, 1fr); }
+}
+/* With Reduce Motion the drawer cross-fades in place instead of sliding. */
+@media (max-width: 1000px) and (prefers-reduced-motion: reduce) {
+  .rail { transform: none; opacity: 0; transition: opacity .15s var(--ease-out), visibility 0s linear .15s; }
+  .rail.open { opacity: 1; transition: opacity .15s var(--ease-out); }
 }
 @media (max-width: 700px) {
   :root { --t-display: 40px; --t-h2: 28px; --t-h3: 20px; --top-h: 56px; }
