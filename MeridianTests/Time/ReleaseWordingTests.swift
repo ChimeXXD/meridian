@@ -99,7 +99,7 @@ struct ReleaseWordingTests {
         (.adjusted(base: .anilist, offsetMinutes: -30), .estimated,
          "Your 30-minute adjustment is taken off the Japanese TV time."),
         (.adjusted(base: .platformRule("Crunchyroll rule"), offsetMinutes: 15), .estimated,
-         "Your 15-minute adjustment is added to the Crunchyroll's usual time."),
+         "Your 15-minute adjustment is added to Crunchyroll's usual time."),
         (.adjusted(base: .broadcast(network: "Tokyo MX"), offsetMinutes: 15), .estimated,
          "Your 15-minute adjustment is added to the listed time."),
         (.anilist, .exact, "This is when it airs on Japanese TV. Streaming services may add it a little later."),

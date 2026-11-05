@@ -44,7 +44,7 @@ enum ReleaseWording {
                 : "This time was reported but isn't confirmed yet."
         case .adjusted(let base, let minutes):
             let direction = minutes < 0 ? "taken off" : "added to"
-            return "Your \(abs(minutes))-minute adjustment is \(direction) the \(baseTime(base))."
+            return "Your \(abs(minutes))-minute adjustment is \(direction) \(baseTime(base))."
         case .anilist:
             return "This is when it airs on Japanese TV. Streaming services may add it a little later."
         case .dateOnly:
@@ -96,13 +96,14 @@ enum ReleaseWording {
         rule.hasSuffix(" rule") ? String(rule.dropLast(" rule".count)) : rule
     }
 
-    /// What an offset is applied to, in words: "Japanese TV time", "Netflix's usual time", "listed time".
+    /// What an offset is applied to, with its article: "the Japanese TV time", "Netflix's usual time" (a possessive
+    /// takes no "the"), "the listed time".
     private static func baseTime(_ base: ReleaseSource) -> String {
         switch base {
-        case .anilist: "Japanese TV time"
+        case .anilist: "the Japanese TV time"
         case .platformRule(let rule): "\(platform(rule))'s usual time"
         case .adjusted(let inner, _): baseTime(inner)
-        case .broadcast, .override, .dateOnly: "listed time"
+        case .broadcast, .override, .dateOnly: "the listed time"
         }
     }
 }
