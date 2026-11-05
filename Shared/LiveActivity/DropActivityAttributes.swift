@@ -11,7 +11,7 @@ struct DropActivityAttributes: ActivityAttributes {
         /// The (earliest) drop's time, UTC (CLAUDE.md rule 1). The content's `staleDate` is this too, so the views
         /// show "Out now" at the drop without the app running.
         var dropDate: Date
-        /// The time it was listed for before a delay, shown struck through.
+        /// The time it was listed for before a delay, shown as "Delayed from 22:00".
         var delayedFrom: Date?
     }
 

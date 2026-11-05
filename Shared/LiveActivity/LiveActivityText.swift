@@ -72,7 +72,7 @@ enum LiveActivityText {
         attributes.dropIDs.count > 1 ? "+ \(attributes.dropIDs.count - 1) more" : nil
     }
 
-    /// The time it was listed for before a delay, struck through next to the new one: "01:00", or "Thu 23:00" when it
+    /// The time it was listed for before a delay, for "Delayed from 01:00", or "Thu 23:00" when it
     /// was another day. Nil when it hasn't moved.
     static func previousTime(_ state: DropActivityAttributes.ContentState, formatter: DropFormatter) -> String? {
         guard let previous = state.delayedFrom, previous != state.dropDate else { return nil }

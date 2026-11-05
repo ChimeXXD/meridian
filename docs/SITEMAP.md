@@ -106,7 +106,7 @@ flowchart TD
 | No shows followed | "Follow a show to see its countdown here", with Find a show |
 | Shows followed, nothing scheduled | "Nothing scheduled for your shows yet. Meridian checks again each time you open it." |
 | Offline | The last known times plus "Offline · Updated 3 h ago" |
-| A time moved later | The row shows "Delayed", with the old time struck through |
+| A time moved later | "Delayed from 21:00" under the new time, in words (D-58) |
 | No official stream in your country | The row keeps the provider ("HBO · US") and adds "No official stream in your country" under it |
 
 ## Outside the app

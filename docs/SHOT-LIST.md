@@ -34,7 +34,7 @@ bits are cut.
 | 1 | "Silo in 4 days (still “4d 4h”)" | Home Screen widgets, then the Lock Screen widgets | stills |
 | 2 | "Silo in 3 hours (last day, ticking)" | Home Screen widgets ticking, 5 s; Lock Screen ticking, 5 s | clips, stills |
 | 3 | "Live Activity for Silo and <show>, same night" | Home Screen; press and hold the island; Lock Screen banner | stills |
-| 4 | "Simulate delay +1 h" | press and hold the island; Lock Screen banner, old time struck through | stills |
+| 4 | "Simulate delay +1 h" | press and hold the island; Lock Screen banner, "Delayed from 22:00" under the new time | stills |
 | 5 | "Live Activity for Silo now (drop in 3 min)" | Home Screen: the island ticking, 5 s | clip, still |
 | 6 | | press and hold: the expanded island, 5 s | clip, still (hero) |
 | 7 | | Lock Screen banner, 5 s | clip, still |

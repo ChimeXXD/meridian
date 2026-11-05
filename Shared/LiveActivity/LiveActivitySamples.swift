@@ -12,7 +12,7 @@ enum LiveActivitySamples {
         case longName
         /// Silo and House of the Dragon on the same night, merged into one activity.
         case merged
-        /// House of the Dragon moved an hour later; the old time is struck through.
+        /// House of the Dragon moved an hour later; it says "Delayed from" with the old time.
         case delayed
         /// Silo came out 10 minutes ago.
         case outNow
