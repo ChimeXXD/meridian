@@ -1,8 +1,75 @@
 # Handoff: read this first when you pick the project back up
 
-Updated 4 Nov 2026 (Lagos), the night before Day 7, by the session that made the case study footage and shipped the portfolio case study. Chime is they/them. **Start with "Latest: session of Wed 4 Nov 2026" just below**; the older sections follow, newest first. Then read, in order: `CLAUDE.md`, `docs/PLAN.md`, `PROGRESS.md` (newest entry first), `docs/DECISIONS.md` (D-64 and D-65 are the newest).
+Updated 5 Nov 2026 (Lagos, Day 7, about 04:00) by the session that ran the ten skill reviews and applied them. Chime is they/them. **Start with "Latest: session of Thu 5 Nov 2026" just below**; the older sections follow, newest first. Then read, in order: `CLAUDE.md`, `docs/PLAN.md`, `PROGRESS.md` (newest entry first), `docs/DECISIONS.md` (D-64 and D-65 are the newest).
 
-## Latest: session of Wed 4 Nov 2026 (footage, case study, history rewrite)
+## Latest: session of Thu 5 Nov 2026 (ten skill reviews, then "fix everything")
+
+### Where it stands
+
+- **The repo is public** (`ChimeXXD/meridian`; Chime made it public). `main` is **`9b298ea`** plus this handoff, all pushed. 30 commits since `66a3398`, the start of this session.
+- **The proof gate passed** (build, test, spec) on `9b298ea`: 337 tests. **CI** was red from `a346856` to `7f46e6b` (the new App Group tests can't pass in CI's unsigned build); `9b298ea` skips them when `MERIDIAN_UNSIGNED` is set, as ci.yml now does. Its CI run was still in progress at handoff: **check it went green** (`gh run list --limit 1`).
+- **On the phone:** `9b298ea` is installed (install only; not launched, no screenshots). **Signing expires Mon 9 Nov 2026 00:59 Lagos** (read from the build's `embedded.mobileprovision`): reinstall before then.
+- **The design system redeployed** itself on each push (Vercel). Not checked that the last deploy finished.
+
+### What Chime asked for, in order
+
+1. **"Follow all the prompts in the skill prompt file"** (`docs/SKILL-PROMPTS.md`, git-excluded). Each of the 10 prompts ran Pass 1 (findings only) in its own fresh agent: write-swift, break-ui, apple-design, emil-design-eng (app), animation-vocabulary, review-animations, emil-design-eng (site), mobile-native, remove-animations, find-animation-opportunities. About 110 findings went into one pick list.
+2. **"Fix everything, push to GitHub, and push to my phone."** That approved every finding, with the recommended option at each choice. Pass 2 ran in 7 batches: Swift fixes; API refactors; widgets and Live Activity; app motion; app layout and loading; the site (in its own worktree, alongside); docs. Then `/code-review high --fix` over everything, the gate, and the install.
+3. **"Can we work faster?"** Batches share one simulator, so they ran one at a time; only the site batch (no simulator) ran alongside. Each reply of the orchestrator started a Stop-hook gate run that collided with the running agent's simulator ("signal kill/term before establishing connection", "build.db is locked"): those failures were collisions, never code. Chime OK'd letting the batches finish before the gate ran again.
+4. **Memory:** the Mac sat at 75–81% with 4.5 GB swapped. Chime closed Dia and kept Figma open.
+
+### Choices made under "fix everything" (the recommended options)
+
+- Phone menu drawer: keep the slide on an iOS curve, with the scrim fading with it (not removed). Tabs: no transition, plus a 2 px selected line. Hero band: band and phone fade together via `@property --night`.
+- Widgets say today/tomorrow, then the weekday for 2–6 days, then the date from 7 days ("Out Wed 11 Nov 19:00"). Midnight wording kept ("Out tomorrow at 00:00"); "+N more this week" kept.
+- Two-line titles on the Lock Screen banner and the large widget; the small widget stays at one line (D-46). To fit the banner's 160 pt, its padding went 14 → 12 pt and the gap above the countdown 12 → 10 pt.
+- Upcoming rows show the poster at 2:3 (44×66), like the widgets' rows (D-47).
+- Art keeps an opacity fade under Reduce Motion (Apple's cross-fade stand-in); the Welcome drift still stops.
+- **Not done:** a haptic at the drop (an option, not a fix), and linking a real island clip from the site (needs a new decision; rule 9 / D-63).
+
+### What changed (details per batch in PROGRESS.md)
+
+- **Bugs:** a failed show kept its last drop by name, so two same-name follows duplicated a row (`c2cb691`). Every followed show was fetched twice on a cold launch (in-flight sharing in `TVmazeClient`, at most 6 requests at once). `WallClock` accepted junk and signed parts ("2026-11-05-junk", "-0:30"). The rules file's `updated` date is checked.
+- **Tests:** a real airtime at 12/16/17Z stays exact (D-25); the App Group tests can fail; fixture tests are parameterised; a WallClock edge table; worst-case widget and Live Activity tests (Vision reads "US" and "4 more"; AX5 heights; "88:88:88" fits the compact slot); a midnight widget entry.
+- **Refactors:** `ReleaseVerb` enum (payload byte-identical); `ReleaseSource.adjusted(base:)` carries its source; `ShowID` builds every ID string; Upcoming redraws on the minute and at section changes, with only its countdowns ticking each second (`UpcomingSchedule`).
+- **Widgets and Live Activity:** the inline widget keeps its count, the country is never cut (`CountryKeepingText`), the small family keeps "+ N more", the compact timer scales to 0.7, widget countdowns don't grow at AX5, emoji-only initials. DropRow and SourceChip deleted. 57 renders synced to the site.
+- **App feel:** "Out now" fades in without the page jumping (`CountdownSlot`); a solid status-bar shade (`StatusBarShade`); Settings, Credits and Debug on the night base; Search's field always visible (the title is now small and centred); one `PressStyle`; + morphs to ✓; the stepper and Live Activity toggle animate; the hourly still step rolls; Welcome crossfades into the tabs; the stray "the" in "the Crunchyroll's usual time" is gone.
+- **App layout and loading:** Upcoming spacing (rows 16, header 8, sections 32); poster thumbnails; cached art shows on the first frame; placeholders instead of spinners; the show page holds its headline's space; a 200 pt hero for a show with no art; titles take 4 lines at AX sizes; tight leading on serif headings of 28 pt and up; Report opens in an in-app Safari sheet (GitHub issues, D-34).
+- **Site:** every RA/RM/FO/ES/MN item (the IDs are in the reports). Mockup art fades in like the app's; phones share one scale; the hero phone sits on the band's foot; search sits at the top on phones with Close beside the field; the page no longer scrolls under the drawer or search; no tap flash or sticky hover; 44 pt hit areas; `viewport-fit=cover` removed; `theme-color` set.
+- **Docs:** UI-BRIEF §2 and the site's Motion section describe the motion that now exists; a "Motion" paragraph in CASE-STUDY.md; SHOT-LIST step 4 and SITEMAP say "Delayed from 22:00" (not struck through).
+- **The code review** (10 findings) fixed CI, signed clock parts, the three copies of the "today/tomorrow" wording (`DropFormatter.spokenRelativeDay`) and the copied "returns" sentence. It found that today/tomorrow went stale for up to an hour after midnight; fixed with a widget entry just after each midnight when a drop is under a week away (test first).
+
+### Files and where they live
+
+- **The ten reports, the pick list and the Pass 2 brief:** `docs/skill-runs/` (local only, git-excluded like `docs/SKILL-PROMPTS.md`). Finding IDs (WS-, BU-, AD-, EA-, RA-, ES-, MN-, RM-, FO-) in commits and PROGRESS refer to these.
+- Screenshots, renders and recordings from this session were in the session's temporary scratch folder and won't survive. Worst-case widget and Live Activity renders regenerate into `fidelity/shots/worst-cases/` when their tests run.
+
+### Not done, and why
+
+- **ShowID** is only partly adopted: the stored `showID: String` fields and `[String: …]` dictionaries still hold strings, because the debug and sample shows use IDs that aren't real shows ("debug", "from", "tlou", "andor").
+- **Making impossible Drop states unrepresentable** (WS-15) was skipped; it waits on the rest of ShowID. Suggested issue: `enum Release { case timed(Date, ReleaseSource, sure: Bool), case dateOnly(airdate: String?) }` with `confidence` derived from it, still decoding today's snapshot JSON (D-05).
+- **The island past 24 h** still shows "26:00:00", not "1d 2h": it isn't redrawn between content updates, so a still count would go stale.
+- **Snapshot writing** moved only the art I/O off the main actor; the small JSON write stayed synchronous.
+- **The review skipped:** a shared helper for the two "6 at once" loops (it would hold all the art until the end), ShowID's unused Codable, and three micro-optimisations.
+- **The 24 h hand-off** crossfades rather than rolls, because rolling it would need the shared CountdownText, which the widgets use.
+
+### Next steps
+
+1. Check that CI went green on `9b298ea`.
+2. **Phone checks** (renders miss the device layout):
+   - the inline and rectangular widgets with a long name and a long provider ("Paramount+ with Showtime · US")
+   - the compact island with more than 10 h left (Debug fake activity)
+   - the Lock Screen banner with a long name and with a delay
+   - "Out now" on Upcoming at a drop
+   - opening a show: the art should already be there
+   - press feedback, + → ✓, the Report sheet, and the shade on a long show page
+   - widgets across midnight
+   - the site on the iPhone: tap flash, the menu, search with the keyboard up
+3. **Chime to re-approve screens that changed on purpose:** Upcoming (spacing, posters), Search (field, small title), Settings (charcoal), Welcome and the empty states (tighter headings), and the Lock Screen banner (12 / 10 pt).
+4. **Two lines in CLAUDE.md are out of date** (Chime's file, not edited): the layout lists `RefreshService`, which doesn't exist (its tests are now `DelayDetectionTests`), and rule 3 says `SourceChip` survives in the pre-Night-Sky views (it's deleted).
+5. Then the Day 7 steps from 4 Nov below that are still open (the portfolio's repo link, the case study copy), and D-64 after Day 7.
+
+## Session of Wed 4 Nov 2026 (footage, case study, history rewrite)
 
 ### Where it stands
 
