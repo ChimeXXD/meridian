@@ -2,7 +2,8 @@ import SwiftUI
 
 /// Upcoming (SPEC §1, UI-BRIEF §5.2) in Night Sky (D-38): the next show's art fades into night with the countdown
 /// and when it's out; everything else is one quiet list in SPEC's sections. Sections are recomputed from the clock
-/// every second (the countdowns' pace), so a drop moves to "Out now" and on without a reload.
+/// on every minute and at each drop's section change (`UpcomingSchedule`), so a drop moves to "Out now" and on without
+/// a reload; only the countdowns redraw every second.
 struct UpcomingView: View {
     /// Nil until the first load finishes.
     let result: UpcomingLoader.Result?
@@ -21,8 +22,9 @@ struct UpcomingView: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
-        // Every second (`.countdown`): the sections and the hero's art both follow the clock, so the whole page rides it.
-        TimelineView(.countdown) { context in
+        // The page follows the clock only where its sections or words change; each countdown ticks in its own
+        // `TimelineView(.countdown)`, so the sort, the art and its palette aren't redone every second.
+        TimelineView(UpcomingSchedule(changes: UpcomingSections.changes(drops: result?.drops ?? []))) { context in
             let sections = UpcomingSections.make(drops: result?.drops ?? [],
                                                  nothingScheduled: result?.nothingScheduled ?? [], now: context.date)
             ArtworkLoaderView(url: (sections.hero?.showID ?? sections.spotlightShowID).flatMap { artwork[$0]?.hero },
@@ -62,7 +64,7 @@ struct UpcomingView: View {
             ProgressView().frame(maxWidth: .infinity).padding(.top, 240)
         } else if let hero = sections.hero {
             Button { onSelect(hero) } label: {
-                UpcomingHero(drop: hero, image: image, base: base, now: now, formatter: formatter)
+                UpcomingHero(drop: hero, image: image, base: base, formatter: formatter)
             }
             .buttonStyle(.plain)
             // On the button: a button hides its label's own container, so the hero is found by this ID.
@@ -221,12 +223,15 @@ struct UpcomingView: View {
                             .accessibilityIdentifier("drop-row-\(index)-title")
                         if !largeText { Spacer(minLength: Tokens.Space.xs) }
                         if drop.confidence != .dateOnly {  // a date-only drop's day is already in the out line
-                            CountdownText(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate, now: now,
-                                          size: 24, tint: .white, formatter: formatter,
-                                          alignment: largeText ? .leading : .trailing)
-                                .environment(\.numeralStudy, .night)
-                                // Stacked, it may shrink to the row's width (minimumScaleFactor) instead of overflowing.
-                                .fixedSize(horizontal: !largeText, vertical: true)
+                            TimelineView(.countdown) { context in
+                                CountdownText(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate,
+                                              now: context.date, size: 24, tint: .white, formatter: formatter,
+                                              alignment: largeText ? .leading : .trailing)
+                                    .environment(\.numeralStudy, .night)
+                                    // Stacked, it may shrink to the row's width (minimumScaleFactor) instead of
+                                    // overflowing.
+                                    .fixedSize(horizontal: !largeText, vertical: true)
+                            }
                         }
                     }
                     Text(ReleaseWording.outLine(drop, now: now, formatter: formatter))

@@ -6,14 +6,16 @@ struct UpcomingHero: View {
     let drop: Drop
     let image: UIImage?
     let base: Color
-    let now: Date
     var formatter = DropFormatter()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             NightArtHeader(image: image, base: base)
             VStack(alignment: .leading, spacing: Tokens.Space.s) {
-                ReleaseHeadline(drop: drop, now: now, formatter: formatter, testID: "upcoming-hero")
+                // Only the headline follows the clock, so only it redraws every second, not the art above it.
+                TimelineView(.countdown) { context in
+                    ReleaseHeadline(drop: drop, now: context.date, formatter: formatter, testID: "upcoming-hero")
+                }
                 ReleaseMeta(drop: drop, formatter: formatter)
             }
             .padding(.horizontal, Tokens.Space.l)

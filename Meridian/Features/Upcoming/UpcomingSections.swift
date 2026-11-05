@@ -50,6 +50,14 @@ struct UpcomingSections: Equatable {
         }
     }
 
+    /// The instants a timed drop changes section (`bucket`): into This week, Next 24 hours and Out now, and gone an
+    /// hour after its drop. Each takes effect at that instant, so Upcoming's page redraws there (`UpcomingSchedule`).
+    static func changes(drops: [Drop]) -> [Date] {
+        drops.filter { $0.confidence != .dateOnly }
+            .flatMap { [$0.date - 7 * 86_400, $0.date - 86_400, $0.date, $0.date + 3_600] }
+            .sorted()
+    }
+
     static func make(drops: [Drop], nothingScheduled: [UpcomingLoader.Quiet], now: Date) -> UpcomingSections {
         let sorted = drops.sorted { $0.date < $1.date }
         let timed = sorted.filter { [.outNow, .next24Hours, .thisWeek, .later].contains(bucket($0, now: now)) }
