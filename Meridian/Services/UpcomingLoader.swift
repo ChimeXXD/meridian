@@ -21,18 +21,22 @@ struct UpcomingLoader: Sendable {
         var drops: [Drop] = []
         /// Followed shows with no next episode listed, in follow order.
         var nothingScheduled: [Quiet] = []
-        /// Followed shows that couldn't be loaded this time.
+        /// The names of followed shows that couldn't be loaded this time, for Upcoming's status line.
         var failed: [String] = []
+        /// The same shows by ID ("38052", "anilist:154587"), which is what their last known drops are matched on:
+        /// two followed shows can share a name (The Office US and UK).
+        var failedShowIDs: [String] = []
 
         /// Keeps the last known drop for each show that failed this time (offline, a TVmaze hiccup), so Upcoming
         /// doesn't go empty; the show stays in `failed` so the screen can say so. Shows no longer followed don't
-        /// come back, because only failed names are carried over. A kept show with nothing scheduled goes back to its
+        /// come back, because only failed show IDs are carried over. A kept show with nothing scheduled goes back to its
         /// place in `followOrder` (followed show IDs, which survive a rename), so the widgets' rows don't reshuffle when a load fails.
         func keepingLastKnown(from previous: Result?, followOrder: [String] = []) -> Result {
-            guard let previous, !failed.isEmpty else { return self }
+            let failedIDs = Set(failedShowIDs)
+            guard let previous, !failedIDs.isEmpty else { return self }
             var merged = self
-            merged.drops += previous.drops.filter { failed.contains($0.showName) }
-            merged.nothingScheduled += previous.nothingScheduled.filter { failed.contains($0.name) }
+            merged.drops += previous.drops.filter { failedIDs.contains($0.showID) }
+            merged.nothingScheduled += previous.nothingScheduled.filter { failedIDs.contains($0.showID) }
             merged.drops.sort { $0.date < $1.date }
             let place = Dictionary(followOrder.enumerated().map { ($1, $0) }, uniquingKeysWith: { first, _ in first })
             merged.nothingScheduled.sort { (place[$0.showID] ?? .max) < (place[$1.showID] ?? .max) }
@@ -41,7 +45,7 @@ struct UpcomingLoader: Sendable {
     }
 
     private enum Outcome: Sendable {
-        case drop(Drop), nothing(Quiet), failed(String)
+        case drop(Drop), nothing(Quiet), failed(Request)
     }
 
     /// How old a cached next episode may be when Upcoming refreshes: 15 minutes, so a delay shows soon after it's
@@ -69,7 +73,9 @@ struct UpcomingLoader: Sendable {
             switch outcome {
             case .drop(let drop): result.drops.append(drop)
             case .nothing(let quiet): result.nothingScheduled.append(quiet)
-            case .failed(let name): result.failed.append(name)
+            case .failed(let request):
+                result.failed.append(request.name)
+                result.failedShowIDs.append(request.showID)
             }
         }
         result.drops.sort { $0.date < $1.date }
@@ -79,7 +85,7 @@ struct UpcomingLoader: Sendable {
     private func load(_ request: Request, now: Date) async -> Outcome {
         if request.catalog == .anilist { return await loadAnime(request, now: now) }
         guard let show = try? await client.show(id: request.id, maxAge: Self.freshness)
-        else { return .failed(request.name) }
+        else { return .failed(request) }
         guard let next = show.embedded?.nextepisode else {
             return .nothing(Quiet(showID: String(show.id), name: show.name, status: show.status,
                                   lastAired: show.embedded?.previousepisode?.airdate))
@@ -99,7 +105,7 @@ struct UpcomingLoader: Sendable {
     /// An anime's next episode is its Japanese broadcast (AniList `airingAt`), shifted by the show's offset.
     private func loadAnime(_ request: Request, now: Date) async -> Outcome {
         guard let anilist, let media = try? await anilist.media(id: request.id, maxAge: Self.freshness)
-        else { return .failed(request.name) }
+        else { return .failed(request) }
         guard let next = media.nextAiringEpisode else {
             return .nothing(Quiet(showID: "anilist:\(media.id)", name: media.displayTitle, status: media.status,
                                   lastAired: nil))

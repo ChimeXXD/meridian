@@ -56,14 +56,15 @@ struct UpcomingLoaderTests {
         let network = TVmazeClientTests.FakeNetwork([(500, [:], Data())])
         let result = try await Self.loader(network).load([Self.silo], now: Date(iso: "2026-10-30T17:00:00Z"))
         #expect(result.failed == ["Silo"])
+        #expect(result.failedShowIDs == ["38052"])
     }
 }
 
 /// Offline or a TVmaze hiccup keeps the last known times (UI-BRIEF §5.2, offline state) instead of emptying Upcoming.
 @Suite("Upcoming last known times")
 struct UpcomingLastKnownTests {
-    static func drop(_ name: String) -> Drop {
-        Drop(id: "tvmaze:\(name)", showID: name, showName: name, season: 1, number: 1, episodeTitle: nil,
+    static func drop(_ name: String, showID: String? = nil) -> Drop {
+        Drop(id: "tvmaze:\(showID ?? name)", showID: showID ?? name, showName: name, season: 1, number: 1, episodeTitle: nil,
              date: Date(iso: "2026-11-01T20:00:00Z"), airdate: nil, confidence: .exact, source: .broadcast(network: "HBO"),
              provider: nil, previousDate: nil)
     }
@@ -71,7 +72,7 @@ struct UpcomingLastKnownTests {
     @Test("a show that failed this time keeps its last known drop and is still named as failed")
     func keepsLastKnown() {
         let previous = UpcomingLoader.Result(drops: [Self.drop("Silo"), Self.drop("Severance")])
-        let loaded = UpcomingLoader.Result(drops: [Self.drop("Severance")], failed: ["Silo"])
+        let loaded = UpcomingLoader.Result(drops: [Self.drop("Severance")], failed: ["Silo"], failedShowIDs: ["Silo"])
         let merged = loaded.keepingLastKnown(from: previous)
         #expect(Set(merged.drops.map(\.showName)) == ["Silo", "Severance"])
         #expect(merged.failed == ["Silo"])
@@ -81,7 +82,8 @@ struct UpcomingLastKnownTests {
     func quietKeepsFollowOrder() {
         let quiet = { (name: String) in QuietShow(showID: name, name: name, status: "Running", lastAired: nil) }
         let previous = UpcomingLoader.Result(nothingScheduled: [quiet("From"), quiet("Solo Leveling")])
-        let loaded = UpcomingLoader.Result(nothingScheduled: [quiet("Solo Leveling")], failed: ["From"])
+        let loaded = UpcomingLoader.Result(nothingScheduled: [quiet("Solo Leveling")], failed: ["From"],
+                                            failedShowIDs: ["From"])
         let merged = loaded.keepingLastKnown(from: previous, followOrder: ["From", "Silo", "Solo Leveling"])
         #expect(merged.nothingScheduled.map(\.name) == ["From", "Solo Leveling"])
     }
@@ -91,5 +93,21 @@ struct UpcomingLastKnownTests {
         let previous = UpcomingLoader.Result(drops: [Self.drop("Silo"), Self.drop("Old")])
         let loaded = UpcomingLoader.Result(drops: [Self.drop("Silo")])
         #expect(loaded.keepingLastKnown(from: previous).drops.map(\.showName) == ["Silo"])
+    }
+
+    @Test("two followed shows with the same name: only the one that failed keeps its last known drop")
+    func sameNameMatchedByShowID() async throws {
+        let network = TVmazeClientTests.FakeNetwork(routes: [
+            ("/shows/38052", try TVmazeClientTests.ok("show-silo-embed")),
+            ("/shows/2?", (500, [:], Data())),
+        ])
+        let office = { (id: Int) in UpcomingLoader.Request(catalog: .tvmaze, id: id, name: "The Office", offsetMinutes: 0) }
+        let loaded = try await UpcomingLoaderTests.loader(network)
+            .load([office(38052), office(2)], now: Date(iso: "2026-10-30T17:00:00Z"))
+        let previous = UpcomingLoader.Result(drops: [Self.drop("The Office", showID: "38052"),
+                                                     Self.drop("The Office", showID: "2")])
+        let merged = loaded.keepingLastKnown(from: previous)
+        #expect(merged.drops.map(\.showID).sorted() == ["2", "38052"])
+        #expect(merged.failed == ["The Office"])
     }
 }
