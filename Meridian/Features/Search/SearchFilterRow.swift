@@ -38,7 +38,8 @@ struct SearchFilterRow: View {
         let picked = option == selection
         return Button {
             if !picked { taps += 1 }
-            selection = option
+            // A quick change of fill, and the grid under the row crossfades with it (AD-11).
+            withAnimation(.snappy(duration: 0.2)) { selection = option }
         } label: {
             HStack(spacing: 0) {
                 if case .service(let label) = option,
@@ -50,7 +51,7 @@ struct SearchFilterRow: View {
             .font(.subheadline.weight(.medium))
             .modifier(ChipCapsule(picked: picked))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.controlPress)
         .accessibilityAddTraits(picked ? .isSelected : [])
         .accessibilityIdentifier(option.identifier)
     }
@@ -78,21 +79,22 @@ struct SearchFilterRow: View {
             .accessibilityHidden(true)
         }
     }
+}
 
-    /// The Night Sky chip: white with black text when picked, else dark with a hairline.
-    private struct ChipCapsule: ViewModifier {
-        let picked: Bool
+/// The Night Sky chip: white with black text when picked, else dark with a hairline. Search's outlined buttons
+/// ("Try again", "Show popular") wear it unpicked (EA-15).
+struct ChipCapsule: ViewModifier {
+    let picked: Bool
 
-        func body(content: Content) -> some View {
-            content
-                .foregroundStyle(picked ? .black : .white)
-                .padding(.horizontal, Tokens.Space.s)
-                .frame(minHeight: 34)
-                .background(picked ? AnyShapeStyle(.white) : AnyShapeStyle(.black.opacity(0.55)), in: Capsule())
-                .overlay(Capsule().strokeBorder(.white.opacity(picked ? 0 : 0.35)))
-                // Inside the label, so the whole 44 pt row is the tap area, not just the 34 pt capsule.
-                .frame(minHeight: 44)
-                .contentShape(Rectangle())
-        }
+    func body(content: Content) -> some View {
+        content
+            .foregroundStyle(picked ? .black : .white)
+            .padding(.horizontal, Tokens.Space.s)
+            .frame(minHeight: 34)
+            .background(picked ? AnyShapeStyle(.white) : AnyShapeStyle(.black.opacity(0.55)), in: Capsule())
+            .overlay(Capsule().strokeBorder(.white.opacity(picked ? 0 : 0.35)))
+            // Inside the label, so the whole 44 pt row is the tap area, not just the 34 pt capsule.
+            .frame(minHeight: 44)
+            .contentShape(Rectangle())
     }
 }

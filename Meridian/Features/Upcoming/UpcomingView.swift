@@ -49,8 +49,7 @@ struct UpcomingView: View {
                 .defaultScrollAnchor(scrollAnchor)
                 .refreshable { await onRefresh() }
                 .background(base)
-                .overlay(alignment: .top) { StatusBarScrim(color: base) }
-                .ignoresSafeArea(edges: .top)
+                .statusBarShade(base, art: hasArtHeader(sections) ? NightArtHeader.defaultHeight : 0)
             }
         }
         .environment(\.colorScheme, .dark)
@@ -66,18 +65,18 @@ struct UpcomingView: View {
             Button { onSelect(hero) } label: {
                 UpcomingHero(drop: hero, image: image, base: base, formatter: formatter)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.heroPress)
             // On the button: a button hides its label's own container, so the hero is found by this ID.
             .accessibilityIdentifier("upcoming-hero")
         } else if case .dateOnly(let drop) = sections.spotlight {
             // Tappable like the hero: the date-only show left its section, so this is the only way to its detail.
             Button { onSelect(drop) } label: { spotlight(sections, image: image, base: base, now: now) }
-                .buttonStyle(.plain)
+                .buttonStyle(.heroPress)
                 .accessibilityIdentifier("upcoming-spotlight")
         } else if case .quiet(let show) = sections.spotlight {
             // A quiet show opens its own page, so it can be unfollowed from here too (UX audit #12).
             Button { onSelectQuiet(show) } label: { spotlight(sections, image: image, base: base, now: now) }
-                .buttonStyle(.plain)
+                .buttonStyle(.heroPress)
                 .accessibilityIdentifier("upcoming-spotlight")
         } else {
             // Nothing to feature (every drop has gone, or every show failed to load): SPEC's sentence on its own.
@@ -130,6 +129,11 @@ struct UpcomingView: View {
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("upcoming-spotlight")
+    }
+
+    /// Whether the top of the page is a show's art (the hero or the spotlight), which the status-bar shade waits for.
+    private func hasArtHeader(_ sections: UpcomingSections) -> Bool {
+        hasShows && result != nil && (sections.hero != nil || sections.spotlight != nil)
     }
 
     private var emptyFollow: some View {
@@ -194,7 +198,7 @@ struct UpcomingView: View {
                     }
                     .contentShape(.rect)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.rowPress)
                 .accessibilityElement(children: .contain)
                 .accessibilityIdentifier("nothing-\(index + 1)")
             }
@@ -224,8 +228,8 @@ struct UpcomingView: View {
                         if !largeText { Spacer(minLength: Tokens.Space.xs) }
                         if drop.confidence != .dateOnly {  // a date-only drop's day is already in the out line
                             TimelineView(.countdown) { context in
-                                CountdownText(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate,
-                                              now: context.date, size: 24, tint: .white, formatter: formatter,
+                                CountdownSlot(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate,
+                                              now: context.date, size: 24, formatter: formatter,
                                               alignment: largeText ? .leading : .trailing)
                                     .environment(\.numeralStudy, .night)
                                     // Stacked, it may shrink to the row's width (minimumScaleFactor) instead of
@@ -243,7 +247,7 @@ struct UpcomingView: View {
             }
             .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.rowPress)
         .accessibilityIdentifier("drop-row-\(index)")
     }
 }

@@ -12,12 +12,14 @@ struct QuietShowView: View {
 
     @Environment(\.dismiss) private var dismiss
 
+    private static let artHeight: CGFloat = 500
+
     var body: some View {
         ArtworkLoaderView(url: artwork?.hero, maxPixel: ShowArtwork.idealBackgroundWidth) { hero in
             let base = (hero?.palette ?? .neutral).night.color
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    NightArtHeader(image: hero?.image, base: base, height: 500)
+                    NightArtHeader(image: hero?.image, base: base, height: Self.artHeight)
                     VStack(alignment: .leading, spacing: Tokens.Space.xl) {
                         VStack(alignment: .leading, spacing: Tokens.Space.xs) {
                             Text(show.name)
@@ -52,7 +54,8 @@ struct QuietShowView: View {
             }
             .scrollIndicators(.hidden)
             .background(base)
-            .ignoresSafeArea(edges: .top)
+            // Once the text passes the art, the status bar gets the page colour behind it (AD-4).
+            .statusBarShade(base, art: Self.artHeight)
         }
         // The system bar, invisible, so the edge swipe goes back (as on Show detail).
         .navigationBarTitleDisplayMode(.inline)

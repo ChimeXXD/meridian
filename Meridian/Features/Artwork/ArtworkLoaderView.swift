@@ -10,27 +10,16 @@ struct ArtworkLoaderView<Content: View>: View {
     /// Tagged with its URL, so a new URL (another show) never shows the previous show's art and palette, while
     /// coming back to the same URL keeps its art on screen instead of flashing the neutral palette.
     @State private var loaded: (url: URL, value: ArtworkLoader.Loaded)?
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         content(loaded.flatMap { $0.url == url ? $0.value : nil })
             .task(id: url) {
                 guard let url, loaded?.url != url,
                       let result = try? await ArtworkLoader.shared.load(url, maxPixel: maxPixel) else { return }
-                withAnimation(reduceMotion ? nil : .easeOut(duration: 0.35)) { loaded = (url, result) }
+                // A fade even under Reduce Motion: it moves nothing, and a cut would flash bright art onto the night
+                // (AD-3; Apple's stand-in for motion is a cross-fade).
+                withAnimation(.easeOut(duration: 0.35)) { loaded = (url, result) }
             }
-    }
-}
-
-/// Keeps the status bar readable when content scrolls under it: the page colour fading to clear.
-struct StatusBarScrim: View {
-    let color: Color
-
-    var body: some View {
-        LinearGradient(colors: [color.opacity(0.9), color.opacity(0)], startPoint: .top, endPoint: .bottom)
-            .frame(height: 110)
-            .allowsHitTesting(false)
-            .accessibilityHidden(true)
     }
 }
 

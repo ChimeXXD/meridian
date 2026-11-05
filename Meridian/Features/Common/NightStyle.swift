@@ -34,18 +34,37 @@ extension Drop {
     }
 }
 
+extension View {
+    /// Settings, Credits and Debug on the night base the other tabs use, not the system's pure black (EA-4). Each
+    /// section takes `nightRow()`.
+    func nightList() -> some View {
+        scrollContentBackground(.hidden).background(ArtworkPalette.neutral.night.color)
+    }
+
+    /// A grouped list row on the night base: white at 0.08, the same lift as Show detail's action card.
+    func nightRow() -> some View {
+        listRowBackground(Color.white.opacity(0.08))
+    }
+}
 
 /// The key art at the top of Upcoming and Show detail, fading into the night base.
 struct NightArtHeader: View {
     let image: UIImage?
     let base: Color
-    var height: CGFloat = 472
+    var height: CGFloat = Self.defaultHeight
+
+    /// Upcoming's header; the show pages use 500.
+    static let defaultHeight: CGFloat = 472
 
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     /// More than half the screen at the default size; 280 at the accessibility sizes, so the facts under it stay on
     /// the first screen (UX audit #25).
-    private var shown: CGFloat { dynamicTypeSize.isAccessibilitySize ? min(height, 280) : height }
+    static func shownHeight(_ height: CGFloat, dynamicTypeSize: DynamicTypeSize) -> CGFloat {
+        dynamicTypeSize.isAccessibilitySize ? min(height, 280) : height
+    }
+
+    private var shown: CGFloat { Self.shownHeight(height, dynamicTypeSize: dynamicTypeSize) }
 
     var body: some View {
         ZStack {

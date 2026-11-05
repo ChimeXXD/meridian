@@ -316,13 +316,13 @@
   <p class="small">The named radius tokens (card 14, sheet 20, widget 22) are not used by any live view.</p>
 
   <h3 id="elevation">Materials</h3>
-  <p>No shadows anywhere. Depth comes from art fading into night, two scrims (black at the top of the art header, the page colour under the status bar on Upcoming), Welcome’s wall of art (dimmed with night, masked away and faded under the status bar), and one material: Liquid Glass on the back button. iOS also draws the tab bar, search field and Dynamic Island.</p>
+  <p>No shadows anywhere. Depth comes from art fading into night, two scrims (black at the top of the art header, and the page colour under the status bar once a page scrolls past its art), Welcome’s wall of art (dimmed with night, masked away and faded under the status bar), and one material: Liquid Glass on the back button. iOS also draws the tab bar, search field and Dynamic Island.</p>
   <div class="materials">
     <figure id="material-glass" data-search="glass liquid glass material" data-title="Liquid Glass" data-kind="Material"><div class="mat"><div class="art neutral"></div><span class="glass" aria-hidden="true"><svg><use href="#i-chevron"/></svg></span></div><figcaption><b>Liquid Glass.</b> Regular, interactive, a circle. The only control on the art. Approximated here with a backdrop blur.</figcaption></figure>
     <figure id="gradient-art-fade" data-search="gradient art fade night scrim" data-title="Art fade" data-kind="Gradient"><div class="mat"><div class="art neutral"></div><div class="layer" style="background:linear-gradient(180deg,rgba(28,28,28,0) 40%,#1C1C1C 100%)"></div><div class="layer" style="background:linear-gradient(180deg,rgba(0,0,0,.4),rgba(0,0,0,0) 25%)"></div></div><figcaption><b>Art fade and top scrim.</b> Base at 0 from 40% to full base at 100%; black at 0.4 to clear by 25%.</figcaption></figure>
     <figure id="gradient-widget" data-search="gradient widget backdrop fade" data-title="Widget fade" data-kind="Gradient"><div class="mat"><div class="art neutral"></div><div class="layer" style="background:linear-gradient(180deg,rgba(28,28,28,0) 25%,rgba(28,28,28,.7) 50%,#1C1C1C 75%)"></div></div><figcaption><b>Widget fade.</b> Clear at 25%, base at 0.7 at 50%, full base at 75%.</figcaption></figure>
     <figure id="gradient-la" data-search="gradient live activity art edge" data-title="Live Activity art edge" data-kind="Gradient"><div class="mat" style="background:#0D0D0E"><div class="art neutral" style="left:auto;width:44%"></div><div class="layer" style="left:auto;width:44%;background:linear-gradient(90deg,#0D0D0E 0%,rgba(13,13,14,.75) 30%,rgba(13,13,14,.15) 75%,rgba(13,13,14,0) 100%)"></div></div><figcaption><b>Lock Screen art edge.</b> Art on the right 44%, fading leftwards: 1, then 0.75 at 30%, 0.15 at 75%, clear.</figcaption></figure>
-    <figure id="gradient-status-scrim" data-search="status bar scrim" data-title="Status-bar scrim" data-kind="Gradient"><div class="mat"><div class="art neutral"></div><div class="layer" style="bottom:auto;height:110px;background:linear-gradient(180deg,rgba(28,28,28,.9),rgba(28,28,28,0))"></div></div><figcaption><b>Status-bar scrim.</b> Page colour at 0.9 to 0 over 110 pt, on Upcoming only.</figcaption></figure>
+    <figure id="gradient-status-scrim" data-search="status bar scrim" data-title="Status-bar scrim" data-kind="Gradient"><div class="mat"><div class="art neutral"></div><div class="layer" style="bottom:auto;height:102px;background:linear-gradient(180deg,#1C1C1C 0%,#1C1C1C 61%,rgba(28,28,28,0) 100%)"></div></div><figcaption><b>Status-bar shade.</b> The page colour, solid through the status bar (62 pt here), then a 40 pt fade to clear. It fades in over 60 pt of scroll as the text under the art reaches the bar, on Upcoming and the three show pages.</figcaption></figure>
     <figure id="gradient-welcome-wall" data-search="welcome wall dim mask fade night status bar" data-title="Welcome wall" data-kind="Gradient"><div class="mat"><div class="art neutral" style="-webkit-mask-image:linear-gradient(#000 0%,#000 35%,rgba(0,0,0,.35) 68%,transparent 90%);mask-image:linear-gradient(#000 0%,#000 35%,rgba(0,0,0,.35) 68%,transparent 90%)"></div><div class="layer" style="background:rgba(28,28,28,.18);-webkit-mask-image:linear-gradient(#000 0%,#000 35%,rgba(0,0,0,.35) 68%,transparent 90%);mask-image:linear-gradient(#000 0%,#000 35%,rgba(0,0,0,.35) 68%,transparent 90%)"></div><div class="layer" style="bottom:auto;height:96px;background:linear-gradient(180deg,rgba(28,28,28,.7),rgba(28,28,28,0))"></div></div><figcaption><b>Welcome wall.</b> Night at 0.18 over the rows; a mask from full to 0.35 at 68% to clear at 90% of the rows’ height; night at 0.7 to clear over the top 96 pt.</figcaption></figure>
   </div>
 
@@ -330,7 +330,7 @@
   <div class="motion-demo">
     <div class="motion-stage" aria-hidden="true"><div class="art neutral in" id="motion-art"></div></div>
     <div>
-      <p><b>Artwork arrives</b> with <code>withAnimation(.easeOut(duration: 0.35))</code>. The app has three custom animations, and no springs or symbol effects: that art fade; on Welcome, the wall of art fading in and each picture on it fading in, with the same 0.35 s ease out; and the wall’s rows drifting sideways. Under Reduce Motion the fades are skipped and the rows stay still at their starting places. This site follows Reduce Motion the same way.</p>
+      <p><b>Artwork arrives</b> with <code>withAnimation(.easeOut(duration: 0.35))</code>. System motion does most of the work (push, pop, the edge swipe, pull to refresh). The app adds a few short moves, each with one job: that art fade, and Welcome’s wall fading in and drifting; one press style; “Out now” arriving in place at the drop; the still count rolling on the hour; Follow’s + turning into ✓; the filter chips and their grid; and Welcome handing over to the tabs. None of them is a spring. Under Reduce Motion the drift stops and the drop’s scale becomes a plain fade; the fades stay, because a fade moves nothing and a cut would flash bright art onto the night. This site still drops its own transitions under Reduce Motion.</p>
       <button class="btn" type="button" id="motion-play">Play it again</button>
     </div>
   </div>
@@ -339,6 +339,13 @@
     <tbody>
       <tr id="motion-countdown" data-search="timeline countdown 1 second redraw" data-title="Countdown redraw · 1 s" data-kind="Motion"><td>Countdown redraw in the app</td><td><code>TimelineView(.countdown)</code>: every second, on the whole second</td></tr>
       <tr><td>Search grid refresh</td><td><code>.everyMinute</code></td></tr>
+      <tr id="motion-press" data-search="press button pressed scale release" data-title="Press · 0.16 s" data-kind="Motion"><td>Press (<code>PressStyle</code>)</td><td>Instant on press, <code>.easeOut(duration: 0.16)</code> on release. Hero: opacity 0.8. Rows and the quiet grid: scale 0.98. Posters, chips, Follow, the (+), “Find a show”: scale 0.97. Show detail’s card rows: white 0.08 more fill</td></tr>
+      <tr id="motion-drop" data-search="out now drop countdown transition" data-title="Out now · 0.4 s" data-kind="Motion"><td>“Out now” at the drop (<code>CountdownSlot</code>)</td><td>The slot keeps the digits’ height; opacity with scale 0.97 from the leading edge (trailing in rows), <code>.timingCurve(0.23, 1, 0.32, 1, duration: 0.4)</code>; opacity only under Reduce Motion. App screens only: widgets and the Live Activity cut</td></tr>
+      <tr><td>Still count’s hourly step</td><td><code>.contentTransition(.numericText(countsDown: true))</code> with <code>.smooth(duration: 0.35)</code>, keyed on the countdown’s state, so the ticking seconds never animate; the 24 h hand-off crossfades</td></tr>
+      <tr><td>Follow + to ✓</td><td><code>.contentTransition(.symbolEffect(.replace))</code>, <code>.snappy(duration: 0.25)</code>; the success haptic stays</td></tr>
+      <tr><td>Filter chips and grid</td><td><code>.snappy(duration: 0.2)</code>; the grid crossfades to the new filter</td></tr>
+      <tr><td>Stream delay and Live Activity switch</td><td>The bindings animate with <code>.snappy(duration: 0.25)</code>, so the delay’s words roll and the status line follows the switch</td></tr>
+      <tr><td>Welcome to the tabs</td><td>A crossfade, <code>.smooth(duration: 0.4)</code></td></tr>
       <tr><td>Search pause before it runs</td><td>400 ms</td></tr>
       <tr><td>Live Activity ring</td><td>System <code>ProgressView(timerInterval:)</code>, which moves with no app running</td></tr>
       <tr><td>Welcome wall drift</td><td>9 pt a second, linear, alternate rows in opposite directions, each starting part-way into its run (0, 0.42, 0.18); still under Reduce Motion</td></tr>
@@ -541,7 +548,7 @@
       <dt>Height</dt><dd>472 on Upcoming; 500 on Show detail and the show page</dd>
       <dt>Layers</dt><dd>The base colour, then the art filled and clipped, then base at 0 from 40% to full base at 100%, then black at 0.4 to clear by 25%</dd>
       <dt>Base</dt><dd><code>ArtworkPalette.night</code> of the art; <code>.neutral</code> until it loads</dd>
-      <dt>Motion</dt><dd>The art fades in over 0.35 s, ease out; no fade with Reduce Motion</dd>
+      <dt>Motion</dt><dd>The art fades in over 0.35 s, ease out, under Reduce Motion too</dd>
       <dt>VoiceOver</dt><dd>Hidden as decoration. On the show page: “Silo artwork, image”</dd>
       <dt>ID</dt><dd><code>show-preview-art</code>, on the show page only</dd>
       <dt>Source</dt><dd class="path">Features/Common/NightStyle.swift:50-65</dd>
@@ -1143,7 +1150,7 @@ Section {
     <div class="spec"><dl class="specs">
       <dt>Layout</dt><dd>Neutral night <code>#1C1C1C</code>; logo, 16, headline, 12, zone, 32, buttons 12 apart; sides and bottom 24</dd>
       <dt>Wall</dt><dd>This week’s show art, under the status bar over the top 60% of the screen: three rows 128, 172 and 128 tall, 8 apart, each starting part-way into its run so no two line up. TV posters and anime covers, with the first three TV shows as wide key art and every third anime as its wide banner; posters 2:3, wide art 16:9, radius 10, on white at 0.05 until each picture loads. Dimmed with night at 0.18, faded out by 90% of the rows’ height, and night at 0.7 fading to clear over the top 96 pt. Under 9 pictures the screen stays plain night. Hidden from VoiceOver</dd>
-      <dt>Motion</dt><dd>The wall fades in over 0.35 s, ease out, and so does each picture as it loads. Rows drift 9 pt a second, alternating direction. Under Reduce Motion the fades are skipped and the rows stay still</dd>
+      <dt>Motion</dt><dd>The wall fades in over 0.35 s, ease out, and so does each picture as it loads. Rows drift 9 pt a second, alternating direction. Under Reduce Motion the rows stay still; the fades stay</dd>
       <dt>Type</dt><dd>Logo lockup: the Longitudes mark (36 tall, gold star, scales with text size) and “Meridian” in New York title 2 (22), both Starlight · headline New York 34 · zone body medium, secondary</dd>
       <dt>Primary</dt><dd>“Find a show”: <code>PrimaryButtonStyle</code>, full width, at least 50 tall, white capsule, black <code>.headline</code></dd>
       <dt>Secondary</dt><dd>“Not now”: secondary ink, 44 tall</dd>
@@ -1168,25 +1175,28 @@ Section {
     <div class="spec"><dl class="specs">
       <dt>Radius</dt><dd>8 by default</dd>
       <dt>Loads</dt><dd>Poster 420 px · row art 300 · hero at the ideal background width · logo 120</dd>
-      <dt>Motion</dt><dd>A 0.35 s ease-out fade; none with Reduce Motion</dd>
+      <dt>Motion</dt><dd>A 0.35 s ease-out fade, under Reduce Motion too</dd>
       <dt>VoiceOver</dt><dd>Hidden, as decoration</dd>
       <dt>Source</dt><dd class="path">Features/Artwork/PosterImage.swift</dd>
     </dl><div class="codebox"><pre><code>PosterImage(url: result.poster, cornerRadius: 8)
     .aspectRatio(2 / 3, contentMode: .fit)</code></pre></div></div>
   </article>
 
-  <article class="comp" id="c-status-bar-scrim" data-search="StatusBarScrim status bar scrim upcoming scroll page colour fade" data-title="StatusBarScrim" data-kind="Component">
-    <div class="hrow"><h3>StatusBarScrim</h3></div>
-    <p class="purpose">Keeps the time and battery readable when Upcoming scrolls under the status bar: the page colour fading to clear.</p>
+  <article class="comp" id="c-status-bar-shade" data-search="StatusBarShade status bar shade scrim upcoming show page scroll page colour fade" data-title="StatusBarShade" data-kind="Component">
+    <div class="hrow"><h3>StatusBarShade</h3></div>
+    <p class="purpose">Keeps the time and battery (and a show page’s back button) readable when a page scrolls under the status bar: the page colour, solid through the bar, then fading to clear.</p>
     <div class="states">
-      <figure class="state"><div class="stage art-stage" style="width:342px;height:160px;padding:0"><div class="art warm"></div><div style="position:absolute;left:0;right:0;top:0;height:110px;background:linear-gradient(180deg,rgba(28,27,26,.9),rgba(28,27,26,0))"></div></div><figcaption>Over warm art, on its charcoal night <code>#1C1B1A</code></figcaption></figure>
+      <figure class="state"><div class="stage art-stage" style="width:342px;height:160px;padding:0"><div class="art warm"></div><div style="position:absolute;left:0;right:0;top:0;height:102px;background:linear-gradient(180deg,#1C1B1A 0%,#1C1B1A 61%,rgba(28,27,26,0) 100%)"></div></div><figcaption>Over warm art, on its charcoal night <code>#1C1B1A</code></figcaption></figure>
     </div>
     <div class="spec"><dl class="specs">
-      <dt>Gradient</dt><dd>The page’s night base at 0.9 at the top to 0, over 110 pt</dd>
-      <dt>Where</dt><dd>Upcoming only, overlaid at the top of the scroll view, under the status bar</dd>
+      <dt>Gradient</dt><dd>The page’s night base, solid as tall as the top safe area (the status bar, plus the invisible bar on a show page), then a 40 pt fade to clear</dd>
+      <dt>When</dt><dd>Fades in over 60 pt of scroll, ending as the text under the art reaches the status bar; over the art it would be a band across the picture. On a page with no art, from the first scroll</dd>
+      <dt>Where</dt><dd>Upcoming, Show detail, the Search show page and a quiet show’s page</dd>
       <dt>VoiceOver</dt><dd>Hidden; it never takes a touch</dd>
-      <dt>Source</dt><dd class="path">Features/Artwork/ArtworkLoaderView.swift:26-35</dd>
-    </dl><div class="codebox"><pre><code>.overlay(alignment: .top) { StatusBarScrim(color: base) }</code></pre></div></div>
+      <dt>Source</dt><dd class="path">Features/Common/StatusBarShade.swift</dd>
+    </dl><div class="codebox"><pre><code>ScrollView { … }
+    .background(base)
+    .statusBarShade(base, art: 500)  // also ignores the top safe area</code></pre></div></div>
   </article>
   </div>
 
@@ -1291,7 +1301,7 @@ Section {
       <tr><td>Hit targets</td><td>Filter chips are 34 tall with a 44 tall tap area. The Follow (+) is 32 inside 44 × 44. The back button is 44, Follow 50 tall, “Not now” 44.</td><td>At least 44</td></tr>
       <tr><td>Contrast</td><td id="a11y-contrast">See the <a href="#contrast">contrast matrix</a>.</td><td id="a11y-contrast-status">See matrix</td></tr>
       <tr><td>Dynamic Type</td><td>Everything in the app grows with the text size. Serif titles keep their designed size (32, 34, 28, 22, 20) and grow like large titles (<code>.serif(_:relativeTo:)</code>); countdowns grow like a large title too, 1.76 times at the largest size. At the accessibility sizes: a row’s countdown goes under its title, the service line and titles are never cut, Show detail’s episodes stack, the art header is 280 tall, Search shows one poster a row, Welcome scrolls and drops the poster wall. Widgets and the Live Activity keep fixed sizes on their fixed canvas. Checked at AX5 on every main screen (2 Nov).</td><td>Done</td></tr>
-      <tr><td>Reduce Motion</td><td>The three animations stop: the 0.35 s art fade and Welcome’s two fades (the wall, and each picture on it) are skipped, and the wall’s drifting rows stay still.</td><td>Done</td></tr>
+      <tr><td>Reduce Motion</td><td>Welcome’s drifting rows stay still and “Out now” arrives with a fade and no scale. The art fades stay: a fade moves nothing, and a cut would flash bright art onto the night.</td><td>Done</td></tr>
       <tr><td>Tinted and Always-On</td><td>The countdown and the empty headline take a widget’s tint; on the Lock Screen so do the inline line, the rectangular title and the circular ring, value and day number. Always-On hides the art and dims every other ink to 0.85 (was 0.7), so muted text stays legible.</td><td>Done</td></tr>
       <tr><td>Decorative images</td><td>Art, posters, logos, the Welcome wall and the poster mark are hidden from VoiceOver. Only one picture is labelled: the key art on the show page that Search opens (<code>ShowPreviewView</code>), read “Silo artwork, image”. Show detail’s and Upcoming’s art stay hidden.</td><td>Done</td></tr>
     </tbody></table></div>

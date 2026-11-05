@@ -26,6 +26,7 @@ struct DebugMenuView: View {
             } footer: {
                 Text("Adds “Debug Show” to Upcoming and the widgets until the app is relaunched.")
             }
+            .nightRow()
             Section("Live Activity") {
                 Button("Live Activity for fake drop in 3 min (lead 1 min)") { Task { await fakeActivity() } }
                     .accessibilityIdentifier("debug-activity")
@@ -38,17 +39,21 @@ struct DebugMenuView: View {
                 Button("Simulate delay +1 h") { Task { await delay() } }
                     .accessibilityIdentifier("debug-delay")
             }
+            .nightRow()
             siloDemo
             Section {
                 NavigationLink("Dump snapshot") { DebugSnapshotView() }
                     .accessibilityIdentifier("debug-snapshot")
             }
+            .nightRow()
             if let status {
                 Section("Last action") {
                     Text(status).accessibilityIdentifier("debug-status")
                 }
+                .nightRow()
             }
         }
+        .nightList()
         .navigationTitle("Debug")
     }
 
@@ -116,6 +121,7 @@ struct DebugMenuView: View {
             Text("Silo, its art, Apple TV and “Expected” are real; only the time is made up. The island shows only "
                 + "outside Meridian: go to the Home Screen. “Simulate delay +1 h” moves it too. A relaunch clears it.")
         }
+        .nightRow()
     }
 
     /// Sets Silo's demo drop (and its same-night partner), books its Live Activity when asked, then refreshes Upcoming
@@ -172,6 +178,7 @@ struct DebugSnapshotView: View {
                 .padding(Tokens.Space.m)
                 .accessibilityIdentifier("debug-snapshot-text")
         }
+        .background(ArtworkPalette.neutral.night.color)
         .navigationTitle("snapshot.json")
         .toolbar {
             Button("Copy") { UIPasteboard.general.string = text }

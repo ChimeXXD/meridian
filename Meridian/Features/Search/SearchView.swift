@@ -74,7 +74,8 @@ struct SearchView: View {
             .unfollowConfirmation($unfollowing, title: \.title) { show in
                 try? FollowStore(context: context).unfollow(catalog: show.catalog, id: show.id)
             }
-            .searchable(text: $query, prompt: "Shows and anime")
+            // Always shown, not hidden until a pull down (EA-5): Search is the field.
+            .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: "Shows and anime")
             .onSubmit(of: .search) { Task { await search() } }
             .task(id: "\(kind.rawValue)|\(airingAttempt)") { await loadAiring() }
             .onChange(of: kind) {
@@ -148,14 +149,20 @@ struct SearchView: View {
                 .foregroundStyle(NightInk.muted)
                 .accessibilityIdentifier(id)
             if let action {
-                Button(action.title, action: action.run)
-                    .buttonStyle(.bordered)
-                    .tint(.white)
-                    .accessibilityIdentifier("\(id)-action")
+                outlinedButton(action.title, id: "\(id)-action", action: action.run)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.top, Tokens.Space.l)
+    }
+
+    /// A way forward in the chips' outlined capsule, not the system's grey `.bordered` (EA-15).
+    private func outlinedButton(_ title: String, id: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title).font(.subheadline.weight(.medium)).modifier(ChipCapsule(picked: false))
+        }
+        .buttonStyle(.controlPress)
+        .accessibilityIdentifier(id)
     }
 
     /// This week's shows for the picked catalog, once; a failure says so and offers "Try again".
@@ -195,27 +202,34 @@ struct SearchView: View {
         let shown = AiringFilter.apply(filter.wrappedValue, to: airingSoon, now: now, formatter: formatter)
         let lines = Dictionary(shown.map { ($0.id, $0.releaseLine(now: now, formatter: formatter)) },
                                uniquingKeysWith: { first, _ in first })
-        if shown.isEmpty {
-            VStack(alignment: .leading, spacing: Tokens.Space.s) {
-                message(AiringFilter.noMatch(filter.wrappedValue, kind: kind), id: "search-filter-empty")
-                if filter.wrappedValue != .popular {
-                    Button("Show popular") { filter.wrappedValue = .popular }
-                        .buttonStyle(.bordered)
-                        .tint(.white)
-                        .accessibilityIdentifier("search-filter-clear")
+        Group {
+            if shown.isEmpty {
+                VStack(alignment: .leading, spacing: Tokens.Space.s) {
+                    message(AiringFilter.noMatch(filter.wrappedValue, kind: kind), id: "search-filter-empty")
+                    if filter.wrappedValue != .popular {
+                        outlinedButton("Show popular", id: "search-filter-clear") {
+                            withAnimation(.snappy(duration: 0.2)) { filter.wrappedValue = .popular }
+                        }
+                    }
                 }
-            }
-        } else {
-            posterGrid(kind == .tv ? "Airing in the next few days" : "Airing in Japan this week",
-                       headerID: "search-airing-header", shown.map(\.result), idPrefix: "airing",
-                       drops: Dictionary(shown.map { ($0.id, $0.drop) }, uniquingKeysWith: { first, _ in first })) { result in
-                VStack(alignment: .leading, spacing: 0) {
-                    if let network = result.network { Text(network) }
-                    if let line = lines[result.id] { Text(line) }
+            } else {
+                posterGrid(kind == .tv ? "Airing in the next few days" : "Airing in Japan this week",
+                           headerID: "search-airing-header", shown.map(\.result), idPrefix: "airing",
+                           drops: Dictionary(shown.map { ($0.id, $0.drop) }, uniquingKeysWith: { first, _ in first })) { result in
+                    VStack(alignment: .leading, spacing: 0) {
+                        if let network = result.network { Text(network) }
+                        // "Out tomorrow at 02:00" keeps "at" with its time when the cell wraps it (EA-12).
+                        if let line = lines[result.id] {
+                            Text(line.replacingOccurrences(of: " at ", with: " at\u{00A0}"))
+                        }
+                    }
+                    .accessibilityElement(children: .combine)
                 }
-                .accessibilityElement(children: .combine)
             }
         }
+        // A new filter crossfades the grid instead of swapping it in place (AD-11); the chip's tap animates it.
+        .id(filter.wrappedValue)
+        .transition(.opacity)
     }
 
     /// One grid for both lists, so the airing shows and the results can't drift apart. Cells are `<idPrefix>-<n>`.
@@ -243,59 +257,18 @@ struct SearchView: View {
         .padding(.top, Tokens.Space.s)
     }
 
-    /// Tapping the poster or its words opens the show's page; the (+) on the poster still follows in one tap. A tap
-    /// gesture, not a link, so the cell's parts keep their own IDs for the screen checks; VoiceOver opens the page
-    /// from the title.
     private func posterCell(_ result: SearchResult, id: String, meta: some View, route: ShowRoute) -> some View {
-        VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
-            PosterImage(url: result.poster, cornerRadius: 8)
-                .aspectRatio(2 / 3, contentMode: .fit)
-                .overlay(alignment: .topTrailing) {
-                    followButton(result, size: 32, id: "\(id)-follow").padding(Tokens.Space.xxs)
-                }
-            Text(result.title)
-                .font(.subheadline.weight(.medium))  // a step above its 12 pt info lines (UX audit #26)
-                .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
-                .accessibilityAddTraits(.isButton)
-                .accessibilityHint("Opens the show")
-                .accessibilityAction { path.append(route) }
-                .accessibilityIdentifier("\(id)-title")
-            // Two lines a part, so a long network ("Amazon Prime Video") can't push its country out of the cell.
-            meta
-                .font(.caption)
-                .foregroundStyle(NightInk.muted)
-                .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
-                .accessibilityIdentifier("\(id)-meta")
-        }
-        .contentShape(Rectangle())
-        .onTapGesture { path.append(route) }
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier(id)
-    }
-
-    private func followButton(_ result: SearchResult, size: CGFloat, id: String) -> some View {
         let following = followed.contains { $0.key == FollowedShow.key(catalog: result.catalog, id: result.id) }
-        // Following is one tap; unfollowing asks first, as everywhere (UX audit #15).
-        return Button {
+        return SearchPosterCell(result: result, id: id, meta: meta, following: following,
+                                onOpen: { path.append(route) }) {
+            // Following is one tap; unfollowing asks first, as everywhere (UX audit #15).
             if following {
                 unfollowing = result
             } else {
                 // A tap you feel on follow, only once the show is really saved.
                 if (try? FollowStore(context: context).follow(result.followShow)) != nil { followTaps += 1 }
             }
-        } label: {
-            Image(systemName: following ? "checkmark" : "plus")
-                .font(.system(size: size * 0.4, weight: .semibold))
-                .foregroundStyle(following ? .black : .white)
-                .frame(width: size, height: size)
-                .background(following ? AnyShapeStyle(.white) : AnyShapeStyle(.black.opacity(0.55)), in: Circle())
-                .overlay(Circle().strokeBorder(.white.opacity(following ? 0 : 0.35)))
         }
-        .buttonStyle(.plain)
-        .frame(minWidth: 44, minHeight: 44)
-        .contentShape(Rectangle())
-        .accessibilityLabel(following ? "Following \(result.title)" : "Follow \(result.title)")
-        .accessibilityIdentifier(id)
     }
 
     private func search() async {

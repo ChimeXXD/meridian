@@ -22,12 +22,14 @@ struct ShowDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage(LeadTime.storageKey) private var leadMinutes = LeadTime.defaultMinutes
 
+    private static let artHeight: CGFloat = 500
+
     var body: some View {
         ArtworkLoaderView(url: artwork?.hero, maxPixel: ShowArtwork.idealBackgroundWidth) { hero in
             let base = (hero?.palette ?? .neutral).night.color
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    NightArtHeader(image: hero?.image, base: base, height: 500)
+                    NightArtHeader(image: hero?.image, base: base, height: Self.artHeight)
                     VStack(alignment: .leading, spacing: Tokens.Space.xl) {
                         // Only the countdown follows the clock, so only it redraws every second.
                         TimelineView(.countdown) { context in next(now: context.date) }
@@ -52,7 +54,8 @@ struct ShowDetailView: View {
             .scrollIndicators(.hidden)
             .defaultScrollAnchor(scrollAnchor)
             .background(base)
-            .ignoresSafeArea(edges: .top)
+            // Once the text passes the art, the status bar gets the page colour behind it (AD-4).
+            .statusBarShade(base, art: Self.artHeight)
         }
         // The system bar stays, invisible, so its back button brings the edge swipe back (Chime, 2 Nov: hiding it
         // and drawing our own button switched the gesture off). On iOS 26 that button is a glass circle over the art.
@@ -84,7 +87,8 @@ struct ShowDetailView: View {
         // The link sits beside the switch, not in its label: a Toggle merges its label into one VoiceOver element,
         // which would leave the link unreachable.
         VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
-            Toggle(isOn: $liveActivity) {
+            // Animated, so the status line under it changes with the switch instead of snapping (AD-8).
+            Toggle(isOn: $liveActivity.animation(.snappy(duration: 0.25))) {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Release-night Live Activity").font(.body)
                     Text(LiveActivityStatus.text(activityStatus, leadMinutes: leadMinutes))
@@ -105,7 +109,8 @@ struct ShowDetailView: View {
     /// An anime streams a set time after its Japanese broadcast: the delay in steps of 15 minutes, said in words.
     /// Changing it refreshes the times, so the countdown, its "Expected" and the Live Activity follow (UX audit #5).
     private func offsetRow(_ minutes: Binding<Int>) -> some View {
-        Stepper(value: minutes, in: AnimeOffset.range, step: AnimeOffset.step) {
+        // Animated, or the phrase's `.numericText` roll never plays (AD-8).
+        Stepper(value: minutes.animation(.snappy(duration: 0.25)), in: AnimeOffset.range, step: AnimeOffset.step) {
             VStack(alignment: .leading, spacing: 2) {
                 Text("Stream delay").font(.body)
                 Text(AnimeOffset.phrase(minutes.wrappedValue))

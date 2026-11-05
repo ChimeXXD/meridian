@@ -134,7 +134,6 @@ private struct WallTile: View {
     let decodeLength: CGFloat
 
     @Environment(\.displayScale) private var scale
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var image: UIImage?
 
     var body: some View {
@@ -151,7 +150,8 @@ private struct WallTile: View {
             .task(id: url) {
                 let maxPixel = Int(decodeLength * scale)
                 guard let loaded = try? await ArtworkLoader.shared.load(url, maxPixel: maxPixel) else { return }
-                withAnimation(reduceMotion ? nil : .easeOut(duration: 0.35)) { image = loaded.image }
+                // Faded under Reduce Motion too: a fade moves nothing (AD-3); only the drift stops.
+                withAnimation(.easeOut(duration: 0.35)) { image = loaded.image }
             }
     }
 }

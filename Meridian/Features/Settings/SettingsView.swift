@@ -19,6 +19,7 @@ struct SettingsView: View {
                     LabeledContent("Automatic", value: ReleaseWording.zoneSummary(formatter, at: .now))
                         .accessibilityIdentifier("settings-zone")
                 }
+                .nightRow()
                 Section {
                     Picker("Live Activity lead time", selection: $leadMinutes) {
                         ForEach(LeadTime.choices, id: \.self) { minutes in
@@ -30,17 +31,21 @@ struct SettingsView: View {
                 } footer: {
                     Text("The release-night Live Activity starts this long before an episode is out.")
                 }
+                .nightRow()
                 Section {
                     NavigationLink("Credits & licences") { CreditsView() }
                         .accessibilityIdentifier("settings-credits")
                 }
+                .nightRow()
                 #if DEBUG
                 Section {
                     NavigationLink("Debug") { DebugMenuView(model: model, scheduler: scheduler) }
                         .accessibilityIdentifier("settings-debug")
                 }
+                .nightRow()
                 #endif
             }
+            .nightList()
             .navigationTitle("Settings")
         }
         // The switch lives in iOS Settings, so read it again whenever the user may have come back from there.
@@ -91,6 +96,7 @@ struct CreditsView: View {
                     .accessibilityIdentifier("credits-logos")
                 ForEach(Self.logoCredits, id: \.self) { Text($0).font(.footnote) }
             }
+            .nightRow()
             Section {
                 Text("Meridian is open source under the MIT licence")
                     .accessibilityIdentifier("credits-licence")
@@ -101,7 +107,9 @@ struct CreditsView: View {
                      destination: URL(string: "https://github.com/ChimeXXD/meridian/blob/main/PRIVACY.md")!)
                     .accessibilityIdentifier("credits-privacy")
             }
+            .nightRow()
         }
+        .nightList()
         .navigationTitle("Credits & licences")
     }
 }

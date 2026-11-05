@@ -48,9 +48,13 @@ struct ReleaseHeadline: View {
                 .accessibilityIdentifier("\(testID)-title")
             // A date-only drop has no countdown: its day is in the out line, so it isn't said twice in big type.
             if drop.confidence != .dateOnly {
-                CountdownText(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate, now: now,
-                              size: countdownSize, tint: .white, formatter: formatter)
+                // The slot holds the line's height at the drop and brings "Out now" in (EA-2).
+                CountdownSlot(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate, now: now,
+                              size: countdownSize, formatter: formatter)
                     .environment(\.numeralStudy, .night)
+                    // The light serif's digits carry a side bearing, so at the same x they start 2 pt right of the
+                    // title's first letter; pulled back by 3% of the size to line up optically (EA-16).
+                    .padding(.leading, -countdownSize * 0.03)
             }
             Text(ReleaseWording.outLine(drop, now: now, formatter: formatter, naming: true))
                 .font(.body.weight(.medium))

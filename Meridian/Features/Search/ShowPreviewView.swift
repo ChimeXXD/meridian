@@ -28,12 +28,14 @@ struct ShowPreviewView: View {
     /// before the key art replaces it.
     private var heroURL: URL? { loaded ? artwork?.hero ?? result.largePoster : nil }
 
+    private static let artHeight: CGFloat = 500
+
     var body: some View {
         ArtworkLoaderView(url: heroURL, maxPixel: ShowArtwork.idealBackgroundWidth) { hero in
             let base = (hero?.palette ?? .neutral).night.color
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    NightArtHeader(image: hero?.image, base: base, height: 500)
+                    NightArtHeader(image: hero?.image, base: base, height: Self.artHeight)
                         .accessibilityElement()
                         .accessibilityLabel("\(result.title) artwork")
                         .accessibilityAddTraits(.isImage)
@@ -69,7 +71,8 @@ struct ShowPreviewView: View {
             }
             .scrollIndicators(.hidden)
             .background(base)
-            .ignoresSafeArea(edges: .top)
+            // Once the text passes the art, the status bar gets the page colour behind it (AD-4).
+            .statusBarShade(base, art: Self.artHeight)
         }
         // The system bar stays, invisible, so its back button brings the edge swipe back (Chime, 2 Nov: hiding it
         // and drawing our own button switched the gesture off). On iOS 26 that button is a glass circle over the art.
@@ -99,13 +102,15 @@ struct ShowPreviewView: View {
             if following { confirmingUnfollow = true } else { try? FollowStore(context: context).follow(result.followShow) }
         } label: {
             Label(following ? "Following" : "Follow", systemImage: following ? "checkmark" : "plus")
+                .contentTransition(.symbolEffect(.replace))  // + turns into ✓ instead of snapping (AD-5)
                 .font(.headline)
                 .foregroundStyle(following ? .white : .black)
                 .frame(maxWidth: .infinity, minHeight: 50)
                 .background(following ? AnyShapeStyle(.white.opacity(0.12)) : AnyShapeStyle(.white), in: Capsule())
                 .overlay(Capsule().strokeBorder(.white.opacity(following ? 0.35 : 0)))
+                .animation(.snappy(duration: 0.25), value: following)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.controlPress)
         .accessibilityLabel(following ? "Following \(result.title)" : "Follow \(result.title)")
         .sensoryFeedback(.success, trigger: following) { old, new in !old && new }
         .accessibilityIdentifier("show-preview-follow")

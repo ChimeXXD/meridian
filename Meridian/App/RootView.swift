@@ -21,7 +21,10 @@ struct RootView: View {
     @State private var tab = AppTab.upcoming
 
     var body: some View {
-        content
+        // Welcome hands over to the tabs with a crossfade, not a cut (AD-7); a fade moves nothing, so it stays under
+        // Reduce Motion.
+        ZStack { content }
+            .animation(.smooth(duration: 0.4), value: showsWelcome)
             // A follow, an unfollow or an anime's new stream delay reloads the times.
             .task(id: followed.map { "\($0.key):\($0.animeOffsetMinutes)" }) { await refresh() }
             .onChange(of: scenePhase) { _, phase in
@@ -61,10 +64,13 @@ struct RootView: View {
                              leadMinutes: leadMinutes, rebookPending: rebookPending)
     }
 
+    private var showsWelcome: Bool { !welcomeDone && followed.isEmpty }
+
     @ViewBuilder private var content: some View {
-        if !welcomeDone && followed.isEmpty {
+        if showsWelcome {
             WelcomeView(client: client, anilist: anilist, rules: model.rules,
                         onFind: { welcomeDone = true; tab = .search }, onLater: { welcomeDone = true })
+                .transition(.opacity)
         } else {
             TabView(selection: $tab) {
                 Tab("Upcoming", systemImage: "clock", value: .upcoming) {
@@ -81,6 +87,7 @@ struct RootView: View {
             }
             .tint(.white)
             .environment(\.colorScheme, .dark)
+            .transition(.opacity)
         }
     }
 }

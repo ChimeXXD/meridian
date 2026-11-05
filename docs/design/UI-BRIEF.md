@@ -39,7 +39,13 @@ Taken as counterexamples, not patterns: #24 Paramount+ (US-only times) and #64 P
 - **One accent**, set by the chosen numeral study (§3). It is used for the countdown tint in the Dynamic Island and for controls, never for status.
 - **Spacing:** 4 · 8 · 12 · 16 · 24 · 32 pt. **Radius:** chip = capsule, row card 14 pt, sheet 20 pt.
 - **Type:** text styles so Dynamic Type works (SPEC AX5 criterion). The numeral face comes from the chosen study. Everything else is SF Pro.
-- **Motion:** system defaults only, with no custom animations. Reduce Motion needs no extra work.
+- **Motion:** system motion first (push, pop, edge swipe, refresh, sheets), plus a few short custom moves, each with one job (pass 2, 5 Nov 2026):
+  - **Press:** one `PressStyle`, instant on press and a 0.16 s ease out on release. The hero dims to 0.8; rows and the quiet grid scale to 0.98; posters, chips, Follow, the (+) and "Find a show" scale to 0.97; Show detail's card rows get a lighter fill.
+  - **The drop:** the countdown's slot keeps its height, so "Out now" fades in with a 0.97 scale from the reading edge, on `timingCurve(0.23, 1, 0.32, 1)` over 0.4 s, and nothing below it moves. The still count's hourly step rolls (`.numericText`, `.smooth` 0.35 s), keyed on the countdown's state; the ticking digits never animate (D-52). All of this is app-only: the shared `CountdownText` in widgets and the Live Activity is untouched.
+  - **State changes:** Follow's + turns into ✓ (`.symbolEffect(.replace)`, `.snappy` 0.25 s); the filter chips change in `.snappy` 0.2 s and the grid crossfades; the stream delay and the Live Activity switch animate their lines (`.snappy` 0.25 s); Welcome hands over to the tabs with a 0.4 s crossfade.
+  - **Art:** fades in over 0.35 s, ease out; Welcome's wall drifts 9 pt a second.
+  - **Status bar:** a shade of the page colour, solid through the bar and fading over 40 pt, appears as the text under the art reaches it.
+  - **Reduce Motion:** the drift stops and the drop's scale becomes a plain fade. Fades stay, because they move nothing and a cut would flash bright art onto the night.
 
 ## 3. Numeral studies (Chime picks one)
 

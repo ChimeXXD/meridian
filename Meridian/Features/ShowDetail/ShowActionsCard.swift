@@ -30,8 +30,9 @@ struct ShowActionsCard: View {
             }
             .accessibilityIdentifier("detail-unfollow")
         }
-        .buttonStyle(.plain)
+        .buttonStyle(CardRowPressStyle())
         .background(.white.opacity(0.08), in: .rect(cornerRadius: Tokens.Radius.card))
+        .clipShape(.rect(cornerRadius: Tokens.Radius.card))  // keeps a pressed row's fill inside the corners
         .unfollowConfirmation(showName, isPresented: $confirmingUnfollow, onUnfollow: onUnfollow)
     }
 
