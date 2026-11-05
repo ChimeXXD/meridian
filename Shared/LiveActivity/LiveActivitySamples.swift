@@ -1,6 +1,7 @@
 import Foundation
 
-/// Sample Live Activities for the previews and `LiveActivityLayoutTests`: every state UI-BRIEF §6.2 lists. No artwork
+/// Sample Live Activities for the previews and `LiveActivityLayoutTests`: every state UI-BRIEF §6.2 lists, and the
+/// worst cases the layouts must survive. No artwork
 /// is committed (CLAUDE.md rule 9): the tests pass neutral placeholders. Each
 /// activity started 40 minutes before `now`, so its ring is partly filled.
 enum LiveActivitySamples {
@@ -45,6 +46,48 @@ enum LiveActivitySamples {
             .init(phase: .upcoming, dropDate: now + 3 * hour, delayedFrom: now + 2 * hour)
         case .outNow:
             .init(phase: .outNow, dropDate: now - 600, delayedFrom: nil)
+        }
+    }
+
+    /// Worst cases for the previews and the guard tests (break-ui, 5 Nov), kept out of `Case` so the design system
+    /// shows the real states only.
+    enum WorstCase: String, CaseIterable, Sendable {
+        /// A 60-character name on "Paramount+ with Showtime · US", with four more merged in.
+        case longMerged
+        /// The long name, running, then delayed by a day: its timer is past 24 hours.
+        case delayedADay
+        /// One second to go.
+        case oneSecond
+        /// A title that is a single emoji, with no episode or provider.
+        case emojiOnly
+    }
+
+    static func attributes(_ worst: WorstCase, now: Date = .now) -> DropActivityAttributes {
+        let long = "Ascendance of a Bookworm: Adopted Daughter of an Archduke II"
+        var attributes = switch worst {
+        case .longMerged:
+            DropActivityAttributes(dropIDs: (1...5).map { "tvmaze:\($0):s12e104" }, showName: long,
+                                   episodeLabel: "S12E104", provider: "Paramount+ with Showtime · US", verb: .expected,
+                                   noOfficialStream: true)
+        case .delayedADay:
+            DropActivityAttributes(dropIDs: ["tvmaze:1:s12e104"], showName: long, episodeLabel: "S12E104",
+                                   provider: "Paramount+ with Showtime · US", verb: .out)
+        case .oneSecond:
+            hotd
+        case .emojiOnly:
+            DropActivityAttributes(dropIDs: ["tvmaze:2:s1e1"], showName: "💍", episodeLabel: "", provider: nil,
+                                   verb: .expected)
+        }
+        attributes.windowStart = now - 40 * 60
+        return attributes
+    }
+
+    static func state(_ worst: WorstCase, now: Date) -> DropActivityAttributes.ContentState {
+        let hour: TimeInterval = 3_600
+        return switch worst {
+        case .longMerged, .emojiOnly: .init(phase: .upcoming, dropDate: now + 2 * hour, delayedFrom: nil)
+        case .delayedADay: .init(phase: .upcoming, dropDate: now + 26 * hour, delayedFrom: now + 2 * hour)
+        case .oneSecond: .init(phase: .upcoming, dropDate: now + 1, delayedFrom: nil)
         }
     }
 

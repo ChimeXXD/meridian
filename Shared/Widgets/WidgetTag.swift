@@ -9,10 +9,11 @@ struct WidgetTag: View {
     @Environment(\.isLuminanceReduced) private var dimmed
 
     var body: some View {
-        Text(text)
+        // A long provider shortens before its country (D-20): "Paramount+ with Sh… · US".
+        CountryKeepingText(line: text)
             .font(.system(size: 11, weight: .semibold))
             .foregroundStyle(WidgetInk.dimmed(WidgetInk.primary, when: dimmed))
-            .lineLimit(1).minimumScaleFactor(0.8)
+            .minimumScaleFactor(0.8)
             .padding(.horizontal, 7)
             .padding(.vertical, 3)
             .background(.black.opacity(0.45), in: Capsule())

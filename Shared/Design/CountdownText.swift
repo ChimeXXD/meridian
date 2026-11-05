@@ -20,6 +20,9 @@ struct CountdownText: View {
     var formatter = DropFormatter()
     /// Where the digits sit inside the template's width: trailing in right-aligned columns.
     var alignment: Alignment = .leading
+    /// False in widgets, which draw on a fixed canvas: there only the countdown grew, so at the largest text size it
+    /// pushed the medium widget 32 pt past its height (break-ui BU-8). App screens grow it with the text.
+    var scalesWithText = true
 
     @Environment(\.numeralStudy) private var study
     /// Grows like a large title (1.76 times at the largest size), not like body text (3.1 times), so at large text
@@ -62,11 +65,13 @@ struct CountdownText: View {
         }
     }
 
-    private var digits: Font { study.font(size: size * scale).monospacedDigit() }
+    private var growth: CGFloat { scalesWithText ? scale : 1 }
+
+    private var digits: Font { study.font(size: size * growth).monospacedDigit() }
 
     /// Words and unit letters at a fraction of the numerals, but never under 11 pt (UX audit #19: 7.5 pt in the
     /// widgets' compact rows).
-    private func minor(_ factor: CGFloat) -> Font { study.font(size: max(size * factor * scale, 11)) }
+    private func minor(_ factor: CGFloat) -> Font { study.font(size: max(size * factor * growth, 11)) }
 
     /// The last day's live count, inside a hidden template as wide as its widest value.
     private var live: some View {

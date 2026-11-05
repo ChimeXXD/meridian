@@ -73,12 +73,14 @@ struct LargeWidgetView: View {
 
     private func heroBlock(_ drop: Drop) -> some View {
         VStack(alignment: .leading, spacing: 0) {
+            // Two lines before it shortens: one cut a long name with room to spare (break-ui BU-11). The small
+            // widget's title stays on one line (D-46).
             Text(drop.showName)
                 .font(.system(size: 24, design: .serif))
                 .foregroundStyle(WidgetInk.dimmed(WidgetInk.primary, when: dimmed))
-                .lineLimit(1).minimumScaleFactor(0.75)
+                .lineLimit(2).minimumScaleFactor(0.75)
             CountdownText(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate, now: moment.date,
-                          size: 46, tint: WidgetInk.primary, formatter: formatter)
+                          size: 46, tint: WidgetInk.primary, formatter: formatter, scalesWithText: false)
                 .environment(\.numeralStudy, .night)
             Text(WidgetText.outLine(drop, now: moment.date, formatter: formatter))
                 .font(.system(size: 13, weight: .medium))

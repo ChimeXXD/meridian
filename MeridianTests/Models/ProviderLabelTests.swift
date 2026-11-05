@@ -27,4 +27,16 @@ struct ProviderLabelTests {
         let label = ProviderLabel(name: "Disney+", countryCode: nil, viewerCountry: viewer, rules: Self.rules)
         #expect(label.noOfficialStream == expected)
     }
+
+    @Test("a line that ends with a country splits there, so a tight line shortens the words and keeps ' · US'",
+          arguments: [("Paramount+ with Showtime · US", "Paramount+ with Showtime", " · US"),
+                      ("S12E104 · Paramount+ with Showtime · US", "S12E104 · Paramount+ with Showtime", " · US"),
+                      ("S2E5 · Apple TV", "S2E5 · Apple TV", nil),
+                      ("Apple TV", "Apple TV", nil),
+                      ("+3 more this week", "+3 more this week", nil)])
+    func countrySplit(line: String, lead: String, country: String?) {
+        let split = ProviderLabel.splitCountry(line)
+        #expect(split.lead == lead)
+        #expect(split.country == country)
+    }
 }

@@ -80,7 +80,8 @@ struct MediumWidgetView: View {
             .layoutPriority(1)
             Spacer(minLength: Tokens.Space.xs)
             CountdownText(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate, now: moment.date,
-                          size: 32, tint: WidgetInk.primary, formatter: formatter, alignment: .trailing)
+                          size: 32, tint: WidgetInk.primary, formatter: formatter, alignment: .trailing,
+                          scalesWithText: false)
                 .environment(\.numeralStudy, .night)
                 .fixedSize(horizontal: true, vertical: false)
         }

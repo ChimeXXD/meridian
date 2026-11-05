@@ -231,14 +231,14 @@
       "width" : 1113
     },
     "lock-countingDown-art.png" : {
-      "height" : 424,
+      "height" : 406,
       "holes" : [
         {
           "align" : "center",
           "circle" : false,
           "corner" : "none",
           "fit" : "cover",
-          "h" : 424,
+          "h" : 406,
           "kind" : "wide",
           "radius" : 0,
           "show" : "Silo",
@@ -250,14 +250,14 @@
       "width" : 1080
     },
     "lock-countingDown-longest-art.png" : {
-      "height" : 424,
+      "height" : 474,
       "holes" : [
         {
           "align" : "center",
           "circle" : false,
           "corner" : "none",
           "fit" : "cover",
-          "h" : 424,
+          "h" : 474,
           "kind" : "wide",
           "radius" : 0,
           "show" : "Silo",
@@ -269,14 +269,14 @@
       "width" : 1080
     },
     "lock-delayed-art.png" : {
-      "height" : 471,
+      "height" : 453,
       "holes" : [
         {
           "align" : "center",
           "circle" : false,
           "corner" : "none",
           "fit" : "cover",
-          "h" : 471,
+          "h" : 453,
           "kind" : "wide",
           "radius" : 0,
           "show" : "House of the Dragon",
@@ -288,14 +288,14 @@
       "width" : 1080
     },
     "lock-delayed-longest-art.png" : {
-      "height" : 471,
+      "height" : 453,
       "holes" : [
         {
           "align" : "center",
           "circle" : false,
           "corner" : "none",
           "fit" : "cover",
-          "h" : 471,
+          "h" : 453,
           "kind" : "wide",
           "radius" : 0,
           "show" : "House of the Dragon",
@@ -307,14 +307,14 @@
       "width" : 1080
     },
     "lock-longName-art.png" : {
-      "height" : 424,
+      "height" : 474,
       "holes" : [
         {
           "align" : "center",
           "circle" : false,
           "corner" : "none",
           "fit" : "cover",
-          "h" : 424,
+          "h" : 474,
           "kind" : "wide",
           "radius" : 0,
           "show" : "Frieren: Beyond Journey's End",
@@ -326,14 +326,14 @@
       "width" : 1080
     },
     "lock-longName-longest-art.png" : {
-      "height" : 424,
+      "height" : 474,
       "holes" : [
         {
           "align" : "center",
           "circle" : false,
           "corner" : "none",
           "fit" : "cover",
-          "h" : 424,
+          "h" : 474,
           "kind" : "wide",
           "radius" : 0,
           "show" : "Frieren: Beyond Journey's End",
@@ -345,14 +345,14 @@
       "width" : 1080
     },
     "lock-merged-art.png" : {
-      "height" : 424,
+      "height" : 406,
       "holes" : [
         {
           "align" : "center",
           "circle" : false,
           "corner" : "none",
           "fit" : "cover",
-          "h" : 424,
+          "h" : 406,
           "kind" : "wide",
           "radius" : 0,
           "show" : "Silo",
@@ -364,14 +364,14 @@
       "width" : 1080
     },
     "lock-merged-longest-art.png" : {
-      "height" : 424,
+      "height" : 474,
       "holes" : [
         {
           "align" : "center",
           "circle" : false,
           "corner" : "none",
           "fit" : "cover",
-          "h" : 424,
+          "h" : 474,
           "kind" : "wide",
           "radius" : 0,
           "show" : "Silo",
@@ -383,14 +383,14 @@
       "width" : 1080
     },
     "lock-outNow-art.png" : {
-      "height" : 424,
+      "height" : 406,
       "holes" : [
         {
           "align" : "center",
           "circle" : false,
           "corner" : "none",
           "fit" : "cover",
-          "h" : 424,
+          "h" : 406,
           "kind" : "wide",
           "radius" : 0,
           "show" : "Silo",
@@ -402,14 +402,14 @@
       "width" : 1080
     },
     "lock-outNow-longest-art.png" : {
-      "height" : 424,
+      "height" : 474,
       "holes" : [
         {
           "align" : "center",
           "circle" : false,
           "corner" : "none",
           "fit" : "cover",
-          "h" : 424,
+          "h" : 474,
           "kind" : "wide",
           "radius" : 0,
           "show" : "Silo",
@@ -421,14 +421,14 @@
       "width" : 1080
     },
     "lock-stale-art.png" : {
-      "height" : 424,
+      "height" : 406,
       "holes" : [
         {
           "align" : "center",
           "circle" : false,
           "corner" : "none",
           "fit" : "cover",
-          "h" : 424,
+          "h" : 406,
           "kind" : "wide",
           "radius" : 0,
           "show" : "Silo",
@@ -440,14 +440,14 @@
       "width" : 1080
     },
     "lock-stale-longest-art.png" : {
-      "height" : 424,
+      "height" : 474,
       "holes" : [
         {
           "align" : "center",
           "circle" : false,
           "corner" : "none",
           "fit" : "cover",
-          "h" : 424,
+          "h" : 474,
           "kind" : "wide",
           "radius" : 0,
           "show" : "Silo",

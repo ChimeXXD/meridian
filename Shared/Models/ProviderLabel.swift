@@ -10,6 +10,15 @@ struct ProviderLabel: Codable, Hashable, Sendable {
         guard let countryCode else { return name }
         return "\(name) · \(countryCode)"
     }
+
+    /// A line that ends with a country code, split before it: "S2E5 · HBO · US" is ("S2E5 · HBO", " · US"), so a tight
+    /// line shortens the words and keeps the country (D-20, CLAUDE.md rule 11). A line without one keeps it all.
+    static func splitCountry(_ line: String) -> (lead: String, country: String?) {
+        guard let dot = line.range(of: " · ", options: .backwards) else { return (line, nil) }
+        let code = line[dot.upperBound...]
+        guard code.count == 2, code.allSatisfy({ $0.isASCII && $0.isUppercase }) else { return (line, nil) }
+        return (String(line[..<dot.lowerBound]), String(line[dot.lowerBound...]))
+    }
 }
 
 extension ProviderLabel {

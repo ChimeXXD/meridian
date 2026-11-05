@@ -2,7 +2,8 @@ import SwiftUI
 import UIKit
 
 /// The `.small` activity family (SPEC §6: Watch Smart Stack, Mac menu bar, CarPlay): the poster mark and the title in
-/// serif, the label's words over the countdown, and the local time. Same words as the Lock Screen, fewer of them.
+/// serif ("+ 1 more" smaller after it when same-night drops merge), the label's words over the countdown, and the
+/// local time. Same words as the Lock Screen, fewer of them.
 struct LiveActivitySmallView: View {
     let attributes: DropActivityAttributes
     let state: DropActivityAttributes.ContentState
@@ -17,11 +18,20 @@ struct LiveActivitySmallView: View {
         VStack(alignment: .leading, spacing: 2) {
             HStack(spacing: 6) {
                 LiveActivityPosterMark(attributes: attributes, poster: poster, size: 18)
-                Text(LiveActivityText.title(attributes))
-                    .font(.system(size: 15, weight: .medium, design: .serif))
-                    .foregroundStyle(LiveActivityInk.primary)
-                    .lineLimit(1)
-                    .accessibilityIdentifier("la-small-title")
+                // A long name shortens; "+ 4 more" after it stays, as on the Lock Screen (break-ui BU-4).
+                HStack(alignment: .firstTextBaseline, spacing: 4) {
+                    Text(verbatim: attributes.showName.trimmingCharacters(in: .whitespaces))
+                        .font(.system(size: 15, weight: .medium, design: .serif))
+                        .foregroundStyle(LiveActivityInk.primary)
+                        .lineLimit(1)
+                        .accessibilityIdentifier("la-small-title")
+                    if let more = LiveActivityText.more(attributes) {
+                        Text(more)
+                            .font(.system(size: 11, weight: .semibold))
+                            .foregroundStyle(LiveActivityInk.secondary)
+                            .fixedSize()
+                    }
+                }
             }
             .padding(.bottom, 2)
             Text(LiveActivityText.band(attributes, out: out))

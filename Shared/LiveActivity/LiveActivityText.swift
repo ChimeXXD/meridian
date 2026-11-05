@@ -96,9 +96,12 @@ enum LiveActivityText {
         return "\(previous < state.dropDate ? "Delayed" : "Moved") from \(time)"
     }
 
-    /// The show's initial, where there's no poster: its first letter or digit, "S" for Silo.
+    /// The show's initial, where there's no poster: its first letter or digit, "S" for Silo; a title with neither
+    /// ("💍") shows its first character, and only an empty one a bullet.
     static func monogram(_ attributes: DropActivityAttributes) -> String {
-        attributes.showName.first(where: { $0.isLetter || $0.isNumber }).map { String($0).uppercased() } ?? "•"
+        let name = attributes.showName.trimmingCharacters(in: .whitespacesAndNewlines)
+        if let initial = name.first(where: { $0.isLetter || $0.isNumber }) { return String(initial).uppercased() }
+        return name.first.map(String.init) ?? "•"
     }
 
     // MARK: - Private

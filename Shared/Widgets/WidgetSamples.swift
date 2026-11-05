@@ -1,7 +1,7 @@
 import Foundation
 
-/// Sample moments for the widget previews and `WidgetRenderTests`: every state UI-BRIEF §6.1 lists. No artwork
-/// (CLAUDE.md rule 9); the placeholder entry uses `.countdown`.
+/// Sample moments for the widget previews and `WidgetRenderTests`: every state UI-BRIEF §6.1 lists, and the worst
+/// cases the layouts must survive. No artwork (CLAUDE.md rule 9); the placeholder entry uses `.countdown`.
 enum WidgetSamples {
     enum Case: String, CaseIterable, Sendable {
         /// Silo in 2 days 4 hours by Apple TV's usual time, then two more (3 rows).
@@ -71,11 +71,60 @@ enum WidgetSamples {
                                      nothingScheduled: [.quiet, .allQuiet].contains(sample) ? quietShows : [])
     }
 
-    private static func drop(_ showID: String, _ name: String, season: Int, number: Int, at date: Date,
+    /// Worst cases for the previews and the guard tests (break-ui, 5 Nov), kept out of `Case` so the design system
+    /// shows the real states only.
+    enum WorstCase: String, CaseIterable, Sendable {
+        /// A 60-character name on "Paramount+ with Showtime · US" in 2 days, then a long name and a one-letter one.
+        case longNames
+        /// The long name ticking, then Japanese and Arabic names.
+        case longTicking
+        /// Over a year away: the top line needs its date and year.
+        case farAway
+        /// The long name just out.
+        case longOutNow
+    }
+
+    static let longName = "Ascendance of a Bookworm: Adopted Daughter of an Archduke II"
+    static let longProvider = ProviderLabel(name: "Paramount+ with Showtime", countryCode: "US", noOfficialStream: true)
+
+    static func moment(_ worst: WorstCase, now: Date) -> WidgetMoment {
+        let hour: TimeInterval = 3_600, day: TimeInterval = 86_400
+        let prime = ProviderLabel(name: "Prime Video", countryCode: nil, noOfficialStream: false)
+        let fx = ProviderLabel(name: "FX", countryCode: "US", noOfficialStream: false)
+        let tokyoMX = ProviderLabel(name: "Tokyo MX", countryCode: "JP", noOfficialStream: false)
+        let hbo = ProviderLabel(name: "HBO", countryCode: "US", noOfficialStream: true)
+        func sure(_ id: String, _ name: String, in seconds: TimeInterval, _ provider: ProviderLabel) -> Drop {
+            drop(id, name, season: 12, number: 104, at: now + seconds, confidence: .exact,
+                 source: .broadcast(network: provider.name), provider: provider)
+        }
+        func guess(_ id: String, _ name: String, in seconds: TimeInterval, _ provider: ProviderLabel) -> Drop {
+            drop(id, name, season: 1, number: 1, at: now + seconds, confidence: .estimated,
+                 source: .platformRule("\(provider.name) rule"), provider: provider)
+        }
+        let lotr = guess("lotr", "The Lord of the Rings: The Rings of Power", in: 78 * hour, prime)
+        let drops: [Drop] = switch worst {
+        case .longNames:
+            [sure("long", longName, in: 52 * hour, longProvider), lotr, sure("v", "V", in: 4 * day, fx)]
+        case .longTicking:
+            [sure("long", longName, in: 3 * hour + 600, longProvider),
+             drop("anilist:1", "転生したらスライムだった件", season: nil, number: 24, at: now + 5 * hour,
+                  confidence: .exact, source: .anilist, provider: tokyoMX),
+             guess("rawabi", "مدرسة الروابي للبنات", in: 20 * hour,
+                   ProviderLabel(name: "Netflix", countryCode: nil, noOfficialStream: false))]
+        case .farAway:
+            [sure("hotd", "House of the Dragon", in: 400 * day + 3 * hour, hbo),
+             sure("tlou", "The Last of Us", in: 401 * day, hbo), sure("v", "V", in: 402 * day, fx)]
+        case .longOutNow:
+            [sure("long", longName, in: -60, longProvider), lotr]
+        }
+        return WidgetTimeline.moment(at: now, drops: drops, nextReturn: nil, nothingScheduled: [])
+    }
+
+    private static func drop(_ showID: String, _ name: String, season: Int?, number: Int?, at date: Date,
                              confidence: Confidence, source: ReleaseSource, airdate: String? = nil,
                              provider: ProviderLabel?) -> Drop {
-        Drop(id: "\(showID):s\(season)e\(number)", showID: showID, showName: name, season: season, number: number,
-             episodeTitle: nil, date: date, airdate: airdate, confidence: confidence, source: source, provider: provider,
+        Drop(id: "\(showID):s\(season ?? 0)e\(number ?? 0)", showID: showID, showName: name, season: season,
+             number: number, episodeTitle: nil, date: date, airdate: airdate, confidence: confidence, source: source, provider: provider,
              previousDate: nil)
     }
 

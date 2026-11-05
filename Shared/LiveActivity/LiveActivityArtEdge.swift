@@ -37,8 +37,10 @@ struct LiveActivityArtEdge: View {
                 } else {
                     Text(LiveActivityText.monogram(attributes))
                         .font(.system(size: proxy.size.height * 1.1, weight: .light, design: .serif))
-                        .foregroundStyle(LiveActivityInk.primary.opacity(0.07))
+                        .foregroundStyle(LiveActivityInk.primary)
                         .fixedSize()
+                        // On the view, not the ink, so an emoji initial ("💍") is as faint as a letter.
+                        .opacity(0.07)
                         .offset(x: proxy.size.height * 0.08, y: proxy.size.height * 0.12)
                         .padding(.trailing, Tokens.Space.m)
                 }

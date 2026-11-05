@@ -17,6 +17,8 @@ struct LiveActivityCompactView: View {
 
     /// Wide enough for "1:59:59" in the slot's digits, so the island doesn't jump as the hours roll over.
     static let timerWidth: CGFloat = 60
+    /// How far the timer may shrink inside that width: enough for "26:00:00", a running activity delayed by a day.
+    static let timerMinimumScale: CGFloat = 0.7
 
     private var out: Bool { LiveActivityText.isOut(state, isStale: isStale, now: now) }
 
@@ -41,8 +43,12 @@ struct LiveActivityCompactView: View {
                         .lineLimit(1)
                         .fixedSize()
                 } else {
+                    // A bound width and a scale, never `.fixedSize()`: on the phone a timer asks for its widest
+                    // value's width (CLAUDE.md rule 4). Past 10 hours, or past a day once a running activity is
+                    // delayed, the digits shrink to fit rather than being cut (break-ui BU-5).
                     LiveActivityCountdown(dropDate: state.dropDate, now: now, size: 15, weight: .medium,
                                           alignment: .trailing)
+                        .minimumScaleFactor(Self.timerMinimumScale)
                         .frame(maxWidth: Self.timerWidth, alignment: .trailing)
                 }
             }

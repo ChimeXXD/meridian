@@ -35,15 +35,16 @@ struct RectangularWidgetView: View {
                     .accessibilityIdentifier("widget-rect-title")
                 HStack(alignment: .firstTextBaseline, spacing: 6) {
                     CountdownText(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate,
-                                  now: moment.date, size: 26, formatter: formatter)
+                                  now: moment.date, size: 26, formatter: formatter, scalesWithText: false)
                         .environment(\.numeralStudy, .night)
                         .fixedSize(horizontal: true, vertical: false)
                         .accessibilityIdentifier("widget-rect-countdown")
                     if let provider = drop.provider?.display {
-                        Text(provider)
+                        // A long provider shortens before its country does (D-20).
+                        CountryKeepingText(line: provider)
                             .font(.system(size: 12, weight: .medium))
                             .foregroundStyle(.secondary)
-                            .lineLimit(1).minimumScaleFactor(0.7)
+                            .minimumScaleFactor(0.7)
                             .accessibilityIdentifier("widget-rect-provider")
                     }
                 }

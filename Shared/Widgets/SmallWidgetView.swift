@@ -35,7 +35,7 @@ struct SmallWidgetView: View {
                     .lineLimit(1).minimumScaleFactor(0.75)
                     .accessibilityIdentifier("widget-small-title")
                 CountdownText(drop: drop.date, confidence: drop.confidence, airdate: drop.airdate, now: moment.date,
-                              size: 36, tint: WidgetInk.primary, formatter: formatter)
+                              size: 36, tint: WidgetInk.primary, formatter: formatter, scalesWithText: false)
                     .environment(\.numeralStudy, .night)
                     .accessibilityIdentifier("widget-small-countdown")
                 Text(WidgetText.outLine(drop, now: moment.date, formatter: formatter))

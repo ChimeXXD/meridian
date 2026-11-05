@@ -54,3 +54,35 @@ private let now = Date.now
 } contentStates: {
     LiveActivitySamples.state(.delayed, now: now)
 }
+
+// The worst cases the layouts must survive (break-ui, 5 Nov), from `LiveActivitySamples.WorstCase`.
+
+#Preview("Lock Screen, worst: long and merged", as: .content,
+         using: LiveActivitySamples.attributes(.longMerged)) {
+    DropLiveActivity()
+} contentStates: {
+    LiveActivitySamples.state(.longMerged, now: now)
+    LiveActivitySamples.state(.delayedADay, now: now)
+}
+
+#Preview("Lock Screen, worst: emoji only", as: .content, using: LiveActivitySamples.attributes(.emojiOnly)) {
+    DropLiveActivity()
+} contentStates: {
+    LiveActivitySamples.state(.emojiOnly, now: now)
+}
+
+#Preview("Compact, worst: delayed a day", as: .dynamicIsland(.compact),
+         using: LiveActivitySamples.attributes(.delayedADay)) {
+    DropLiveActivity()
+} contentStates: {
+    LiveActivitySamples.state(.delayedADay, now: now)
+    LiveActivitySamples.state(.oneSecond, now: now)
+}
+
+#Preview("Expanded, worst: long and merged", as: .dynamicIsland(.expanded),
+         using: LiveActivitySamples.attributes(.longMerged)) {
+    DropLiveActivity()
+} contentStates: {
+    LiveActivitySamples.state(.longMerged, now: now)
+    LiveActivitySamples.state(.delayedADay, now: now)
+}

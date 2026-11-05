@@ -146,6 +146,9 @@ struct LiveActivityTextTests {
         #expect(LiveActivityText.previousTime(Self.state(delayedFrom: Self.drop), formatter: Self.lagos) == nil)
         #expect(LiveActivityText.monogram(Self.attributes()) == "S")
         #expect(LiveActivityText.monogram(Self.attributes("“Ghosts”")) == "G")
+        // A title with no letter or digit shows its first character, not a bullet (break-ui BU-12).
+        #expect(LiveActivityText.monogram(Self.attributes("💍")) == "💍")
+        #expect(LiveActivityText.monogram(Self.attributes(" ")) == "•")
         #expect(LiveActivityText.more(Self.attributes()) == nil)
     }
 
