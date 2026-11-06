@@ -109,6 +109,21 @@ struct AiringSoonTests {
         #expect(dates.count == 8)
     }
 
+    @Test("offline (every schedule call fails) is nil, not an empty week, so Search can say the schedule is missing")
+    func allCallsFail() async throws {
+        let network = TVmazeClientTests.FakeNetwork([(503, [:], Data())])
+        let picks = await AiringSoon.load(client: TVmazeClientTests.client(network), rules: try Fixture.bundledRules(),
+                                          now: Date(iso: "2026-10-30T00:00:00Z"),
+                                          formatter: DropFormatter(zoneIdentifier: "Africa/Lagos"))
+        #expect(picks == nil)
+        // One answered call is enough for a list, even an empty one.
+        let partial = TVmazeClientTests.FakeNetwork([(503, [:], Data()), (200, [:], Data("[]".utf8))])
+        let some = await AiringSoon.load(client: TVmazeClientTests.client(partial), rules: try Fixture.bundledRules(),
+                                         now: Date(iso: "2026-10-30T00:00:00Z"),
+                                         formatter: DropFormatter(zoneIdentifier: "Africa/Lagos"))
+        #expect(some?.isEmpty == true)
+    }
+
     @Test("a date-only episode stays through its day in the viewer's zone, then goes")
     func dateOnlyByDay() throws {
         // Days of Our Lives on Peacock: no airtime and no Peacock rule, so date only.

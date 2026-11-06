@@ -42,7 +42,8 @@ enum AiringSoon {
     }
 
     /// Loads the schedules for the coming days (in the viewer's zone) at once and picks from them. Calls that fail are
-    /// skipped. Returns nil when the task was cancelled, so a half-loaded list is never kept.
+    /// skipped. Returns nil when the task was cancelled, so a half-loaded list is never kept, or when every call failed
+    /// (offline), so the caller can say the schedule is missing rather than show an empty week.
     static func load(client: TVmazeClient, rules: RulesFile, now: Date = .now,
                      formatter: DropFormatter = DropFormatter()) async -> [Pick]? {
         // From yesterday: TVmaze dates an episode in its own country, so east of the US a Friday 21:00 ET episode
@@ -51,20 +52,20 @@ enum AiringSoon {
         // Indexed so the merged order (and so the weight tie-break) doesn't depend on which call answers first.
         // Two calls per day: the streaming schedule (even index) and the US broadcast schedule (odd index).
         let calls = dates.flatMap { [($0, true), ($0, false)] }
-        let parts = await withTaskGroup(of: (Int, [TVmazeScheduleItem]).self) { group in
+        let parts = await withTaskGroup(of: (Int, [TVmazeScheduleItem]?).self) { group in
             for (index, call) in calls.enumerated() {
                 group.addTask {
                     let items = call.1 ? try? await client.webSchedule(date: call.0)
                                        : try? await client.schedule(country: "US", date: call.0)
-                    return (index, items ?? [])
+                    return (index, items)
                 }
             }
-            var parts = [[TVmazeScheduleItem]](repeating: [], count: calls.count)
+            var parts = [[TVmazeScheduleItem]?](repeating: nil, count: calls.count)
             for await (index, items) in group { parts[index] = items }
             return parts
         }
-        guard !Task.isCancelled else { return nil }
-        return pool(from: parts.flatMap(\.self), rules: rules, now: now, formatter: formatter)
+        guard !Task.isCancelled, parts.contains(where: { $0 != nil }) else { return nil }
+        return pool(from: parts.compactMap(\.self).flatMap(\.self), rules: rules, now: now, formatter: formatter)
     }
 
     private static func qualifies(_ show: TVmazeShow) -> Bool {

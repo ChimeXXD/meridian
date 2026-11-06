@@ -155,6 +155,11 @@ struct SearchFilterTests {
         // The chips that stay keep the platforms' order.
         let labels = options.compactMap { if case .service(let label) = $0 { label } else { nil } }
         #expect(labels == AiringFilter.services.filter(labels.contains))
+        // A platform picked before it emptied keeps its chip, in its place, so the selection never vanishes.
+        let picked = AiringFilter.options(for: .tv, catalogue: catalogue, now: Date(iso: now),
+                                          formatter: DropFormatter(zoneIdentifier: "Africa/Lagos"), picked: .service("Disney+"))
+        let pickedLabels = picked.compactMap { if case .service(let label) = $0 { label } else { nil } }
+        #expect(pickedLabels == AiringFilter.services.filter((labels + ["Disney+"]).contains))
     }
 
     @Test("every major platform has a logo in the bundled list")

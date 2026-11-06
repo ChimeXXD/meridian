@@ -39,15 +39,17 @@ enum AiringFilter {
     static let popularDays = 365
 
     /// TV: Popular, Today, New seasons, then the major platforms that have something to show. Anime: no service
-    /// filter, because AniList names no single service.
+    /// filter, because AniList names no single service. The `picked` platform keeps its chip even once it has
+    /// nothing left (its only episode came out while it was picked), so the selection never vanishes under the
+    /// viewer's thumb; its grid says so and offers "Show popular", and the chip goes once another is picked.
     static func options(for kind: SearchView.Kind, catalogue: SearchCatalogue, now: Date,
-                        formatter: DropFormatter) -> [SearchFilter] {
+                        formatter: DropFormatter, picked: SearchFilter? = nil) -> [SearchFilter] {
         guard kind == .tv else { return [.popular, .today, .newSeasons] }
         // The networks with a popular show or an episode still to come, worked out once for all 12 chips.
         let networks = Set((pastYear(catalogue.popular, now: now, formatter: formatter).map(\.result)
             + stillToCome(catalogue.upcoming, now: now, formatter: formatter).map(\.result)).compactMap(\.network))
         return [.popular, .today, .newSeasons] + services.filter { label in
-            !networks.isDisjoint(with: PopularServices.service(label)?.names ?? [label])
+            picked == .service(label) || !networks.isDisjoint(with: PopularServices.service(label)?.names ?? [label])
         }.map(SearchFilter.service)
     }
 

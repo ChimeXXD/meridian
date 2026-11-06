@@ -56,6 +56,8 @@ enum DebugLaunch {
 
     static var query: String? { UserDefaults.standard.string(forKey: "query") }
     static var anime: Bool { UserDefaults.standard.string(forKey: "kind") == "anime" }
+    /// `-offlineSchedule YES` makes Search's TV schedule fail, to see the bundled Popular shown without it.
+    static var offlineSchedule: Bool { UserDefaults.standard.bool(forKey: "offlineSchedule") }
 
     /// `-openFirstResult YES` opens the show page of the first search result (with `-query`), for the screen check.
     static var openFirstResult: Bool { UserDefaults.standard.bool(forKey: "openFirstResult") }

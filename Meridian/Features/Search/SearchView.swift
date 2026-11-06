@@ -118,6 +118,11 @@ struct SearchView: View {
         case .idle:
             SearchFilterRow(options: filterOptions(now: .now), selection: filter, logos: Self.logos)
                 .padding(.top, Tokens.Space.s)
+            // TV's schedule failed but its bundled popular list still shows; say what's missing (Chime, 6 Nov).
+            if airingPhase[kind] == .failed {
+                message("Couldn't load this week's schedule, so Today and what's airing are missing.",
+                        id: "search-schedule-error", action: ("Try again", { airingAttempt += 1 }))
+            }
             airingGrid
         case .searching where results.isEmpty:
             SearchPlaceholderGrid(header: "Results", label: "Searching")
@@ -153,7 +158,8 @@ struct SearchView: View {
     /// alone decides.
     private func filterOptions(now: Date) -> [SearchFilter] {
         let lists = catalogue ?? SearchCatalogue(upcoming: [], popular: Self.bundledPopular, seasons: [])
-        return AiringFilter.options(for: kind, catalogue: lists, now: now, formatter: DropFormatter())
+        return AiringFilter.options(for: kind, catalogue: lists, now: now, formatter: DropFormatter(),
+                                    picked: filter.wrappedValue)
     }
 
     /// TV's popular list, read once from the bundle.
@@ -188,18 +194,27 @@ struct SearchView: View {
         .accessibilityIdentifier(id)
     }
 
-    /// The picked catalog's lists, once; a failure says so and offers "Try again".
+    /// The picked catalog's lists, once; a failure says so and offers "Try again", which loads again. Anything short
+    /// of a finished load (never started, failed, or cancelled mid-retry by a catalog switch) loads again.
     private func loadAiring() async {
-        guard catalogue == nil else { return }
+        guard airingPhase[kind] != .done else { return }
         let loading = kind
         airingPhase[loading] = .searching
         switch loading {
         case .tv:
-            guard let picks = await AiringSoon.load(client: client, rules: rules) else {
-                // A switch of catalog cancels this load; that's not a failure, and the next visit loads again.
-                if !Task.isCancelled { airingPhase[loading] = .failed }; return
-            }
             let popular = Self.bundledPopular
+            var schedule = await AiringSoon.load(client: client, rules: rules)
+            #if DEBUG
+            if DebugLaunch.offlineSchedule { schedule = nil }
+            #endif
+            guard let picks = schedule else {
+                // A switch of catalog cancels this load; that's not a failure, and the next visit loads again.
+                guard !Task.isCancelled else { return }
+                // Popular, New seasons and "Popular on" need no network: show them from the bundle (Chime, 6 Nov).
+                if catalogues[.tv] == nil { catalogues[.tv] = SearchCatalogue(upcoming: [], popular: popular, seasons: popular) }
+                airingPhase[loading] = .failed
+                return
+            }
             catalogues[.tv] = SearchCatalogue(upcoming: picks.map(AiringItem.init(pick:)), popular: popular, seasons: popular)
         case .anime:
             // Both at once. The popular lists are extra: if they fail, Popular falls back to this week's shows
@@ -236,7 +251,10 @@ struct SearchView: View {
         Group {
             if shelves.allSatisfy(\.entries.isEmpty) {
                 VStack(alignment: .leading, spacing: Tokens.Space.s) {
-                    message(AiringFilter.noMatch(filter.wrappedValue), id: "search-filter-empty")
+                    // With the schedule failed, its own line above already says why; don't say it twice.
+                    if airingPhase[kind] != .failed {
+                        message(AiringFilter.noMatch(filter.wrappedValue), id: "search-filter-empty")
+                    }
                     if filter.wrappedValue != .popular {
                         outlinedButton("Show popular", id: "search-filter-clear") {
                             withAnimation(.snappy(duration: 0.2)) { filter.wrappedValue = .popular }

@@ -18,7 +18,9 @@ Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
 - /code-review medium --fix: 8 findings, 5 fixed (anime Popular falls back to this week if its request fails; the two AniList requests run together; chips worked out once per render; one date helper; dead `releaseLine` removed). proof:verifier PASS on all six asks; its gaps fixed: the design-system site still said Exact time and always-12 chips, and year-numbered soap seasons read "Season 2026 began" (now "Began Fri 2 Jan").
 
-**Not done**: the weekly GitHub Action and a remote fetch for the list, so a season that starts after the build date drops out of New seasons once its episode 1 is out, until the script is rerun (reinstalling every 7 days refreshes only what was rebuilt). Open for Chime: when TVmaze can't be reached, show the bundled Popular instead of the error? A picked platform that empties (its only episode came out) loses its chip while picked. SearchView is ~343 lines (over the ~300 guide).
+- Chime's two calls (same day): offline TV shows the bundled Popular under "Couldn't load this week's schedule…" + Try again (Debug `-offlineSchedule YES`; simulator screenshot checked); a picked platform keeps its chip after it empties (`AiringFilter.options(picked:)`; `emptyPlatformsHidden` extended, and removing the condition fails it).
+
+**Not done**: the weekly GitHub Action and a remote fetch for the list, so a season that starts after the build date drops out of New seasons once its episode 1 is out, until the script is rerun (reinstalling every 7 days refreshes only what was rebuilt). SearchView is ~343 lines (over the ~300 guide).
 
 ## Skill review pass 2: docs, code review and midnight entries (Thu 5 Nov 2026)
 
