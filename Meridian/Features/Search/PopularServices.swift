@@ -7,8 +7,8 @@ struct PopularService: Hashable, Sendable {
 }
 
 /// The platforms that get a chip (Chime, 1 Nov 2026: "the popular platforms that most people use"; D-45): the big
-/// streamers by reported paid subscribers, then the four big US networks. Every one always has a chip, in this order,
-/// even with nothing coming; every other service (YouTube, BBC iPlayer, small channels) gets no chip, though its shows
+/// streamers by reported paid subscribers, then the four big US networks, in this order. One with no popular show and
+/// nothing coming gets no chip (D-66, superseding D-45's always-shown chips); every other service (YouTube, BBC iPlayer, small channels) gets no chip, though its shows
 /// still appear under Popular and the other filters.
 enum PopularServices {
     /// Most subscribers first (2026 estimates: Netflix ~325M, Prime Video ~205M, HBO Max ~140M, Disney+ ~132M,

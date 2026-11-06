@@ -34,6 +34,8 @@ targets:
         buildPhase: resources
       - path: rules/network-logos.json
         buildPhase: resources
+      - path: rules/popular-shows.json
+        buildPhase: resources
     info:
       path: Meridian/Info.plist
       properties:

@@ -10,6 +10,8 @@ struct AniListMedia: Codable, Hashable, Sendable {
 
     struct FuzzyDate: Codable, Hashable, Sendable {
         let year: Int?
+        var month: Int? = nil
+        var day: Int? = nil
     }
 
     struct Cover: Codable, Hashable, Sendable {
@@ -78,6 +80,18 @@ struct AniListPage: Decodable, Sendable {
 
     struct Body: Decodable, Sendable {
         let Page: Page
+    }
+
+    let data: Body
+}
+
+/// `{ data: { releasing, finished, recent: { media } } }`: Search's popular anime, asked for in one request (D-66).
+struct AniListPopular: Decodable, Sendable {
+    struct List: Decodable, Sendable { let media: [AniListMedia]? }
+    struct Body: Decodable, Sendable {
+        let releasing: List
+        let finished: List
+        let recent: List
     }
 
     let data: Body

@@ -263,7 +263,7 @@
     ['Hero title', 'App', 'serif', 32, 400, false, 'Headline title, spotlight, the show page'],
     ['Empty headline', 'App', 'serif', 28, 400, false, '“Follow a show…”, “Nothing scheduled…”'],
     ['Row countdown', 'App', 'serif', 24, 300, true, 'Upcoming row'],
-    ['Grid section header', 'App', 'serif', 22, 400, false, '“Airing in the next few days”, “Results”'],
+    ['Grid section header', 'App', 'serif', 22, 400, false, '“Popular in the past year”, “Results”'],
     ['Row title', 'App', 'serif', 20, 400, false, 'Upcoming row'],
     ['Out line (hero)', 'App', 'sans', 17, 500, false, 'Body medium: “Expected Wed at 23:00 Lagos time”'],
     ['Follow button', 'App', 'sans', 17, 600, false, 'Headline'],
@@ -319,10 +319,10 @@
     if (/Welcome/.test(r)) return 'How long until your next episode';
     if (/empty/i.test(r)) return 'Follow a show';
     if (/meta|footnote/i.test(r)) return 'S4E1 · Apple TV';
-    if (/chip/.test(r)) return 'Exact time';
+    if (/chip/.test(r)) return 'New seasons';
     if (/label/i.test(r)) return 'Expected in';
     if (/Follow/.test(r)) return 'Follow';
-    if (/Grid section/.test(r)) return 'Airing in the next few days';
+    if (/Grid section/.test(r)) return 'Popular in the past year';
     if (/section header/i.test(r)) return 'Next 24 hours';
     return 'House of the Dragon';
   };

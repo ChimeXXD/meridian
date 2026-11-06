@@ -90,6 +90,9 @@ struct CreditsView: View {
                 .accessibilityIdentifier("credits-tvmaze")
                 Text("Anime schedules from AniList")
                     .accessibilityIdentifier("credits-anilist")
+                // D-66: the list is built off the phone; the phone asks Wikipedia nothing.
+                Text("Popular shows ranked by Wikipedia page views, matched to TVmaze with Wikidata")
+                    .accessibilityIdentifier("credits-popular")
                 Text("Show artwork is loaded from TVmaze while the app runs and kept only on your phone")
                     .accessibilityIdentifier("credits-artwork")
                 Text("Service logos from Wikimedia Commons, each under its own free licence")

@@ -1,0 +1,7190 @@
+{
+ "updated": "2026-11-06",
+ "months": "2025-11..2026-10",
+ "shows": [
+  {
+   "views": 25823526,
+   "lastAired": "2025-12-31",
+   "season": 5,
+   "seasonStart": "2025-11-26",
+   "show": {
+    "id": 2993,
+    "name": "Stranger Things",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2016-07-15",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/595/1489169.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/595/1489169.jpg"
+    }
+   }
+  },
+  {
+   "views": 10654613,
+   "lastAired": "2025-12-24",
+   "season": 1,
+   "seasonStart": "2025-11-07",
+   "show": {
+    "id": 86175,
+    "name": "Pluribus",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-11-07",
+    "network": null,
+    "webChannel": {
+     "id": 310,
+     "name": "Apple TV",
+     "country": null,
+     "officialSite": "https://tv.apple.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/592/1481086.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/592/1481086.jpg"
+    }
+   }
+  },
+  {
+   "views": 9191185,
+   "lastAired": "2026-05-20",
+   "season": 5,
+   "seasonStart": "2026-04-08",
+   "show": {
+    "id": 15299,
+    "name": "The Boys",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2019-07-26",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/619/1547768.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/619/1547768.jpg"
+    }
+   }
+  },
+  {
+   "views": 8884220,
+   "lastAired": "2025-12-26",
+   "season": 1,
+   "seasonStart": "2025-11-28",
+   "show": {
+    "id": 85269,
+    "name": "Heated Rivalry",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-11-28",
+    "network": {
+     "id": 1782,
+     "name": "Crave",
+     "country": {
+      "name": "Canada",
+      "code": "CA",
+      "timezone": "America/Toronto"
+     },
+     "officialSite": "https://www.crave.ca/"
+    },
+    "webChannel": null,
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/598/1495771.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/598/1495771.jpg"
+    }
+   }
+  },
+  {
+   "views": 8829031,
+   "lastAired": "2026-05-31",
+   "season": 3,
+   "seasonStart": "2026-04-12",
+   "show": {
+    "id": 28826,
+    "name": "Euphoria",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2019-06-16",
+    "network": {
+     "id": 8,
+     "name": "HBO",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hbo.com/"
+    },
+    "webChannel": null,
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/621/1552657.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/621/1552657.jpg"
+    }
+   }
+  },
+  {
+   "views": 8294398,
+   "lastAired": "2026-08-09",
+   "season": 3,
+   "seasonStart": "2026-06-21",
+   "show": {
+    "id": 44778,
+    "name": "House of the Dragon",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2022-08-21",
+    "network": {
+     "id": 8,
+     "name": "HBO",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hbo.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/627/1568449.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/627/1568449.jpg"
+    }
+   }
+  },
+  {
+   "views": 8155283,
+   "lastAired": "2026-04-16",
+   "season": 2,
+   "seasonStart": "2026-01-08",
+   "show": {
+    "id": 75632,
+    "name": "The Pitt",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-01-09",
+    "network": null,
+    "webChannel": {
+     "id": 329,
+     "name": "HBO Max",
+     "country": null,
+     "officialSite": "https://www.hbomax.com"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/606/1516776.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/606/1516776.jpg"
+    }
+   }
+  },
+  {
+   "views": 7549990,
+   "lastAired": "2026-02-22",
+   "season": 1,
+   "seasonStart": "2026-01-18",
+   "show": {
+    "id": 53063,
+    "name": "A Knight of the Seven Kingdoms",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-01-18",
+    "network": {
+     "id": 8,
+     "name": "HBO",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hbo.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/608/1521912.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/608/1521912.jpg"
+    }
+   }
+  },
+  {
+   "views": 6714260,
+   "lastAired": "2026-06-17",
+   "season": 1,
+   "seasonStart": "2026-04-29",
+   "show": {
+    "id": 79390,
+    "name": "Widow's Bay",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-04-29",
+    "network": null,
+    "webChannel": {
+     "id": 310,
+     "name": "Apple TV",
+     "country": null,
+     "officialSite": "https://tv.apple.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/623/1559488.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/623/1559488.jpg"
+    }
+   }
+  },
+  {
+   "views": 6135863,
+   "lastAired": "2026-02-03",
+   "season": 2,
+   "seasonStart": "2025-12-16",
+   "show": {
+    "id": 49041,
+    "name": "Fallout",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2024-04-10",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/599/1499142.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/599/1499142.jpg"
+    }
+   }
+  },
+  {
+   "views": 5997385,
+   "lastAired": "2026-10-31",
+   "season": 1,
+   "seasonStart": "2025-10-26",
+   "show": {
+    "id": 61324,
+    "name": "IT: Welcome to Derry",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-10-26",
+    "network": {
+     "id": 8,
+     "name": "HBO",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hbo.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/594/1485959.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/594/1485959.jpg"
+    }
+   }
+  },
+  {
+   "views": 5573954,
+   "lastAired": "2026-10-04",
+   "season": 1,
+   "seasonStart": "2026-08-16",
+   "show": {
+    "id": 44776,
+    "name": "Lanterns",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2026-08-16",
+    "network": {
+     "id": 8,
+     "name": "HBO",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hbo.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/637/1592971.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/637/1592971.jpg"
+    }
+   }
+  },
+  {
+   "views": 5537221,
+   "lastAired": "2026-10-07",
+   "season": 4,
+   "seasonStart": "2026-08-05",
+   "show": {
+    "id": 44458,
+    "name": "Ted Lasso",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2020-08-14",
+    "network": null,
+    "webChannel": {
+     "id": 310,
+     "name": "Apple TV",
+     "country": null,
+     "officialSite": "https://tv.apple.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/634/1585930.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/634/1585930.jpg"
+    }
+   }
+  },
+  {
+   "views": 5113204,
+   "lastAired": "2026-01-18",
+   "season": 2,
+   "seasonStart": "2025-11-16",
+   "show": {
+    "id": 53777,
+    "name": "Landman",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2024-11-17",
+    "network": null,
+    "webChannel": {
+     "id": 107,
+     "name": "Paramount+",
+     "country": null,
+     "officialSite": "https://www.paramountplus.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/598/1495770.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/598/1495770.jpg"
+    }
+   }
+  },
+  {
+   "views": 5063910,
+   "lastAired": "2026-10-21",
+   "season": 6,
+   "seasonStart": "2026-09-16",
+   "show": {
+    "id": 45039,
+    "name": "Slow Horses",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2022-04-01",
+    "network": null,
+    "webChannel": {
+     "id": 310,
+     "name": "Apple TV",
+     "country": null,
+     "officialSite": "https://tv.apple.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/641/1604425.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/641/1604425.jpg"
+    }
+   }
+  },
+  {
+   "views": 4953816,
+   "lastAired": "2026-02-26",
+   "season": 4,
+   "seasonStart": "2026-01-29",
+   "show": {
+    "id": 42966,
+    "name": "Bridgerton",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2020-12-25",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/614/1535959.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/614/1535959.jpg"
+    }
+   }
+  },
+  {
+   "views": 4753918,
+   "lastAired": "2026-09-04",
+   "season": 3,
+   "seasonStart": "2026-07-03",
+   "show": {
+    "id": 38052,
+    "name": "Silo",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2023-05-05",
+    "network": null,
+    "webChannel": {
+     "id": 310,
+     "name": "Apple TV",
+     "country": null,
+     "officialSite": "https://tv.apple.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/631/1577677.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/631/1577677.jpg"
+    }
+   }
+  },
+  {
+   "views": 4564578,
+   "lastAired": "2026-05-13",
+   "season": 1,
+   "seasonStart": "2026-05-13",
+   "show": {
+    "id": 79932,
+    "name": "Off Campus",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-05-13",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/624/1562439.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/624/1562439.jpg"
+    }
+   }
+  },
+  {
+   "views": 4496899,
+   "lastAired": "2026-03-30",
+   "season": 2,
+   "seasonStart": "2026-02-23",
+   "show": {
+    "id": 75030,
+    "name": "Paradise",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-01-26",
+    "network": null,
+    "webChannel": {
+     "id": 2,
+     "name": "Hulu",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hulu.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/614/1536865.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/614/1536865.jpg"
+    }
+   }
+  },
+  {
+   "views": 4359846,
+   "lastAired": "2026-06-28",
+   "season": 4,
+   "seasonStart": "2026-04-19",
+   "show": {
+    "id": 54723,
+    "name": "FROM",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2022-02-20",
+    "network": null,
+    "webChannel": {
+     "id": 503,
+     "name": "MGM+",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.mgmplus.com/browse"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/621/1554646.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/621/1554646.jpg"
+    }
+   }
+  },
+  {
+   "views": 4344672,
+   "lastAired": "2025-11-13",
+   "season": 1,
+   "seasonStart": "2025-11-13",
+   "show": {
+    "id": 75701,
+    "name": "The Beast in Me",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-11-13",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/597/1494856.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/597/1494856.jpg"
+    }
+   }
+  },
+  {
+   "views": 4297763,
+   "lastAired": "2026-02-01",
+   "season": 2,
+   "seasonStart": "2026-01-01",
+   "show": {
+    "id": 2285,
+    "name": "The Night Manager",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2016-02-21",
+    "network": null,
+    "webChannel": {
+     "id": 26,
+     "name": "BBC iPlayer",
+     "country": {
+      "name": "United Kingdom",
+      "code": "GB",
+      "timezone": "Europe/London"
+     },
+     "officialSite": "https://www.bbc.co.uk/iplayer"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/606/1515144.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/606/1515144.jpg"
+    }
+   }
+  },
+  {
+   "views": 4151589,
+   "lastAired": "2026-09-16",
+   "season": 4,
+   "seasonStart": "2026-08-12",
+   "show": {
+    "id": 43031,
+    "name": "Reacher",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2022-02-04",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/636/1591350.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/636/1591350.jpg"
+    }
+   }
+  },
+  {
+   "views": 4063165,
+   "lastAired": "2026-10-29",
+   "season": 13,
+   "seasonStart": "2026-09-24",
+   "show": {
+    "id": 30,
+    "name": "American Horror Story",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2011-10-05",
+    "network": {
+     "id": 13,
+     "name": "FX",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": null
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/642/1607475.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/642/1607475.jpg"
+    }
+   }
+  },
+  {
+   "views": 3554456,
+   "lastAired": "2026-03-20",
+   "season": 6,
+   "seasonStart": "2022-02-27",
+   "show": {
+    "id": 269,
+    "name": "Peaky Blinders",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2013-09-12",
+    "network": {
+     "id": 12,
+     "name": "BBC One",
+     "country": {
+      "name": "United Kingdom",
+      "code": "GB",
+      "timezone": "Europe/London"
+     },
+     "officialSite": "https://www.bbc.co.uk/bbcone"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/48/122213.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/48/122213.jpg"
+    }
+   }
+  },
+  {
+   "views": 3497372,
+   "lastAired": "2026-01-08",
+   "season": 1,
+   "seasonStart": "2026-01-08",
+   "show": {
+    "id": 78610,
+    "name": "His & Hers",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-01-08",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 96,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/607/1518202.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/607/1518202.jpg"
+    }
+   }
+  },
+  {
+   "views": 3477399,
+   "lastAired": "2026-04-16",
+   "season": 2,
+   "seasonStart": "2026-04-16",
+   "show": {
+    "id": 54285,
+    "name": "BEEF",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2023-04-06",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/621/1554643.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/621/1554643.jpg"
+    }
+   }
+  },
+  {
+   "views": 3466489,
+   "lastAired": "2026-03-21",
+   "season": 1,
+   "seasonStart": "2026-03-14",
+   "show": {
+    "id": 73127,
+    "name": "The Madison",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-03-14",
+    "network": null,
+    "webChannel": {
+     "id": 107,
+     "name": "Paramount+",
+     "country": null,
+     "officialSite": "https://www.paramountplus.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/617/1544046.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/617/1544046.jpg"
+    }
+   }
+  },
+  {
+   "views": 3431320,
+   "lastAired": "2026-05-25",
+   "season": 1,
+   "seasonStart": "2026-05-25",
+   "show": {
+    "id": 77003,
+    "name": "Spider-Noir",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-05-25",
+    "network": {
+     "id": 253,
+     "name": "MGM+",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.mgmplus.com/"
+    },
+    "webChannel": null,
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/626/1566111.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/626/1566111.jpg"
+    }
+   }
+  },
+  {
+   "views": 3428453,
+   "lastAired": "2025-11-06",
+   "season": 1,
+   "seasonStart": "2025-11-06",
+   "show": {
+    "id": 74670,
+    "name": "All Her Fault",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2025-11-06",
+    "network": null,
+    "webChannel": {
+     "id": 347,
+     "name": "Peacock",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.peacocktv.com/"
+    },
+    "weight": 97,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/595/1489995.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/595/1489995.jpg"
+    }
+   }
+  },
+  {
+   "views": 3341362,
+   "lastAired": "2026-09-03",
+   "season": 2,
+   "seasonStart": "2026-09-03",
+   "show": {
+    "id": 64992,
+    "name": "The Gentlemen",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2024-03-07",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/641/1603070.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/641/1603070.jpg"
+    }
+   }
+  },
+  {
+   "views": 3324213,
+   "lastAired": "2026-09-20",
+   "season": 3,
+   "seasonStart": "2026-08-02",
+   "show": {
+    "id": 50415,
+    "name": "Lioness",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2023-07-23",
+    "network": null,
+    "webChannel": {
+     "id": 107,
+     "name": "Paramount+",
+     "country": null,
+     "officialSite": "https://www.paramountplus.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/635/1587727.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/635/1587727.jpg"
+    }
+   }
+  },
+  {
+   "views": 3237126,
+   "lastAired": "2026-03-01",
+   "season": 4,
+   "seasonStart": "2026-01-11",
+   "show": {
+    "id": 45501,
+    "name": "Industry",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2020-11-09",
+    "network": {
+     "id": 8,
+     "name": "HBO",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hbo.com/"
+    },
+    "webChannel": null,
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/608/1521293.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/608/1521293.jpg"
+    }
+   }
+  },
+  {
+   "views": 3170597,
+   "lastAired": "2026-04-22",
+   "season": 4,
+   "seasonStart": "2026-03-18",
+   "show": {
+    "id": 37196,
+    "name": "Invincible",
+    "type": "Animation",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2021-03-26",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/618/1545777.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/618/1545777.jpg"
+    }
+   }
+  },
+  {
+   "views": 3124178,
+   "lastAired": "2026-05-04",
+   "season": 8,
+   "seasonStart": "2026-01-06",
+   "show": {
+    "id": 32938,
+    "name": "The Rookie",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2018-10-16",
+    "network": {
+     "id": 3,
+     "name": "ABC",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://abc.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/606/1515728.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/606/1515728.jpg"
+    }
+   }
+  },
+  {
+   "views": 3078881,
+   "lastAired": "2026-03-26",
+   "season": 1,
+   "seasonStart": "2026-02-12",
+   "show": {
+    "id": 56862,
+    "name": "Love Story",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2026-02-12",
+    "network": {
+     "id": 13,
+     "name": "FX",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": null
+    },
+    "webChannel": null,
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/612/1532112.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/612/1532112.jpg"
+    }
+   }
+  },
+  {
+   "views": 2986085,
+   "lastAired": "2026-07-03",
+   "season": 1,
+   "seasonStart": "2026-05-15",
+   "show": {
+    "id": 84539,
+    "name": "Dutton Ranch",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-05-15",
+    "network": null,
+    "webChannel": {
+     "id": 107,
+     "name": "Paramount+",
+     "country": null,
+     "officialSite": "https://www.paramountplus.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/625/1563140.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/625/1563140.jpg"
+    }
+   }
+  },
+  {
+   "views": 2929973,
+   "lastAired": "2026-06-25",
+   "season": 5,
+   "seasonStart": "2026-05-05",
+   "show": {
+    "id": 54198,
+    "name": "The Bear",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2022-06-23",
+    "network": null,
+    "webChannel": {
+     "id": 2,
+     "name": "Hulu",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hulu.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/629/1574642.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/629/1574642.jpg"
+    }
+   }
+  },
+  {
+   "views": 2928745,
+   "lastAired": "2026-05-29",
+   "season": 5,
+   "seasonStart": "2026-03-27",
+   "show": {
+    "id": 41414,
+    "name": "For All Mankind",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2019-11-01",
+    "network": null,
+    "webChannel": {
+     "id": 310,
+     "name": "Apple TV",
+     "country": null,
+     "officialSite": "https://tv.apple.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/616/1541416.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/616/1541416.jpg"
+    }
+   }
+  },
+  {
+   "views": 2766912,
+   "lastAired": "2026-11-05",
+   "season": 23,
+   "seasonStart": "2026-10-15",
+   "show": {
+    "id": 67,
+    "name": "Grey's Anatomy",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2005-03-27",
+    "network": {
+     "id": 3,
+     "name": "ABC",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://abc.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/644/1611931.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/644/1611931.jpg"
+    }
+   }
+  },
+  {
+   "views": 2751739,
+   "lastAired": "2026-03-26",
+   "season": 1,
+   "seasonStart": "2026-03-26",
+   "show": {
+    "id": 78442,
+    "name": "Something Very Bad Is Going to Happen",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-03-26",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 97,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/619/1548691.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/619/1548691.jpg"
+    }
+   }
+  },
+  {
+   "views": 2750541,
+   "lastAired": "2026-10-15",
+   "season": 4,
+   "seasonStart": "2026-10-15",
+   "show": {
+    "id": 60213,
+    "name": "The Diplomat",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2023-04-20",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/646/1615567.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/646/1615567.jpg"
+    }
+   }
+  },
+  {
+   "views": 2732742,
+   "lastAired": "2026-10-01",
+   "season": 1,
+   "seasonStart": "2026-10-01",
+   "show": {
+    "id": 79399,
+    "name": "East of Eden",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-10-01",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/643/1609556.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/643/1609556.jpg"
+    }
+   }
+  },
+  {
+   "views": 2700122,
+   "lastAired": "2026-11-06",
+   "season": 2,
+   "seasonStart": "2026-09-18",
+   "show": {
+    "id": 75026,
+    "name": "MobLand",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-03-30",
+    "network": null,
+    "webChannel": {
+     "id": 107,
+     "name": "Paramount+",
+     "country": null,
+     "officialSite": "https://www.paramountplus.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/641/1604671.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/641/1604671.jpg"
+    }
+   }
+  },
+  {
+   "views": 2607208,
+   "lastAired": "2026-11-01",
+   "season": 2,
+   "seasonStart": "2026-10-04",
+   "show": {
+    "id": 84526,
+    "name": "Marshals",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-03-01",
+    "network": {
+     "id": 2,
+     "name": "CBS",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.cbs.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/644/1610557.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/644/1610557.jpg"
+    }
+   }
+  },
+  {
+   "views": 2579145,
+   "lastAired": "2026-11-05",
+   "season": 3,
+   "seasonStart": "2026-10-08",
+   "show": {
+    "id": 76566,
+    "name": "Georgie & Mandy's First Marriage",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2024-10-17",
+    "network": {
+     "id": 2,
+     "name": "CBS",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.cbs.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/644/1611942.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/644/1611942.jpg"
+    }
+   }
+  },
+  {
+   "views": 2565914,
+   "lastAired": "2026-03-10",
+   "season": 2,
+   "seasonStart": "2026-03-10",
+   "show": {
+    "id": 46065,
+    "name": "One Piece",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2023-08-31",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/617/1543011.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/617/1543011.jpg"
+    }
+   }
+  },
+  {
+   "views": 2564250,
+   "lastAired": "2026-11-03",
+   "season": 1,
+   "seasonStart": "2026-10-13",
+   "show": {
+    "id": 64950,
+    "name": "VisionQuest",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-10-13",
+    "network": null,
+    "webChannel": {
+     "id": 287,
+     "name": "Disney+",
+     "country": null,
+     "officialSite": "https://www.disneyplus.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/636/1592334.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/636/1592334.jpg"
+    }
+   }
+  },
+  {
+   "views": 2556931,
+   "lastAired": "2026-06-05",
+   "season": 2,
+   "seasonStart": "2026-04-03",
+   "show": {
+    "id": 73484,
+    "name": "Your Friends & Neighbors",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-04-11",
+    "network": null,
+    "webChannel": {
+     "id": 310,
+     "name": "Apple TV",
+     "country": null,
+     "officialSite": "https://tv.apple.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/620/1550778.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/620/1550778.jpg"
+    }
+   }
+  },
+  {
+   "views": 2520839,
+   "lastAired": "2026-04-07",
+   "season": 2,
+   "seasonStart": "2025-09-16",
+   "show": {
+    "id": 68752,
+    "name": "High Potential",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2024-09-17",
+    "network": {
+     "id": 3,
+     "name": "ABC",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://abc.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/585/1463470.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/585/1463470.jpg"
+    }
+   }
+  },
+  {
+   "views": 2517679,
+   "lastAired": "2026-06-19",
+   "season": 1,
+   "seasonStart": "2023-10-13",
+   "show": {
+    "id": 72128,
+    "name": "The Amazing Digital Circus",
+    "type": "Animation",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2023-10-13",
+    "network": null,
+    "webChannel": {
+     "id": 21,
+     "name": "YouTube",
+     "country": null,
+     "officialSite": "https://www.youtube.com"
+    },
+    "weight": 96,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/483/1207540.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/483/1207540.jpg"
+    }
+   }
+  },
+  {
+   "views": 2492839,
+   "lastAired": "2026-05-21",
+   "season": 1,
+   "seasonStart": "2026-05-21",
+   "show": {
+    "id": 68237,
+    "name": "The Boroughs",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-05-21",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/625/1563509.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/625/1563509.jpg"
+    }
+   }
+  },
+  {
+   "views": 2459948,
+   "lastAired": "2026-02-05",
+   "season": 4,
+   "seasonStart": "2026-02-05",
+   "show": {
+    "id": 52910,
+    "name": "The Lincoln Lawyer",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2022-05-13",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/613/1532917.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/613/1532917.jpg"
+    }
+   }
+  },
+  {
+   "views": 2452007,
+   "lastAired": "2026-03-04",
+   "season": 1,
+   "seasonStart": "2026-01-21",
+   "show": {
+    "id": 79916,
+    "name": "The Beauty",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2026-01-21",
+    "network": null,
+    "webChannel": {
+     "id": 2,
+     "name": "Hulu",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hulu.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/608/1520444.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/608/1520444.jpg"
+    }
+   }
+  },
+  {
+   "views": 2435933,
+   "lastAired": "2026-04-12",
+   "season": 1,
+   "seasonStart": "2026-03-01",
+   "show": {
+    "id": 63268,
+    "name": "DTF St. Louis",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-03-01",
+    "network": {
+     "id": 8,
+     "name": "HBO",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hbo.com/"
+    },
+    "webChannel": null,
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/615/1538778.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/615/1538778.jpg"
+    }
+   }
+  },
+  {
+   "views": 2339910,
+   "lastAired": "2026-05-27",
+   "season": 1,
+   "seasonStart": "2026-04-08",
+   "show": {
+    "id": 45531,
+    "name": "The Testaments",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-04-08",
+    "network": null,
+    "webChannel": {
+     "id": 2,
+     "name": "Hulu",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hulu.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/616/1541825.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/616/1541825.jpg"
+    }
+   }
+  },
+  {
+   "views": 2337231,
+   "lastAired": "2026-05-05",
+   "season": 2,
+   "seasonStart": "2026-03-24",
+   "show": {
+    "id": 63234,
+    "name": "Daredevil: Born Again",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-03-04",
+    "network": null,
+    "webChannel": {
+     "id": 287,
+     "name": "Disney+",
+     "country": null,
+     "officialSite": "https://www.disneyplus.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/616/1540605.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/616/1540605.jpg"
+    }
+   }
+  },
+  {
+   "views": 2325871,
+   "lastAired": "2026-05-07",
+   "season": 1,
+   "seasonStart": "2026-05-07",
+   "show": {
+    "id": 91311,
+    "name": "Legends",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-05-07",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/624/1560610.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/624/1560610.jpg"
+    }
+   }
+  },
+  {
+   "views": 2308972,
+   "lastAired": "2026-02-19",
+   "season": 3,
+   "seasonStart": "2026-02-19",
+   "show": {
+    "id": 56512,
+    "name": "The Night Agent",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2023-03-23",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/614/1536331.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/614/1536331.jpg"
+    }
+   }
+  },
+  {
+   "views": 2252508,
+   "lastAired": "2026-01-01",
+   "season": 1,
+   "seasonStart": "2026-01-01",
+   "show": {
+    "id": 74210,
+    "name": "Harlan Coben's Run Away",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-01-01",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 97,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/606/1516903.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/606/1516903.jpg"
+    }
+   }
+  },
+  {
+   "views": 2209892,
+   "lastAired": "2026-08-31",
+   "season": 1,
+   "seasonStart": "2026-07-27",
+   "show": {
+    "id": 87753,
+    "name": "Furious",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-07-27",
+    "network": null,
+    "webChannel": {
+     "id": 2,
+     "name": "Hulu",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hulu.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/634/1585631.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/634/1585631.jpg"
+    }
+   }
+  },
+  {
+   "views": 2170578,
+   "lastAired": "2026-05-15",
+   "season": 8,
+   "seasonStart": "2026-03-06",
+   "show": {
+    "id": 43,
+    "name": "Outlander",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2014-08-09",
+    "network": {
+     "id": 17,
+     "name": "STARZ",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.starz.com/us/en/"
+    },
+    "webChannel": null,
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/616/1541142.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/616/1541142.jpg"
+    }
+   }
+  },
+  {
+   "views": 2125729,
+   "lastAired": "2026-04-10",
+   "season": 1,
+   "seasonStart": "2026-04-10",
+   "show": {
+    "id": 90782,
+    "name": "Malcolm in the Middle: Life's Still Unfair",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-04-10",
+    "network": null,
+    "webChannel": {
+     "id": 2,
+     "name": "Hulu",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hulu.com/"
+    },
+    "weight": 87,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/621/1552907.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/621/1552907.jpg"
+    }
+   }
+  },
+  {
+   "views": 2124979,
+   "lastAired": "2026-03-11",
+   "season": 1,
+   "seasonStart": "2026-03-11",
+   "show": {
+    "id": 67323,
+    "name": "Scarpetta",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-03-11",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/615/1539895.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/615/1539895.jpg"
+    }
+   }
+  },
+  {
+   "views": 2109034,
+   "lastAired": "2026-11-01",
+   "season": 38,
+   "seasonStart": "2026-09-27",
+   "show": {
+    "id": 83,
+    "name": "The Simpsons",
+    "type": "Animation",
+    "language": "English",
+    "status": "Running",
+    "premiered": "1989-12-17",
+    "network": {
+     "id": 4,
+     "name": "FOX",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.fox.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/637/1594614.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/637/1594614.jpg"
+    }
+   }
+  },
+  {
+   "views": 2091446,
+   "lastAired": "2026-03-29",
+   "season": 1,
+   "seasonStart": "2026-03-15",
+   "show": {
+    "id": 80059,
+    "name": "The Other Bennet Sister",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-03-15",
+    "network": null,
+    "webChannel": {
+     "id": 26,
+     "name": "BBC iPlayer",
+     "country": {
+      "name": "United Kingdom",
+      "code": "GB",
+      "timezone": "Europe/London"
+     },
+     "officialSite": "https://www.bbc.co.uk/iplayer"
+    },
+    "weight": 97,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/617/1544880.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/617/1544880.jpg"
+    }
+   }
+  },
+  {
+   "views": 2085840,
+   "lastAired": "2026-05-28",
+   "season": 1,
+   "seasonStart": "2026-04-23",
+   "show": {
+    "id": 74839,
+    "name": "Half Man",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-04-23",
+    "network": null,
+    "webChannel": {
+     "id": 329,
+     "name": "HBO Max",
+     "country": null,
+     "officialSite": "https://www.hbomax.com"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/622/1556682.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/622/1556682.jpg"
+    }
+   }
+  },
+  {
+   "views": 2038407,
+   "lastAired": "2026-02-17",
+   "season": 3,
+   "seasonStart": "2026-01-13",
+   "show": {
+    "id": 50062,
+    "name": "Tell Me Lies",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2022-09-07",
+    "network": null,
+    "webChannel": {
+     "id": 2,
+     "name": "Hulu",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hulu.com/"
+    },
+    "weight": 97,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/608/1520588.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/608/1520588.jpg"
+    }
+   }
+  },
+  {
+   "views": 2032421,
+   "lastAired": "2026-08-12",
+   "season": 2,
+   "seasonStart": "2026-07-01",
+   "show": {
+    "id": 58951,
+    "name": "X-Men '97",
+    "type": "Animation",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2024-03-20",
+    "network": null,
+    "webChannel": {
+     "id": 287,
+     "name": "Disney+",
+     "country": null,
+     "officialSite": "https://www.disneyplus.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/630/1576859.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/630/1576859.jpg"
+    }
+   }
+  },
+  {
+   "views": 1917018,
+   "lastAired": "2026-11-05",
+   "season": 28,
+   "seasonStart": "2026-10-08",
+   "show": {
+    "id": 103,
+    "name": "Law & Order: Special Victims Unit",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "1999-09-20",
+    "network": {
+     "id": 1,
+     "name": "NBC",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.nbc.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/644/1611226.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/644/1611226.jpg"
+    }
+   }
+  },
+  {
+   "views": 1898897,
+   "lastAired": "2025-11-21",
+   "season": 3,
+   "seasonStart": "2025-11-21",
+   "show": {
+    "id": 43728,
+    "name": "The Family Man",
+    "type": "Scripted",
+    "language": "Hindi",
+    "status": "Running",
+    "premiered": "2019-09-20",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 92,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/599/1498893.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/599/1498893.jpg"
+    }
+   }
+  },
+  {
+   "views": 1884091,
+   "lastAired": "2026-05-10",
+   "season": 1,
+   "seasonStart": "2026-03-08",
+   "show": {
+    "id": 88862,
+    "name": "Rooster",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-03-08",
+    "network": {
+     "id": 8,
+     "name": "HBO",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hbo.com/"
+    },
+    "webChannel": null,
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/616/1540316.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/616/1540316.jpg"
+    }
+   }
+  },
+  {
+   "views": 1872384,
+   "lastAired": "2026-03-04",
+   "season": 1,
+   "seasonStart": "2026-03-04",
+   "show": {
+    "id": 77427,
+    "name": "Young Sherlock",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-03-04",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/616/1540834.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/616/1540834.jpg"
+    }
+   }
+  },
+  {
+   "views": 1865781,
+   "lastAired": "2025-11-06",
+   "season": 1,
+   "seasonStart": "2025-11-06",
+   "show": {
+    "id": 74416,
+    "name": "Death by Lightning",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2025-11-06",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 96,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/596/1491705.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/596/1491705.jpg"
+    }
+   }
+  },
+  {
+   "views": 1845188,
+   "lastAired": "2026-07-31",
+   "season": 1,
+   "seasonStart": "2026-06-05",
+   "show": {
+    "id": 80946,
+    "name": "Cape Fear",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-06-05",
+    "network": null,
+    "webChannel": {
+     "id": 310,
+     "name": "Apple TV",
+     "country": null,
+     "officialSite": "https://tv.apple.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/627/1568824.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/627/1568824.jpg"
+    }
+   }
+  },
+  {
+   "views": 1834779,
+   "lastAired": "2026-09-24",
+   "season": 1,
+   "seasonStart": "2026-07-23",
+   "show": {
+    "id": 83360,
+    "name": "Stuart Fails to Save the Universe",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-07-23",
+    "network": null,
+    "webChannel": {
+     "id": 329,
+     "name": "HBO Max",
+     "country": null,
+     "officialSite": "https://www.hbomax.com"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/633/1584491.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/633/1584491.jpg"
+    }
+   }
+  },
+  {
+   "views": 1832213,
+   "lastAired": "2026-11-06",
+   "season": 4,
+   "seasonStart": "2026-10-16",
+   "show": {
+    "id": 59344,
+    "name": "Tulsa King",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2022-11-13",
+    "network": null,
+    "webChannel": {
+     "id": 107,
+     "name": "Paramount+",
+     "country": null,
+     "officialSite": "https://www.paramountplus.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/646/1615902.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/646/1615902.jpg"
+    }
+   }
+  },
+  {
+   "views": 1822083,
+   "lastAired": "2026-05-20",
+   "season": 1,
+   "seasonStart": "2026-04-15",
+   "show": {
+    "id": 74442,
+    "name": "Margo's Got Money Troubles",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-04-15",
+    "network": null,
+    "webChannel": {
+     "id": 310,
+     "name": "Apple TV",
+     "country": null,
+     "officialSite": "https://tv.apple.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/621/1554071.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/621/1554071.jpg"
+    }
+   }
+  },
+  {
+   "views": 1786941,
+   "lastAired": "2025-12-28",
+   "season": 4,
+   "seasonStart": "2025-10-26",
+   "show": {
+    "id": 45840,
+    "name": "Mayor of Kingstown",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2021-11-14",
+    "network": null,
+    "webChannel": {
+     "id": 107,
+     "name": "Paramount+",
+     "country": null,
+     "officialSite": "https://www.paramountplus.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/594/1486611.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/594/1486611.jpg"
+    }
+   }
+  },
+  {
+   "views": 1783355,
+   "lastAired": "2026-01-21",
+   "season": 2,
+   "seasonStart": "2025-12-10",
+   "show": {
+    "id": 48108,
+    "name": "Percy Jackson and the Olympians",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2023-12-19",
+    "network": null,
+    "webChannel": {
+     "id": 287,
+     "name": "Disney+",
+     "country": null,
+     "officialSite": "https://www.disneyplus.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/633/1584057.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/633/1584057.jpg"
+    }
+   }
+  },
+  {
+   "views": 1743306,
+   "lastAired": "2026-10-08",
+   "season": 1,
+   "seasonStart": "2026-10-08",
+   "show": {
+    "id": 93115,
+    "name": "Below",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-10-08",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/644/1612494.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/644/1612494.jpg"
+    }
+   }
+  },
+  {
+   "views": 1710780,
+   "lastAired": "2026-06-05",
+   "season": 1,
+   "seasonStart": "2026-06-05",
+   "show": {
+    "id": 83378,
+    "name": "Teach You a Lesson",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Ended",
+    "premiered": "2026-06-05",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 91,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/627/1569777.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/627/1569777.jpg"
+    }
+   }
+  },
+  {
+   "views": 1704945,
+   "lastAired": "2026-01-15",
+   "season": 1,
+   "seasonStart": "2026-01-15",
+   "show": {
+    "id": 77725,
+    "name": "Agatha Christie's Seven Dials",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-01-15",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 97,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/608/1521771.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/608/1521771.jpg"
+    }
+   }
+  },
+  {
+   "views": 1695969,
+   "lastAired": "2026-10-28",
+   "season": 29,
+   "seasonStart": "2026-09-16",
+   "show": {
+    "id": 112,
+    "name": "South Park",
+    "type": "Animation",
+    "language": "English",
+    "status": "Running",
+    "premiered": "1997-08-13",
+    "network": {
+     "id": 23,
+     "name": "Comedy Central",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.cc.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/641/1604427.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/641/1604427.jpg"
+    }
+   }
+  },
+  {
+   "views": 1678414,
+   "lastAired": "2026-09-24",
+   "season": 4,
+   "seasonStart": "2026-07-23",
+   "show": {
+    "id": 48090,
+    "name": "Star Trek: Strange New Worlds",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2022-05-05",
+    "network": null,
+    "webChannel": {
+     "id": 107,
+     "name": "Paramount+",
+     "country": null,
+     "officialSite": "https://www.paramountplus.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/635/1589217.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/635/1589217.jpg"
+    }
+   }
+  },
+  {
+   "views": 1668999,
+   "lastAired": "2026-06-05",
+   "season": 2,
+   "seasonStart": "2026-05-15",
+   "show": {
+    "id": 64087,
+    "name": "Rivals",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2024-10-18",
+    "network": null,
+    "webChannel": {
+     "id": 287,
+     "name": "Disney+",
+     "country": null,
+     "officialSite": "https://www.disneyplus.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/627/1567849.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/627/1567849.jpg"
+    }
+   }
+  },
+  {
+   "views": 1651256,
+   "lastAired": "2025-11-19",
+   "season": 2,
+   "seasonStart": "2025-10-29",
+   "show": {
+    "id": 43094,
+    "name": "Hazbin Hotel",
+    "type": "Animation",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2019-10-28",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 97,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/594/1487307.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/594/1487307.jpg"
+    }
+   }
+  },
+  {
+   "views": 1598760,
+   "lastAired": "2026-10-15",
+   "season": 1,
+   "seasonStart": "2026-10-15",
+   "show": {
+    "id": 64960,
+    "name": "Crystal Lake",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2026-10-15",
+    "network": null,
+    "webChannel": {
+     "id": 347,
+     "name": "Peacock",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.peacocktv.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/643/1609653.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/643/1609653.jpg"
+    }
+   }
+  },
+  {
+   "views": 1594490,
+   "lastAired": "2026-10-27",
+   "season": 24,
+   "seasonStart": "2026-10-06",
+   "show": {
+    "id": 60,
+    "name": "NCIS",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2003-09-23",
+    "network": {
+     "id": 2,
+     "name": "CBS",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.cbs.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/644/1611234.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/644/1611234.jpg"
+    }
+   }
+  },
+  {
+   "views": 1543840,
+   "lastAired": "2026-06-18",
+   "season": 1,
+   "seasonStart": "2026-06-18",
+   "show": {
+    "id": 81110,
+    "name": "Harlan Coben's I Will Find You",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-06-18",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/624/1560819.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/624/1560819.jpg"
+    }
+   }
+  },
+  {
+   "views": 1542637,
+   "lastAired": "2026-08-05",
+   "season": 1,
+   "seasonStart": "2026-08-05",
+   "show": {
+    "id": 82911,
+    "name": "Sterling Point",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-08-05",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/635/1588784.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/635/1588784.jpg"
+    }
+   }
+  },
+  {
+   "views": 1515143,
+   "lastAired": "2025-11-30",
+   "season": 1,
+   "seasonStart": "2025-10-12",
+   "show": {
+    "id": 75852,
+    "name": "The Chair Company",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-10-12",
+    "network": {
+     "id": 8,
+     "name": "HBO",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hbo.com/"
+    },
+    "webChannel": null,
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/591/1479768.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/591/1479768.jpg"
+    }
+   }
+  },
+  {
+   "views": 1507540,
+   "lastAired": "2026-05-04",
+   "season": 1,
+   "seasonStart": "2026-04-06",
+   "show": {
+    "id": 84190,
+    "name": "Star Wars: Maul - Shadow Lord",
+    "type": "Animation",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-04-06",
+    "network": null,
+    "webChannel": {
+     "id": 287,
+     "name": "Disney+",
+     "country": null,
+     "officialSite": "https://www.disneyplus.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/610/1525084.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/610/1525084.jpg"
+    }
+   }
+  },
+  {
+   "views": 1499724,
+   "lastAired": "2026-05-16",
+   "season": 1,
+   "seasonStart": "2026-04-10",
+   "show": {
+    "id": 81369,
+    "name": "Perfect Crown",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Ended",
+    "premiered": "2026-04-10",
+    "network": {
+     "id": 166,
+     "name": "MBC",
+     "country": {
+      "name": "Korea, Republic of",
+      "code": "KR",
+      "timezone": "Asia/Seoul"
+     },
+     "officialSite": null
+    },
+    "webChannel": null,
+    "weight": 94,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/623/1559769.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/623/1559769.jpg"
+    }
+   }
+  },
+  {
+   "views": 1481118,
+   "lastAired": "2026-03-05",
+   "season": 2,
+   "seasonStart": "2026-03-05",
+   "show": {
+    "id": 55832,
+    "name": "Ted",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2024-01-11",
+    "network": null,
+    "webChannel": {
+     "id": 347,
+     "name": "Peacock",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.peacocktv.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/616/1541133.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/616/1541133.jpg"
+    }
+   }
+  },
+  {
+   "views": 1467267,
+   "lastAired": "2026-05-28",
+   "season": 5,
+   "seasonStart": "2026-04-09",
+   "show": {
+    "id": 54914,
+    "name": "Hacks",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2021-05-13",
+    "network": null,
+    "webChannel": {
+     "id": 329,
+     "name": "HBO Max",
+     "country": null,
+     "officialSite": "https://www.hbomax.com"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/621/1552621.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/621/1552621.jpg"
+    }
+   }
+  },
+  {
+   "views": 1466608,
+   "lastAired": "2026-09-09",
+   "season": 1,
+   "seasonStart": "2026-08-05",
+   "show": {
+    "id": 68193,
+    "name": "The Shards",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2026-08-05",
+    "network": null,
+    "webChannel": {
+     "id": 2,
+     "name": "Hulu",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hulu.com/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/635/1588616.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/635/1588616.jpg"
+    }
+   }
+  },
+  {
+   "views": 1464583,
+   "lastAired": "2026-10-29",
+   "season": 6,
+   "seasonStart": "2026-10-29",
+   "show": {
+    "id": 46573,
+    "name": "Ghosts",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2021-10-07",
+    "network": {
+     "id": 2,
+     "name": "CBS",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.cbs.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/590/1475093.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/590/1475093.jpg"
+    }
+   }
+  },
+  {
+   "views": 1461322,
+   "lastAired": "2025-12-21",
+   "season": 1,
+   "seasonStart": "2025-12-07",
+   "show": {
+    "id": 78640,
+    "name": "The War Between the Land and the Sea",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2025-12-07",
+    "network": null,
+    "webChannel": {
+     "id": 26,
+     "name": "BBC iPlayer",
+     "country": {
+      "name": "United Kingdom",
+      "code": "GB",
+      "timezone": "Europe/London"
+     },
+     "officialSite": "https://www.bbc.co.uk/iplayer"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/602/1506196.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/602/1506196.jpg"
+    }
+   }
+  },
+  {
+   "views": 1459488,
+   "lastAired": "2025-11-19",
+   "season": 4,
+   "seasonStart": "2025-09-17",
+   "show": {
+    "id": 41524,
+    "name": "The Morning Show",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2019-11-01",
+    "network": null,
+    "webChannel": {
+     "id": 310,
+     "name": "Apple TV",
+     "country": null,
+     "officialSite": "https://tv.apple.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/594/1485135.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/594/1485135.jpg"
+    }
+   }
+  },
+  {
+   "views": 1442743,
+   "lastAired": "2026-05-28",
+   "season": 2,
+   "seasonStart": "2026-05-28",
+   "show": {
+    "id": 73889,
+    "name": "The Four Seasons",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-05-01",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/626/1566331.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/626/1566331.jpg"
+    }
+   }
+  },
+  {
+   "views": 1438403,
+   "lastAired": "2025-12-22",
+   "season": 1,
+   "seasonStart": "2025-11-19",
+   "show": {
+    "id": 86172,
+    "name": "The Mighty Nein",
+    "type": "Animation",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-11-19",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/598/1496655.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/598/1496655.jpg"
+    }
+   }
+  },
+  {
+   "views": 1431709,
+   "lastAired": "2026-11-04",
+   "season": 6,
+   "seasonStart": "2026-10-07",
+   "show": {
+    "id": 55350,
+    "name": "Abbott Elementary",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2021-12-07",
+    "network": {
+     "id": 3,
+     "name": "ABC",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://abc.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/644/1611887.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/644/1611887.jpg"
+    }
+   }
+  },
+  {
+   "views": 1430490,
+   "lastAired": "2026-02-12",
+   "season": 1,
+   "seasonStart": "2026-02-12",
+   "show": {
+    "id": 76004,
+    "name": "How to Get to Heaven From Belfast",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-02-12",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/613/1533076.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/613/1533076.jpg"
+    }
+   }
+  },
+  {
+   "views": 1420280,
+   "lastAired": "2026-07-25",
+   "season": 1,
+   "seasonStart": "2026-06-26",
+   "show": {
+    "id": 89784,
+    "name": "Agent Kim Reactivated",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Ended",
+    "premiered": "2026-06-26",
+    "network": {
+     "id": 127,
+     "name": "SBS",
+     "country": {
+      "name": "Korea, Republic of",
+      "code": "KR",
+      "timezone": "Asia/Seoul"
+     },
+     "officialSite": null
+    },
+    "webChannel": null,
+    "weight": 96,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/631/1578943.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/631/1578943.jpg"
+    }
+   }
+  },
+  {
+   "views": 1413569,
+   "lastAired": "2026-03-11",
+   "season": 1,
+   "seasonStart": "2026-03-11",
+   "show": {
+    "id": 82574,
+    "name": "A Woman of Substance",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-03-11",
+    "network": null,
+    "webChannel": {
+     "id": 52,
+     "name": "Channel 4",
+     "country": {
+      "name": "United Kingdom",
+      "code": "GB",
+      "timezone": "Europe/London"
+     },
+     "officialSite": "https://www.channel4.com/"
+    },
+    "weight": 97,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/617/1544929.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/617/1544929.jpg"
+    }
+   }
+  },
+  {
+   "views": 1413232,
+   "lastAired": "2026-01-15",
+   "season": 1,
+   "seasonStart": "2026-01-15",
+   "show": {
+    "id": 79185,
+    "name": "Ponies",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-01-15",
+    "network": null,
+    "webChannel": {
+     "id": 347,
+     "name": "Peacock",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.peacocktv.com/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/608/1521711.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/608/1521711.jpg"
+    }
+   }
+  },
+  {
+   "views": 1393992,
+   "lastAired": "2026-09-16",
+   "season": 1,
+   "seasonStart": "2026-09-16",
+   "show": {
+    "id": 82707,
+    "name": "Neagley",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-09-16",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/641/1604422.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/641/1604422.jpg"
+    }
+   }
+  },
+  {
+   "views": 1386873,
+   "lastAired": "2026-11-03",
+   "season": 2,
+   "seasonStart": "2026-09-20",
+   "show": {
+    "id": 84556,
+    "name": "Best Medicine",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-01-04",
+    "network": {
+     "id": 4,
+     "name": "FOX",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.fox.com/"
+    },
+    "webChannel": null,
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/639/1597644.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/639/1597644.jpg"
+    }
+   }
+  },
+  {
+   "views": 1386216,
+   "lastAired": "2026-03-04",
+   "season": 2,
+   "seasonStart": "2026-01-14",
+   "show": {
+    "id": 61739,
+    "name": "Hijack",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2023-06-28",
+    "network": null,
+    "webChannel": {
+     "id": 310,
+     "name": "Apple TV",
+     "country": null,
+     "officialSite": "https://tv.apple.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/608/1521070.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/608/1521070.jpg"
+    }
+   }
+  },
+  {
+   "views": 1372229,
+   "lastAired": "2026-04-12",
+   "season": 3,
+   "seasonStart": "2026-03-08",
+   "show": {
+    "id": 35512,
+    "name": "The Capture",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2019-09-03",
+    "network": null,
+    "webChannel": {
+     "id": 26,
+     "name": "BBC iPlayer",
+     "country": {
+      "name": "United Kingdom",
+      "code": "GB",
+      "timezone": "Europe/London"
+     },
+     "officialSite": "https://www.bbc.co.uk/iplayer"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/616/1542367.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/616/1542367.jpg"
+    }
+   }
+  },
+  {
+   "views": 1371646,
+   "lastAired": "2025-12-10",
+   "season": 1,
+   "seasonStart": "2025-10-29",
+   "show": {
+    "id": 76165,
+    "name": "Down Cemetery Road",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-10-29",
+    "network": null,
+    "webChannel": {
+     "id": 310,
+     "name": "Apple TV",
+     "country": null,
+     "officialSite": "https://tv.apple.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/594/1487306.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/594/1487306.jpg"
+    }
+   }
+  },
+  {
+   "views": 1366365,
+   "lastAired": "2026-11-05",
+   "season": 10,
+   "seasonStart": "2026-10-15",
+   "show": {
+    "id": 28152,
+    "name": "9-1-1",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2018-01-03",
+    "network": {
+     "id": 3,
+     "name": "ABC",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://abc.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/645/1614039.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/645/1614039.jpg"
+    }
+   }
+  },
+  {
+   "views": 1365283,
+   "lastAired": "2026-04-12",
+   "season": 3,
+   "seasonStart": "2025-10-05",
+   "show": {
+    "id": 47182,
+    "name": "Smiling Friends",
+    "type": "Animation",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2020-04-01",
+    "network": {
+     "id": 10,
+     "name": "Adult Swim",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.adultswim.com/"
+    },
+    "webChannel": null,
+    "weight": 96,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/590/1477120.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/590/1477120.jpg"
+    }
+   }
+  },
+  {
+   "views": 1363447,
+   "lastAired": "2026-09-03",
+   "season": 2,
+   "seasonStart": "2026-09-03",
+   "show": {
+    "id": 74865,
+    "name": "Chad Powers",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-09-30",
+    "network": null,
+    "webChannel": {
+     "id": 2,
+     "name": "Hulu",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hulu.com/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/639/1599358.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/639/1599358.jpg"
+    }
+   }
+  },
+  {
+   "views": 1361500,
+   "lastAired": "2026-10-21",
+   "season": 2,
+   "seasonStart": "2026-10-21",
+   "show": {
+    "id": 47856,
+    "name": "The Terminal List",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2022-07-01",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/646/1617453.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/646/1617453.jpg"
+    }
+   }
+  },
+  {
+   "views": 1330232,
+   "lastAired": "2026-10-22",
+   "season": 3,
+   "seasonStart": "2026-10-22",
+   "show": {
+    "id": 77060,
+    "name": "Nobody Wants This",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2024-09-26",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/646/1615448.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/646/1615448.jpg"
+    }
+   }
+  },
+  {
+   "views": 1321742,
+   "lastAired": "2026-10-30",
+   "season": 1,
+   "seasonStart": "2026-10-09",
+   "show": {
+    "id": 83073,
+    "name": "Avatar: Seven Havens",
+    "type": "Animation",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2026-10-09",
+    "network": null,
+    "webChannel": {
+     "id": 107,
+     "name": "Paramount+",
+     "country": null,
+     "officialSite": "https://www.paramountplus.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/645/1613483.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/645/1613483.jpg"
+    }
+   }
+  },
+  {
+   "views": 1319227,
+   "lastAired": "2026-07-09",
+   "season": 1,
+   "seasonStart": "2026-07-09",
+   "show": {
+    "id": 82345,
+    "name": "Little House on the Prairie",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2026-07-09",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/621/1553667.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/621/1553667.jpg"
+    }
+   }
+  },
+  {
+   "views": 1305600,
+   "lastAired": "2026-11-05",
+   "season": 26,
+   "seasonStart": "2026-10-08",
+   "show": {
+    "id": 562,
+    "name": "Law & Order",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "1990-09-13",
+    "network": {
+     "id": 1,
+     "name": "NBC",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.nbc.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/644/1611219.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/644/1611219.jpg"
+    }
+   }
+  },
+  {
+   "views": 1299050,
+   "lastAired": "2026-10-30",
+   "season": 2,
+   "seasonStart": "2026-08-28",
+   "show": {
+    "id": 61315,
+    "name": "Dark Matter",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2024-05-08",
+    "network": null,
+    "webChannel": {
+     "id": 310,
+     "name": "Apple TV",
+     "country": null,
+     "officialSite": "https://tv.apple.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/633/1584721.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/633/1584721.jpg"
+    }
+   }
+  },
+  {
+   "views": 1290773,
+   "lastAired": "2025-12-18",
+   "season": 5,
+   "seasonStart": "2025-12-18",
+   "show": {
+    "id": 41632,
+    "name": "Emily in Paris",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2020-10-02",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/604/1510920.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/604/1510920.jpg"
+    }
+   }
+  },
+  {
+   "views": 1285950,
+   "lastAired": "2026-05-20",
+   "season": 4,
+   "seasonStart": "2023-06-30",
+   "show": {
+    "id": 5079,
+    "name": "Tom Clancy's Jack Ryan",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2018-08-31",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/486/1215704.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/486/1215704.jpg"
+    }
+   }
+  },
+  {
+   "views": 1277410,
+   "lastAired": "2026-11-04",
+   "season": 2,
+   "seasonStart": "2026-11-04",
+   "show": {
+    "id": 78300,
+    "name": "All's Fair",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-11-04",
+    "network": null,
+    "webChannel": {
+     "id": 2,
+     "name": "Hulu",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hulu.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/644/1612248.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/644/1612248.jpg"
+    }
+   }
+  },
+  {
+   "views": 1252862,
+   "lastAired": "2026-02-18",
+   "season": 1,
+   "seasonStart": "2026-02-18",
+   "show": {
+    "id": 73371,
+    "name": "56 Days",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-02-18",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 97,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/613/1534419.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/613/1534419.jpg"
+    }
+   }
+  },
+  {
+   "views": 1204552,
+   "lastAired": "2026-08-18",
+   "season": 2026,
+   "seasonStart": "2026-08-18",
+   "show": {
+    "id": 64646,
+    "name": "The Backrooms",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2022-01-07",
+    "network": null,
+    "webChannel": {
+     "id": 21,
+     "name": "YouTube",
+     "country": null,
+     "officialSite": "https://www.youtube.com"
+    },
+    "weight": 58,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/606/1517015.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/606/1517015.jpg"
+    }
+   }
+  },
+  {
+   "views": 1194658,
+   "lastAired": "2026-02-09",
+   "season": 1,
+   "seasonStart": "2026-02-09",
+   "show": {
+    "id": 87306,
+    "name": "Small Prophets",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-02-09",
+    "network": null,
+    "webChannel": {
+     "id": 26,
+     "name": "BBC iPlayer",
+     "country": {
+      "name": "United Kingdom",
+      "code": "GB",
+      "timezone": "Europe/London"
+     },
+     "officialSite": "https://www.bbc.co.uk/iplayer"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/612/1532216.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/612/1532216.jpg"
+    }
+   }
+  },
+  {
+   "views": 1168070,
+   "lastAired": "2025-11-20",
+   "season": 2,
+   "seasonStart": "2025-11-20",
+   "show": {
+    "id": 74443,
+    "name": "A Man on the Inside",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2024-11-21",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/599/1499138.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/599/1499138.jpg"
+    }
+   }
+  },
+  {
+   "views": 1162720,
+   "lastAired": "2025-12-04",
+   "season": 1,
+   "seasonStart": "2025-12-04",
+   "show": {
+    "id": 64627,
+    "name": "The Abandons",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2025-12-04",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 94,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/601/1504439.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/601/1504439.jpg"
+    }
+   }
+  },
+  {
+   "views": 1156800,
+   "lastAired": "2025-12-21",
+   "season": 1,
+   "seasonStart": "2025-11-02",
+   "show": {
+    "id": 86738,
+    "name": "I Love LA",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-11-02",
+    "network": {
+     "id": 8,
+     "name": "HBO",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hbo.com/"
+    },
+    "webChannel": null,
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/596/1490312.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/596/1490312.jpg"
+    }
+   }
+  },
+  {
+   "views": 1155316,
+   "lastAired": "2026-08-20",
+   "season": 5,
+   "seasonStart": "2026-08-20",
+   "show": {
+    "id": 42062,
+    "name": "Outer Banks",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2020-04-15",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/635/1589150.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/635/1589150.jpg"
+    }
+   }
+  },
+  {
+   "views": 1120100,
+   "lastAired": "2026-04-23",
+   "season": 2,
+   "seasonStart": "2025-10-12",
+   "show": {
+    "id": 66872,
+    "name": "Matlock",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2024-09-22",
+    "network": {
+     "id": 2,
+     "name": "CBS",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.cbs.com/"
+    },
+    "webChannel": null,
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/591/1479764.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/591/1479764.jpg"
+    }
+   }
+  },
+  {
+   "views": 1118115,
+   "lastAired": "2026-11-06",
+   "season": 2,
+   "seasonStart": "2026-10-30",
+   "show": {
+    "id": 78665,
+    "name": "Dexter: Resurrection",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-07-11",
+    "network": null,
+    "webChannel": {
+     "id": 107,
+     "name": "Paramount+",
+     "country": null,
+     "officialSite": "https://www.paramountplus.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/649/1623432.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/649/1623432.jpg"
+    }
+   }
+  },
+  {
+   "views": 1089362,
+   "lastAired": "2026-04-23",
+   "season": 2,
+   "seasonStart": "2026-04-23",
+   "show": {
+    "id": 77064,
+    "name": "Running Point",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-02-27",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/622/1556551.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/622/1556551.jpg"
+    }
+   }
+  },
+  {
+   "views": 1088548,
+   "lastAired": "2026-04-06",
+   "season": 1,
+   "seasonStart": "2026-01-25",
+   "show": {
+    "id": 84601,
+    "name": "Memory of a Killer",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-01-25",
+    "network": {
+     "id": 4,
+     "name": "FOX",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.fox.com/"
+    },
+    "webChannel": null,
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/610/1526197.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/610/1526197.jpg"
+    }
+   }
+  },
+  {
+   "views": 1073678,
+   "lastAired": "2026-08-27",
+   "season": 2,
+   "seasonStart": "2026-07-31",
+   "show": {
+    "id": 83946,
+    "name": "Adults",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2025-05-29",
+    "network": null,
+    "webChannel": {
+     "id": 2,
+     "name": "Hulu",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hulu.com/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/641/1603022.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/641/1603022.jpg"
+    }
+   }
+  },
+  {
+   "views": 1072324,
+   "lastAired": "2025-11-13",
+   "season": 1,
+   "seasonStart": "2025-11-13",
+   "show": {
+    "id": 76232,
+    "name": "Last Samurai Standing",
+    "type": "Scripted",
+    "language": "Japanese",
+    "status": "Running",
+    "premiered": "2025-11-13",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/598/1495158.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/598/1495158.jpg"
+    }
+   }
+  },
+  {
+   "views": 1058624,
+   "lastAired": "2026-09-10",
+   "season": 2,
+   "seasonStart": "2026-08-20",
+   "show": {
+    "id": 68919,
+    "name": "Ludwig",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2024-09-25",
+    "network": null,
+    "webChannel": {
+     "id": 26,
+     "name": "BBC iPlayer",
+     "country": {
+      "name": "United Kingdom",
+      "code": "GB",
+      "timezone": "Europe/London"
+     },
+     "officialSite": "https://www.bbc.co.uk/iplayer"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/637/1594123.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/637/1594123.jpg"
+    }
+   }
+  },
+  {
+   "views": 1053702,
+   "lastAired": "2026-07-15",
+   "season": 1,
+   "seasonStart": "2026-07-15",
+   "show": {
+    "id": 91854,
+    "name": "Ride or Die",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-07-15",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/630/1577447.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/630/1577447.jpg"
+    }
+   }
+  },
+  {
+   "views": 1033624,
+   "lastAired": "2026-07-10",
+   "season": 1,
+   "seasonStart": "2026-05-29",
+   "show": {
+    "id": 76191,
+    "name": "Star City",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2026-05-29",
+    "network": null,
+    "webChannel": {
+     "id": 310,
+     "name": "Apple TV",
+     "country": null,
+     "officialSite": "https://tv.apple.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/622/1556438.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/622/1556438.jpg"
+    }
+   }
+  },
+  {
+   "views": 1031609,
+   "lastAired": "2026-06-07",
+   "season": 1,
+   "seasonStart": "2026-05-31",
+   "show": {
+    "id": 82604,
+    "name": "Tip Toe",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-05-31",
+    "network": null,
+    "webChannel": {
+     "id": 52,
+     "name": "Channel 4",
+     "country": {
+      "name": "United Kingdom",
+      "code": "GB",
+      "timezone": "Europe/London"
+     },
+     "officialSite": "https://www.channel4.com/"
+    },
+    "weight": 97,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/627/1568484.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/627/1568484.jpg"
+    }
+   }
+  },
+  {
+   "views": 1006606,
+   "lastAired": "2025-12-04",
+   "season": 1,
+   "seasonStart": "2025-11-06",
+   "show": {
+    "id": 86342,
+    "name": "Dear X",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Ended",
+    "premiered": "2025-11-06",
+    "network": null,
+    "webChannel": {
+     "id": 454,
+     "name": "TVING",
+     "country": {
+      "name": "Korea, Republic of",
+      "code": "KR",
+      "timezone": "Asia/Seoul"
+     },
+     "officialSite": "https://www.tving.com/onboarding"
+    },
+    "weight": 94,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/600/1500626.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/600/1500626.jpg"
+    }
+   }
+  },
+  {
+   "views": 997871,
+   "lastAired": "2026-03-18",
+   "season": 2,
+   "seasonStart": "2026-02-11",
+   "show": {
+    "id": 64834,
+    "name": "Cross",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2024-11-14",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/613/1532936.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/613/1532936.jpg"
+    }
+   }
+  },
+  {
+   "views": 996658,
+   "lastAired": "2026-05-06",
+   "season": 2,
+   "seasonStart": "2026-05-06",
+   "show": {
+    "id": 45834,
+    "name": "Citadel",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2023-04-28",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/624/1560435.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/624/1560435.jpg"
+    }
+   }
+  },
+  {
+   "views": 992704,
+   "lastAired": "2026-08-13",
+   "season": 3,
+   "seasonStart": "2026-08-13",
+   "show": {
+    "id": 74979,
+    "name": "Tires",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2024-05-23",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/640/1602046.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/640/1602046.jpg"
+    }
+   }
+  },
+  {
+   "views": 984256,
+   "lastAired": "2026-11-03",
+   "season": 3,
+   "seasonStart": "2026-09-22",
+   "show": {
+    "id": 67884,
+    "name": "Doc",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-01-07",
+    "network": {
+     "id": 4,
+     "name": "FOX",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.fox.com/"
+    },
+    "webChannel": null,
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/639/1597647.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/639/1597647.jpg"
+    }
+   }
+  },
+  {
+   "views": 984253,
+   "lastAired": "2026-11-04",
+   "season": 15,
+   "seasonStart": "2026-10-07",
+   "show": {
+    "id": 59,
+    "name": "Chicago Fire",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2012-10-10",
+    "network": {
+     "id": 1,
+     "name": "NBC",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.nbc.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/644/1611896.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/644/1611896.jpg"
+    }
+   }
+  },
+  {
+   "views": 981798,
+   "lastAired": "2026-06-10",
+   "season": 1,
+   "seasonStart": "2026-06-10",
+   "show": {
+    "id": 78706,
+    "name": "Every Year After",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-06-10",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 97,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/628/1571138.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/628/1571138.jpg"
+    }
+   }
+  },
+  {
+   "views": 970104,
+   "lastAired": "2026-06-21",
+   "season": 2,
+   "seasonStart": "2026-06-21",
+   "show": {
+    "id": 66840,
+    "name": "The Agency",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2024-11-29",
+    "network": null,
+    "webChannel": {
+     "id": 107,
+     "name": "Paramount+",
+     "country": null,
+     "officialSite": "https://www.paramountplus.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/629/1573992.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/629/1573992.jpg"
+    }
+   }
+  },
+  {
+   "views": 964205,
+   "lastAired": "2026-08-19",
+   "season": 1,
+   "seasonStart": "2026-07-15",
+   "show": {
+    "id": 81228,
+    "name": "Lucky",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-07-15",
+    "network": null,
+    "webChannel": {
+     "id": 310,
+     "name": "Apple TV",
+     "country": null,
+     "officialSite": "https://tv.apple.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/632/1582019.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/632/1582019.jpg"
+    }
+   }
+  },
+  {
+   "views": 960267,
+   "lastAired": "2026-02-27",
+   "season": 1,
+   "seasonStart": "2026-01-30",
+   "show": {
+    "id": 79089,
+    "name": "Under Salt Marsh",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-01-30",
+    "network": {
+     "id": 113,
+     "name": "Sky Atlantic",
+     "country": {
+      "name": "United Kingdom",
+      "code": "GB",
+      "timezone": "Europe/London"
+     },
+     "officialSite": "https://www.sky.com/watch/channel/sky-atlantic"
+    },
+    "webChannel": null,
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/611/1528258.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/611/1528258.jpg"
+    }
+   }
+  },
+  {
+   "views": 957380,
+   "lastAired": "2026-09-09",
+   "season": 2,
+   "seasonStart": "2026-09-09",
+   "show": {
+    "id": 84611,
+    "name": "The Paper",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2025-09-04",
+    "network": null,
+    "webChannel": {
+     "id": 347,
+     "name": "Peacock",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.peacocktv.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/636/1591367.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/636/1591367.jpg"
+    }
+   }
+  },
+  {
+   "views": 945945,
+   "lastAired": "2026-01-16",
+   "season": 1,
+   "seasonStart": "2026-01-16",
+   "show": {
+    "id": 80053,
+    "name": "Can This Love Be Translated?",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Ended",
+    "premiered": "2026-01-16",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 84,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/608/1520438.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/608/1520438.jpg"
+    }
+   }
+  },
+  {
+   "views": 945448,
+   "lastAired": "2026-07-09",
+   "season": 1,
+   "seasonStart": "2026-07-09",
+   "show": {
+    "id": 82297,
+    "name": "The Five Star Weekend",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-07-09",
+    "network": null,
+    "webChannel": {
+     "id": 347,
+     "name": "Peacock",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.peacocktv.com/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/627/1567606.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/627/1567606.jpg"
+    }
+   }
+  },
+  {
+   "views": 941653,
+   "lastAired": "2026-07-01",
+   "season": 2026,
+   "seasonStart": "2026-07-01",
+   "show": {
+    "id": 55261,
+    "name": "Enola Holmes",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2020-09-23",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 67,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/629/1573440.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/629/1573440.jpg"
+    }
+   }
+  },
+  {
+   "views": 928389,
+   "lastAired": "2026-07-01",
+   "season": 1,
+   "seasonStart": "2026-07-01",
+   "show": {
+    "id": 77011,
+    "name": "Elle",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-07-01",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 97,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/628/1572300.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/628/1572300.jpg"
+    }
+   }
+  },
+  {
+   "views": 918532,
+   "lastAired": "2026-02-08",
+   "season": 1,
+   "seasonStart": "2026-02-08",
+   "show": {
+    "id": 79408,
+    "name": "The ‘Burbs",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2026-02-08",
+    "network": null,
+    "webChannel": {
+     "id": 347,
+     "name": "Peacock",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.peacocktv.com/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/613/1533726.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/613/1533726.jpg"
+    }
+   }
+  },
+  {
+   "views": 915084,
+   "lastAired": "2026-04-21",
+   "season": 1,
+   "seasonStart": "2026-04-21",
+   "show": {
+    "id": 81032,
+    "name": "Unchosen",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-04-21",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 97,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/622/1555669.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/622/1555669.jpg"
+    }
+   }
+  },
+  {
+   "views": 900520,
+   "lastAired": "2026-10-30",
+   "season": 2,
+   "seasonStart": "2026-10-09",
+   "show": {
+    "id": 82705,
+    "name": "Boston Blue",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-10-17",
+    "network": {
+     "id": 2,
+     "name": "CBS",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.cbs.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/644/1611927.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/644/1611927.jpg"
+    }
+   }
+  },
+  {
+   "views": 899886,
+   "lastAired": "2026-04-09",
+   "season": 1,
+   "seasonStart": "2026-04-09",
+   "show": {
+    "id": 86488,
+    "name": "Big Mistakes",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-04-09",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/619/1549408.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/619/1549408.jpg"
+    }
+   }
+  },
+  {
+   "views": 884619,
+   "lastAired": "2026-05-27",
+   "season": 2,
+   "seasonStart": "2026-05-27",
+   "show": {
+    "id": 63949,
+    "name": "A Good Girl's Guide to Murder",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2024-07-01",
+    "network": null,
+    "webChannel": {
+     "id": 26,
+     "name": "BBC iPlayer",
+     "country": {
+      "name": "United Kingdom",
+      "code": "GB",
+      "timezone": "Europe/London"
+     },
+     "officialSite": "https://www.bbc.co.uk/iplayer"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/626/1566763.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/626/1566763.jpg"
+    }
+   }
+  },
+  {
+   "views": 884488,
+   "lastAired": "2026-04-30",
+   "season": 1,
+   "seasonStart": "2026-04-30",
+   "show": {
+    "id": 67765,
+    "name": "Man on Fire",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2026-04-30",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/621/1554712.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/621/1554712.jpg"
+    }
+   }
+  },
+  {
+   "views": 879880,
+   "lastAired": "2026-11-02",
+   "season": 9,
+   "seasonStart": "2026-10-05",
+   "show": {
+    "id": 32158,
+    "name": "FBI",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2018-09-25",
+    "network": {
+     "id": 2,
+     "name": "CBS",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.cbs.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/644/1611428.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/644/1611428.jpg"
+    }
+   }
+  },
+  {
+   "views": 879301,
+   "lastAired": "2026-11-05",
+   "season": 1,
+   "seasonStart": "2026-10-01",
+   "show": {
+    "id": 86587,
+    "name": "War",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-10-01",
+    "network": {
+     "id": 8,
+     "name": "HBO",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hbo.com/"
+    },
+    "webChannel": null,
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/645/1614048.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/645/1614048.jpg"
+    }
+   }
+  },
+  {
+   "views": 873500,
+   "lastAired": "2026-05-05",
+   "season": 4,
+   "seasonStart": "2026-01-06",
+   "show": {
+    "id": 61740,
+    "name": "Will Trent",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2023-01-03",
+    "network": {
+     "id": 3,
+     "name": "ABC",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://abc.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/602/1506386.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/602/1506386.jpg"
+    }
+   }
+  },
+  {
+   "views": 870038,
+   "lastAired": "2026-07-23",
+   "season": 2,
+   "seasonStart": "2026-07-23",
+   "show": {
+    "id": 73223,
+    "name": "Ransom Canyon",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2025-04-17",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/633/1583807.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/633/1583807.jpg"
+    }
+   }
+  },
+  {
+   "views": 866594,
+   "lastAired": "2026-05-15",
+   "season": 1,
+   "seasonStart": "2026-05-15",
+   "show": {
+    "id": 80609,
+    "name": "The WONDERfools",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Ended",
+    "premiered": "2026-05-15",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 93,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/622/1557005.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/622/1557005.jpg"
+    }
+   }
+  },
+  {
+   "views": 861940,
+   "lastAired": "2026-11-04",
+   "season": 14,
+   "seasonStart": "2026-10-07",
+   "show": {
+    "id": 56,
+    "name": "Chicago P.D.",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2014-01-08",
+    "network": {
+     "id": 1,
+     "name": "NBC",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.nbc.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/644/1611897.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/644/1611897.jpg"
+    }
+   }
+  },
+  {
+   "views": 858603,
+   "lastAired": "2026-11-05",
+   "season": 2,
+   "seasonStart": "2026-10-15",
+   "show": {
+    "id": 82759,
+    "name": "9-1-1: Nashville",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-10-09",
+    "network": {
+     "id": 3,
+     "name": "ABC",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://abc.com/"
+    },
+    "webChannel": null,
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/642/1605098.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/642/1605098.jpg"
+    }
+   }
+  },
+  {
+   "views": 852686,
+   "lastAired": "2026-11-05",
+   "season": 4,
+   "seasonStart": "2026-10-08",
+   "show": {
+    "id": 66869,
+    "name": "Elsbeth",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2024-02-29",
+    "network": {
+     "id": 2,
+     "name": "CBS",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.cbs.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/644/1611949.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/644/1611949.jpg"
+    }
+   }
+  },
+  {
+   "views": 835310,
+   "lastAired": "2025-12-25",
+   "season": 1,
+   "seasonStart": "2025-11-12",
+   "show": {
+    "id": 87661,
+    "name": "Dynamite Kiss",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Ended",
+    "premiered": "2025-11-12",
+    "network": {
+     "id": 127,
+     "name": "SBS",
+     "country": {
+      "name": "Korea, Republic of",
+      "code": "KR",
+      "timezone": "Asia/Seoul"
+     },
+     "officialSite": null
+    },
+    "webChannel": null,
+    "weight": 93,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/593/1482842.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/593/1482842.jpg"
+    }
+   }
+  },
+  {
+   "views": 819618,
+   "lastAired": "2026-08-06",
+   "season": 3,
+   "seasonStart": "2026-08-06",
+   "show": {
+    "id": 60523,
+    "name": "My Life With the Walter Boys",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2023-12-07",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/635/1589055.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/635/1589055.jpg"
+    }
+   }
+  },
+  {
+   "views": 815963,
+   "lastAired": "2026-06-20",
+   "season": 1,
+   "seasonStart": "2026-05-08",
+   "show": {
+    "id": 90692,
+    "name": "My Royal Nemesis",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Ended",
+    "premiered": "2026-05-08",
+    "network": {
+     "id": 127,
+     "name": "SBS",
+     "country": {
+      "name": "Korea, Republic of",
+      "code": "KR",
+      "timezone": "Asia/Seoul"
+     },
+     "officialSite": null
+    },
+    "webChannel": null,
+    "weight": 94,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/624/1561134.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/624/1561134.jpg"
+    }
+   }
+  },
+  {
+   "views": 811957,
+   "lastAired": "2025-12-05",
+   "season": 1,
+   "seasonStart": "2025-10-10",
+   "show": {
+    "id": 67154,
+    "name": "The Last Frontier",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2025-10-10",
+    "network": null,
+    "webChannel": {
+     "id": 310,
+     "name": "Apple TV",
+     "country": null,
+     "officialSite": "https://tv.apple.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/591/1478676.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/591/1478676.jpg"
+    }
+   }
+  },
+  {
+   "views": 794674,
+   "lastAired": "2026-07-13",
+   "season": 5,
+   "seasonStart": "2026-05-18",
+   "show": {
+    "id": 15315,
+    "name": "Fauda",
+    "type": "Scripted",
+    "language": "Hebrew",
+    "status": "To Be Determined",
+    "premiered": "2015-02-15",
+    "network": {
+     "id": 554,
+     "name": "Yes",
+     "country": {
+      "name": "Israel",
+      "code": "IL",
+      "timezone": "Asia/Jerusalem"
+     },
+     "officialSite": null
+    },
+    "webChannel": null,
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/631/1579218.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/631/1579218.jpg"
+    }
+   }
+  },
+  {
+   "views": 789292,
+   "lastAired": "2026-05-13",
+   "season": 3,
+   "seasonStart": "2026-05-13",
+   "show": {
+    "id": 28717,
+    "name": "Good Omens",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2019-05-31",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/625/1563341.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/625/1563341.jpg"
+    }
+   }
+  },
+  {
+   "views": 785240,
+   "lastAired": "2026-04-29",
+   "season": 1,
+   "seasonStart": "2026-03-18",
+   "show": {
+    "id": 75637,
+    "name": "Imperfect Women",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-03-18",
+    "network": null,
+    "webChannel": {
+     "id": 310,
+     "name": "Apple TV",
+     "country": null,
+     "officialSite": "https://tv.apple.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/618/1545422.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/618/1545422.jpg"
+    }
+   }
+  },
+  {
+   "views": 783027,
+   "lastAired": "2026-06-23",
+   "season": 1,
+   "seasonStart": "2026-06-02",
+   "show": {
+    "id": 83015,
+    "name": "Not Suitable for Work",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-06-02",
+    "network": null,
+    "webChannel": {
+     "id": 2,
+     "name": "Hulu",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hulu.com/"
+    },
+    "weight": 96,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/627/1568662.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/627/1568662.jpg"
+    }
+   }
+  },
+  {
+   "views": 764042,
+   "lastAired": "2026-11-04",
+   "season": 1,
+   "seasonStart": "2026-09-23",
+   "show": {
+    "id": 68625,
+    "name": "Brothers",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-09-23",
+    "network": null,
+    "webChannel": {
+     "id": 310,
+     "name": "Apple TV",
+     "country": null,
+     "officialSite": "https://tv.apple.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/642/1606577.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/642/1606577.jpg"
+    }
+   }
+  },
+  {
+   "views": 760961,
+   "lastAired": "2026-03-05",
+   "season": 1,
+   "seasonStart": "2026-03-05",
+   "show": {
+    "id": 83065,
+    "name": "Vladimir",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-03-05",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 96,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/616/1541362.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/616/1541362.jpg"
+    }
+   }
+  },
+  {
+   "views": 753049,
+   "lastAired": "2026-11-02",
+   "season": 2,
+   "seasonStart": "2026-10-05",
+   "show": {
+    "id": 82211,
+    "name": "CIA",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-02-23",
+    "network": {
+     "id": 2,
+     "name": "CBS",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.cbs.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/642/1606527.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/642/1606527.jpg"
+    }
+   }
+  },
+  {
+   "views": 749226,
+   "lastAired": "2026-04-02",
+   "season": 3,
+   "seasonStart": "2026-04-02",
+   "show": {
+    "id": 60509,
+    "name": "XO, Kitty",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2023-05-18",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 96,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/620/1550651.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/620/1550651.jpg"
+    }
+   }
+  },
+  {
+   "views": 724131,
+   "lastAired": "2026-10-30",
+   "season": 5,
+   "seasonStart": "2026-10-09",
+   "show": {
+    "id": 60339,
+    "name": "Fire Country",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2022-10-07",
+    "network": {
+     "id": 2,
+     "name": "CBS",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.cbs.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/644/1611928.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/644/1611928.jpg"
+    }
+   }
+  },
+  {
+   "views": 720252,
+   "lastAired": "2026-05-17",
+   "season": 16,
+   "seasonStart": "2025-09-28",
+   "show": {
+    "id": 107,
+    "name": "Bob's Burgers",
+    "type": "Animation",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2011-01-09",
+    "network": {
+     "id": 4,
+     "name": "FOX",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.fox.com/"
+    },
+    "webChannel": null,
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/589/1474468.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/589/1474468.jpg"
+    }
+   }
+  },
+  {
+   "views": 707365,
+   "lastAired": "2025-11-13",
+   "season": 3,
+   "seasonStart": "2025-11-13",
+   "show": {
+    "id": 41322,
+    "name": "Delhi Crime",
+    "type": "Scripted",
+    "language": "Hindi",
+    "status": "To Be Determined",
+    "premiered": "2019-03-22",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 88,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/188/470620.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/188/470620.jpg"
+    }
+   }
+  },
+  {
+   "views": 693820,
+   "lastAired": "2026-03-12",
+   "season": 1,
+   "seasonStart": "2026-02-04",
+   "show": {
+    "id": 89765,
+    "name": "Our Universe",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Ended",
+    "premiered": "2026-02-04",
+    "network": {
+     "id": 280,
+     "name": "tvN",
+     "country": {
+      "name": "Korea, Republic of",
+      "code": "KR",
+      "timezone": "Asia/Seoul"
+     },
+     "officialSite": "https://tvn.cjenm.com/"
+    },
+    "webChannel": null,
+    "weight": 43,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/613/1533834.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/613/1533834.jpg"
+    }
+   }
+  },
+  {
+   "views": 693493,
+   "lastAired": "2026-09-13",
+   "season": 21,
+   "seasonStart": "2026-02-22",
+   "show": {
+    "id": 215,
+    "name": "American Dad!",
+    "type": "Animation",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2005-02-06",
+    "network": {
+     "id": 4,
+     "name": "FOX",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.fox.com/"
+    },
+    "webChannel": null,
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/611/1528249.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/611/1528249.jpg"
+    }
+   }
+  },
+  {
+   "views": 687832,
+   "lastAired": "2025-12-27",
+   "season": 1,
+   "seasonStart": "2025-12-27",
+   "show": {
+    "id": 82738,
+    "name": "The Copenhagen Test",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2025-12-27",
+    "network": null,
+    "webChannel": {
+     "id": 347,
+     "name": "Peacock",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.peacocktv.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/605/1513760.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/605/1513760.jpg"
+    }
+   }
+  },
+  {
+   "views": 678405,
+   "lastAired": "2026-04-24",
+   "season": 1,
+   "seasonStart": "2026-04-24",
+   "show": {
+    "id": 87858,
+    "name": "If Wishes Could Kill",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Ended",
+    "premiered": "2026-04-24",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 88,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/623/1557825.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/623/1557825.jpg"
+    }
+   }
+  },
+  {
+   "views": 670668,
+   "lastAired": "2025-12-03",
+   "season": 1,
+   "seasonStart": "2025-11-05",
+   "show": {
+    "id": 84807,
+    "name": "The Manipulated",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Ended",
+    "premiered": "2025-11-05",
+    "network": null,
+    "webChannel": {
+     "id": 287,
+     "name": "Disney+",
+     "country": null,
+     "officialSite": "https://www.disneyplus.com/"
+    },
+    "weight": 94,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/595/1489992.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/595/1489992.jpg"
+    }
+   }
+  },
+  {
+   "views": 662174,
+   "lastAired": "2026-03-08",
+   "season": 1,
+   "seasonStart": "2026-03-08",
+   "show": {
+    "id": 88579,
+    "name": "Gone",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2026-03-08",
+    "network": null,
+    "webChannel": {
+     "id": 54,
+     "name": "ITVX",
+     "country": {
+      "name": "United Kingdom",
+      "code": "GB",
+      "timezone": "Europe/London"
+     },
+     "officialSite": "https://www.itvx.com/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/615/1538714.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/615/1538714.jpg"
+    }
+   }
+  },
+  {
+   "views": 657253,
+   "lastAired": "2026-09-13",
+   "season": 3,
+   "seasonStart": "2026-08-30",
+   "show": {
+    "id": 45879,
+    "name": "Vigil",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2021-08-29",
+    "network": null,
+    "webChannel": {
+     "id": 26,
+     "name": "BBC iPlayer",
+     "country": {
+      "name": "United Kingdom",
+      "code": "GB",
+      "timezone": "Europe/London"
+     },
+     "officialSite": "https://www.bbc.co.uk/iplayer"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/639/1597618.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/639/1597618.jpg"
+    }
+   }
+  },
+  {
+   "views": 646733,
+   "lastAired": "2025-11-28",
+   "season": 2,
+   "seasonStart": "2025-11-07",
+   "show": {
+    "id": 63973,
+    "name": "Maxton Hall",
+    "type": "Scripted",
+    "language": "German",
+    "status": "Running",
+    "premiered": "2024-05-09",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/641/1602804.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/641/1602804.jpg"
+    }
+   }
+  },
+  {
+   "views": 645927,
+   "lastAired": "2026-07-16",
+   "season": 1,
+   "seasonStart": "2026-07-16",
+   "show": {
+    "id": 77059,
+    "name": "The Hawk",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2026-07-16",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 96,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/617/1543410.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/617/1543410.jpg"
+    }
+   }
+  },
+  {
+   "views": 642626,
+   "lastAired": "2026-10-27",
+   "season": 3,
+   "seasonStart": "2026-10-06",
+   "show": {
+    "id": 73811,
+    "name": "NCIS: Origins",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2024-10-14",
+    "network": {
+     "id": 2,
+     "name": "CBS",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.cbs.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/644/1611236.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/644/1611236.jpg"
+    }
+   }
+  },
+  {
+   "views": 637202,
+   "lastAired": "2026-11-02",
+   "season": 3,
+   "seasonStart": "2026-11-02",
+   "show": {
+    "id": 63498,
+    "name": "St. Denis Medical",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2024-11-12",
+    "network": {
+     "id": 1,
+     "name": "NBC",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.nbc.com/"
+    },
+    "webChannel": null,
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/646/1617479.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/646/1617479.jpg"
+    }
+   }
+  },
+  {
+   "views": 632366,
+   "lastAired": "2026-08-07",
+   "season": 1,
+   "seasonStart": "2026-06-26",
+   "show": {
+    "id": 90796,
+    "name": "Life, Larry and the Pursuit of Unhappiness",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-06-26",
+    "network": {
+     "id": 8,
+     "name": "HBO",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hbo.com/"
+    },
+    "webChannel": null,
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/632/1580379.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/632/1580379.jpg"
+    }
+   }
+  },
+  {
+   "views": 628918,
+   "lastAired": "2026-05-14",
+   "season": 1,
+   "seasonStart": "2026-05-14",
+   "show": {
+    "id": 83053,
+    "name": "Nemesis",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-05-14",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/625/1563340.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/625/1563340.jpg"
+    }
+   }
+  },
+  {
+   "views": 627146,
+   "lastAired": "2026-05-02",
+   "season": 1,
+   "seasonStart": "2026-03-13",
+   "show": {
+    "id": 89292,
+    "name": "Phantom Lawyer",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Ended",
+    "premiered": "2026-03-13",
+    "network": {
+     "id": 127,
+     "name": "SBS",
+     "country": {
+      "name": "Korea, Republic of",
+      "code": "KR",
+      "timezone": "Asia/Seoul"
+     },
+     "officialSite": null
+    },
+    "webChannel": null,
+    "weight": 91,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/617/1544467.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/617/1544467.jpg"
+    }
+   }
+  },
+  {
+   "views": 621889,
+   "lastAired": "2026-02-13",
+   "season": 1,
+   "seasonStart": "2026-02-13",
+   "show": {
+    "id": 89805,
+    "name": "The Art of Sarah",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Ended",
+    "premiered": "2026-02-13",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 70,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/613/1532937.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/613/1532937.jpg"
+    }
+   }
+  },
+  {
+   "views": 620644,
+   "lastAired": "2026-11-04",
+   "season": 12,
+   "seasonStart": "2026-10-07",
+   "show": {
+    "id": 2246,
+    "name": "Chicago Med",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2015-11-17",
+    "network": {
+     "id": 1,
+     "name": "NBC",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.nbc.com/"
+    },
+    "webChannel": null,
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/644/1611894.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/644/1611894.jpg"
+    }
+   }
+  },
+  {
+   "views": 604971,
+   "lastAired": "2025-11-14",
+   "season": 1,
+   "seasonStart": "2025-11-14",
+   "show": {
+    "id": 74232,
+    "name": "Malice",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2025-11-14",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 97,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/598/1495715.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/598/1495715.jpg"
+    }
+   }
+  },
+  {
+   "views": 601051,
+   "lastAired": "2026-11-02",
+   "season": 2,
+   "seasonStart": "2026-11-02",
+   "show": {
+    "id": 84605,
+    "name": "The Fall and Rise of Reggie Dinkins",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-01-18",
+    "network": {
+     "id": 1,
+     "name": "NBC",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.nbc.com/"
+    },
+    "webChannel": null,
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/646/1616254.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/646/1616254.jpg"
+    }
+   }
+  },
+  {
+   "views": 588860,
+   "lastAired": "2026-08-07",
+   "season": 1,
+   "seasonStart": "2026-08-07",
+   "show": {
+    "id": 93357,
+    "name": "Operation Safed Sagar: The Untold Story of the Kargil War",
+    "type": "Scripted",
+    "language": "Hindi",
+    "status": "Running",
+    "premiered": "2026-08-07",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 62,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/635/1589388.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/635/1589388.jpg"
+    }
+   }
+  },
+  {
+   "views": 583804,
+   "lastAired": "2026-05-12",
+   "season": 2,
+   "seasonStart": "2026-05-12",
+   "show": {
+    "id": 71529,
+    "name": "Devil May Cry",
+    "type": "Animation",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-04-03",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 96,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/555/1389167.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/555/1389167.jpg"
+    }
+   }
+  },
+  {
+   "views": 581154,
+   "lastAired": "2026-04-09",
+   "season": 1,
+   "seasonStart": "2026-04-09",
+   "show": {
+    "id": 75600,
+    "name": "The Miniature Wife",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2026-04-09",
+    "network": null,
+    "webChannel": {
+     "id": 347,
+     "name": "Peacock",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.peacocktv.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/616/1540965.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/616/1540965.jpg"
+    }
+   }
+  },
+  {
+   "views": 579852,
+   "lastAired": "2026-03-06",
+   "season": 1,
+   "seasonStart": "2026-03-06",
+   "show": {
+    "id": 89678,
+    "name": "Boyfriend on Demand",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Ended",
+    "premiered": "2026-03-06",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 87,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/616/1541579.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/616/1541579.jpg"
+    }
+   }
+  },
+  {
+   "views": 577001,
+   "lastAired": "2026-09-07",
+   "season": 3,
+   "seasonStart": "2026-07-27",
+   "show": {
+    "id": 64860,
+    "name": "Colin From Accounts",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2022-12-01",
+    "network": null,
+    "webChannel": {
+     "id": 522,
+     "name": "Binge",
+     "country": {
+      "name": "Australia",
+      "code": "AU",
+      "timezone": "Australia/Sydney"
+     },
+     "officialSite": "https://binge.com.au/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/634/1585630.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/634/1585630.jpg"
+    }
+   }
+  },
+  {
+   "views": 565384,
+   "lastAired": "2026-08-07",
+   "season": 1,
+   "seasonStart": "2026-08-07",
+   "show": {
+    "id": 91086,
+    "name": "Our Sticky Love",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Ended",
+    "premiered": "2026-08-07",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 88,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/635/1589317.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/635/1589317.jpg"
+    }
+   }
+  },
+  {
+   "views": 562168,
+   "lastAired": "2026-01-01",
+   "season": 2,
+   "seasonStart": "2026-01-01",
+   "show": {
+    "id": 75015,
+    "name": "Red Eye",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2024-04-21",
+    "network": null,
+    "webChannel": {
+     "id": 54,
+     "name": "ITVX",
+     "country": {
+      "name": "United Kingdom",
+      "code": "GB",
+      "timezone": "Europe/London"
+     },
+     "officialSite": "https://www.itvx.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/606/1515328.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/606/1515328.jpg"
+    }
+   }
+  },
+  {
+   "views": 555302,
+   "lastAired": "2026-11-06",
+   "season": 2026,
+   "seasonStart": "2026-01-02",
+   "show": {
+    "id": 4344,
+    "name": "The Young and the Restless",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "1973-03-26",
+    "network": {
+     "id": 2,
+     "name": "CBS",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.cbs.com/"
+    },
+    "webChannel": null,
+    "weight": 97,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/593/1482522.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/593/1482522.jpg"
+    }
+   }
+  },
+  {
+   "views": 553327,
+   "lastAired": "2026-11-05",
+   "season": 2026,
+   "seasonStart": "2026-01-02",
+   "show": {
+    "id": 4189,
+    "name": "General Hospital",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "1963-04-01",
+    "network": {
+     "id": 3,
+     "name": "ABC",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://abc.com/"
+    },
+    "webChannel": null,
+    "weight": 97,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/521/1302689.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/521/1302689.jpg"
+    }
+   }
+  },
+  {
+   "views": 548409,
+   "lastAired": "2026-09-20",
+   "season": 1,
+   "seasonStart": "2026-09-20",
+   "show": {
+    "id": 86463,
+    "name": "The Blame",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2026-09-20",
+    "network": null,
+    "webChannel": {
+     "id": 54,
+     "name": "ITVX",
+     "country": {
+      "name": "United Kingdom",
+      "code": "GB",
+      "timezone": "Europe/London"
+     },
+     "officialSite": "https://www.itvx.com/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/642/1605821.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/642/1605821.jpg"
+    }
+   }
+  },
+  {
+   "views": 545198,
+   "lastAired": "2026-10-11",
+   "season": 3,
+   "seasonStart": "2026-10-11",
+   "show": {
+    "id": 50374,
+    "name": "Time",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2021-06-06",
+    "network": null,
+    "webChannel": {
+     "id": 26,
+     "name": "BBC iPlayer",
+     "country": {
+      "name": "United Kingdom",
+      "code": "GB",
+      "timezone": "Europe/London"
+     },
+     "officialSite": "https://www.bbc.co.uk/iplayer"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/645/1614031.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/645/1614031.jpg"
+    }
+   }
+  },
+  {
+   "views": 512170,
+   "lastAired": "2026-10-25",
+   "season": 2,
+   "seasonStart": "2026-10-25",
+   "show": {
+    "id": 74826,
+    "name": "This City Is Ours",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-03-23",
+    "network": null,
+    "webChannel": {
+     "id": 26,
+     "name": "BBC iPlayer",
+     "country": {
+      "name": "United Kingdom",
+      "code": "GB",
+      "timezone": "Europe/London"
+     },
+     "officialSite": "https://www.bbc.co.uk/iplayer"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/647/1619645.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/647/1619645.jpg"
+    }
+   }
+  },
+  {
+   "views": 503316,
+   "lastAired": "2026-04-03",
+   "season": 2,
+   "seasonStart": "2026-04-03",
+   "show": {
+    "id": 63870,
+    "name": "Bloodhounds",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Running",
+    "premiered": "2023-06-09",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 75,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/620/1550874.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/620/1550874.jpg"
+    }
+   }
+  },
+  {
+   "views": 497084,
+   "lastAired": "2026-02-11",
+   "season": 2,
+   "seasonStart": "2026-02-11",
+   "show": {
+    "id": 69717,
+    "name": "Kohrra",
+    "type": "Scripted",
+    "language": "Panjabi",
+    "status": "Running",
+    "premiered": "2023-07-15",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 82,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/468/1170715.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/468/1170715.jpg"
+    }
+   }
+  },
+  {
+   "views": 494820,
+   "lastAired": "2026-08-13",
+   "season": 1,
+   "seasonStart": "2026-08-13",
+   "show": {
+    "id": 85474,
+    "name": "My Brilliant Career",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-08-13",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 92,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/633/1583365.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/633/1583365.jpg"
+    }
+   }
+  },
+  {
+   "views": 494556,
+   "lastAired": "2026-01-09",
+   "season": 2,
+   "seasonStart": "2026-01-09",
+   "show": {
+    "id": 63786,
+    "name": "A Thousand Blows",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2025-02-21",
+    "network": null,
+    "webChannel": {
+     "id": 287,
+     "name": "Disney+",
+     "country": null,
+     "officialSite": "https://www.disneyplus.com/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/607/1518917.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/607/1518917.jpg"
+    }
+   }
+  },
+  {
+   "views": 492348,
+   "lastAired": "2026-07-17",
+   "season": 1,
+   "seasonStart": "2026-07-17",
+   "show": {
+    "id": 85393,
+    "name": "The East Palace",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Ended",
+    "premiered": "2026-07-17",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 96,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/632/1582210.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/632/1582210.jpg"
+    }
+   }
+  },
+  {
+   "views": 491253,
+   "lastAired": "2026-08-12",
+   "season": 2,
+   "seasonStart": "2026-07-22",
+   "show": {
+    "id": 73612,
+    "name": "A Shop for Killers",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Ended",
+    "premiered": "2024-01-17",
+    "network": null,
+    "webChannel": {
+     "id": 287,
+     "name": "Disney+",
+     "country": null,
+     "officialSite": "https://www.disneyplus.com/"
+    },
+    "weight": 96,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/631/1577676.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/631/1577676.jpg"
+    }
+   }
+  },
+  {
+   "views": 489811,
+   "lastAired": "2026-06-04",
+   "season": 1,
+   "seasonStart": "2026-06-04",
+   "show": {
+    "id": 91633,
+    "name": "The Witness",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-06-04",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 95,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/624/1561448.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/624/1561448.jpg"
+    }
+   }
+  },
+  {
+   "views": 485751,
+   "lastAired": "2026-09-18",
+   "season": 1,
+   "seasonStart": "2026-09-18",
+   "show": {
+    "id": 91016,
+    "name": "The Scandal",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Ended",
+    "premiered": "2026-09-18",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 79,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/641/1604826.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/641/1604826.jpg"
+    }
+   }
+  },
+  {
+   "views": 461470,
+   "lastAired": "2026-07-01",
+   "season": 2,
+   "seasonStart": "2025-09-22",
+   "show": {
+    "id": 66625,
+    "name": "Brilliant Minds",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2024-09-23",
+    "network": {
+     "id": 1,
+     "name": "NBC",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.nbc.com/"
+    },
+    "webChannel": null,
+    "weight": 97,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/590/1475103.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/590/1475103.jpg"
+    }
+   }
+  },
+  {
+   "views": 460446,
+   "lastAired": "2026-11-01",
+   "season": 5,
+   "seasonStart": "2026-09-27",
+   "show": {
+    "id": 63266,
+    "name": "Animal Control",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2023-02-16",
+    "network": {
+     "id": 4,
+     "name": "FOX",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.fox.com/"
+    },
+    "webChannel": null,
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/643/1608230.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/643/1608230.jpg"
+    }
+   }
+  },
+  {
+   "views": 451787,
+   "lastAired": "2025-11-07",
+   "season": 1,
+   "seasonStart": "2025-11-07",
+   "show": {
+    "id": 85482,
+    "name": "As You Stood By",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Ended",
+    "premiered": "2025-11-07",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 70,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/597/1493683.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/597/1493683.jpg"
+    }
+   }
+  },
+  {
+   "views": 443668,
+   "lastAired": "2025-12-08",
+   "season": 4,
+   "seasonStart": "2025-11-24",
+   "show": {
+    "id": 50270,
+    "name": "Bel-Air",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2022-02-13",
+    "network": null,
+    "webChannel": {
+     "id": 347,
+     "name": "Peacock",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.peacocktv.com/"
+    },
+    "weight": 92,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/599/1499439.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/599/1499439.jpg"
+    }
+   }
+  },
+  {
+   "views": 443398,
+   "lastAired": "2026-10-07",
+   "season": 1,
+   "seasonStart": "2026-09-09",
+   "show": {
+    "id": 78183,
+    "name": "Last Seen",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2026-09-09",
+    "network": null,
+    "webChannel": {
+     "id": 310,
+     "name": "Apple TV",
+     "country": null,
+     "officialSite": "https://tv.apple.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/636/1591384.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/636/1591384.jpg"
+    }
+   }
+  },
+  {
+   "views": 438985,
+   "lastAired": "2026-09-24",
+   "season": 1,
+   "seasonStart": "2026-09-24",
+   "show": {
+    "id": 91916,
+    "name": "A Different World",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-09-24",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 96,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/642/1607490.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/642/1607490.jpg"
+    }
+   }
+  },
+  {
+   "views": 426508,
+   "lastAired": "2026-07-02",
+   "season": 1,
+   "seasonStart": "2026-07-02",
+   "show": {
+    "id": 91917,
+    "name": "Human Vapor",
+    "type": "Scripted",
+    "language": "Japanese",
+    "status": "To Be Determined",
+    "premiered": "2026-07-02",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 89,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/630/1577420.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/630/1577420.jpg"
+    }
+   }
+  },
+  {
+   "views": 417997,
+   "lastAired": "2026-09-10",
+   "season": 1,
+   "seasonStart": "2026-09-10",
+   "show": {
+    "id": 86983,
+    "name": "Crew Girl",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-09-10",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 96,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/640/1601998.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/640/1601998.jpg"
+    }
+   }
+  },
+  {
+   "views": 406689,
+   "lastAired": "2026-11-06",
+   "season": 1,
+   "seasonStart": "2026-10-23",
+   "show": {
+    "id": 93263,
+    "name": "Yaga",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-10-23",
+    "network": null,
+    "webChannel": {
+     "id": 109,
+     "name": "Crave",
+     "country": {
+      "name": "Canada",
+      "code": "CA",
+      "timezone": "America/Toronto"
+     },
+     "officialSite": "https://www.crave.ca/en"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/649/1622861.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/649/1622861.jpg"
+    }
+   }
+  },
+  {
+   "views": 392648,
+   "lastAired": "2026-10-02",
+   "season": 1,
+   "seasonStart": "2026-10-02",
+   "show": {
+    "id": 83159,
+    "name": "Coven Academy",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-10-02",
+    "network": null,
+    "webChannel": {
+     "id": 287,
+     "name": "Disney+",
+     "country": null,
+     "officialSite": "https://www.disneyplus.com/"
+    },
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/643/1609609.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/643/1609609.jpg"
+    }
+   }
+  },
+  {
+   "views": 370771,
+   "lastAired": "2026-06-05",
+   "season": 1,
+   "seasonStart": "2026-06-05",
+   "show": {
+    "id": 78622,
+    "name": "Among Us",
+    "type": "Animation",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2026-06-05",
+    "network": null,
+    "webChannel": {
+     "id": 107,
+     "name": "Paramount+",
+     "country": null,
+     "officialSite": "https://www.paramountplus.com/"
+    },
+    "weight": 94,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/628/1570411.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/628/1570411.jpg"
+    }
+   }
+  },
+  {
+   "views": 368655,
+   "lastAired": "2026-04-19",
+   "season": 3,
+   "seasonStart": "2025-09-28",
+   "show": {
+    "id": 55386,
+    "name": "Krapopolis",
+    "type": "Animation",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2023-09-24",
+    "network": {
+     "id": 4,
+     "name": "FOX",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.fox.com/"
+    },
+    "webChannel": null,
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/589/1474471.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/589/1474471.jpg"
+    }
+   }
+  },
+  {
+   "views": 368030,
+   "lastAired": "2025-11-19",
+   "season": 1,
+   "seasonStart": "2025-10-15",
+   "show": {
+    "id": 82743,
+    "name": "Murdaugh: Death in the Family",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2025-10-15",
+    "network": null,
+    "webChannel": {
+     "id": 2,
+     "name": "Hulu",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hulu.com/"
+    },
+    "weight": 95,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/592/1480197.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/592/1480197.jpg"
+    }
+   }
+  },
+  {
+   "views": 347876,
+   "lastAired": "2026-03-12",
+   "season": 1,
+   "seasonStart": "2026-01-15",
+   "show": {
+    "id": 60302,
+    "name": "Star Trek: Starfleet Academy",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-01-15",
+    "network": null,
+    "webChannel": {
+     "id": 107,
+     "name": "Paramount+",
+     "country": null,
+     "officialSite": "https://www.paramountplus.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/608/1521221.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/608/1521221.jpg"
+    }
+   }
+  },
+  {
+   "views": 322998,
+   "lastAired": "2026-10-27",
+   "season": 1,
+   "seasonStart": "2026-10-06",
+   "show": {
+    "id": 91405,
+    "name": "NCIS: New York",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-10-06",
+    "network": {
+     "id": 2,
+     "name": "CBS",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.cbs.com/"
+    },
+    "webChannel": null,
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/644/1611239.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/644/1611239.jpg"
+    }
+   }
+  },
+  {
+   "views": 319961,
+   "lastAired": "2026-11-06",
+   "season": 1,
+   "seasonStart": "2026-10-30",
+   "show": {
+    "id": 66811,
+    "name": "Nocturne",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-10-30",
+    "network": null,
+    "webChannel": {
+     "id": 310,
+     "name": "Apple TV",
+     "country": null,
+     "officialSite": "https://tv.apple.com/"
+    },
+    "weight": 100,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/643/1609134.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/643/1609134.jpg"
+    }
+   }
+  },
+  {
+   "views": 314908,
+   "lastAired": "2026-08-07",
+   "season": 1,
+   "seasonStart": "2026-08-07",
+   "show": {
+    "id": 91116,
+    "name": "Ricky Gervais Alley Cats",
+    "type": "Animation",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2026-08-07",
+    "network": null,
+    "webChannel": {
+     "id": 1,
+     "name": "Netflix",
+     "country": null,
+     "officialSite": "https://www.netflix.com/"
+    },
+    "weight": 96,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/635/1588686.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/635/1588686.jpg"
+    }
+   }
+  },
+  {
+   "views": 292596,
+   "lastAired": "2026-10-30",
+   "season": 3,
+   "seasonStart": "2026-10-23",
+   "show": {
+    "id": 76487,
+    "name": "Happy's Place",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2024-10-18",
+    "network": {
+     "id": 1,
+     "name": "NBC",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.nbc.com/"
+    },
+    "webChannel": null,
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/645/1614061.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/645/1614061.jpg"
+    }
+   }
+  },
+  {
+   "views": 291229,
+   "lastAired": "2026-03-13",
+   "season": 1,
+   "seasonStart": "2025-11-07",
+   "show": {
+    "id": 81253,
+    "name": "Stumble",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2025-11-07",
+    "network": {
+     "id": 1,
+     "name": "NBC",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.nbc.com/"
+    },
+    "webChannel": null,
+    "weight": 97,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/617/1542859.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/617/1542859.jpg"
+    }
+   }
+  },
+  {
+   "views": 288087,
+   "lastAired": "2026-03-26",
+   "season": 3,
+   "seasonStart": "2026-01-08",
+   "show": {
+    "id": 48450,
+    "name": "Jujutsu Kaisen",
+    "type": "Animation",
+    "language": "Japanese",
+    "status": "To Be Determined",
+    "premiered": "2020-10-02",
+    "network": {
+     "id": 24,
+     "name": "MBS",
+     "country": {
+      "name": "Japan",
+      "code": "JP",
+      "timezone": "Asia/Tokyo"
+     },
+     "officialSite": null
+    },
+    "webChannel": null,
+    "weight": 97,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/608/1521905.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/608/1521905.jpg"
+    }
+   }
+  },
+  {
+   "views": 277708,
+   "lastAired": "2026-11-03",
+   "season": 4,
+   "seasonStart": "2026-10-06",
+   "show": {
+    "id": 61704,
+    "name": "Reasonable Doubt",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2022-09-27",
+    "network": null,
+    "webChannel": {
+     "id": 2,
+     "name": "Hulu",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.hulu.com/"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/648/1620423.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/648/1620423.jpg"
+    }
+   }
+  },
+  {
+   "views": 270420,
+   "lastAired": "2026-10-07",
+   "season": 1,
+   "seasonStart": "2026-10-07",
+   "show": {
+    "id": 45562,
+    "name": "Carrie",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-10-07",
+    "network": null,
+    "webChannel": {
+     "id": 3,
+     "name": "Prime Video",
+     "country": null,
+     "officialSite": "https://www.primevideo.com"
+    },
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/644/1611660.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/644/1611660.jpg"
+    }
+   }
+  },
+  {
+   "views": 247293,
+   "lastAired": "2026-11-06",
+   "season": 1,
+   "seasonStart": "2026-10-09",
+   "show": {
+    "id": 91309,
+    "name": "Doctor X: Mafia in White",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Running",
+    "premiered": "2026-10-09",
+    "network": {
+     "id": 127,
+     "name": "SBS",
+     "country": {
+      "name": "Korea, Republic of",
+      "code": "KR",
+      "timezone": "Asia/Seoul"
+     },
+     "officialSite": null
+    },
+    "webChannel": null,
+    "weight": 94,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/645/1613382.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/645/1613382.jpg"
+    }
+   }
+  },
+  {
+   "views": 232552,
+   "lastAired": "2026-11-05",
+   "season": 2026,
+   "seasonStart": "2026-01-01",
+   "show": {
+    "id": 75194,
+    "name": "Beyond the Gates",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2025-02-24",
+    "network": {
+     "id": 2,
+     "name": "CBS",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.cbs.com/"
+    },
+    "webChannel": null,
+    "weight": 96,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/593/1482540.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/593/1482540.jpg"
+    }
+   }
+  },
+  {
+   "views": 228689,
+   "lastAired": "2026-11-05",
+   "season": 1,
+   "seasonStart": "2026-10-08",
+   "show": {
+    "id": 79196,
+    "name": "Cupertino",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2026-10-08",
+    "network": {
+     "id": 2,
+     "name": "CBS",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.cbs.com/"
+    },
+    "webChannel": null,
+    "weight": 99,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/645/1612978.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/645/1612978.jpg"
+    }
+   }
+  },
+  {
+   "views": 202164,
+   "lastAired": "2026-04-23",
+   "season": 2,
+   "seasonStart": "2026-01-15",
+   "show": {
+    "id": 74095,
+    "name": "Going Dutch",
+    "type": "Scripted",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2025-01-02",
+    "network": {
+     "id": 4,
+     "name": "FOX",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.fox.com/"
+    },
+    "webChannel": null,
+    "weight": 96,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/613/1533708.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/613/1533708.jpg"
+    }
+   }
+  },
+  {
+   "views": 175360,
+   "lastAired": "2026-02-25",
+   "season": 1,
+   "seasonStart": "2026-02-04",
+   "show": {
+    "id": 89709,
+    "name": "Bloody Flower",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Ended",
+    "premiered": "2026-02-04",
+    "network": null,
+    "webChannel": {
+     "id": 287,
+     "name": "Disney+",
+     "country": null,
+     "officialSite": "https://www.disneyplus.com/"
+    },
+    "weight": 57,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/616/1540991.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/616/1540991.jpg"
+    }
+   }
+  },
+  {
+   "views": 151876,
+   "lastAired": "2026-11-01",
+   "season": 3,
+   "seasonStart": "2026-09-27",
+   "show": {
+    "id": 65072,
+    "name": "Universal Basic Guys",
+    "type": "Animation",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2024-09-08",
+    "network": {
+     "id": 4,
+     "name": "FOX",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.fox.com/"
+    },
+    "webChannel": null,
+    "weight": 97,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/637/1594616.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/637/1594616.jpg"
+    }
+   }
+  },
+  {
+   "views": 133695,
+   "lastAired": "2025-12-19",
+   "season": 4,
+   "seasonStart": "2025-12-19",
+   "show": {
+    "id": 61798,
+    "name": "Dora",
+    "type": "Animation",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2024-04-12",
+    "network": null,
+    "webChannel": {
+     "id": 107,
+     "name": "Paramount+",
+     "country": null,
+     "officialSite": "https://www.paramountplus.com/"
+    },
+    "weight": 81,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/513/1284071.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/513/1284071.jpg"
+    }
+   }
+  },
+  {
+   "views": 115114,
+   "lastAired": "2026-10-02",
+   "season": 2,
+   "seasonStart": "2026-10-02",
+   "show": {
+    "id": 92003,
+    "name": "Adventure Time: Side Quests",
+    "type": "Animation",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2026-06-29",
+    "network": null,
+    "webChannel": {
+     "id": 287,
+     "name": "Disney+",
+     "country": null,
+     "officialSite": "https://www.disneyplus.com/"
+    },
+    "weight": 94,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/646/1615505.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/646/1615505.jpg"
+    }
+   }
+  },
+  {
+   "views": 106155,
+   "lastAired": "2026-11-01",
+   "season": 3,
+   "seasonStart": "2026-09-27",
+   "show": {
+    "id": 58638,
+    "name": "Grimsburg",
+    "type": "Animation",
+    "language": "English",
+    "status": "Running",
+    "premiered": "2024-01-07",
+    "network": {
+     "id": 4,
+     "name": "FOX",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://www.fox.com/"
+    },
+    "webChannel": null,
+    "weight": 98,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/637/1594615.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/637/1594615.jpg"
+    }
+   }
+  },
+  {
+   "views": 77529,
+   "lastAired": "2026-09-16",
+   "season": 1,
+   "seasonStart": "2026-09-16",
+   "show": {
+    "id": 76188,
+    "name": "Golden Axe",
+    "type": "Animation",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2026-09-16",
+    "network": null,
+    "webChannel": {
+     "id": 107,
+     "name": "Paramount+",
+     "country": null,
+     "officialSite": "https://www.paramountplus.com/"
+    },
+    "weight": 96,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/637/1594231.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/637/1594231.jpg"
+    }
+   }
+  },
+  {
+   "views": 75477,
+   "lastAired": "2026-05-27",
+   "season": 1,
+   "seasonStart": "2026-04-29",
+   "show": {
+    "id": 90928,
+    "name": "Gold Land",
+    "type": "Scripted",
+    "language": "Korean",
+    "status": "Ended",
+    "premiered": "2026-04-29",
+    "network": null,
+    "webChannel": {
+     "id": 287,
+     "name": "Disney+",
+     "country": null,
+     "officialSite": "https://www.disneyplus.com/"
+    },
+    "weight": 45,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/624/1560437.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/624/1560437.jpg"
+    }
+   }
+  },
+  {
+   "views": 53440,
+   "lastAired": "2025-11-27",
+   "season": 2025,
+   "seasonStart": "2025-11-27",
+   "show": {
+    "id": 52402,
+    "name": "Prep & Landing",
+    "type": "Animation",
+    "language": "English",
+    "status": "Ended",
+    "premiered": "2009-12-08",
+    "network": {
+     "id": 3,
+     "name": "ABC",
+     "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+     },
+     "officialSite": "https://abc.com/"
+    },
+    "webChannel": null,
+    "weight": 40,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/599/1499479.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/599/1499479.jpg"
+    }
+   }
+  },
+  {
+   "views": 11178,
+   "lastAired": "2026-05-31",
+   "season": 1,
+   "seasonStart": "2026-04-26",
+   "show": {
+    "id": 87341,
+    "name": "Bad Company",
+    "type": "Scripted",
+    "language": "English",
+    "status": "To Be Determined",
+    "premiered": "2026-04-26",
+    "network": {
+     "id": 114,
+     "name": "ABC",
+     "country": {
+      "name": "Australia",
+      "code": "AU",
+      "timezone": "Australia/Sydney"
+     },
+     "officialSite": "https://www.abc.net.au/"
+    },
+    "webChannel": null,
+    "weight": 93,
+    "image": {
+     "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/622/1557159.jpg",
+     "original": "https://static.tvmaze.com/uploads/images/original_untouched/622/1557159.jpg"
+    }
+   }
+  }
+ ]
+}

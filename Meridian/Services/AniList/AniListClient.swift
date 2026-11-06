@@ -30,7 +30,7 @@ actor AniListClient {
     }
 
     private static let fields = """
-        id isAdult title { romaji english } startDate { year } status format popularity countryOfOrigin
+        id isAdult title { romaji english } startDate { year month day } status format popularity countryOfOrigin
         coverImage { large extraLarge } bannerImage nextAiringEpisode { airingAt episode } externalLinks { site type }
         """
 
@@ -81,6 +81,28 @@ actor AniListClient {
             return Double(next.airingAt) >= start && Double(next.airingAt) <= end
         }
         .sorted { ($0.popularity ?? 0) > ($1.popularity ?? 0) }
+    }
+
+    /// Search's popular anime (Chime, 6 Nov 2026; D-66): what is airing now or finished in the past year, most
+    /// popular first, and the shows whose run began in the past `recentDays` days (an anime's new season is its own
+    /// entry). TV series, shorts and web series only: a film has no next episode to follow. One request with three
+    /// aliased pages; its dates are whole UTC days, so loads on the same day ask the same question and hit the cache.
+    func popular(now: Date, recentDays: Int = 90) async throws -> (popular: [AniListMedia], recent: [AniListMedia]) {
+        // AniList's FuzzyDateInt: the UTC day as yyyyMMdd.
+        let utc = DropFormatter(timeZone: .gmt)
+        func day(_ offset: Int) -> Int { Int(utc.localDay(now, addingDays: offset).filter(\.isNumber)) ?? 0 }
+        let shape = "type: ANIME, countryOfOrigin: \"JP\", isAdult: false, format_in: [TV, TV_SHORT, ONA], " +
+            "sort: POPULARITY_DESC"
+        let query = "query { releasing: Page(perPage: 50) { media(\(shape), status: RELEASING) { \(Self.fields) } } " +
+            "finished: Page(perPage: 50) { media(\(shape), status: FINISHED, endDate_greater: \(day(-365))) " +
+            "{ \(Self.fields) } } recent: Page(perPage: 50) { media(\(shape), startDate_greater: \(day(-recentDays - 1)), " +
+            "startDate_lesser: \(day(1))) { \(Self.fields) } } }"
+        let lists: AniListPopular = try await post(query, [:])
+        var seen = Set<Int>()
+        let popular = ((lists.data.releasing.media ?? []) + (lists.data.finished.media ?? []))
+            .filter { !$0.isAdult && seen.insert($0.id).inserted }
+            .sorted { ($0.popularity ?? 0) > ($1.popularity ?? 0) }
+        return (popular, (lists.data.recent.media ?? []).filter { !$0.isAdult })
     }
 
     // MARK: Transport

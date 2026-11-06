@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// The filters over Search's airing grid, one picked at a time like the TV | Anime switch above it (Chime, D-43):
-/// Popular, Today, New seasons, Exact time, then the 12 major platforms in a fixed order (D-45), each with its logo
+/// Popular, Today, New seasons, then the 12 major platforms in a fixed order (D-45), each with its logo
 /// (D-44). Night Sky
 /// chips: the picked one is white with black text, the rest are dark with a hairline, like the follow button.
 struct SearchFilterRow: View {

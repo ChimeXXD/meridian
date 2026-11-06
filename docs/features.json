@@ -358,7 +358,7 @@
       "id": "D3-9",
       "day": 3,
       "priority": "must",
-      "title": "Search: filter logic for Today, New seasons, Exact time known and Service (D-43)",
+      "title": "Search: filter logic for Today, New seasons, Exact time known and Service (D-43; meanings superseded by D-66, see D8-1)",
       "criteria": [
         "Today: still to come and on the viewer's calendar day in the zone times are formatted in (TimeZone.current; the Settings override once it exists); a date-only episode counts when its airdate is today",
         "New seasons: the kept episode is episode 1 of any season (TV) or episode 1 (anime), brand-new shows included",
@@ -736,6 +736,24 @@
       "verify": "the portfolio page URL is recorded in README",
       "passes": false,
       "evidence": ""
+    },
+    {
+      "id": "D8-1",
+      "day": 8,
+      "priority": "must",
+      "title": "Search: Popular is the past year, Today is today, New seasons is the past 3 months, no Exact time, a service shows Popular on over Airing on (D-66)",
+      "criteria": [
+        "Popular ('Popular in the past year'): TV from the bundled rules/popular-shows.json (Wikipedia page views, 12 months), anime from AniList; only shows whose last episode aired in the past 365 days, most popular first, at most 15, whether or not an episode is coming",
+        "Today ('Airing today'): only episodes on the viewer's calendar day, never a later day",
+        "New seasons: a season begun in the past 90 days, plus episode 1s in the next few days, most popular first; a season not yet begun never counts",
+        "no Exact time filter on TV or anime",
+        "a service shows 'Popular on <service>' first, then 'Airing on <service> in the next few days'; an empty grid is left out, and a platform with nothing in either gets no chip",
+        "a cell with an episode coming says when in ReleaseWording words (rule 3); one between seasons says when its season began",
+        "scripts/build-popular-shows.py rebuilds the list with the standard library; every major platform has shows on it"
+      ],
+      "verify": "SearchFilterTests (popularPastYear, popularLimit, today x3 zones, todayDateOnly, newSeasons window edges, service, popularServicesOnly, emptyPlatformsHidden, options, anime, cellLine, noMatchCopy); PopularShowsTests over the bundled file; AniListClientTests.popular; fidelity/verify-screen.sh search, search-filtered, search-filter-empty; Chime approves a screenshot",
+      "passes": true,
+      "evidence": "6 Nov: SearchFilterTests 15/15, PopularShowsTests, AniListClientTests (33 in 3 suites); mutations (New seasons 90->95 days, Popular 365->366 days) each fail their test; fidelity/verify-screen.sh search, search-filtered, search-filter-empty ALL PASS; full proof gate build+test+spec; /code-review medium --fix (5 of 8 fixed); proof:verifier PASS on all 6 asks. Not yet: Chime's approval of a phone screenshot"
     }
   ]
 }

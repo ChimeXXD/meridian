@@ -1,6 +1,6 @@
 {
   "screen": "search",
-  "brief": "UI-BRIEF §5.3, Chime's grid picks (live TVmaze)",
+  "brief": "UI-BRIEF §5.3, Chime's grid picks; opens on Popular in the past year (D-66, bundled list + live TVmaze)",
   "launch": [
     "-inMemoryStore",
     "-welcomeDone",
@@ -13,14 +13,14 @@
       "id": "search-kind"
     },
     {
-      "id": "search-airing-header",
-      "text": "Airing in the next few days"
+      "id": "search-popular-header",
+      "text": "Popular in the past year"
     },
     {
-      "id": "airing-1-title"
+      "id": "popular-1-title"
     },
     {
-      "id": "airing-1-follow"
+      "id": "popular-1-follow"
     }
   ]
 }

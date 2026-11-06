@@ -112,6 +112,31 @@ struct AniListClientTests {
         #expect(lesser >= end)
     }
 
+    @Test("popular: airing or finished in the past year, most popular first, once each; recent: begun in 90 days")
+    func popular() async throws {
+        func show(_ id: Int, _ popularity: Int, adult: Bool = false) -> String {
+            """
+            {"id":\(id),"isAdult":\(adult),"title":{"romaji":"S\(id)"},"popularity":\(popularity),
+             "startDate":{"year":2026,"month":10,"day":4}}
+            """
+        }
+        let body = Data("""
+        {"data":{"releasing":{"media":[\(show(1, 50)),\(show(2, 300))]},
+                 "finished":{"media":[\(show(3, 200)),\(show(2, 300)),\(show(4, 999, adult: true))]},
+                 "recent":{"media":[\(show(2, 300)),\(show(5, 9, adult: true))]}}}
+        """.utf8)
+        let network = TVmazeClientTests.FakeNetwork([(200, [:], body)])
+        let lists = try await Self.client(network).popular(now: Date(iso: "2026-11-06T10:00:00Z"))
+        #expect(lists.popular.map(\.id) == [2, 3, 1])
+        #expect(lists.recent.map(\.id) == [2])
+        #expect(PopularItem(media: lists.recent[0]).seasonStart == "2026-10-04")
+        // One request, its window in whole UTC days: finished after 6 Nov 2025, begun after 7 Aug 2026 up to 7 Nov.
+        let sent = await network.bodies.first.flatMap { String(data: $0, encoding: .utf8) } ?? ""
+        #expect(await network.bodies.count == 1)
+        #expect(sent.contains("endDate_greater: 20251106") && sent.contains("startDate_greater: 20260807")
+            && sent.contains("startDate_lesser: 20261107") && sent.contains("format_in: [TV, TV_SHORT, ONA]"))
+    }
+
     /// A premieres page of episode-1 airings, as AniList sends it.
     static func premierePage(ids: [Int], hasNextPage: Bool) -> (status: Int, headers: [String: String], body: Data) {
         let rows = ids.map { id in

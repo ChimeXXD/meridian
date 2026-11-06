@@ -34,9 +34,4 @@ struct AiringItem: Hashable, Identifiable, Sendable {
                     date: resolution.date, airdate: resolution.airdate, confidence: resolution.confidence, source: resolution.source,
                     provider: nil, previousDate: nil)
     }
-
-    /// "Out today at 21:00", "Expected Mon at 09:00", "Airs in Japan tomorrow at 01:24" (rule 3, D-40).
-    func releaseLine(now: Date, formatter: DropFormatter) -> String {
-        ReleaseWording.outLine(drop, now: now, formatter: formatter)
-    }
 }

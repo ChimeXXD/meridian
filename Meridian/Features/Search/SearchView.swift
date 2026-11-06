@@ -3,7 +3,7 @@ import SwiftUI
 
 /// Search (SPEC §1, UI-BRIEF §5.3), one poster grid from Chime's picks (Plex "Popular Searches"): three posters across,
 /// the title and a muted meta line under each, and a round follow button on the poster's corner. Before you type it
-/// holds shows airing in the next few days; once you search, the results, whose year · network · status tells
+/// holds the popular shows of the past year, or what a filter picks (D-66); once you search, the results, whose year · network · status tells
 /// same-name shows apart. Nothing is followed until you tap its button. A TV | Anime switch (Hypelist's media switch)
 /// picks TVmaze or AniList (D-19).
 struct SearchView: View {
@@ -27,12 +27,13 @@ struct SearchView: View {
     @State private var results: [SearchResult] = []
     @State private var state = Phase.idle
     @State private var kind = Kind.tv
-    /// Shows with episodes in the next few days, shown before you type: TV from `AiringSoon`, anime from AniList. The
-    /// whole pool is kept; the filter and the 15-show cap apply when it's shown (D-43).
-    @State private var airing: [Kind: [AiringItem]] = [:]
+    /// What shows before you type, per catalog: shows with episodes in the next few days (TV from `AiringSoon`, anime
+    /// from AniList), and the popular shows and recent seasons (TV from the bundled `PopularShows`, anime from
+    /// AniList). The whole lists are kept; the filter and the 15-show cap apply when they're shown (D-43, D-66).
+    @State private var catalogues: [Kind: SearchCatalogue] = [:]
     /// The filter picked for each catalog this session; Popular until one is picked.
     @State private var filters: [Kind: SearchFilter] = [:]
-    private var airingSoon: [AiringItem] { airing[kind] ?? [] }
+    private var catalogue: SearchCatalogue? { catalogues[kind] }
     /// This week's shows per catalog: loading, failed, or loaded (UX audit #16: all three showed the same line).
     @State private var airingPhase: [Kind: Phase] = [:]
     /// Bumped by "Try again", so the airing task runs again.
@@ -105,20 +106,17 @@ struct SearchView: View {
         switch state {
         // Nil until the first load starts, which is a load too: no "Search TVmaze…" flash before the posters. The
         // chips are already known, so they're drawn; the posters wait as outlines (EA-6).
-        case .idle where airingSoon.isEmpty && (airingPhase[kind] ?? .searching) == .searching:
-            SearchFilterRow(options: AiringFilter.options(for: kind), selection: filter, logos: Self.logos)
-                .padding(.top, Tokens.Space.s)
-            SearchPlaceholderGrid(header: airingHeader, label: "Finding this week's shows")
-                .accessibilityIdentifier("search-airing-loading")
-        case .idle where airingSoon.isEmpty && airingPhase[kind] == .failed:
+        case .idle where catalogue == nil && airingPhase[kind] == .failed:
             message("Couldn't load this week's shows. You can still search above.", id: "search-airing-error",
                     action: ("Try again", { airingAttempt += 1 }))
-        case .idle where airingSoon.isEmpty:
-            message(kind == .tv ? "Search TVmaze for a show to follow" : "Search AniList for an anime to follow",
-                    id: "search-empty")
+        case .idle where catalogue == nil:
+            // While loading, TV's chips come from the bundled popular list alone, so they're known at once.
+            SearchFilterRow(options: filterOptions(now: .now), selection: filter, logos: Self.logos)
+                .padding(.top, Tokens.Space.s)
+            SearchPlaceholderGrid(header: placeholderHeader, label: "Finding shows")
+                .accessibilityIdentifier("search-airing-loading")
         case .idle:
-            SearchFilterRow(options: AiringFilter.options(for: kind),
-                            selection: filter, logos: Self.logos)
+            SearchFilterRow(options: filterOptions(now: .now), selection: filter, logos: Self.logos)
                 .padding(.top, Tokens.Space.s)
             airingGrid
         case .searching where results.isEmpty:
@@ -151,7 +149,21 @@ struct SearchView: View {
         }
     }
 
-    private var airingHeader: String { kind == .tv ? "Airing in the next few days" : "Airing in Japan this week" }
+    /// The chips: a platform with nothing to show has none (D-66). Before TV's schedule loads, the bundled popular list
+    /// alone decides.
+    private func filterOptions(now: Date) -> [SearchFilter] {
+        let lists = catalogue ?? SearchCatalogue(upcoming: [], popular: Self.bundledPopular, seasons: [])
+        return AiringFilter.options(for: kind, catalogue: lists, now: now, formatter: DropFormatter())
+    }
+
+    /// TV's popular list, read once from the bundle.
+    private static let bundledPopular = PopularShows.bundled.shows.map(PopularItem.init(entry:))
+
+    /// The picked filter's first header, drawn over the outlines while the lists load.
+    private var placeholderHeader: String {
+        AiringFilter.shelves(filter.wrappedValue, kind: kind, catalogue: SearchCatalogue(upcoming: [], popular: [], seasons: []),
+                             now: .now, formatter: DropFormatter()).first?.header ?? ""
+    }
 
     /// A quiet line, with a way forward when there is one ("Try again", "Search anime instead").
     private func message(_ text: String, id: String, action: (title: String, run: () -> Void)? = nil) -> some View {
@@ -176,9 +188,9 @@ struct SearchView: View {
         .accessibilityIdentifier(id)
     }
 
-    /// This week's shows for the picked catalog, once; a failure says so and offers "Try again".
+    /// The picked catalog's lists, once; a failure says so and offers "Try again".
     private func loadAiring() async {
-        guard airingSoon.isEmpty else { return }
+        guard catalogue == nil else { return }
         let loading = kind
         airingPhase[loading] = .searching
         switch loading {
@@ -187,21 +199,29 @@ struct SearchView: View {
                 // A switch of catalog cancels this load; that's not a failure, and the next visit loads again.
                 if !Task.isCancelled { airingPhase[loading] = .failed }; return
             }
-            airing[.tv] = picks.map(AiringItem.init(pick:))
+            let popular = Self.bundledPopular
+            catalogues[.tv] = SearchCatalogue(upcoming: picks.map(AiringItem.init(pick:)), popular: popular, seasons: popular)
         case .anime:
+            // Both at once. The popular lists are extra: if they fail, Popular falls back to this week's shows
+            // (most popular first, as before D-66), and Today and this week's premieres still show.
+            async let popularLists = try? anilist.popular(now: .now)
             guard let media = try? await anilist.airingSoon(from: .now, days: 7) else {
                 if !Task.isCancelled { airingPhase[loading] = .failed }; return
             }
-            airing[.anime] = media.compactMap { AiringItem(media: $0) }
+            let lists = await popularLists
+            guard !Task.isCancelled else { return }
+            catalogues[.anime] = SearchCatalogue(upcoming: media.compactMap { AiringItem(media: $0) },
+                                                 popular: (lists?.popular ?? media).map(PopularItem.init(media:)),
+                                                 seasons: (lists?.recent ?? []).map(PopularItem.init(media:)))
         }
         airingPhase[loading] = .done
     }
 
     // MARK: Plex's poster grid, for both the airing shows and the results
 
-    /// The airing grid under the picked filter. Each cell says where and when ("Netflix", "Expected Mon at 09:00"),
-    /// so Today and Exact time show why a show is there (rule 3). Re-read every minute, so an episode that comes out
-    /// while the grid is open leaves it and the "when" lines stay true.
+    /// The grids under the picked filter. Each cell says where and when ("Netflix", "Expected Mon at 09:00", or
+    /// "Season 3 began Sat 12 Sep"), so it shows why a show is there (rule 3). Re-read every minute, so an episode
+    /// that comes out while the grid is open stops reading as still to come and the "when" lines stay true.
     private var airingGrid: some View {
         TimelineView(.everyMinute) { context in
             airingGrid(now: context.date)
@@ -210,13 +230,13 @@ struct SearchView: View {
 
     @ViewBuilder private func airingGrid(now: Date) -> some View {
         let formatter = DropFormatter()
-        let shown = AiringFilter.apply(filter.wrappedValue, to: airingSoon, now: now, formatter: formatter)
-        let lines = Dictionary(shown.map { ($0.id, $0.releaseLine(now: now, formatter: formatter)) },
-                               uniquingKeysWith: { first, _ in first })
+        let shelves = AiringFilter.shelves(filter.wrappedValue, kind: kind,
+                                           catalogue: catalogue ?? SearchCatalogue(upcoming: [], popular: [], seasons: []),
+                                           now: now, formatter: formatter)
         Group {
-            if shown.isEmpty {
+            if shelves.allSatisfy(\.entries.isEmpty) {
                 VStack(alignment: .leading, spacing: Tokens.Space.s) {
-                    message(AiringFilter.noMatch(filter.wrappedValue, kind: kind), id: "search-filter-empty")
+                    message(AiringFilter.noMatch(filter.wrappedValue), id: "search-filter-empty")
                     if filter.wrappedValue != .popular {
                         outlinedButton("Show popular", id: "search-filter-clear") {
                             withAnimation(.snappy(duration: 0.2)) { filter.wrappedValue = .popular }
@@ -224,22 +244,34 @@ struct SearchView: View {
                     }
                 }
             } else {
-                posterGrid(airingHeader, headerID: "search-airing-header", shown.map(\.result), idPrefix: "airing",
-                           drops: Dictionary(shown.map { ($0.id, $0.drop) }, uniquingKeysWith: { first, _ in first })) { result in
-                    VStack(alignment: .leading, spacing: 0) {
-                        if let network = result.network { Text(network) }
-                        // "Out tomorrow at 02:00" keeps "at" with its time when the cell wraps it (EA-12).
-                        if let line = lines[result.id] {
-                            Text(line.replacingOccurrences(of: " at ", with: " at\u{00A0}"))
-                        }
-                    }
-                    .accessibilityElement(children: .combine)
+                VStack(alignment: .leading, spacing: Tokens.Space.l) {
+                    // An empty grid beside a full one is left out: nothing empty is shown (D-66).
+                    ForEach(shelves.filter { !$0.entries.isEmpty }) { shelf in shelfGrid(shelf, now: now, formatter: formatter) }
                 }
             }
         }
         // A new filter crossfades the grid instead of swapping it in place (AD-11); the chip's tap animates it.
         .id(filter.wrappedValue)
         .transition(.opacity)
+    }
+
+    /// One titled grid of posters.
+    private func shelfGrid(_ shelf: SearchShelf, now: Date, formatter: DropFormatter) -> some View {
+        let lines = Dictionary(shelf.entries.map { ($0.id, $0.line(now: now, formatter: formatter)) },
+                               uniquingKeysWith: { first, _ in first })
+        let drops = Dictionary(shelf.entries.compactMap { entry in entry.drop.map { (entry.id, $0) } },
+                               uniquingKeysWith: { first, _ in first })
+        return posterGrid(shelf.header, headerID: "search-\(shelf.id)-header", shelf.entries.map(\.result),
+                          idPrefix: shelf.id, drops: drops) { result in
+            VStack(alignment: .leading, spacing: 0) {
+                if let network = result.network { Text(network) }
+                // "Out tomorrow at 02:00" keeps "at" with its time when the cell wraps it (EA-12).
+                if let line = lines[result.id] ?? nil {
+                    Text(line.replacingOccurrences(of: " at ", with: " at\u{00A0}"))
+                }
+            }
+            .accessibilityElement(children: .combine)
+        }
     }
 
     /// One grid for both lists, so the airing shows and the results can't drift apart. Cells are `<idPrefix>-<n>`.

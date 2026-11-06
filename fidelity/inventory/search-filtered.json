@@ -1,6 +1,6 @@
 {
   "screen": "search-filtered",
-  "brief": "D-43: Search's filter row (one at a time, like the TV | Anime switch), Exact time picked (live TVmaze)",
+  "brief": "D-43, D-66: Search's filter row (one at a time), Netflix picked: Popular on Netflix first (bundled list). The Airing on Netflix row depends on live TVmaze and is hidden when empty, so SearchFilterTests.service covers it",
   "launch": [
     "-inMemoryStore",
     "-welcomeDone",
@@ -8,7 +8,7 @@
     "-tab",
     "search",
     "-filter",
-    "exact-time"
+    "service:Netflix"
   ],
   "items": [
     {
@@ -28,23 +28,18 @@
       "text": "New seasons"
     },
     {
-      "id": "search-filter-exact-time",
-      "text": "Exact time",
+      "id": "search-filter-service-netflix",
       "selected": true
     },
     {
-      "id": "search-airing-header",
-      "text": "Airing in the next few days"
+      "id": "search-service-popular-header",
+      "text": "Popular on Netflix"
     },
     {
-      "id": "airing-1-title"
+      "id": "service-popular-1-title"
     },
     {
-      "id": "airing-1-meta",
-      "contains": "Out "
-    },
-    {
-      "id": "airing-1-follow"
+      "id": "service-popular-1-follow"
     }
   ]
 }

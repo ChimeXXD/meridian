@@ -817,9 +817,9 @@ Text(ReleaseWording.quietNote(status: show.status, lastAired: show.lastAired, fo
 
   <article class="comp" id="c-filter-chip" data-search="filter chip popular today new seasons exact time picked" data-title="Filter chip" data-kind="Component">
     <div class="hrow"><h3>Filter chip</h3></div>
-    <p class="purpose">Narrows the airing grid, one choice at a time, like the TV and Anime switch. One row that scrolls sideways, never wrapping: it runs to the screen’s edges, on from the four filters into the 12 service chips, and keeps the picked chip in view.</p>
+    <p class="purpose">Picks what Search shows before you type, one choice at a time, like the TV and Anime switch: Popular in the past year, Airing today, New seasons from the past 3 months, or a service. One row that scrolls sideways, never wrapping: it runs to the screen’s edges, on from the three filters into the service chips, and keeps the picked chip in view.</p>
     <div class="states">
-      <figure class="state"><div class="stage" style="width:390px;padding:16px"><div class="chiprow" tabindex="0" role="group" aria-label="Filter chips, scrolls sideways"><span class="fchip on">Popular</span><span class="fchip">Today</span><span class="fchip">New seasons</span><span class="fchip">Exact time</span><span class="fchip"><span class="logo-tile">N</span>Netflix</span><span class="fchip"><span class="logo-tile">P</span>Prime Video</span><span class="fchip"><span class="logo-tile">H</span>HBO Max</span><span class="fchip"><span class="logo-tile">D</span>Disney+</span></div></div><figcaption>Popular picked, the default for TV; the row scrolls on into the services</figcaption></figure>
+      <figure class="state"><div class="stage" style="width:390px;padding:16px"><div class="chiprow" tabindex="0" role="group" aria-label="Filter chips, scrolls sideways"><span class="fchip on">Popular</span><span class="fchip">Today</span><span class="fchip">New seasons</span><span class="fchip"><span class="logo-tile">N</span>Netflix</span><span class="fchip"><span class="logo-tile">P</span>Prime Video</span><span class="fchip"><span class="logo-tile">H</span>HBO Max</span><span class="fchip"><span class="logo-tile">D</span>Disney+</span></div></div><figcaption>Popular picked, the default for TV; the row scrolls on into the services</figcaption></figure>
       <figure class="state"><div class="stage" style="width:390px;padding:16px"><div class="chiprow" tabindex="0" role="group" aria-label="Filter chips, scrolls sideways"><span class="fchip">Popular</span><span class="fchip on">Today</span><span class="fchip">New seasons</span></div></div><figcaption>Anime: three chips, no services</figcaption></figure>
     </div>
     <div class="spec"><dl class="specs">
@@ -829,7 +829,7 @@ Text(ReleaseWording.quietNote(status: show.status, lastAired: show.lastAired, fo
       <dt>Not picked</dt><dd>Black at 0.55, white text, a white hairline at 0.35</dd>
       <dt>Type</dt><dd>SF Pro subheadline medium (15)</dd>
       <dt>VoiceOver</dt><dd>“Today, selected, button”</dd>
-      <dt>IDs</dt><dd><code>search-filters</code>; <code>search-filter-popular</code>, <code>-today</code>, <code>-new-seasons</code>, <code>-exact-time</code></dd>
+      <dt>IDs</dt><dd><code>search-filters</code>; <code>search-filter-popular</code>, <code>-today</code>, <code>-new-seasons</code></dd>
       <dt>Hit target</dt><dd>Chip width × 44</dd>
       <dt>Source</dt><dd class="path">Features/Search/SearchFilterRow.swift:12-52, 78-92</dd>
     </dl><div class="codebox"><pre><code>SearchFilterRow(options: AiringFilter.options(for: kind), selection: filter, logos: Self.logos)
@@ -838,7 +838,7 @@ Text(ReleaseWording.quietNote(status: show.status, lastAired: show.lastAired, fo
 
   <article class="comp" id="c-service-chip" data-search="service chip logo tile netflix prime video hbo max disney paramount hulu peacock apple tv cbs nbc abc fox" data-title="Service chip" data-kind="Component">
     <div class="hrow"><h3>Service chip</h3></div>
-    <p class="purpose">A filter chip for one of 12 major services, always in the same order, with its logo on a small white tile. Shown here with a letter in place of the real logo.</p>
+    <p class="purpose">A filter chip for one of 12 major services, in a fixed order, shown only when it has a popular show or something airing in the next few days, with its logo on a small white tile. Shown here with a letter in place of the real logo.</p>
     <div class="states">
       <figure class="state"><div class="stage" style="width:390px;padding:16px"><div class="chiprow" tabindex="0" role="group" aria-label="Service chips, scrolls sideways"><span class="fchip"><span class="logo-tile">N</span>Netflix</span><span class="fchip on"><span class="logo-tile">P</span>Paramount+</span><span class="fchip"><span class="logo-tile">H</span>Hulu</span></div></div><figcaption>Logos loaded, Paramount+ picked: its white tile sits on the white chip</figcaption></figure>
       <figure class="state"><div class="stage" style="width:200px;padding:16px"><div class="chiprow"><span class="fchip"><span class="logo-tile gap"></span>Peacock</span></div></div><figcaption>Loading or failed: clear space kept, never a white box</figcaption></figure>
@@ -846,13 +846,13 @@ Text(ReleaseWording.quietNote(status: show.status, lastAired: show.lastAired, fo
     <div class="spec"><dl class="specs">
       <dt>Order</dt><dd>Netflix, Prime Video, HBO Max, Disney+, Paramount+, Hulu, Peacock, Apple TV, CBS, NBC, ABC, FOX. TV only</dd>
       <dt>Logo tile</dt><dd>30 × 22, radius 5, white, with no outline; the logo fits with 3 pt padding, 8 pt before the name; loaded at 120 px from Wikimedia Commons. Until it loads, or if it can’t, the same 30 × 22 stays clear</dd>
-      <dt>No match</dt><dd>“Nothing on Paramount+ in the next few days.” with “Show popular”</dd>
+      <dt>No match</dt><dd>“Nothing on Paramount+ from the past year or the next few days.” with “Show popular”; a picked service shows “Popular on Paramount+” over “Airing on Paramount+ in the next few days”, leaving out an empty one</dd>
       <dt>VoiceOver</dt><dd>“Netflix, button”. The logo is hidden; the name says it</dd>
       <dt>IDs</dt><dd><code>search-filter-service-netflix</code>, <code>-prime-video</code>, <code>-disney-</code>, <code>-paramount-</code>…</dd>
       <dt>Hit target</dt><dd>Chip width × 44</dd>
       <dt>Source</dt><dd class="path">Features/Search/SearchFilterRow.swift:57-75</dd>
     </dl><div class="codebox"><pre><code>// SearchFilter.service("Netflix").identifier == "search-filter-service-netflix"
-AiringFilter.options(for: .tv)   // [.popular, .today, .newSeasons, .exactTime] + 12 services</code></pre></div></div>
+AiringFilter.options(for: .tv)   // [.popular, .today, .newSeasons] + the services with something to show</code></pre></div></div>
   </article>
 
   <article class="comp" id="c-follow-plus" data-search="follow plus button poster following checkmark" data-title="Follow (+) button" data-kind="Component">

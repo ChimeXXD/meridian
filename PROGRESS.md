@@ -2,6 +2,24 @@
 
 Build log for the one-week plan (`docs/PLAN.md`). Newest entry first.
 
+## Search before you type: Popular is the past year (Fri 6 Nov 2026, D-66)
+
+**Asked (Chime)**: Popular = well-known shows that aired in the past year, not only this week's; Today = today only; New seasons = seasons begun in the past 3 months; remove Exact time; each platform shows its most popular shows first, then what airs in the next few days; then (mid-session) hide any platform or row with nothing in it. The past transcripts hold the platform request (4 Nov, D-64, deferred to after Day 7, with the rows the wrong way round) but not the other four; the 31 Oct request was "popular shows airing in the next few days".
+
+**Changed**
+- `scripts/build-popular-shows.py` (standard library) writes `rules/popular-shows.json` (bundled): English Wikipedia's monthly top 1,000 for Nov 2025–Oct 2026 → Wikidata TVmaze IDs (P8600, season articles via P179) → 12-month page views → TVmaze (scripted or animated, last episode in the past year). A second pass gives each platform under 15 shows its own Wikidata shows (P449), ranked by 60 days of views. 258 shows; every platform 10–15+ (NBC had 0 before the second pass). Takes about 20 minutes.
+- `PopularShows`, `PopularItem`, `SearchShelf`/`SearchCatalogue`; `AiringFilter.shelves` builds each filter's grids; Exact time removed (`SearchFilter`, Debug `-filter`). A cell with nothing coming says "Season 3 began Sat 12 Sep". Anime: `AniListClient.popular(now:)`, one aliased request (releasing, finished in the past year, begun in the past 90 days; TV/short/web only).
+- A worker fork (Chime's mid-session ask) hid platforms with nothing to show (superseding D-45's always-12) and empty rows. Credits names Wikipedia and Wikidata. DECISIONS D-66, SPEC, UI-BRIEF, features D8-1, the design-system site's copy.
+
+**Checked**
+- SearchFilterTests, PopularShowsTests, AniListClientTests: 33 pass. Mutation runs: New seasons window 90→95 days and Popular 365→366 days each fail their test (the first Popular test was too loose at 426 days and was tightened to the 365/366 edge; `shelves` now sorts by popularity itself).
+- `fidelity/verify-screen.sh` search, search-filtered (Netflix), search-filter-empty: ALL PASS. search-filtered no longer requires "Airing on Netflix": on 6 Nov Netflix had nothing still to come (Steel Ball Run out that day, Palacio not in English), so the row is rightly hidden; `SearchFilterTests.service` covers the two-row case.
+- WidgetRenderTests failed once in the gate while the fork ran tests at the same time; alone it passes 6/6.
+
+- /code-review medium --fix: 8 findings, 5 fixed (anime Popular falls back to this week if its request fails; the two AniList requests run together; chips worked out once per render; one date helper; dead `releaseLine` removed). proof:verifier PASS on all six asks; its gaps fixed: the design-system site still said Exact time and always-12 chips, and year-numbered soap seasons read "Season 2026 began" (now "Began Fri 2 Jan").
+
+**Not done**: the weekly GitHub Action and a remote fetch for the list, so a season that starts after the build date drops out of New seasons once its episode 1 is out, until the script is rerun (reinstalling every 7 days refreshes only what was rebuilt). Open for Chime: when TVmaze can't be reached, show the bundled Popular instead of the error? A picked platform that empties (its only episode came out) loses its chip while picked. SearchView is ~343 lines (over the ~300 guide).
+
 ## Skill review pass 2: docs, code review and midnight entries (Thu 5 Nov 2026)
 
 **Changed**
